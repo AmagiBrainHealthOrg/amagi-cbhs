@@ -23,7 +23,7 @@ Moved out of Release 1. In Release 1, `/news` shows `news` items only.
 - `substack-posts` collection per SPEC §5.1: `url` unique, `approved` default `false`, admin and editor access via `src/access/` helpers.
 - `substackFeedUrl` and `substackUrl` fields on the `integrations` global.
 - `src/lib/substack.ts`: fetch and parse the RSS feed; upsert `substack-posts` by `url` with `approved: false` (never overwrite `approved`).
-- Payload job running hourly, plus an admin-only "Sync now" endpoint and button.
+- Payload job run hourly by Vercel Cron (needs the Pro plan; Hobby runs cron at most daily), plus an admin-only "Sync now" endpoint and button.
 - `/news` merges approved posts with `news` items, newest first.
 - "Subscribe" link to `integrations.substackUrl`, tracked as outbound.
 - Migration.

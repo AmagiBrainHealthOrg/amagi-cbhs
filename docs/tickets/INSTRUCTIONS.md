@@ -82,12 +82,12 @@ Work in the implementer's worktree, on its branch, with its database and port.
 
 ## 3. Local environment
 
-One Postgres container from `docker-compose.yml` (service `postgres`, user `postgres`, password `postgres`). Each ticket gets its own database and port so implementers can run in parallel.
+One local Supabase stack, started from the main checkout (`supabase start`): Postgres on port 54322 (user `postgres`, password `postgres`), and Storage's S3 endpoint and keys from `supabase status`. Each ticket gets its own database and port so implementers can run in parallel.
 
 | Item                   | Value                                                                               |
 | ---------------------- | ----------------------------------------------------------------------------------- |
 | Database               | `amagi_cbhs_<id>`, e.g. `amagi_cbhs_t012`                                           |
-| `DATABASE_URL`         | `postgres://postgres:postgres@localhost:5432/amagi_cbhs_<id>`                       |
+| `DATABASE_URL`         | `postgres://postgres:postgres@127.0.0.1:54322/amagi_cbhs_<id>`                      |
 | Dev server port        | `3000 + <numeric id>`, e.g. T012 → 3012. `pnpm dev --port <port>` in the background |
 | `NEXT_PUBLIC_SITE_URL` | `http://localhost:<port>`                                                           |
 | Artefacts              | `.verification/<id>/` (git-ignored)                                                 |
@@ -95,14 +95,15 @@ One Postgres container from `docker-compose.yml` (service `postgres`, user `post
 Setup in the worktree:
 
 1. `pnpm install`
-2. `psql postgres://postgres:postgres@localhost:5432/postgres -c "create database amagi_cbhs_<id>"`
+2. `psql postgres://postgres:postgres@127.0.0.1:54322/postgres -c "create database amagi_cbhs_<id>"`, then copy the pulled main database into it: `pg_dump postgres://postgres:postgres@127.0.0.1:54322/amagi_cbhs | psql -q postgres://postgres:postgres@127.0.0.1:54322/amagi_cbhs_<id>`. ACs that say "fresh database" use a separate empty database instead.
 3. `cp <main checkout>/.env .env`, then set `DATABASE_URL` and `NEXT_PUBLIC_SITE_URL` for your id and port. Check with `grep -c amagi_cbhs_<id> .env` (must print 1).
 4. `pnpm payload migrate` (and `pnpm db:seed` once it exists).
 
 Rules:
 
 - Never print `.env` or any secret. Never modify the main checkout's `.env`.
-- Never stop or recreate the Postgres container. If it's down, `docker compose up -d postgres` from the repo root.
+- Never run `supabase stop`, `supabase db …` or `supabase migration …`. If the stack is down, run `supabase start` from the main checkout.
+- Never connect to a remote database or bucket. Your `.env` points at `127.0.0.1` only, and you never run `pnpm db:pull`; only the user does, in the main checkout.
 - Kill only your own dev server: `lsof -tiTCP:<port> -sTCP:LISTEN | xargs kill`.
 - Test users: create via `POST /api/users/first-register` on an empty database, or `payload.create({ collection: 'users', ... })` in a test, with emails `<id>-<n>@test.local`.
 

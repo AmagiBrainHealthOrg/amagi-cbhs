@@ -39,6 +39,6 @@ skills: []
 - [ ] **AC4**: Draft preview works.
   - _Verify (browser):_ an unpublished page returns 404 anonymously and renders for a logged-in editor at `?preview=true`.
 - [ ] **AC5**: Kitchen sink is hidden in production.
-  - _Verify (cli):_ `NODE_ENV=production pnpm build && pnpm start` then `curl -i localhost:3000/dev/kitchen-sink` returns 404.
+  - _Verify (cli):_ `NODE_ENV=production pnpm build && pnpm start --port <port>` then `curl -i localhost:<port>/dev/kitchen-sink` returns 404.
 - [ ] **AC6**: Gates pass.
   - _Verify (cli):_ `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build` exits 0.

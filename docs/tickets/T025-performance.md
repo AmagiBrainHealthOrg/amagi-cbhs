@@ -24,6 +24,6 @@ skills: []
 - [ ] **AC1**: Targets met.
   - _Verify (cli):_ `npx lighthouse <url> --preset=perf --form-factor=mobile --throttling-method=simulate --output=json` on each page shows LCP < 2.5s and CLS < 0.1. Record values in the report.
 - [ ] **AC2**: JavaScript budget met.
-  - _Verify (cli):_ the build output shows first-load JS for content routes under 150 KB gzipped.
+  - _Verify (cli):_ in the AC1 Lighthouse JSON, the `resource-summary` audit's script transfer size is under 150 KB for each page. (Next 16's build output no longer lists first-load JS.)
 - [ ] **AC3**: Gates pass.
   - _Verify (cli):_ `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build` exits 0.

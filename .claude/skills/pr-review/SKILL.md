@@ -68,6 +68,8 @@ Severity:
 
 - [ ] Every schema change ships a migration in `src/migrations/`, and `src/payload-types.ts` is regenerated in the same PR. No hand edits to generated files.
 - [ ] No merged migration was edited. Data migrations are idempotent.
+- [ ] Migrations are backward compatible: the previous deployment keeps working on the new schema (no drop or rename in the same release as the code change). Breaking one is 🔴.
+- [ ] No `supabase db …` or `supabase migration …` commands in scripts or docs, and nothing writes to a remote database or bucket.
 - [ ] Access uses the helpers in `src/access/`, not inline role checks. `form-submissions`, `users` and `integrations` stay admin-only.
 - [ ] Local API calls made on behalf of a user pass `user` and `overrideAccess: false`. The default (`overrideAccess: true`) skips access control.
 - [ ] Nested operations inside hooks pass `req`, so they share the transaction.

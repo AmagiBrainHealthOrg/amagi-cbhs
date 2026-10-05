@@ -49,7 +49,7 @@ Fast on slow Caribbean mobile connections. Targets on a throttled "Slow 4G" mobi
 
 ### 3.5 Ownership
 
-All production accounts (hosting, database, storage, Stripe, email, fonts, Google) are in Amagi's name.
+All production accounts (hosting, database, storage, Stripe, email, fonts, Google) are in Amagi's name. One exception until launch: the Vercel project runs on Tandem's Hobby team, and moves to an Amagi-owned Pro team in T018.
 
 ## 4. Information architecture
 
@@ -88,7 +88,7 @@ Publishing a `news` item with `type: partner-announcement` and a related partner
 
 ## 5. Content model
 
-All collections and globals use drafts, autosave and live preview.
+Drafts, autosave and live preview are on for `pages`, `news`, `partners`, `supporters`, `faqs`, `host-countries`, `sessions` and every global except `integrations`. There are no drafts on `users`, `media`, `form-submissions`, `substack-posts` or `integrations`. Code that reads a global at runtime (for example `dropdowns`) reads the published version.
 
 ### 5.1 Collections
 
@@ -160,7 +160,7 @@ Header, Footer, Button (primary = Donate; secondary; tertiary), Section, Card, A
 ### 8.2 Submission flow
 
 1. Client validation, then server validation (Zod).
-2. Rate limit: 5 submissions per IP per 10 minutes.
+2. Rate limit: 5 submissions per IP per 10 minutes, counted in Postgres (the app runs serverless, so in-memory counters don't work).
 3. Create a `form-submissions` document (`sheetSyncStatus: pending`).
 4. `afterChange` appends a row to the form's tab in Google Sheets; sets `synced` or `failed` with the error.
 5. Send a confirmation email.
@@ -238,13 +238,18 @@ No personal data in any event or data-layer value. No advertising pixels. Google
 
 ### 11.1 Environments
 
-- **Local:** Docker Postgres, local S3-compatible storage or the dev bucket, Stripe test mode, Resend sandbox, staging spreadsheet.
-- **Staging:** separate database, bucket and spreadsheet; Stripe test mode; `isTest: true` on submissions; basic-auth protected; `noindex`.
-- **Production:** amagisummit.org; Stripe live mode.
+- **Local:** the Supabase CLI stack (`supabase start`): Postgres on port 54322 and S3-compatible Storage. Schema and content come one way from staging with `pnpm db:pull` (§11.5). Stripe test mode, Resend sandbox, staging spreadsheet.
+- **Staging:** Vercel deployments of `main` before launch, on their own Supabase project (currently the only one); Stripe test mode; `isTest: true` on submissions; basic-auth protected; `noindex`. Every PR also gets a Vercel preview deployment against the staging database.
+- **Production:** amagisummit.org; a separate Supabase project in Amagi's name; Stripe live mode. Created in T018.
 
 ### 11.2 Hosting
 
-Docker image (`output: 'standalone'`) deployed to the chosen host behind Cloudflare. Managed Postgres and S3-compatible storage. **The hosting provider is an open decision (§13).** Migrations run as a release step (`pnpm payload migrate`) before the new version serves traffic.
+Vercel, building `main` with the Next.js preset. Until launch the project is on Tandem's Hobby team; in T018 it moves to an Amagi-owned Pro team (Hobby is for non-commercial use and runs cron at most once a day). Cloudflare manages DNS only, with no proxying in front of Vercel.
+
+- **Database:** Supabase Postgres through the transaction pooler (port 6543). The direct address is IPv6-only and Vercel can't reach it. The build pre-renders pages and connects to the database, so `DATABASE_URL` is set for every environment.
+- **Storage:** Supabase Storage through its S3 API, with `clientUploads: true` so admin uploads go straight to storage and avoid Vercel's 4.5 MB request limit.
+- **Row-level security:** Supabase exposes the `public` schema through its Data API. Every Payload table has RLS enabled with no policies, and automatic RLS is on for new tables. Payload connects as the table owner, so it isn't affected.
+- **Migrations:** `pnpm payload migrate` runs in the build of staging and production deployments (`VERCEL_ENV=production`), never in previews. The previous deployment keeps serving until the new one is ready, so every migration must work with both versions: add first, then drop or rename in a later release. A preview of a PR that adds a migration can't use the new schema until it merges; verify those locally.
 
 ### 11.3 Release 1 vs Release 2
 
@@ -259,6 +264,10 @@ Every ticket's `release` frontmatter says which release it belongs to. Release 1
 
 The `coming-soon` global and page stay until Release 1 launch, then `/` renders Home. Remove the global in a later migration once launch is confirmed.
 
+### 11.5 Local data pull
+
+`pnpm db:pull` replaces the local main database (`amagi_cbhs`) with staging's `public` schema and data, syncs the staging bucket into local Storage, then runs `pnpm payload migrate` to apply any newer migrations from the branch. It is one way: nothing is ever written to a remote. `form_submissions` rows are left out because they hold personal data. Because pulls copy schema too, the remote schema changes only through migrations, never by hand in the Supabase dashboard.
+
 ## 12. Out of scope
 
 Copywriting and brand design; translation; analytics and dashboard configuration; CRM build (Amagi syncs Sheets to Airtable); on-site card processing; event registration or ticketing; member logins; forms beyond §8.3; Summit week support beyond launch.
@@ -267,7 +276,6 @@ Copywriting and brand design; translation; analytics and dashboard configuration
 
 | #   | Decision                                                      | Owner          | Blocks                           |
 | --- | ------------------------------------------------------------- | -------------- | -------------------------------- |
-| D1  | Hosting provider for staging and production (in Amagi's name) | Tandem + Amagi | T017                             |
 | D3  | Territory and industry values                                 | Amagi          | T014 (seed can use placeholders) |
 | D4  | Whether Release 1 is public or editor-only                    | Amagi          | T018                             |
 | D5  | Suggested donation amounts and currency                       | Amagi          | T010 (seed can use placeholders) |
