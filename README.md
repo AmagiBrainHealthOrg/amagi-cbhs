@@ -1,218 +1,67 @@
-# Payload Plugin Template
+# Payload Blank Template
 
-A template repo to create a [Payload CMS](https://payloadcms.com) plugin.
+This template comes configured with the bare minimum to get started on anything you need.
 
-Payload is built with a robust infrastructure intended to support Plugins with ease. This provides a simple, modular, and reusable way for developers to extend the core capabilities of Payload.
+## Quick start
 
-To build your own Payload plugin, all you need is:
+This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
 
-- An understanding of the basic Payload concepts
-- And some JavaScript/Typescript experience
+## Quick Start - local setup
 
-## Background
+To spin up this template locally, follow these steps:
 
-Here is a short recap on how to integrate plugins with Payload, to learn more visit the [plugin overview page](https://payloadcms.com/docs/plugins/overview).
+### Clone
 
-### How to install a plugin
+After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
 
-To install any plugin, simply add it to your payload.config() in the Plugin array.
+### Development
 
-```ts
-import myPlugin from 'my-plugin'
+1. First [clone the repo](#clone) if you have not done so already
+2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URL` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
 
-export const config = buildConfig({
-  plugins: [
-    // You can pass options to the plugin
-    myPlugin({
-      enabled: true,
-    }),
-  ],
-})
-```
+3. `pnpm install && pnpm dev` to install dependencies and start the dev server
+4. open `http://localhost:3000` to open the app in your browser
 
-### Initialization
+That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
 
-The initialization process goes in the following order:
+#### Docker (Optional)
 
-1. Incoming config is validated
-2. **Plugins execute**
-3. Default options are integrated
-4. Sanitization cleans and validates data
-5. Final config gets initialized
+If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
 
-## Building the Plugin
+To do so, follow these steps:
 
-When you build a plugin, you are purely building a feature for your project and then abstracting it outside of the project.
+- Modify the `MONGODB_URL` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
+- Modify the `docker-compose.yml` file's `MONGODB_URL` to match the above `<dbname>`
+- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
 
-### Template Files
+## How it works
 
-In the Payload [plugin template](https://github.com/payloadcms/payload/tree/3.x/templates/plugin), you will see a common file structure that is used across all plugins:
+The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
 
-1. root folder
-2. /src folder
-3. /dev folder
+### Collections
 
-#### Root
+See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
 
-In the root folder, you will see various files that relate to the configuration of the plugin. We set up our environment in a similar manner in Payload core and across other projects, so hopefully these will look familiar:
+- #### Users (Authentication)
 
-- **README**.md\* - This contains instructions on how to use the template. When you are ready, update this to contain instructions on how to use your Plugin.
-- **package**.json\* - Contains necessary scripts and dependencies. Overwrite the metadata in this file to describe your Plugin.
-- .**eslint**.config.js - Eslint configuration for reporting on problematic patterns.
-- .**gitignore** - List specific untracked files to omit from Git.
-- .**prettierrc**.json - Configuration for Prettier code formatting.
-- **tsconfig**.json - Configures the compiler options for TypeScript
-- .**swcrc** - Configuration for SWC, a fast compiler that transpiles and bundles TypeScript.
-- **vitest**.config.js - Config file for Vitest, defining how tests are run and how modules are resolved
+  Users are auth-enabled collections that have access to the admin panel.
 
-**IMPORTANT\***: You will need to modify these files.
+  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/3.x/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
 
-#### Dev
+- #### Media
 
-In the dev folder, you’ll find a basic payload project, created with `npx create-payload-app` and the blank template.
+  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
 
-**IMPORTANT**: Make a copy of the `.env.example` file and rename it to `.env`. Update the `DATABASE_URL` to match the database you are using and your plugin name. Update `PAYLOAD_SECRET` to a unique string.
-**You will not be able to run `pnpm/yarn dev` until you have created this `.env` file.**
+### Docker
 
-`myPlugin` has already been added to the `payload.config()` file in this project.
+Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
 
-```ts
-plugins: [
-  myPlugin({
-    collections: {
-      posts: true,
-    },
-  }),
-]
-```
+1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
+1. Next run `docker-compose up`
+1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
 
-Later when you rename the plugin or add additional options, **make sure to update it here**.
+That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
 
-You may wish to add collections or expand the test project depending on the purpose of your plugin. Just make sure to keep this dev environment as simplified as possible - users should be able to install your plugin without additional configuration required.
+## Questions
 
-When you’re ready to start development, initiate the project with `pnpm/npm/yarn dev` and pull up [http://localhost:3000](http://localhost:3000) in your browser.
-
-#### Src
-
-Now that we have our environment setup and we have a dev project ready to - it’s time to build the plugin!
-
-**index.ts**
-
-The essence of a Payload plugin is simply to extend the payload config - and that is exactly what we are doing in this file.
-
-```ts
-export const myPlugin =
-  (pluginOptions: MyPluginConfig) =>
-  (config: Config): Config => {
-    // do cool stuff with the config here
-
-    return config
-  }
-```
-
-First, we receive the existing payload config along with any plugin options.
-
-From here, you can extend the config as you wish.
-
-Finally, you return the config and that is it!
-
-##### Spread Syntax
-
-Spread syntax (or the spread operator) is a feature in JavaScript that uses the dot notation **(...)** to spread elements from arrays, strings, or objects into various contexts.
-
-We are going to use spread syntax to allow us to add data to existing arrays without losing the existing data. It is crucial to spread the existing data correctly – else this can cause adverse behavior and conflicts with Payload config and other plugins.
-
-Let’s say you want to build a plugin that adds a new collection:
-
-```ts
-config.collections = [
-  ...(config.collections || []),
-  // Add additional collections here
-]
-```
-
-First we spread the `config.collections` to ensure that we don’t lose the existing collections, then you can add any additional collections just as you would in a regular payload config.
-
-This same logic is applied to other properties like admin, hooks, globals:
-
-```ts
-config.globals = [
-  ...(config.globals || []),
-  // Add additional globals here
-]
-
-config.hooks = {
-  ...(incomingConfig.hooks || {}),
-  // Add additional hooks here
-}
-```
-
-Some properties will be slightly different to extend, for instance the onInit property:
-
-```ts
-import { onInitExtension } from './onInitExtension' // example file
-
-config.onInit = async (payload) => {
-  if (incomingConfig.onInit) await incomingConfig.onInit(payload)
-  // Add additional onInit code by defining an onInitExtension function
-  onInitExtension(pluginOptions, payload)
-}
-```
-
-If you wish to add to the onInit, you must include the **async/await**. We don’t use spread syntax in this case, instead you must await the existing `onInit` before running additional functionality.
-
-In the template, we have stubbed out some addition `onInit` actions that seeds in a document to the `plugin-collection`, you can use this as a base point to add more actions - and if not needed, feel free to delete it.
-
-##### Types.ts
-
-If your plugin has options, you should define and provide types for these options.
-
-```ts
-export type MyPluginConfig = {
-  /**
-   * List of collections to add a custom field
-   */
-  collections?: Partial<Record<CollectionSlug, true>>
-  /**
-   * Disable the plugin
-   */
-  disabled?: boolean
-}
-```
-
-If possible, include JSDoc comments to describe the options and their types. This allows a developer to see details about the options in their editor.
-
-##### Testing
-
-Having a test suite for your plugin is essential to ensure quality and stability. **Vitest** is a fast, modern testing framework that works seamlessly with Vite and supports TypeScript out of the box.
-
-Vitest organizes tests into test suites and cases, similar to other testing frameworks. We recommend creating individual tests based on the expected behavior of your plugin from start to finish.
-
-Writing tests with Vitest is very straightforward, and you can learn more about how it works in the [Vitest documentation.](https://vitest.dev/)
-
-For this template, we stubbed out `int.spec.ts` in the `dev` folder where you can write your tests.
-
-```ts
-describe('Plugin tests', () => {
-  // Create tests to ensure expected behavior from the plugin
-  it('some condition that must be met', () => {
-   // Write your test logic here
-   expect(...)
-  })
-})
-```
-
-## Best practices
-
-With this tutorial and the plugin template, you should have everything you need to start building your own plugin.
-In addition to the setup, here are other best practices aim we follow:
-
-- **Providing an enable / disable option:** For a better user experience, provide a way to disable the plugin without uninstalling it. This is especially important if your plugin adds additional webpack aliases, this will allow you to still let the webpack run to prevent errors.
-- **Include tests in your GitHub CI workflow**: If you’ve configured tests for your package, integrate them into your workflow to run the tests each time you commit to the plugin repository. Learn more about [how to configure tests into your GitHub CI workflow.](https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs)
-- **Publish your finished plugin to NPM**: The best way to share and allow others to use your plugin once it is complete is to publish an NPM package. This process is straightforward and well documented, find out more [creating and publishing a NPM package here.](https://docs.npmjs.com/creating-and-publishing-scoped-public-packages/).
-- **Add payload-plugin topic tag**: Apply the tag **payload-plugin **to your GitHub repository. This will boost the visibility of your plugin and ensure it gets listed with [existing payload plugins](https://github.com/topics/payload-plugin).
-- **Use [Semantic Versioning](https://semver.org/) (SemVar)** - With the SemVar system you release version numbers that reflect the nature of changes (major, minor, patch). Ensure all major versions reference their Payload compatibility.
-
-# Questions
-
-Please contact [Payload](mailto:dev@payloadcms.com) with any questions about using this plugin template.
+If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).

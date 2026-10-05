@@ -13,12 +13,11 @@
 /coverage
 
 # next.js
-.next/
+/.next/
 /out/
 
 # production
 /build
-/dist
 
 # misc
 .DS_Store
@@ -41,9 +40,10 @@ next-env.d.ts
 
 .env
 
-/dev/media
+/media
 
 # Playwright
+node_modules/
 /test-results/
 /playwright-report/
 /blob-report/
