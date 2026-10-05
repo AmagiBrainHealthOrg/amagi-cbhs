@@ -2,6 +2,7 @@
 id: T004
 title: User roles, backfill and access helpers
 milestone: M0
+release: 1
 depends_on: [T003]
 migrations: true
 requires_human: false

@@ -2,6 +2,7 @@
 id: T013
 title: Google Sheets sync and email adapter
 milestone: M2
+release: 1
 depends_on: [T012]
 migrations: false
 requires_human: true

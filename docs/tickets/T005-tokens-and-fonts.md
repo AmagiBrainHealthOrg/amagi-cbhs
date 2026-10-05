@@ -2,6 +2,7 @@
 id: T005
 title: Design tokens and fonts
 milestone: M1
+release: 1
 depends_on: [T001]
 migrations: false
 requires_human: false

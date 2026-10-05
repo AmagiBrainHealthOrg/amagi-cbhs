@@ -2,6 +2,7 @@
 id: T019
 title: Partner, Relay and Contact/media forms
 milestone: M4
+release: 2
 depends_on: [T014]
 migrations: false
 requires_human: false

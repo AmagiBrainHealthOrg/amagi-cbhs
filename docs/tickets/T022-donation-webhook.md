@@ -2,6 +2,7 @@
 id: T022
 title: Stripe webhook writes donations to Sheets
 milestone: M4
+release: 2
 depends_on: [T010, T013]
 migrations: false
 requires_human: true

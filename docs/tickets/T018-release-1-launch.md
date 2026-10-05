@@ -2,10 +2,11 @@
 id: T018
 title: Release 1 launch
 milestone: M3
+release: 1
 depends_on: [T017]
 migrations: false
 requires_human: true
-spec: ['SPEC §11.3', 'SPEC §11.4', 'SPEC §14 D4']
+spec: ['SPEC §11.3', 'SPEC §11.4', 'SPEC §13 D4']
 skills: []
 ---
 

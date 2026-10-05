@@ -2,6 +2,7 @@
 id: T000
 title: Short imperative title
 milestone: M0
+release: 1
 depends_on: []
 migrations: false
 requires_human: false

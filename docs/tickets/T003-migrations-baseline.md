@@ -2,6 +2,7 @@
 id: T003
 title: Switch to migrations and create the baseline
 milestone: M0
+release: 1
 depends_on: [T001]
 migrations: true
 requires_human: false

@@ -2,10 +2,11 @@
 id: T017
 title: Staging and production environments
 milestone: M3
-depends_on: [T010, T011, T014, T015, T016]
+release: 1
+depends_on: [T010, T011, T014, T015]
 migrations: false
 requires_human: true
-spec: ['SPEC §11', 'SPEC §3.5', 'SPEC §14 D1']
+spec: ['SPEC §11', 'SPEC §3.5', 'SPEC §13 D1']
 skills: []
 ---
 
@@ -13,7 +14,7 @@ skills: []
 
 ## Context
 
-Human steps: decide the host (SPEC §14 D1); create accounts in Amagi's name (host, Postgres, storage, Stripe live keys, Resend domain, production spreadsheet); add Cloudflare DNS records. Provide connection details as environment variables on the host; never in the repo.
+Human steps: decide the host (SPEC §13 D1); create accounts in Amagi's name (host, Postgres, storage, Stripe live keys, Resend domain, production spreadsheet); add Cloudflare DNS records. Provide connection details as environment variables on the host; never in the repo.
 
 ## Scope
 
