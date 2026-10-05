@@ -1,0 +1,33 @@
+---
+id: T027
+title: Full go-live
+milestone: M5
+depends_on: [T024, T025, T026]
+migrations: false
+requires_human: true
+spec: ['SPEC §11.3']
+skills: []
+---
+
+# T027: Full go-live
+
+## Context
+
+Human steps: Amagi confirms copy, host country content and programme sessions are entered; Beyond Growth confirms tracking on staging. Give Beyond Growth two business days' notice before this release.
+
+## Scope
+
+**In**
+
+- Deploy Release 2 to production.
+- Run the smoke test extended with Release 2 routes.
+- Remove the `coming-soon` global and page in a migration, if Amagi agrees.
+
+## Acceptance criteria
+
+- [ ] **AC1**: All routes are live.
+  - _Verify (deploy):_ `pnpm tsx scripts/smoke.ts https://amagisummit.org` exits 0 including `/host-countries`, `/programme`, `/get-involved/partner`, `/get-involved/relay`, `/contact`.
+- [ ] **AC2**: Production donation and form flows work.
+  - _Verify (deploy):_ one production form submission reaches the production spreadsheet; one donation writes a `Donations` row via the webhook.
+- [ ] **AC3**: Gates pass.
+  - _Verify (cli):_ `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build` exits 0.

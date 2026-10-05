@@ -1,0 +1,91 @@
+# CBHS 2026 Website: Implementation Plan
+
+## 1. Strategy
+
+Build on the existing Payload + Next.js repo. Tidy and harden the foundations first (clean-up, migrations, roles, CI), then the content model, then the design system and donation flow, then pages and forms. Release 1 is everything an editor and a donor need. Release 2 adds the remaining journeys, translation and the quality pass.
+
+## 2. Principles
+
+- **Donations first.** When choosing between two pieces of work, pick the one closer to a working donation.
+- **Content in the CMS.** Editors change copy; developers change structure.
+- **Thin vertical slices.** Each ticket leaves the app building, migrated and deployable.
+- **Evidence, not assertion.** Every acceptance criterion is verified by the method it names.
+- **One migration at a time.**
+
+## 3. Milestones
+
+### M0: Foundations
+
+T001 tooling and clean-up · T002 CI · T003 migrations baseline · T004 roles and access.
+
+### M1: Content model and design system
+
+T005 tokens and fonts · T006 globals · T007 core collections · T008 supporting collections · T009 shell and blocks.
+
+### M2: Release 1 features
+
+T010 donations · T011 pages and seed · T012 form system · T013 Sheets and email · T014 Release 1 forms · T015 tracking · T016 Substack and video.
+
+### M3: Release 1 launch
+
+T017 environments and deployment · T018 Release 1 launch.
+
+### M4: Release 2
+
+T019 remaining forms · T020 Host Countries · T021 programme · T022 donation webhook · T023 translation.
+
+### M5: Quality and go-live
+
+T024 accessibility · T025 performance · T026 end-to-end suite · T027 go-live.
+
+## 4. Dependency graph
+
+```
+T001 ─┬─ T002
+      ├─ T003 ─ T004 ─ T006 ─ T007 ─ T008
+      └─ T005 ─ T009 (needs T006, T007)
+T009 ─┬─ T010 (needs T006)
+      ├─ T011 (needs T007, T008)
+      └─ T012 (needs T008) ─ T013 ─ T014
+T009 ─ T015
+T008 + T009 ─ T016
+T010 + T011 + T014 + T015 + T016 ─ T017 ─ T018
+T014 ─ T019
+T009 + T008 ─ T020, T021
+T013 + T010 ─ T022
+T018 ─ T023
+T019..T023 ─ T024, T025, T026 ─ T027
+```
+
+## 5. Practices
+
+### 5.1 Branches and PRs
+
+- Branch per ticket: `ticket/<id>-<slug>`.
+- Conventional Commits with the ticket ID, e.g. `feat(forms): shared form system (T012)`. No AI attribution.
+- Squash-merge to `main`.
+
+### 5.2 Testing by layer
+
+- **Vitest (`tests/int/`):** access helpers, hooks, validation schemas, Sheets and Stripe wrappers (with recorded fixtures), Substack parsing.
+- **Playwright (`tests/e2e/`):** pages render, forms submit, donation flow in Stripe test mode, editor vs admin permissions, draft preview.
+
+### 5.3 Definition of done (every ticket)
+
+1. `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build` exit 0.
+2. Every AC verified by its stated method, with evidence in the report.
+3. Migrations created and applied cleanly on a fresh database (`pnpm payload migrate` from empty).
+4. Types and import map regenerated if the schema or admin components changed.
+5. No hard-coded copy, raw hex colours, personal data in tracking, or forbidden wording (`CLAUDE.md` hard rules).
+6. Visual changes screenshotted at 390px and 1280px.
+7. `docs/SPEC.md` updated in the same PR if behaviour diverged.
+
+## 6. Risks
+
+| Risk                                                      | Mitigation                                                          |
+| --------------------------------------------------------- | ------------------------------------------------------------------- |
+| Amagi inputs arrive late (copy, dropdown values, amounts) | Content lives in the CMS; seed placeholders; editors fill in later  |
+| Hosting not decided                                       | T017 is a human ticket; everything before it runs locally and in CI |
+| Tracking spec changes                                     | Event names and attributes centralised in `src/lib/tracking/`       |
+| Translation widget breaks layout or tracking              | Isolated ticket (T023) with explicit ACs; can ship last             |
+| Existing users locked out by roles                        | T004 backfills existing users to `admin`                            |

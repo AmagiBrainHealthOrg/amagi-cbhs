@@ -1,4 +1,96 @@
-# Claude Code
+# CLAUDE.md
 
-This project uses the Payload CMS skill at `.claude/skills/payload/`.
-Start with `.claude/skills/payload/SKILL.md` for a quick reference, then see `.claude/skills/payload/reference/` for detailed docs.
+Guidance for Claude Code in this repository. Domain-specific rules live in `.claude/rules/` and load automatically when you touch matching files.
+
+## Project overview
+
+The public website for the **Caribbean Brain Health Summit 2026 (CBHS)**, run by Amagi Health Ltd, at amagisummit.org. The Summit runs 16–22 November 2026 across several Caribbean countries and online.
+
+**The site's primary call to action is donating to the Summit.** Everything else (Summit information, host countries, programme, news) supports that case. Every page leads towards the Donate button.
+
+- `docs/SPEC.md` is the source of truth for **what** we build. Read the cited section before starting work.
+- `docs/PLAN.md` covers **how and in what order**, plus the definition of done.
+- If code needs to diverge from the spec, update the spec in the same PR.
+
+**Terminology:** "Call to Action" (capitalised) is the _Caribbean Call to Action on Brain Health_, a policy statement with its own page and form. For buttons, say "primary button" or "CTA button".
+
+## Tech stack
+
+- **Framework:** Next.js 16 (App Router, React Server Components), React 19, TypeScript 5 (strict)
+- **CMS:** Payload CMS 3 (`payload`, `@payloadcms/next`, Lexical rich text, live preview)
+- **Database:** PostgreSQL via `@payloadcms/db-postgres`. Docker locally (`docker-compose.yml`), managed Postgres in production
+- **Media:** S3-compatible storage via `@payloadcms/storage-s3`
+- **Payments:** Stripe Checkout (hosted). No card data on our site, ever
+- **Email:** Resend via Payload's email adapter
+- **Sheets:** `googleapis` with a Google service account
+- **Testing:** Vitest (integration, `tests/int/`) and Playwright (end to end, `tests/e2e/`)
+- **Package manager:** pnpm
+
+## Commands
+
+```bash
+pnpm dev                 # Dev server (localhost:3000)
+pnpm build               # Production build
+pnpm lint                # ESLint
+pnpm typecheck           # tsc --noEmit
+pnpm test:int            # Vitest
+pnpm test:e2e            # Playwright
+pnpm generate:types      # Regenerate src/payload-types.ts
+pnpm generate:importmap  # Regenerate the admin import map
+pnpm payload migrate:create <name>   # Schema change → migration
+pnpm payload migrate                 # Apply migrations
+pnpm db:seed             # Seed local content (added in T011)
+pnpm preflight           # Orchestrator preflight (added in T001)
+
+docker compose up -d postgres        # Local Postgres
+```
+
+After any collection, global or field change:
+
+1. `pnpm generate:types`
+2. `pnpm payload migrate:create <name>`
+3. `pnpm payload migrate`
+4. `pnpm typecheck`
+
+After adding or moving an admin component, run `pnpm generate:importmap`.
+
+## Next.js 16
+
+This is not the Next.js in your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing framework code.
+
+- Server Components by default. Use `"use client"` only for interactivity, browser APIs or hooks.
+- Middleware is now Proxy (`src/proxy.ts`), if needed.
+
+## Payload
+
+Use the Payload skill at `.claude/skills/payload/` (start with `SKILL.md`). Rules are in `.claude/rules/payload.md`.
+
+- `src/payload-types.ts` is generated. Never edit it by hand. Derive frontend types from it.
+- Read content through the Payload Local API (`getPayload({ config })`) in server code. Never call the REST API from our own server components.
+
+## Architecture
+
+- **Content:** collections in `src/collections/`, globals in `src/globals/`, blocks in `src/blocks/`, hooks in `src/hooks/`, access helpers in `src/access/`.
+- **Frontend:** routes in `src/app/(frontend)/`. Shared components in `src/components/`. Block renderers in `src/components/blocks/`.
+- **External systems:** wrappers in `src/lib/` (`stripe.ts`, `sheets.ts`, `email.ts`, `substack.ts`). Plain helpers in `src/utils/`. Constants in `src/config/`.
+- **Route handlers** (`src/app/(frontend)/api/` or `src/app/api/`) are thin: validate input, call `src/lib/`, respond.
+- **Errors:** never swallow a failure into an empty state. Log it, and render an error state or return a non-2xx response.
+
+## Hard rules
+
+- **No card data on our site.** Payments only on Stripe's hosted Checkout page.
+- **No personal data in tracking.** Names, emails, phone numbers and free text never go into `dataLayer` or any analytics event.
+- **No advertising pixels.**
+- **No health questions** on any form (no diagnosis, health history or clinical data).
+- **Wording:** never use "sponsor", "exhibitor" or "lead generation" in UI copy, labels or seed content.
+- **Permission-gated names:** a supporter's or partner's name or logo renders only when `permissionConfirmed` is true.
+- **Copy belongs in the CMS.** Never hard-code copy an editor might change. Dropdown values come from the `dropdowns` global.
+- **Accessibility:** WCAG 2.1 AA.
+- **Secrets** live in environment variables. Never print, log or commit them.
+
+## Code quality
+
+- No comments unless the why is non-obvious.
+- Don't abstract speculatively.
+- No `any`.
+- Every ticket finishes with `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build` passing.

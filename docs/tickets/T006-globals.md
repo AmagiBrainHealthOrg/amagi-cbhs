@@ -1,0 +1,38 @@
+---
+id: T006
+title: 'Globals: header, footer, donation settings, anchor day, dropdowns, integrations'
+milestone: M1
+depends_on: [T004]
+migrations: true
+requires_human: false
+spec: ['SPEC §5.2', 'SPEC §5.3']
+skills: [payload]
+---
+
+# T006: Globals
+
+## Scope
+
+**In**
+
+- Globals `header`, `footer`, `donation-settings`, `anchor-day`, `dropdowns`, `integrations` per SPEC §5.2, with drafts and live preview (except `integrations`, which has no drafts).
+- Access: `integrations` admin-only for read and update; others readable publicly (published only) and editable by admins and editors.
+- `src/lib/dropdowns.ts`: `getDropdowns()` returning typed `{ territories, audienceTypes, industries }`, cached per request.
+- Migration.
+
+**Out**
+
+- Frontend rendering (T009). Seed values (T011).
+
+## Acceptance criteria
+
+- [ ] **AC1**: All six globals exist with the specified fields.
+  - _Verify (api):_ as admin, `GET /api/globals/<slug>` returns 200 for each slug; field names match SPEC §5.2.
+- [ ] **AC2**: Integrations are admin-only.
+  - _Verify (api):_ anonymous and editor `GET /api/globals/integrations` return 403 or an empty result; admin gets the document.
+- [ ] **AC3**: `getDropdowns()` returns typed values.
+  - _Verify (unit):_ `tests/int/dropdowns.int.spec.ts` sets values via the Local API and asserts the returned shape.
+- [ ] **AC4**: Migration applies from empty.
+  - _Verify (db):_ on a fresh database, `pnpm payload migrate` succeeds and the global tables exist.
+- [ ] **AC5**: Gates pass.
+  - _Verify (cli):_ `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build` exits 0.
