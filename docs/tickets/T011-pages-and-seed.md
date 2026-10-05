@@ -18,7 +18,7 @@ skills: [payload]
 
 - `scripts/seed.ts` (`pnpm db:seed`): idempotent; creates `pages` for Home (slug `home`), About, Support, Call to Action, FAQs, Privacy, Cookies, Terms with sensible block layouts and placeholder copy marked `[PLACEHOLDER]`; seeds `dropdowns.audienceTypes` (SPEC §5.3), placeholder territories and industries, placeholder `donation-settings` amounts; header and footer.
 - `/home-preview` route rendering the `home` page (so Home can be reviewed before T018 switches `/`).
-- `/news` (news items + approved Substack posts, newest first) and `/news/[slug]`.
+- `/news` (news items, newest first) and `/news/[slug]`. Substack posts join `/news` in T028 (Release 2).
 - `/faqs` rendering the `faqs` collection by category.
 - Partner announcements per SPEC §4.4: Home `newsTeaser` shows latest announcements; partner entries link to their announcements.
 - No seed content uses forbidden wording.

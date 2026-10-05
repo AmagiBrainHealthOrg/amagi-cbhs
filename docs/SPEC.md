@@ -23,7 +23,7 @@ The source of truth for **what** we build. Tickets cite sections as `SPEC §x.y`
 
 ### 2.2 Non-goals
 
-See §13.
+See §12.
 
 ## 3. Constraints
 
@@ -67,7 +67,7 @@ All production accounts (hosting, database, storage, Stripe, email, fonts, Googl
 | `/support`                       | Support Caribbean Brain Health | Why support matters, what it enables, supporter levels, safeguards, support FAQs, Donate. Supporter list shows permission-confirmed entries only             |
 | `/call-to-action`                | Call to Action                 | Explains the _Caribbean Call to Action on Brain Health_ and its five action areas. Hosts the consultation form (§8.3). No download, signing or endorser list |
 | `/faqs`                          | FAQs                           | Expandable questions                                                                                                                                         |
-| `/news`                          | News                           | `news` items plus approved `substack-posts`, newest first                                                                                                    |
+| `/news`                          | News                           | `news` items, newest first. Approved `substack-posts` join in Release 2 (§9.3)                                                                                                    |
 | `/news/[slug]`                   | News item                      |                                                                                                                                                              |
 | `/donate/thank-you`              | Donation thank-you             | §7                                                                                                                                                           |
 | `/thank-you/[form]`              | Form thank-you                 | §8                                                                                                                                                           |
@@ -103,7 +103,7 @@ All collections and globals use drafts, autosave and live preview.
 | `faqs`             | `question`, `answer`, `category`, `order`                                                                                                                                                      |
 | `host-countries`   | `name`, `slug`, `countryLead` (name, photo, bio), `weekOverview`, `activities` (array), `localPartners` (logos), `territory` (value from dropdowns)                                            |
 | `sessions`         | `title`, `stream`, `day` (date), `territory`, `format` (`in-person` \| `online`), `description`, `lumaUrl`                                                                                     |
-| `substack-posts`   | `title`, `url` (unique), `publishedDate`, `excerpt`, `approved` (default false)                                                                                                                |
+| `substack-posts`   | Release 2. `title`, `url` (unique), `publishedDate`, `excerpt`, `approved` (default false)                                                                                                                |
 | `form-submissions` | `form`, `data` (JSON), `territory`, `audienceType`, `consents` (group of 3), `utm` (group of 5), `isTest`, `sheetSyncStatus` (`pending` \| `synced` \| `failed`), `sheetSyncError`. Admin-only |
 
 ### 5.2 Globals
@@ -115,7 +115,7 @@ All collections and globals use drafts, autosave and live preview.
 | `donation-settings` | `suggestedAmounts` (array of integers, minor units), `currency` (default `usd`), `allowCustomAmount`, `minimumAmount`, `thankYouHeading`, `thankYouBody` |
 | `anchor-day`        | `date`, `venue`, `moderator`, `mc` (all optional; still being confirmed)                                                                                 |
 | `dropdowns`         | `territories`, `audienceTypes`, `industries`: each an array of `{ label, value }`                                                                        |
-| `integrations`      | `gtmContainerId`, `substackFeedUrl`, `substackUrl`. Admin-only                                                                                           |
+| `integrations`      | `gtmContainerId`; `substackFeedUrl`, `substackUrl` (Release 2). Admin-only                                                                                           |
 | `coming-soon`       | Existing. Retired at Release 1 launch (§11.4)                                                                                                            |
 
 ### 5.3 Dropdown values
@@ -136,7 +136,7 @@ Header, Footer, Button (primary = Donate; secondary; tertiary), Section, Card, A
 
 ### 6.3 Blocks
 
-`hero`, `richText`, `cardGrid`, `donateBanner`, `logoGrid` (supporters or partners, permission-filtered), `faqList`, `newsTeaser`, `hostCountriesTeaser`, `video` (§9.4), `form` (selects a form from §8.3), `anchorDay`, `supporterLevels`, `actionAreas`.
+`hero`, `richText`, `cardGrid`, `donateBanner`, `logoGrid` (supporters or partners, permission-filtered), `faqList`, `newsTeaser`, `hostCountriesTeaser`, `video` (§9.4, Release 2), `form` (selects a form from §8.3), `anchorDay`, `supporterLevels`, `actionAreas`.
 
 ## 7. Donations
 
@@ -191,15 +191,15 @@ One template; copy per form from the CMS (stored on the `form` block or a `thank
 
 Payload email adapter using Resend (`@payloadcms/email-resend`). From `EMAIL_FROM_ADDRESS` on an Amagi domain verified in Cloudflare. Plain, accessible HTML templates in `src/emails/`.
 
-### 9.3 Substack
+### 9.3 Substack (Release 2)
 
 `src/lib/substack.ts` reads the RSS feed at `integrations.substackFeedUrl` and upserts into `substack-posts` by `url` with `approved: false`. Runs as a Payload job every hour and on demand from the admin. Only approved posts appear on `/news`. A "Subscribe" link points to `integrations.substackUrl`.
 
-### 9.4 Video
+### 9.4 Video (Release 2)
 
 `video` block: YouTube or Vimeo URL, rendered with privacy-enhanced embeds (`youtube-nocookie.com`, Vimeo `dnt=1`) behind a click-to-load poster for performance.
 
-### 9.5 Luma
+### 9.5 Luma (Release 2)
 
 Sessions link out to Luma event pages (`lumaUrl`), tracked as outbound clicks. No Luma API integration.
 
@@ -244,14 +244,14 @@ No personal data in any event or data-layer value. No advertising pixels. Google
 
 ### 11.2 Hosting
 
-Docker image (`output: 'standalone'`) deployed to the chosen host behind Cloudflare. Managed Postgres and S3-compatible storage. **The hosting provider is an open decision (§14).** Migrations run as a release step (`pnpm payload migrate`) before the new version serves traffic.
+Docker image (`output: 'standalone'`) deployed to the chosen host behind Cloudflare. Managed Postgres and S3-compatible storage. **The hosting provider is an open decision (§13).** Migrations run as a release step (`pnpm payload migrate`) before the new version serves traffic.
 
 ### 11.3 Release 1 vs Release 2
 
 | Release | Date                                 | Delivers                                                                                                                                                                                                                                                      | Tickets   |
 | ------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
-| 1       | **16 October 2026**                  | Release 1 pages (§4.2); donations via Stripe Checkout with server-confirmed thank-you (§7 steps 1–4); Register Interest and Call to Action consultation forms (§8.3) with Sheets sync and email (§9.1–9.2); Substack sync and video (§9.3–9.4); tracking (§10) | T001–T018 |
-| 2       | To be confirmed (§14 D6)             | Host Countries and Programme with Luma links (§4.3, §9.5); donation webhook to Sheets (§7 step 5); Partner, Relay and Contact forms (§8.3); translation (§12); accessibility, performance and end-to-end pass                                                     | T019–T027 |
+| 1       | **16 October 2026**                  | Release 1 pages (§4.2); donations via Stripe Checkout with server-confirmed thank-you (§7 steps 1–4); Register Interest and Call to Action consultation forms (§8.3) with Sheets sync and email (§9.1–9.2); tracking (§10) | T001–T015, T017, T018 |
+| 2       | To be confirmed (§13 D6)             | Host Countries and Programme with Luma links (§4.3, §9.5); Substack posts on News (§9.3); video block (§9.4); donation webhook to Sheets (§7 step 5); Partner, Relay and Contact forms (§8.3); accessibility, performance and end-to-end pass                                                     | T016, T019–T022, T024–T028 |
 
 Every ticket's `release` frontmatter says which release it belongs to. Release 1 work takes priority: no Release 2 ticket starts while a Release 1 ticket is ready to start.
 
@@ -259,20 +259,15 @@ Every ticket's `release` frontmatter says which release it belongs to. Release 1
 
 The `coming-soon` global and page stay until Release 1 launch, then `/` renders Home. Remove the global in a later migration once launch is confirmed.
 
-## 12. Translation (Release 2)
+## 12. Out of scope
 
-Automated translation into Spanish, French, Dutch and Haitian Creole. **Tool is an open decision (§14).** Must not break layout, accessibility, the data layer or data attributes, and must not translate form field `value`s.
+Copywriting and brand design; translation; analytics and dashboard configuration; CRM build (Amagi syncs Sheets to Airtable); on-site card processing; event registration or ticketing; member logins; forms beyond §8.3; Summit week support beyond launch.
 
-## 13. Out of scope
-
-Copywriting and brand design; analytics and dashboard configuration; CRM build (Amagi syncs Sheets to Airtable); on-site card processing; event registration or ticketing; member logins; forms beyond §8.3; Summit week support beyond launch.
-
-## 14. Open decisions
+## 13. Open decisions
 
 | #   | Decision                                                      | Owner          | Blocks                           |
 | --- | ------------------------------------------------------------- | -------------- | -------------------------------- |
 | D1  | Hosting provider for staging and production (in Amagi's name) | Tandem + Amagi | T017                             |
-| D2  | Translation tool                                              | Amagi          | T023                             |
 | D3  | Territory and industry values                                 | Amagi          | T014 (seed can use placeholders) |
 | D4  | Whether Release 1 is public or editor-only                    | Amagi          | T018                             |
 | D5  | Suggested donation amounts and currency                       | Amagi          | T010 (seed can use placeholders) |

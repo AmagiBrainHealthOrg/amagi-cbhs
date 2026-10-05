@@ -1,6 +1,6 @@
 ---
 id: T008
-title: 'Collections: host countries, sessions, Substack posts, form submissions'
+title: 'Collections: host countries, sessions, form submissions'
 milestone: M1
 release: 1
 depends_on: [T007]
@@ -16,15 +16,14 @@ skills: [payload]
 
 **In**
 
-- Collections `host-countries`, `sessions`, `substack-posts`, `form-submissions` per SPEC §5.1.
+- Collections `host-countries`, `sessions`, `form-submissions` per SPEC §5.1.
 - `territory` fields on host countries and sessions validate against `dropdowns.territories` values.
 - `form-submissions`: admin-only for every operation; `data` as JSON; `consents` group of three checkboxes; `utm` group of five text fields; `isTest`; `sheetSyncStatus` default `pending`; `sheetSyncError`. No drafts.
-- `substack-posts.url` unique; `approved` default `false`.
 - Migration.
 
 **Out**
 
-- Sheets sync hook (T013). Substack job (T016).
+- Sheets sync hook (T013). `substack-posts` (T028, Release 2).
 
 ## Acceptance criteria
 

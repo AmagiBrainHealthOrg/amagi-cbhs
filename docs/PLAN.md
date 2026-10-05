@@ -2,7 +2,7 @@
 
 ## 1. Strategy
 
-Build on the existing Payload + Next.js repo. Tidy and harden the foundations first (clean-up, migrations, roles, CI), then the content model, then the design system and donation flow, then pages and forms. Release 1 is everything an editor and a donor need. Release 2 adds the remaining journeys, translation and the quality pass.
+Build on the existing Payload + Next.js repo. Tidy and harden the foundations first (clean-up, migrations, roles, CI), then the content model, then the design system and donation flow, then pages and forms. Release 1 is everything an editor and a donor need. Release 2 adds the remaining journeys and the quality pass.
 
 ## 2. Principles
 
@@ -15,7 +15,7 @@ Build on the existing Payload + Next.js repo. Tidy and harden the foundations fi
 
 ## 3. Milestones
 
-**Release 1, 16 October 2026: M0–M3 (T001–T018).** **Release 2, date to be confirmed: M4–M5 (T019–T027).**
+**Release 1, 16 October 2026: M0–M3 (T001–T015, T017, T018).** **Release 2, date to be confirmed: M4–M5 (T016, T019–T022, T024–T028).**
 
 ### M0: Foundations
 
@@ -27,7 +27,7 @@ T005 tokens and fonts · T006 globals · T007 core collections · T008 supportin
 
 ### M2: Release 1 features
 
-T010 donations · T011 pages and seed · T012 form system · T013 Sheets and email · T014 Release 1 forms · T015 tracking · T016 Substack and video.
+T010 donations · T011 pages and seed · T012 form system · T013 Sheets and email · T014 Release 1 forms · T015 tracking.
 
 ### M3: Release 1 launch
 
@@ -35,7 +35,7 @@ T017 environments and deployment · T018 Release 1 launch.
 
 ### M4: Release 2 features
 
-T019 remaining forms · T020 Host Countries · T021 programme · T022 donation webhook · T023 translation.
+T019 remaining forms · T020 Host Countries · T021 programme · T022 donation webhook · T016 video block · T028 Substack.
 
 ### M5: Quality and go-live
 
@@ -51,13 +51,13 @@ T009 ─┬─ T010 (needs T006)
       ├─ T011 (needs T007, T008)
       └─ T012 (needs T008) ─ T013 ─ T014
 T009 ─ T015
-T008 + T009 ─ T016
-T010 + T011 + T014 + T015 + T016 ─ T017 ─ T018
+T009 ─ T016
+T011 ─ T028
+T010 + T011 + T014 + T015 ─ T017 ─ T018
 T014 ─ T019
 T009 + T008 ─ T020, T021
 T013 + T010 ─ T022
-T018 ─ T023
-T019..T023 ─ T024, T025, T026 ─ T027
+T016, T019..T022, T028 ─ T024, T025, T026 ─ T027
 ```
 
 ## 5. Practices
@@ -90,5 +90,4 @@ T019..T023 ─ T024, T025, T026 ─ T027
 | Amagi inputs arrive late (copy, dropdown values, amounts) | Content lives in the CMS; seed placeholders; editors fill in later  |
 | Hosting not decided                                       | T017 is a human ticket; everything before it runs locally and in CI |
 | Tracking spec changes                                     | Event names and attributes centralised in `src/lib/tracking/`       |
-| Translation widget breaks layout or tracking              | Isolated ticket (T023) with explicit ACs; can ship last             |
 | Existing users locked out by roles                        | T004 backfills existing users to `admin`                            |

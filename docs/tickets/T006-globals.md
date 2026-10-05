@@ -23,7 +23,7 @@ skills: [payload]
 
 **Out**
 
-- Frontend rendering (T009). Seed values (T011).
+- Frontend rendering (T009). Seed values (T011). Substack fields on `integrations` (T028, Release 2).
 
 ## Acceptance criteria
 

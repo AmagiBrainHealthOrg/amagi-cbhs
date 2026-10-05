@@ -19,7 +19,7 @@ skills: []
 - Components from SPEC §6.2 in `src/components/`. Button supports `primary`, `secondary`, `tertiary` and requires tracking attributes (`journey`, `action`, `destinationType` props → `data-*`).
 - Header (from `header` global) with the Donate button as primary, linking to `/donate`. Accessible mobile navigation.
 - Footer (from `footer` global).
-- Block renderers in `src/components/blocks/` for every block in SPEC §6.3, with a `RenderBlocks` switch. The `form` block renders a placeholder until T012; `logoGrid` filters by `permissionConfirmed`.
+- Block renderers in `src/components/blocks/` for every block in SPEC §6.3 except `video` (T016, Release 2), with a `RenderBlocks` switch. The `form` block renders a placeholder until T012; `logoGrid` filters by `permissionConfirmed`.
 - Catch-all route `src/app/(frontend)/[...slug]/page.tsx` rendering `pages` by slug, with draft preview (`?preview=true` + authenticated) and `RefreshRouteOnSave`.
 - `generateMetadata` from `meta`.
 - A dev-only `/dev/kitchen-sink` route rendering every component and block with sample data (returns 404 in production).

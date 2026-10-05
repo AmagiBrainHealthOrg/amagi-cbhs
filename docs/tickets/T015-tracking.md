@@ -31,7 +31,7 @@ skills: []
 - [ ] **AC1**: Page context is pushed before the tag manager loads.
   - _Verify (browser):_ on `/about`, with a test container ID set, `window.dataLayer[0]` contains the four context keys, and its push happens before the GTM script element is inserted (check element order and `dataLayer` index).
 - [ ] **AC2**: Events fire correctly.
-  - _Verify (browser):_ focusing a form field twice yields one `form_start`; clicking Donate yields `donate_click`; completing a test donation yields `donation_complete` with `value` and `currency` only; clicking a Luma or Substack link yields `outbound_click`.
+  - _Verify (browser):_ focusing a form field twice yields one `form_start`; clicking Donate yields `donate_click`; completing a test donation yields `donation_complete` with `value` and `currency` only; clicking an external partner link yields `outbound_click`.
 - [ ] **AC3**: No personal data in the data layer.
   - _Verify (browser):_ after submitting a form with name and email, `JSON.stringify(window.dataLayer)` contains neither value.
 - [ ] **AC4**: Every CTA carries the attributes.
