@@ -16,7 +16,11 @@ skills: [payload]
 
 The repo started from the Payload plugin template and still carries its scaffolding. Remove it, move local development onto the Supabase CLI with a one-way pull from staging, add the scripts the build protocol needs, and add `pnpm preflight` so `/orchestrate` can run. **Do this ticket in a normal session, not through `/orchestrate`.**
 
-Human steps: install Docker, and put the staging connection details (`PULL_DATABASE_URL`, `PULL_S3_*`) in the main checkout's `.env`.
+Human steps, in the main checkout:
+
+1. Install Docker and have it running. Log in to GitHub with `gh auth login` if `gh auth status` fails (preflight checks it).
+2. Before the pull is built, add the staging connection details to `.env`: `PULL_DATABASE_URL` is the current Supabase project's connection string (today's `DATABASE_URL` works); `PULL_S3_*` take today's `S3_*` values.
+3. Once `pnpm supabase start` runs, switch the app to the local stack: set `DATABASE_URL` and `S3_*` to the `.env.example` values, with the local Storage keys from `pnpm supabase status`. `pnpm db:pull` refuses to run until `DATABASE_URL` is local, and until then `pnpm dev` still uses staging.
 
 ## Scope
 
