@@ -82,7 +82,7 @@ Work in the implementer's worktree, on its branch, with its database and port.
 
 ## 3. Local environment
 
-One local Supabase stack, started from the main checkout (`supabase start`): Postgres on port 54322 (user `postgres`, password `postgres`), and Storage's S3 endpoint and keys from `supabase status`. Each ticket gets its own database and port so implementers can run in parallel.
+One local Supabase stack, started from the main checkout (`pnpm supabase start`): Postgres on port 54322 (user `postgres`, password `postgres`), and Storage's S3 endpoint and keys from `pnpm supabase status`. Each ticket gets its own database and port so implementers can run in parallel.
 
 | Item                   | Value                                                                               |
 | ---------------------- | ----------------------------------------------------------------------------------- |
@@ -102,7 +102,7 @@ Setup in the worktree:
 Rules:
 
 - Never print `.env` or any secret. Never modify the main checkout's `.env`.
-- Never run `supabase stop`, `supabase db …` or `supabase migration …`. If the stack is down, run `supabase start` from the main checkout.
+- Never run `pnpm supabase stop`, `pnpm supabase db …` or `pnpm supabase migration …`. If the stack is down, run `pnpm supabase start` from the main checkout.
 - Never connect to a remote database or bucket. Your `.env` points at `127.0.0.1` only, and you never run `pnpm db:pull`; only the user does, in the main checkout.
 - Kill only your own dev server: `lsof -tiTCP:<port> -sTCP:LISTEN | xargs kill`.
 - Test users: create via `POST /api/users/first-register` on an empty database, or `payload.create({ collection: 'users', ... })` in a test, with emails `<id>-<n>@test.local`.

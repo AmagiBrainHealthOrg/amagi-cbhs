@@ -43,7 +43,7 @@ pnpm payload migrate                 # Apply migrations
 pnpm db:seed             # Seed local content (added in T011)
 pnpm preflight           # Orchestrator preflight (added in T001)
 
-supabase start                       # Local Postgres and Storage
+pnpm supabase start                  # Local Postgres and Storage
 pnpm db:pull                         # Pull staging schema and data (added in T001)
 ```
 
@@ -89,7 +89,7 @@ Use the Payload skill at `.claude/skills/payload/` (start with `SKILL.md`). Rule
 - **Copy belongs in the CMS.** Never hard-code copy an editor might change. Dropdown values come from the `dropdowns` global.
 - **Accessibility:** WCAG 2.1 AA.
 - **Secrets** live in environment variables. Never print, log or commit them.
-- **Remote databases are read-only from dev machines.** `pnpm db:pull` copies staging down; nothing goes up. Never run `supabase db push`, `supabase db pull`, `supabase db reset` or `supabase migration`. Payload migrations are the only schema changes, and they reach staging and production only through deploys.
+- **Remote databases are read-only from dev machines.** `pnpm db:pull` copies staging down; nothing goes up. Never run `pnpm supabase db push`, `pnpm supabase db pull`, `pnpm supabase db reset` or `pnpm supabase migration`. Payload migrations are the only schema changes, and they reach staging and production only through deploys.
 - **Migrations are backward compatible.** The previous deployment runs against the new schema until the switch: add first, drop or rename in a later release.
 
 ## Code quality

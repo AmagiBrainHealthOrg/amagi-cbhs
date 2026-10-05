@@ -16,7 +16,7 @@ skills: [payload]
 
 The repo started from the Payload plugin template and still carries its scaffolding. Remove it, move local development onto the Supabase CLI with a one-way pull from staging, add the scripts the build protocol needs, and add `pnpm preflight` so `/orchestrate` can run. **Do this ticket in a normal session, not through `/orchestrate`.**
 
-Human steps: install the Supabase CLI and Docker, and put the staging connection details (`PULL_DATABASE_URL`, `PULL_S3_*`) in the main checkout's `.env`.
+Human steps: install Docker, and put the staging connection details (`PULL_DATABASE_URL`, `PULL_S3_*`) in the main checkout's `.env`.
 
 ## Scope
 
@@ -29,13 +29,13 @@ Human steps: install the Supabase CLI and Docker, and put the staging connection
 - Remove unused dependencies left by the template (check with `pnpm why`). Keep `qrcode` and `lucide-react` (used by Coming Soon).
 - `package.json` scripts: `typecheck` (`tsc --noEmit`), `test:int`, `test:e2e`, `preflight` (`tsx scripts/preflight.ts`). Keep existing Payload scripts.
 - `s3Storage` in `src/payload.config.ts`: `clientUploads: true` (SPEC §11.2).
-- Supabase CLI: `supabase init`, committing `supabase/config.toml` only. The local main database is `amagi_cbhs`.
+- Supabase CLI as a dev dependency (`supabase` package), with `supabase: true` in `allowBuilds` so its binary installs; every command runs as `pnpm supabase …`. `pnpm supabase init`, committing `supabase/config.toml` only. The local main database is `amagi_cbhs`.
 - `scripts/db-pull.ts` (`pnpm db:pull`) per SPEC §11.5: reads `PULL_DATABASE_URL` and `PULL_S3_*`; refuses to run unless `DATABASE_URL` points at `127.0.0.1`; drops and recreates local `amagi_cbhs`; pipes `pg_dump --schema=public --no-owner --no-acl --exclude-table-data='form_submissions*'` into it; copies every object in the staging bucket to the local bucket; prints table row counts and the object count. Never writes to a remote. The `pnpm payload migrate` step is added in T003.
 - `src/env.ts`: Zod schema validating required env vars at startup (only those already used: `DATABASE_URL`, `PAYLOAD_SECRET`, `S3_*`). Later tickets extend it.
 - `.env.example` updated to match: local Supabase values for the app, placeholders for `PULL_*`.
-- `scripts/preflight.ts`: prints `PREFLIGHT OK` or `PREFLIGHT FAIL: <reason>` and exits non-zero on failure. Checks, in order: the local Supabase stack is up (`supabase status`, else `supabase start`); on `main` with a clean tree level with `origin/main`; `gh auth status`; `pnpm install --frozen-lockfile`; `pnpm payload migrate` succeeds on the local main database (`amagi_cbhs`); `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build`. Logs to `.verification/preflight.log`.
+- `scripts/preflight.ts`: prints `PREFLIGHT OK` or `PREFLIGHT FAIL: <reason>` and exits non-zero on failure. Checks, in order: the local Supabase stack is up (`pnpm supabase status`, else `pnpm supabase start`); on `main` with a clean tree level with `origin/main`; `gh auth status`; `pnpm install --frozen-lockfile`; `pnpm payload migrate` succeeds on the local main database (`amagi_cbhs`); `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build`. Logs to `.verification/preflight.log`.
 - `PROMPT.md` kept as written by the agentic setup.
-- Replace `README.md` with local setup steps: install the Supabase CLI, `supabase start`, `.env`, `pnpm db:pull`, `pnpm dev`.
+- Replace `README.md` with local setup steps: install Docker, `pnpm install`, `pnpm supabase start`, `.env`, `pnpm db:pull`, `pnpm dev`.
 
 **Out**
 

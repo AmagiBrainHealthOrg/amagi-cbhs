@@ -238,7 +238,7 @@ No personal data in any event or data-layer value. No advertising pixels. Google
 
 ### 11.1 Environments
 
-- **Local:** the Supabase CLI stack (`supabase start`): Postgres on port 54322 and S3-compatible Storage. Schema and content come one way from staging with `pnpm db:pull` (§11.5). Stripe test mode, Resend sandbox, staging spreadsheet.
+- **Local:** the Supabase CLI stack (`pnpm supabase start`): Postgres on port 54322 and S3-compatible Storage. Schema and content come one way from staging with `pnpm db:pull` (§11.5). Stripe test mode, Resend sandbox, staging spreadsheet.
 - **Staging:** Vercel deployments of `main` before launch, on their own Supabase project (currently the only one); Stripe test mode; `isTest: true` on submissions; basic-auth protected; `noindex`. Every PR also gets a Vercel preview deployment against the staging database.
 - **Production:** amagisummit.org; a separate Supabase project in Amagi's name; Stripe live mode. Created in T018.
 
