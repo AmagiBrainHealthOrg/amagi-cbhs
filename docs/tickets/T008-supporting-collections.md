@@ -18,12 +18,12 @@ skills: [payload]
 
 - Collections `host-countries`, `sessions`, `form-submissions` per SPEC §5.1.
 - `territory` fields on host countries and sessions validate against `dropdowns.territories` values.
-- `form-submissions`: admin-only for every operation; `data` as JSON; `consents` group of three checkboxes; `utm` group of five text fields; `isTest`; `sheetSyncStatus` default `pending`; `sheetSyncError`. No drafts.
+- `form-submissions`: admin-only for every operation; `data` as JSON; `consents` group of three checkboxes; `utm` group of five text fields; `isTest`; `airtableSyncStatus` default `pending`; `airtableSyncError`; `airtableRecordId`. No drafts.
 - Migration.
 
 **Out**
 
-- Sheets sync hook (T013). `substack-posts` (T028, Release 2).
+- Airtable sync hook (T013). `substack-posts` (T028, Release 2).
 
 ## Acceptance criteria
 

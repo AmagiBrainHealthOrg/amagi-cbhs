@@ -27,7 +27,7 @@ T005 tokens and fonts · T006 globals · T007 core collections · T008 supportin
 
 ### M2: Release 1 features
 
-T010 donations · T011 pages and seed · T012 form system · T013 Sheets and email · T014 Release 1 forms · T015 tracking.
+T010 donations · T011 pages and seed · T012 form system · T013 Airtable and email · T014 Release 1 forms · T015 tracking.
 
 ### M3: Release 1 launch
 
@@ -70,7 +70,7 @@ T016, T019..T022, T028 ─ T024, T025, T026 ─ T027
 
 ### 5.2 Testing by layer
 
-- **Vitest (`tests/int/`):** access helpers, hooks, validation schemas, Sheets and Stripe wrappers (with recorded fixtures), Substack parsing.
+- **Vitest (`tests/int/`):** access helpers, hooks, validation schemas, Airtable and Stripe wrappers (with recorded fixtures), Substack parsing.
 - **Playwright (`tests/e2e/`):** pages render, forms submit, donation flow in Stripe test mode, editor vs admin permissions, draft preview.
 
 ### 5.3 Definition of done (every ticket)

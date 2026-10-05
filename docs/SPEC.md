@@ -18,7 +18,7 @@ The source of truth for **what** we build. Tickets cite sections as `SPEC §x.y`
 1. **Drive donations.** Donate is the primary call to action on every page.
 2. Explain the Summit credibly: what it is, where it happens, who is involved.
 3. Route other visitors into sign-up journeys (register interest, partner, relay, Call to Action consultation, contact).
-4. Capture form data into Amagi's Google Sheets with clean consent and campaign data.
+4. Capture form and donation data straight into Amagi's Airtable CRM with clean consent and campaign data.
 5. Let non-technical editors run the site without developers.
 
 ### 2.2 Non-goals
@@ -104,7 +104,7 @@ Drafts, autosave and live preview are on for `pages`, `news`, `partners`, `suppo
 | `host-countries`   | `name`, `slug`, `countryLead` (name, photo, bio), `weekOverview`, `activities` (array), `localPartners` (logos), `territory` (value from dropdowns)                                            |
 | `sessions`         | `title`, `stream`, `day` (date), `territory`, `format` (`in-person` \| `online`), `description`, `lumaUrl`                                                                                     |
 | `substack-posts`   | Release 2. `title`, `url` (unique), `publishedDate`, `excerpt`, `approved` (default false)                                                                                                                |
-| `form-submissions` | `form`, `data` (JSON), `territory`, `audienceType`, `consents` (group of 3), `utm` (group of 5), `isTest`, `sheetSyncStatus` (`pending` \| `synced` \| `failed`), `sheetSyncError`. Admin-only |
+| `form-submissions` | `form`, `data` (JSON), `territory`, `audienceType`, `consents` (group of 3), `utm` (group of 5), `isTest`, `airtableSyncStatus` (`pending` \| `synced` \| `failed`), `airtableSyncError`, `airtableRecordId`. Admin-only |
 
 ### 5.2 Globals
 
@@ -146,7 +146,7 @@ Header, Footer, Button (primary = Donate; secondary; tertiary), Section, Card, A
    - `success_url`: `/donate/thank-you?session_id={CHECKOUT_SESSION_ID}`
    - `cancel_url`: the source page
 4. `/donate/thank-you` retrieves the session server-side. If `payment_status === 'paid'`, it renders thank-you copy and pushes `donation_complete` (amount, currency). Otherwise it renders a neutral "we couldn't confirm your donation" state.
-5. **Release 2:** `POST /api/stripe/webhook` handles `checkout.session.completed`, verifies the signature, is idempotent on event ID, and appends a row to the `Donations` tab (amount, currency, date, UTM, source page, session ID). No personal data beyond what Stripe returns for the receipt email field, which is **not** written to Sheets.
+5. **Release 2:** `POST /api/stripe/webhook` handles `checkout.session.completed`, verifies the signature, is idempotent on event ID, and creates a record in the Airtable `Donations` table (amount, currency, date, UTM, source page, session ID). Whether the donor's name and email from Stripe also go to Airtable is open (§13 D8); until decided, they are **not** written.
 
 ## 8. Forms
 
@@ -161,8 +161,8 @@ Header, Footer, Button (primary = Donate; secondary; tertiary), Section, Card, A
 
 1. Client validation, then server validation (Zod).
 2. Rate limit: 5 submissions per IP per 10 minutes, counted in Postgres (the app runs serverless, so in-memory counters don't work).
-3. Create a `form-submissions` document (`sheetSyncStatus: pending`).
-4. `afterChange` appends a row to the form's tab in Google Sheets; sets `synced` or `failed` with the error.
+3. Create a `form-submissions` document (`airtableSyncStatus: pending`). This is the permanent record and the retry queue: a submission is never lost if Airtable is down.
+4. `afterChange` writes to Airtable (§9.1); sets `synced` (with the record ID) or `failed` with the error.
 5. Send a confirmation email.
 6. Redirect to `/thank-you/[form]`.
 7. Admins can retry failed syncs from the admin (a "Retry sync" action).
@@ -174,7 +174,7 @@ Header, Footer, Button (primary = Donate; secondary; tertiary), Section, Card, A
 | `register-interest` | Register Interest           | 1       | name, email                                                                               |                                                                                                           |
 | `cta-consultation`  | Call to Action consultation | 1       | name, email, organisation (optional), role, area of interest (from the five action areas) | Must state clearly that registering is **not** an endorsement                                             |
 | `partner`           | Partner Sign-Up             | 2       | name, email, organisation, website, industry, how you'd like to be involved               | Organisation form                                                                                         |
-| `relay`             | Brain Health Relay          | 2       | name, email, organisation (optional), proposed activity, date                             | Routed by territory: territory value written as its own column and the tab is filterable per country lead |
+| `relay`             | Brain Health Relay          | 2       | name, email, organisation (optional), proposed activity, date                             | Routed by territory: territory is its own field, so each country lead has a filtered Airtable view |
 | `contact`           | Contact and media           | 2       | name, email, enquiry type (`general` \| `media`), message, outlet (media only)            |                                                                                                           |
 
 ### 8.4 Thank-you pages
@@ -183,9 +183,18 @@ One template; copy per form from the CMS (stored on the `form` block or a `thank
 
 ## 9. Integrations
 
-### 9.1 Google Sheets
+### 9.1 Airtable
 
-`src/lib/sheets.ts` with `googleapis` and a service account (`GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY`). One spreadsheet per environment (`GOOGLE_SHEETS_SPREADSHEET_ID`). One tab per form key, plus `Donations`. Header row created on first write if missing.
+Airtable is Amagi's CRM. The site writes to it directly through the Airtable REST API; there is no Google Sheets step.
+
+- `src/lib/airtable.ts`, authenticated with a personal access token scoped to one base (`AIRTABLE_TOKEN`, `AIRTABLE_BASE_ID`). One base per environment: staging and production. The production base is in Amagi's name.
+- Base structure (Amagi signs it off, §13 D7):
+  - `Contacts`: one record per person, upserted by email (Airtable's `performUpsert` on `Email`). Name, organisation, territory, audience type, industry, the three consents (latest values), first and latest UTM, first seen and last seen.
+  - One table per form key (§8.3), each record linked to its contact and holding that form's fields, UTM, consents as given, source page, submitted at and the Payload submission ID.
+  - `Donations` (§7 step 5).
+- Table and field names live in one place, `src/config/airtable.ts`, so the base can be renamed without code changes elsewhere. `pnpm airtable:check` reads the base schema and fails if a table or field the code needs is missing.
+- Airtable allows 5 requests per second per base: requests retry with backoff on 429, and a failure leaves the submission `failed` for retry.
+- Outside production, writes go to the staging base and set the `Test` checkbox.
 
 ### 9.2 Email
 
@@ -238,7 +247,7 @@ No personal data in any event or data-layer value. No advertising pixels. Google
 
 ### 11.1 Environments
 
-- **Local:** the Supabase CLI stack (`pnpm supabase start`): Postgres on port 54322 and S3-compatible Storage. Schema and content come one way from staging with `pnpm db:pull` (§11.5). Stripe test mode, Resend sandbox, staging spreadsheet.
+- **Local:** the Supabase CLI stack (`pnpm supabase start`): Postgres on port 54322 and S3-compatible Storage. Schema and content come one way from staging with `pnpm db:pull` (§11.5). Stripe test mode, Resend sandbox, staging Airtable base.
 - **Staging:** Vercel deployments of `main` before launch, on their own Supabase project (currently the only one); Stripe test mode; `isTest: true` on submissions; basic-auth protected; `noindex`. Every PR also gets a Vercel preview deployment against the staging database.
 - **Production:** amagisummit.org; a separate Supabase project in Amagi's name; Stripe live mode. Created in T018.
 
@@ -255,8 +264,8 @@ Vercel, building `main` with the Next.js preset. Until launch the project is on 
 
 | Release | Date                                 | Delivers                                                                                                                                                                                                                                                      | Tickets   |
 | ------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
-| 1       | **16 October 2026**                  | Release 1 pages (§4.2); donations via Stripe Checkout with server-confirmed thank-you (§7 steps 1–4); Register Interest and Call to Action consultation forms (§8.3) with Sheets sync and email (§9.1–9.2); tracking (§10) | T001–T015, T017, T018 |
-| 2       | To be confirmed (§13 D6)             | Host Countries and Programme with Luma links (§4.3, §9.5); Substack posts on News (§9.3); video block (§9.4); donation webhook to Sheets (§7 step 5); Partner, Relay and Contact forms (§8.3); accessibility, performance and end-to-end pass                                                     | T016, T019–T022, T024–T028 |
+| 1       | **16 October 2026**                  | Release 1 pages (§4.2); donations via Stripe Checkout with server-confirmed thank-you (§7 steps 1–4); Register Interest and Call to Action consultation forms (§8.3) with Airtable sync and email (§9.1–9.2); tracking (§10) | T001–T015, T017, T018 |
+| 2       | To be confirmed (§13 D6)             | Host Countries and Programme with Luma links (§4.3, §9.5); Substack posts on News (§9.3); video block (§9.4); donation webhook to Airtable (§7 step 5); Partner, Relay and Contact forms (§8.3); accessibility, performance and end-to-end pass                                                     | T016, T019–T022, T024–T028 |
 
 Every ticket's `release` frontmatter says which release it belongs to. Release 1 work takes priority: no Release 2 ticket starts while a Release 1 ticket is ready to start.
 
@@ -270,7 +279,7 @@ The `coming-soon` global and page stay until Release 1 launch, then `/` renders 
 
 ## 12. Out of scope
 
-Copywriting and brand design; translation; analytics and dashboard configuration; CRM build (Amagi syncs Sheets to Airtable); on-site card processing; event registration or ticketing; member logins; forms beyond §8.3; Summit week support beyond launch.
+Copywriting and brand design; translation; analytics and dashboard configuration; Airtable views, automations and reporting (we supply the base structure and the writes); on-site card processing; event registration or ticketing; member logins; forms beyond §8.3; Summit week support beyond launch.
 
 ## 13. Open decisions
 
@@ -280,3 +289,5 @@ Copywriting and brand design; translation; analytics and dashboard configuration
 | D4  | Whether Release 1 is public or editor-only                    | Amagi          | T018                             |
 | D5  | Suggested donation amounts and currency                       | Amagi          | T010 (seed can use placeholders) |
 | D6  | Release 2 date                                                | Tandem + Amagi | Release 2 scheduling             |
+| D7  | Airtable base structure and field list (§9.1)                 | Amagi          | T013                             |
+| D8  | Whether donor name and email go to Airtable                   | Amagi          | T022                             |

@@ -29,6 +29,6 @@ Human steps: Amagi confirms copy, host country content and programme sessions ar
 - [ ] **AC1**: All routes are live.
   - _Verify (deploy):_ `pnpm tsx scripts/smoke.ts https://amagisummit.org` exits 0 including `/host-countries`, `/programme`, `/get-involved/partner`, `/get-involved/relay`, `/contact`.
 - [ ] **AC2**: Production donation and form flows work.
-  - _Verify (deploy):_ one production form submission reaches the production spreadsheet; one donation writes a `Donations` row via the webhook.
+  - _Verify (deploy):_ one production form submission reaches the production Airtable base; one donation creates a `Donations` record via the webhook.
 - [ ] **AC3**: Gates pass.
   - _Verify (cli):_ `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build` exits 0.

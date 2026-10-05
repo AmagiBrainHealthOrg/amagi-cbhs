@@ -14,7 +14,7 @@ skills: []
 
 ## Context
 
-Human steps: Amagi confirms whether Release 1 is public (D4), that copy is entered, the data processing agreement is signed, and the production Google Tag Manager container ID is set. Then, following `docs/DEPLOY.md`: create an Amagi-owned Vercel Pro team and transfer the project; create the production Supabase project in Amagi's name with automatic RLS on; set production environment variables (transaction pooler, Stripe live keys, production spreadsheet, Resend domain); point amagisummit.org at Vercel in Cloudflare (DNS only); keep staging as a second project or environment on the Pro team.
+Human steps: Amagi confirms whether Release 1 is public (D4), that copy is entered, the data processing agreement is signed, and the production Google Tag Manager container ID is set. Then, following `docs/DEPLOY.md`: create an Amagi-owned Vercel Pro team and transfer the project; create the production Supabase project in Amagi's name with automatic RLS on; set production environment variables (transaction pooler, Stripe live keys, production Airtable base and token, Resend domain); point amagisummit.org at Vercel in Cloudflare (DNS only); keep staging as a second project or environment on the Pro team.
 
 ## Scope
 

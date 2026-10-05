@@ -1,7 +1,8 @@
 ---
 paths:
   - 'src/components/forms/**'
-  - 'src/lib/sheets.ts'
+  - 'src/lib/airtable.ts'
+  - 'src/config/airtable.ts'
   - 'src/lib/email.ts'
   - 'src/lib/stripe.ts'
   - 'src/lib/tracking/**'
@@ -26,7 +27,7 @@ Every form includes:
 - a honeypot field and a server-side rate limit;
 - accessible errors (`aria-describedby`, `aria-invalid`, focus moved to the first error).
 
-Submission order is fixed: validate server-side → save to `form-submissions` → sync to Sheets in `afterChange` → send the confirmation email → redirect to the thank-you page.
+Submission order is fixed: validate server-side → save to `form-submissions` → sync to Airtable in `afterChange` → send the confirmation email → redirect to the thank-you page.
 
 **Never collect health information.** No diagnosis, symptoms, health history or clinical fields on any form.
 
@@ -47,5 +48,5 @@ Submission order is fixed: validate server-side → save to `form-submissions` �
 
 ## Environments
 
-- Outside production, form submissions are marked `isTest: true`, emails go to the sandbox or a single internal address, and Sheets writes go to the staging spreadsheet.
+- Outside production, form submissions are marked `isTest: true`, emails go to the sandbox or a single internal address, and Airtable writes go to the staging base with `Test` ticked.
 - Stripe runs in test mode everywhere except production.

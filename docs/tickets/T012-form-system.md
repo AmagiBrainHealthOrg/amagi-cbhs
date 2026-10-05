@@ -27,7 +27,7 @@ skills: []
 
 **Out**
 
-- Sheets and email (T013). Real form definitions (T014, T019). Tracking events (T015).
+- Airtable and email (T013). Real form definitions (T014, T019). Tracking events (T015).
 
 ## Acceptance criteria
 

@@ -29,7 +29,7 @@ skills: []
 ## Acceptance criteria
 
 - [ ] **AC1**: Both forms submit end to end.
-  - _Verify (browser + db):_ submit each form; a `form-submissions` row exists for each with `sheet_sync_status = 'synced'` and the thank-you page shows.
+  - _Verify (browser + db):_ submit each form; a `form-submissions` row exists for each with `airtable_sync_status = 'synced'`, and its record exists in the staging base linked to a `Contacts` record and the thank-you page shows.
 - [ ] **AC2**: The non-endorsement statement is visible.
   - _Verify (browser):_ on `/call-to-action`, text stating registering is not an endorsement is visible above the submit button.
 - [ ] **AC3**: Required fields are enforced server-side.
