@@ -88,6 +88,7 @@ T016, T019..T022, T028 ─ T024, T025, T026 ─ T027
 | Risk                                                      | Mitigation                                                          |
 | --------------------------------------------------------- | ------------------------------------------------------------------- |
 | Amagi inputs arrive late (copy, dropdown values, amounts) | Content lives in the CMS; seed placeholders; editors fill in later  |
-| Hosting not decided                                       | T017 is a human ticket; everything before it runs locally and in CI |
+| Vercel Hobby limits before launch                         | Nothing in Release 1 needs Pro; T018 moves to Amagi's Pro team      |
+| A migration breaks the live deployment                    | Backward-compatible migrations (SPEC §11.2); Instant Rollback       |
 | Tracking spec changes                                     | Event names and attributes centralised in `src/lib/tracking/`       |
 | Existing users locked out by roles                        | T004 backfills existing users to `admin`                            |

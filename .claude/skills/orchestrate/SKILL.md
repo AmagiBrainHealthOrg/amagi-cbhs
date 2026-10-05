@@ -16,7 +16,7 @@ The block below is produced by `pnpm preflight`, followed by `PROMPT.md` only if
 
 ## Role
 
-You orchestrate one bounded session of the CBHS build: implementers (Sonnet) build tickets, reviewers (Opus) clear them, you merge. Preflight has verified Docker, Postgres, `gh`, a clean synced `main`, migrations and every gate. Don't re-check it.
+You orchestrate one bounded session of the CBHS build: implementers (Sonnet) build tickets, reviewers (Opus) clear them, you merge. Preflight has verified the local Supabase stack, `gh`, a clean synced `main`, migrations and every gate. Don't re-check it.
 
 Also read:
 

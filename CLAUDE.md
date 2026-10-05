@@ -18,8 +18,9 @@ The public website for the **Caribbean Brain Health Summit 2026 (CBHS)**, run by
 
 - **Framework:** Next.js 16 (App Router, React Server Components), React 19, TypeScript 5 (strict)
 - **CMS:** Payload CMS 3 (`payload`, `@payloadcms/next`, Lexical rich text, live preview)
-- **Database:** PostgreSQL via `@payloadcms/db-postgres`. Docker locally (`docker-compose.yml`), managed Postgres in production
-- **Media:** S3-compatible storage via `@payloadcms/storage-s3`
+- **Database:** Supabase Postgres via `@payloadcms/db-postgres`. Locally the Supabase CLI stack; deployed environments use the transaction pooler (SPEC §11.2)
+- **Media:** Supabase Storage via `@payloadcms/storage-s3` (S3 API, client uploads)
+- **Hosting:** Vercel (SPEC §11.2)
 - **Payments:** Stripe Checkout (hosted). No card data on our site, ever
 - **Email:** Resend via Payload's email adapter
 - **Sheets:** `googleapis` with a Google service account
@@ -37,18 +38,19 @@ pnpm test:int            # Vitest
 pnpm test:e2e            # Playwright
 pnpm generate:types      # Regenerate src/payload-types.ts
 pnpm generate:importmap  # Regenerate the admin import map
-pnpm payload migrate:create <name>   # Schema change → migration
+pnpm payload migrate:create --skip-empty <name>   # Schema change → migration
 pnpm payload migrate                 # Apply migrations
 pnpm db:seed             # Seed local content (added in T011)
 pnpm preflight           # Orchestrator preflight (added in T001)
 
-docker compose up -d postgres        # Local Postgres
+pnpm supabase start                  # Local Postgres and Storage
+pnpm db:pull                         # Pull staging schema and data (added in T001)
 ```
 
 After any collection, global or field change:
 
 1. `pnpm generate:types`
-2. `pnpm payload migrate:create <name>`
+2. `pnpm payload migrate:create --skip-empty <name>`
 3. `pnpm payload migrate`
 4. `pnpm typecheck`
 
@@ -87,6 +89,8 @@ Use the Payload skill at `.claude/skills/payload/` (start with `SKILL.md`). Rule
 - **Copy belongs in the CMS.** Never hard-code copy an editor might change. Dropdown values come from the `dropdowns` global.
 - **Accessibility:** WCAG 2.1 AA.
 - **Secrets** live in environment variables. Never print, log or commit them.
+- **Remote databases are read-only from dev machines.** `pnpm db:pull` copies staging down; nothing goes up. Never run `pnpm supabase db push`, `pnpm supabase db pull`, `pnpm supabase db reset` or `pnpm supabase migration`. Payload migrations are the only schema changes, and they reach staging and production only through deploys.
+- **Migrations are backward compatible.** The previous deployment runs against the new schema until the switch: add first, drop or rename in a later release.
 
 ## Code quality
 

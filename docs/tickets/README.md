@@ -12,9 +12,9 @@ Release scope and dates are in SPEC §11.3. Every Release 1 ticket goes before a
 
 | ID                                    | Title                                                | Depends on | Mig | Human | Status |
 | ------------------------------------- | ---------------------------------------------------- | ---------- | --- | ----- | ------ |
-| [T001](./T001-tooling-and-cleanup.md) | Repo clean-up, scripts, env validation and preflight | —          |     |       | todo   |
+| [T001](./T001-tooling-and-cleanup.md) | Repo clean-up, scripts, env validation and preflight | —          |     | ✔     | todo   |
 | [T002](./T002-ci-pipeline.md)         | GitHub Actions CI                                    | T001       |     |       | todo   |
-| [T003](./T003-migrations-baseline.md) | Switch to migrations and create the baseline         | T001       | ✔   |       | todo   |
+| [T003](./T003-migrations-baseline.md) | Switch to migrations and create the baseline         | T001       | ✔   | ✔     | todo   |
 | [T004](./T004-roles-and-access.md)    | User roles, backfill and access helpers              | T003       | ✔   |       | todo   |
 
 ## M1: Content model and design system
@@ -42,7 +42,7 @@ Release scope and dates are in SPEC §11.3. Every Release 1 ticket goes before a
 
 | ID                                        | Title                               | Depends on                   | Mig | Human | Status |
 | ----------------------------------------- | ----------------------------------- | ---------------------------- | --- | ----- | ------ |
-| [T017](./T017-environments-and-deploy.md) | Staging and production environments | T010, T011, T014, T015       |     | ✔     | todo   |
+| [T017](./T017-environments-and-deploy.md) | Staging on Vercel                   | T010, T011, T014, T015       | ✔   | ✔     | todo   |
 | [T018](./T018-release-1-launch.md)        | Release 1 launch                    | T017                         |     | ✔     | todo   |
 
 # Release 2: date to be confirmed
