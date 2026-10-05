@@ -16,7 +16,7 @@ skills: [payload]
 
 The Vercel project already builds `main` on Tandem's Hobby team (SPEC §11.2). This ticket makes that deployment a proper staging environment. Production comes in T018.
 
-Human steps: set the staging environment variables in Vercel (transaction-pooler `DATABASE_URL`, `PAYLOAD_SECRET`, `S3_*`, Stripe test keys, Resend, staging spreadsheet, basic-auth credentials, `SITE_ENV=staging`); turn on automatic RLS in the staging Supabase project; add a DNS-only Cloudflare record for the staging hostname. Never put these values in the repo.
+Human steps: set the staging environment variables in Vercel (transaction-pooler `DATABASE_URL`, `PAYLOAD_SECRET`, `S3_*`, Stripe test keys, Resend, `AIRTABLE_TOKEN` and `AIRTABLE_BASE_ID` for the staging base, basic-auth credentials, `SITE_ENV=staging`); turn on automatic RLS in the staging Supabase project; add a DNS-only Cloudflare record for the staging hostname. Never put these values in the repo.
 
 ## Scope
 
@@ -26,7 +26,7 @@ Human steps: set the staging environment variables in Vercel (transaction-pooler
 - `/api/health`: 200 when the database answers, 503 otherwise. Exempt from basic auth.
 - Staging protection in `src/proxy.ts` when `SITE_ENV=staging`: basic auth and `X-Robots-Tag: noindex`. Preview deployments use Vercel's deployment protection.
 - Migration enabling RLS on every table in `public` (idempotent; loops over `pg_tables`), so new environments get it without manual SQL.
-- Staging behaviour: Stripe test mode, `isTest` submissions, staging spreadsheet, email sandbox.
+- Staging behaviour: Stripe test mode, `isTest` submissions, staging Airtable base, email sandbox.
 - `docs/DEPLOY.md`: deploy (merge to `main`), roll back (Vercel Instant Rollback, only to a deployment whose code works with the current schema), migrations, rotating secrets, moving the project to Amagi's Pro team (used by T018).
 
 **Out**
@@ -38,7 +38,7 @@ Human steps: set the staging environment variables in Vercel (transaction-pooler
 - [ ] **AC1**: Staging serves the app behind basic auth.
   - _Verify (deploy):_ `curl -i https://<staging>/about` returns 401; with credentials returns 200 and `X-Robots-Tag: noindex`.
 - [ ] **AC2**: Staging is isolated.
-  - _Verify (deploy):_ a staging form submission lands in the staging spreadsheet with `isTest` true; a staging donation uses Stripe test mode.
+  - _Verify (deploy):_ a staging form submission lands in the staging Airtable base with `Test` ticked; a staging donation uses Stripe test mode.
 - [ ] **AC3**: Migrations run on `main` deployments only.
   - _Verify (deploy):_ the build log of a `main` deployment shows `payload migrate` completing before `next build`; a preview deployment's log doesn't run it.
 - [ ] **AC4**: The Data API exposes nothing.

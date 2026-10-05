@@ -23,7 +23,7 @@ The public website for the **Caribbean Brain Health Summit 2026 (CBHS)**, run by
 - **Hosting:** Vercel (SPEC §11.2)
 - **Payments:** Stripe Checkout (hosted). No card data on our site, ever
 - **Email:** Resend via Payload's email adapter
-- **Sheets:** `googleapis` with a Google service account
+- **CRM:** Airtable via its REST API (SPEC §9.1). No Google Sheets
 - **Testing:** Vitest (integration, `tests/int/`) and Playwright (end to end, `tests/e2e/`)
 - **Package manager:** pnpm
 
@@ -74,7 +74,7 @@ Use the Payload skill at `.claude/skills/payload/` (start with `SKILL.md`). Rule
 
 - **Content:** collections in `src/collections/`, globals in `src/globals/`, blocks in `src/blocks/`, hooks in `src/hooks/`, access helpers in `src/access/`.
 - **Frontend:** routes in `src/app/(frontend)/`. Shared components in `src/components/`. Block renderers in `src/components/blocks/`.
-- **External systems:** wrappers in `src/lib/` (`stripe.ts`, `sheets.ts`, `email.ts`, `substack.ts`). Plain helpers in `src/utils/`. Constants in `src/config/`.
+- **External systems:** wrappers in `src/lib/` (`stripe.ts`, `airtable.ts`, `email.ts`, `substack.ts`). Plain helpers in `src/utils/`. Constants in `src/config/`.
 - **Route handlers** (`src/app/(frontend)/api/` or `src/app/api/`) are thin: validate input, call `src/lib/`, respond.
 - **Errors:** never swallow a failure into an empty state. Log it, and render an error state or return a non-2xx response.
 

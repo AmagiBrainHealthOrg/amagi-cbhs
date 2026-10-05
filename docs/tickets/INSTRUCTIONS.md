@@ -59,7 +59,7 @@ Rules:
 - **Visual ACs:** screenshots at 1280px and 390px.
 - **Negative ACs:** prove the failure happens _and_ the valid path still works.
 - **Server logs:** check dev server output for errors before reporting.
-- **External services:** use test modes and fixtures (Stripe test keys, Resend sandbox, staging spreadsheet). Never hit production services.
+- **External services:** use test modes and fixtures (Stripe test keys, Resend sandbox, staging Airtable base). Never hit production services.
 
 ### 2.4 Finish
 

@@ -17,6 +17,7 @@
 - Release 1 (T001–T015, T017, T018) ships on 16 October 2026; Release 2 (T016, T019–T022, T024–T028) date to be confirmed (SPEC §11.3). Release 1 tickets always go first.
 - Hosting: Vercel (Tandem Hobby until launch, Amagi Pro from T018) with Supabase Postgres and Storage (SPEC §11.2).
 - Local development runs on the Supabase CLI; `pnpm db:pull` copies staging schema and data down, one way (SPEC §11.5). Agents never touch remotes.
+- Form submissions and donations go straight to Airtable, Amagi's CRM; no Google Sheets. Payload keeps every submission as the record and retry queue (SPEC §9.1).
 - Donations are the primary call to action sitewide (SPEC §2.1).
 - Existing users are backfilled to `admin` in T004; new users default to `editor`.
 - Copy and dropdown values live in the CMS; seed placeholders are marked `[PLACEHOLDER]`.
@@ -28,3 +29,5 @@
 - D4: is Release 1 public or editor-only (affects T018).
 - D5: suggested donation amounts and currency (seed placeholders until then).
 - D6: Release 2 date.
+- D7: Airtable base structure and field list (blocks T013).
+- D8: whether donor name and email go to Airtable (affects T022).

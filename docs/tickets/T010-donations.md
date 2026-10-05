@@ -25,7 +25,7 @@ skills: []
 
 **Out**
 
-- Webhook and Sheets record (T022).
+- Webhook and Airtable record (T022).
 
 ## Acceptance criteria
 

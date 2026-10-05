@@ -17,7 +17,7 @@ skills: []
 **In**
 
 - Playwright specs: every form (submit, validation, consent capture); donation flow in Stripe test mode through to the thank-you page; editor vs admin permissions in the admin; draft preview; partner announcement surfacing.
-- `.github/workflows/e2e.yml` running the suite on pull requests against a built app and a CI Postgres, with Stripe test keys and a Sheets mock (`SHEETS_MODE=mock` writes to the database instead).
+- `.github/workflows/e2e.yml` running the suite on pull requests against a built app and a CI Postgres, with Stripe test keys and an Airtable mock (`AIRTABLE_MODE=mock` records writes in the database instead).
 
 ## Acceptance criteria
 

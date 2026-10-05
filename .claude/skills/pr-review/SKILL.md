@@ -89,7 +89,7 @@ Severity:
 ### Forms, tracking and Stripe (when touched)
 
 - [ ] Forms use the shared system: territory and audience selects, hidden UTM fields, three unticked consents, privacy link, honeypot, server-side Zod validation, rate limit, accessible errors.
-- [ ] Submission order: validate → save → Sheets sync → email → redirect.
+- [ ] Submission order: validate → save → Airtable sync → email → redirect. Table and field names only from `src/config/airtable.ts`.
 - [ ] `form_start` fires once per form per load; `form_submit` only after confirmed success; `donation_complete` carries amount and currency only.
 - [ ] `data-journey`, `data-action`, `data-destination-type` on every CTA and outbound link; names unchanged.
 - [ ] Stripe success confirmed server-side; webhooks verify signatures and are idempotent on event ID.

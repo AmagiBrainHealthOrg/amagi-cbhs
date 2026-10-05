@@ -34,7 +34,7 @@ Release scope and dates are in SPEC §11.3. Every Release 1 ticket goes before a
 | [T010](./T010-donations.md)          | Donations: amount chooser, Stripe Checkout, thank-you   | T006, T009       |     |       | todo   |
 | [T011](./T011-pages-and-seed.md)     | Release 1 pages, partner announcements and seed script  | T007, T008, T009 |     |       | todo   |
 | [T012](./T012-form-system.md)        | Shared form system                                      | T008, T009       |     |       | todo   |
-| [T013](./T013-sheets-and-email.md)   | Google Sheets sync and email adapter                    | T012             |     | ✔     | todo   |
+| [T013](./T013-airtable-and-email.md) | Airtable sync and email adapter                         | T012             |     | ✔     | todo   |
 | [T014](./T014-release-1-forms.md)    | Register Interest and Call to Action consultation forms | T013             |     |       | todo   |
 | [T015](./T015-tracking.md)           | Data layer, Google Tag Manager and events               | T009             |     |       | todo   |
 
@@ -54,7 +54,7 @@ Release scope and dates are in SPEC §11.3. Every Release 1 ticket goes before a
 | [T019](./T019-release-2-forms.md)  | Partner, Relay and Contact/media forms    | T014       |     |       | todo   |
 | [T020](./T020-host-countries.md)   | Host Countries index and profiles         | T008, T009 |     |       | todo   |
 | [T021](./T021-programme.md)        | Programme page with filters               | T008, T009 |     |       | todo   |
-| [T022](./T022-donation-webhook.md) | Stripe webhook writes donations to Sheets | T010, T013 |     | ✔     | todo   |
+| [T022](./T022-donation-webhook.md) | Stripe webhook records donations in Airtable | T010, T013 |     | ✔     | todo   |
 | [T016](./T016-video-block.md)      | Video block                               | T009       | ✔   |       | todo   |
 | [T028](./T028-substack.md)         | Substack posts on News                    | T011       | ✔   |       | todo   |
 
