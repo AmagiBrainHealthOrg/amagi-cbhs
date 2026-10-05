@@ -87,8 +87,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'coming-soon': ComingSoon;
+  };
+  globalsSelect: {
+    'coming-soon': ComingSoonSelect<false> | ComingSoonSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -318,6 +322,107 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "coming-soon".
+ */
+export interface ComingSoon {
+  id: number;
+  logo?: (number | null) | Media;
+  /**
+   * Line breaks are kept.
+   */
+  brandTitle?: string | null;
+  /**
+   * Small uppercase line above the headline.
+   */
+  kicker?: string | null;
+  /**
+   * Line breaks are kept.
+   */
+  headline: string;
+  lead?: string | null;
+  body?: string | null;
+  cta?: {
+    label?: string | null;
+    /**
+     * The QR code is generated from this link.
+     */
+    url?: string | null;
+  };
+  qr?: {
+    label?: string | null;
+    sublabel?: string | null;
+  };
+  details?:
+    | {
+        icon?: ('calendar' | 'map-pin' | 'globe' | 'users' | 'clock' | 'mail') | null;
+        title: string;
+        subtitle?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Shown as a slow crossfade, 8 seconds each. Set the focal point on each image to control cropping.
+   */
+  backgroundImages?: (number | Media)[] | null;
+  footerLeft?: string | null;
+  footerRight?: string | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "coming-soon_select".
+ */
+export interface ComingSoonSelect<T extends boolean = true> {
+  logo?: T;
+  brandTitle?: T;
+  kicker?: T;
+  headline?: T;
+  lead?: T;
+  body?: T;
+  cta?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+      };
+  qr?:
+    | T
+    | {
+        label?: T;
+        sublabel?: T;
+      };
+  details?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        subtitle?: T;
+        id?: T;
+      };
+  backgroundImages?: T;
+  footerLeft?: T;
+  footerRight?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -1,19 +1,21 @@
 import React from 'react'
 import './styles.css'
 
-export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
-}
-
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
   return (
     <html lang="en">
-      <body>
-        <main>{children}</main>
-      </body>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600&family=Montserrat:wght@300;400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap"
+        />
+        <link rel="stylesheet" href="https://use.typekit.net/ebg5tit.css" />
+      </head>
+      <body>{children}</body>
     </html>
   )
 }
