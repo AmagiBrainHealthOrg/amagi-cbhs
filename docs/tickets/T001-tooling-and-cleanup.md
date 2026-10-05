@@ -2,6 +2,7 @@
 id: T001
 title: Repo clean-up, scripts, env validation and preflight
 milestone: M0
+release: 1
 depends_on: []
 migrations: false
 requires_human: false

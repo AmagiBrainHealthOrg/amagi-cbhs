@@ -2,6 +2,7 @@
 id: T017
 title: Staging and production environments
 milestone: M3
+release: 1
 depends_on: [T010, T011, T014, T015, T016]
 migrations: false
 requires_human: true

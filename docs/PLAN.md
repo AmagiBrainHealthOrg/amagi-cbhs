@@ -6,6 +6,7 @@ Build on the existing Payload + Next.js repo. Tidy and harden the foundations fi
 
 ## 2. Principles
 
+- **Release 1 first.** Release 1 ships on 16 October 2026 (SPEC §11.3). No Release 2 ticket starts while a Release 1 ticket is ready.
 - **Donations first.** When choosing between two pieces of work, pick the one closer to a working donation.
 - **Content in the CMS.** Editors change copy; developers change structure.
 - **Thin vertical slices.** Each ticket leaves the app building, migrated and deployable.
@@ -13,6 +14,8 @@ Build on the existing Payload + Next.js repo. Tidy and harden the foundations fi
 - **One migration at a time.**
 
 ## 3. Milestones
+
+**Release 1, 16 October 2026: M0–M3 (T001–T018).** **Release 2, date to be confirmed: M4–M5 (T019–T027).**
 
 ### M0: Foundations
 
@@ -30,7 +33,7 @@ T010 donations · T011 pages and seed · T012 form system · T013 Sheets and ema
 
 T017 environments and deployment · T018 Release 1 launch.
 
-### M4: Release 2
+### M4: Release 2 features
 
 T019 remaining forms · T020 Host Countries · T021 programme · T022 donation webhook · T023 translation.
 

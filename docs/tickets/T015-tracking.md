@@ -2,6 +2,7 @@
 id: T015
 title: Data layer, Google Tag Manager and events
 milestone: M2
+release: 1
 depends_on: [T009]
 migrations: false
 requires_human: false

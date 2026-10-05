@@ -34,7 +34,7 @@ Take **4 to 6 tickets** through to merged, then wind down. In-flight tickets fro
    - Report has `## Review` with ALL CLEAR: go to step 6.
    - PR open, no verdict: launch the reviewer (step 5).
    - Worktree gone, nothing committed: re-dispatch fresh.
-2. **Pick work.** Tickets whose `depends_on` are all `done`. Run independent tickets in parallel, each in its own worktree, about 3 implementers at a time. **Run one migration ticket at a time** (`Mig` column).
+2. **Pick work.** Tickets whose `depends_on` are all `done`. **Release 1 first** (`release: 1`, due 16 October 2026): don't start a Release 2 ticket while a Release 1 ticket is ready. Run independent tickets in parallel, each in its own worktree, about 3 implementers at a time. **Run one migration ticket at a time** (`Mig` column).
 3. **Brief the implementer.** Spawn with `model: "sonnet"`, `isolation: "worktree"`. Give it:
    - the ticket path and its environment (INSTRUCTIONS §3, with id and port filled in);
    - facts it needs from its dependencies' reports (contracts, file locations, gotchas) and relevant decisions from `PROMPT.md`;

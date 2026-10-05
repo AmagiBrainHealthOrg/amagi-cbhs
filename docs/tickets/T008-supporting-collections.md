@@ -2,6 +2,7 @@
 id: T008
 title: 'Collections: host countries, sessions, Substack posts, form submissions'
 milestone: M1
+release: 1
 depends_on: [T007]
 migrations: true
 requires_human: false

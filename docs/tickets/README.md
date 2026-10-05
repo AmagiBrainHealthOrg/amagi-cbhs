@@ -4,6 +4,10 @@ The execution protocol is in [`INSTRUCTIONS.md`](./INSTRUCTIONS.md) and the tick
 
 Status: `todo` → `in-progress` → `review` → `done` (or `blocked`). A ticket can start once everything in **Depends on** is `done`. **Mig** marks tickets that create migrations; run those one at a time. **Human** marks tickets that need the user to act.
 
+Release scope and dates are in SPEC §11.3. Every Release 1 ticket goes before any Release 2 ticket.
+
+# Release 1: 16 October 2026
+
 ## M0: Foundations
 
 | ID                                    | Title                                                | Depends on | Mig | Human | Status |
@@ -42,7 +46,9 @@ Status: `todo` → `in-progress` → `review` → `done` (or `blocked`). A ticke
 | [T017](./T017-environments-and-deploy.md) | Staging and production environments | T010, T011, T014, T015, T016 |     | ✔     | todo   |
 | [T018](./T018-release-1-launch.md)        | Release 1 launch                    | T017                         |     | ✔     | todo   |
 
-## M4: Release 2
+# Release 2: date to be confirmed
+
+## M4: Release 2 features
 
 | ID                                 | Title                                     | Depends on | Mig | Human | Status |
 | ---------------------------------- | ----------------------------------------- | ---------- | --- | ----- | ------ |

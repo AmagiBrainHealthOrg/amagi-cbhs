@@ -14,6 +14,7 @@
 
 ## Decisions and conventions
 
+- Release 1 (T001–T018) ships on 16 October 2026; Release 2 (T019–T027) date to be confirmed (SPEC §11.3). Release 1 tickets always go first.
 - Donations are the primary call to action sitewide (SPEC §2.1).
 - Existing users are backfilled to `admin` in T004; new users default to `editor`.
 - Copy and dropdown values live in the CMS; seed placeholders are marked `[PLACEHOLDER]`.
@@ -26,3 +27,4 @@
 - D3: territory and industry values (seed placeholders until then).
 - D4: is Release 1 public or editor-only (affects T018).
 - D5: suggested donation amounts and currency (seed placeholders until then).
+- D6: Release 2 date.

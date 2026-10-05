@@ -2,6 +2,7 @@
 id: T010
 title: 'Donations: amount chooser, Stripe Checkout, thank-you'
 milestone: M2
+release: 1
 depends_on: [T006, T009]
 migrations: false
 requires_human: false

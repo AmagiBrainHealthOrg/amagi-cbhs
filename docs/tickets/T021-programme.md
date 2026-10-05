@@ -2,6 +2,7 @@
 id: T021
 title: Programme page with filters
 milestone: M4
+release: 2
 depends_on: [T008, T009]
 migrations: false
 requires_human: false

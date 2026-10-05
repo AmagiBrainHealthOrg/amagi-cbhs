@@ -2,6 +2,7 @@
 id: T027
 title: Full go-live
 milestone: M5
+release: 2
 depends_on: [T024, T025, T026]
 migrations: false
 requires_human: true

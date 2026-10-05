@@ -2,6 +2,7 @@
 id: T011
 title: Release 1 pages, partner announcements and seed script
 milestone: M2
+release: 1
 depends_on: [T007, T008, T009]
 migrations: false
 requires_human: false

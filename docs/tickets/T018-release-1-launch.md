@@ -2,6 +2,7 @@
 id: T018
 title: Release 1 launch
 milestone: M3
+release: 1
 depends_on: [T017]
 migrations: false
 requires_human: true

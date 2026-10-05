@@ -154,4 +154,4 @@ Evidence must be real output, trimmed to the decisive lines.
 
 ## 5. Ticket format
 
-See `_TEMPLATE.md`. Frontmatter keys: `id`, `title`, `milestone`, `depends_on`, `migrations`, `requires_human`, `spec`, `skills`.
+See `_TEMPLATE.md`. Frontmatter keys: `id`, `title`, `milestone`, `release` (1 or 2, SPEC §11.3), `depends_on`, `migrations`, `requires_human`, `spec`, `skills`.

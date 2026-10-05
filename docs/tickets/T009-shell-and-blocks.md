@@ -2,6 +2,7 @@
 id: T009
 title: App shell, components and block renderers
 milestone: M1
+release: 1
 depends_on: [T005, T006, T007]
 migrations: false
 requires_human: false

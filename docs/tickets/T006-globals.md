@@ -2,6 +2,7 @@
 id: T006
 title: 'Globals: header, footer, donation settings, anchor day, dropdowns, integrations'
 milestone: M1
+release: 1
 depends_on: [T004]
 migrations: true
 requires_human: false

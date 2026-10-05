@@ -248,7 +248,12 @@ Docker image (`output: 'standalone'`) deployed to the chosen host behind Cloudfl
 
 ### 11.3 Release 1 vs Release 2
 
-Release 1 delivers §4.2, §7 steps 1–4, §8.3 Release 1 forms, §9.1–9.4 and §10. Release 2 delivers §4.3, §7 step 5, the remaining forms, translation (§12) and the quality pass.
+| Release | Date                                 | Delivers                                                                                                                                                                                                                                                      | Tickets   |
+| ------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| 1       | **16 October 2026**                  | Release 1 pages (§4.2); donations via Stripe Checkout with server-confirmed thank-you (§7 steps 1–4); Register Interest and Call to Action consultation forms (§8.3) with Sheets sync and email (§9.1–9.2); Substack sync and video (§9.3–9.4); tracking (§10) | T001–T018 |
+| 2       | To be confirmed (§14 D6)             | Host Countries and Programme with Luma links (§4.3, §9.5); donation webhook to Sheets (§7 step 5); Partner, Relay and Contact forms (§8.3); translation (§12); accessibility, performance and end-to-end pass                                                     | T019–T027 |
+
+Every ticket's `release` frontmatter says which release it belongs to. Release 1 work takes priority: no Release 2 ticket starts while a Release 1 ticket is ready to start.
 
 ### 11.4 Coming Soon
 
@@ -271,3 +276,4 @@ Copywriting and brand design; analytics and dashboard configuration; CRM build (
 | D3  | Territory and industry values                                 | Amagi          | T014 (seed can use placeholders) |
 | D4  | Whether Release 1 is public or editor-only                    | Amagi          | T018                             |
 | D5  | Suggested donation amounts and currency                       | Amagi          | T010 (seed can use placeholders) |
+| D6  | Release 2 date                                                | Tandem + Amagi | Release 2 scheduling             |

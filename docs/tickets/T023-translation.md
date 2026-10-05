@@ -2,6 +2,7 @@
 id: T023
 title: Automated translation
 milestone: M4
+release: 2
 depends_on: [T018]
 migrations: false
 requires_human: true

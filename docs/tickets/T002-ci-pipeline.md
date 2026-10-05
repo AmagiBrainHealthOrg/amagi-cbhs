@@ -2,6 +2,7 @@
 id: T002
 title: GitHub Actions CI
 milestone: M0
+release: 1
 depends_on: [T001]
 migrations: false
 requires_human: false

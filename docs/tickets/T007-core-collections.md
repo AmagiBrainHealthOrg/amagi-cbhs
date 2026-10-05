@@ -2,6 +2,7 @@
 id: T007
 title: 'Collections: pages (blocks), news, partners, supporters, FAQs'
 milestone: M1
+release: 1
 depends_on: [T006]
 migrations: true
 requires_human: false

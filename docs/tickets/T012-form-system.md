@@ -2,6 +2,7 @@
 id: T012
 title: Shared form system
 milestone: M2
+release: 1
 depends_on: [T008, T009]
 migrations: false
 requires_human: false

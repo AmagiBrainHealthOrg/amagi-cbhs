@@ -2,6 +2,7 @@
 id: T026
 title: End-to-end suite
 milestone: M5
+release: 2
 depends_on: [T019, T020, T021, T022]
 migrations: false
 requires_human: false

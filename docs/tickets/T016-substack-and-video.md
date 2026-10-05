@@ -2,6 +2,7 @@
 id: T016
 title: Substack sync and video block
 milestone: M2
+release: 1
 depends_on: [T008, T009]
 migrations: false
 requires_human: false
