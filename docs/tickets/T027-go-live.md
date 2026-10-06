@@ -14,7 +14,7 @@ skills: []
 
 ## Context
 
-Human steps: Amagi confirms copy, host country content and programme sessions are entered; Beyond Growth confirms tracking on staging. Give Beyond Growth two business days' notice before this release.
+Human steps: Amagi confirms copy, host country content and programme sessions are entered; Beyond Growth confirms tracking on production using Google Tag Manager's preview mode. Give Beyond Growth two business days' notice before this release.
 
 ## Scope
 

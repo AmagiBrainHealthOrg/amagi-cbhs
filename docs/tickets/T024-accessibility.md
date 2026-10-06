@@ -3,7 +3,7 @@ id: T024
 title: Accessibility audit and fixes
 milestone: M5
 release: 2
-depends_on: [T019, T020, T021]
+depends_on: [T016, T019, T020, T021, T028]
 migrations: false
 requires_human: false
 spec: ['SPEC §3.2']

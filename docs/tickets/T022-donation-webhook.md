@@ -14,13 +14,13 @@ skills: []
 
 ## Context
 
-Human steps: register the webhook endpoint in Stripe (staging and production) and set `STRIPE_WEBHOOK_SECRET` on each host.
+Human steps: register the production webhook endpoint in Stripe, in test mode until launch and in live mode after it, and set `STRIPE_WEBHOOK_SECRET` in Vercel. Locally, `stripe listen` provides the secret.
 
 ## Scope
 
 **In**
 
-- `POST /api/stripe/webhook`: raw-body signature verification; handles `checkout.session.completed`; idempotent on event ID (store processed IDs, or upsert the `Donations` record on session ID); creates the `Donations` record per SPEC §7.5; writes the donor's name and email only if D8 says so.
+- `POST /api/stripe/webhook`: raw-body signature verification; handles `checkout.session.completed`; idempotent by upserting the `Donations` record on session ID (`performUpsert`), so no extra table is needed; creates the `Donations` record per SPEC §7.5; writes the donor's name and email only if D8 says so.
 - `STRIPE_WEBHOOK_SECRET` in `src/env.ts` and `.env.example`.
 
 ## Acceptance criteria

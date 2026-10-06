@@ -17,7 +17,7 @@ skills: [payload]
 **In**
 
 - Collections `pages`, `news`, `partners`, `supporters`, `faqs` per SPEC §5.1, with drafts, autosave and live preview.
-- Block configs in `src/blocks/` for every block in SPEC §6.3 except `video` (T016, Release 2) (schema only; renderers come in T009). The `form` block holds a select of form keys from SPEC §8.3 and thank-you copy.
+- Block configs in `src/blocks/` for every block in SPEC §6.3 except `video` (T016) and `hostCountriesTeaser` (T020), both Release 2 (schema only; renderers come in T009). The `form` block holds a select of all five form keys from SPEC §8.3, Release 2 keys included (SPEC §8.3 explains why), and no thank-you copy (that's the `forms` global).
 - Slug field helper (`src/fields/slug.ts`), unique and indexed.
 - `news.partner` relationship, required when `type` is `partner-announcement`.
 - `permissionConfirmed` on partners and supporters, default `false`.

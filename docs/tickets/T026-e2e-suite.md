@@ -3,7 +3,7 @@ id: T026
 title: End-to-end suite
 milestone: M5
 release: 2
-depends_on: [T019, T020, T021, T022]
+depends_on: [T016, T019, T020, T021, T022, T028]
 migrations: false
 requires_human: false
 spec: ['PLAN §5.2']
@@ -17,7 +17,7 @@ skills: []
 **In**
 
 - Playwright specs: every form (submit, validation, consent capture); donation flow in Stripe test mode through to the thank-you page; editor vs admin permissions in the admin; draft preview; partner announcement surfacing.
-- `.github/workflows/e2e.yml` running the suite on pull requests against a built app and a CI Postgres, with Stripe test keys and an Airtable mock (`AIRTABLE_MODE=mock` records writes in the database instead).
+- `.github/workflows/e2e.yml` running the suite on pull requests against a built app and a CI Postgres, with Stripe test keys and a local Airtable stub server (`AIRTABLE_API_URL` pointing at it), so no schema change is needed.
 
 ## Acceptance criteria
 

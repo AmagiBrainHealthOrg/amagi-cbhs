@@ -52,14 +52,14 @@ implement → gates → verify every AC → all PASS? → report
 | `unit`    | Vitest. The named test must exist and pass                                                                                   | Test names and pass output                             |
 | `cli`     | Run the named command                                                                                                        | Command, output, exit code                             |
 | `code`    | `grep` or reading files, for structural rules                                                                                | Command and output                                     |
-| `deploy`  | Against staging or production URL with `curl -i` or a headless browser                                                       | Command, output, URL                                   |
+| `deploy`  | Against the production URL with `curl -i` or a headless browser, after merge (there are no preview deployments)              | Command, output, URL                                   |
 
 Rules:
 
 - **Visual ACs:** screenshots at 1280px and 390px.
 - **Negative ACs:** prove the failure happens _and_ the valid path still works.
 - **Server logs:** check dev server output for errors before reporting.
-- **External services:** use test modes and fixtures (Stripe test keys, Resend sandbox, staging Airtable base). Never hit production services.
+- **External services:** use test modes and fixtures (Stripe test keys, Resend sandbox, the test Airtable base). Never hit production services.
 
 ### 2.4 Finish
 
@@ -68,6 +68,7 @@ Rules:
 3. Conventional Commit with the ticket ID. No AI attribution.
 4. Rebase onto `main`, then open the PR with `/pr-prep` (or, if you can't invoke it, read `.claude/commands/pr-prep.md` and follow it). Never merge.
    - **Push once**, after every gate and non-`deploy` AC passes locally. Commit locally as often as you like.
+   - `deploy` ACs are checked after merge, by the orchestrator or, on human tickets, the user. A failure is fixed forward with a new commit to `main`.
    - Don't wait for or poll CI.
 5. Return the PR URL and the report's summary table to the orchestrator.
 

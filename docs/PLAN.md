@@ -2,7 +2,7 @@
 
 ## 1. Strategy
 
-Build on the existing Payload + Next.js repo. Tidy and harden the foundations first (clean-up, migrations, roles, CI), then the content model, then the design system and donation flow, then pages and forms. Release 1 is everything an editor and a donor need. Release 2 adds the remaining journeys and the quality pass.
+Build on the existing Payload + Next.js repo. There is no staging and there are no preview deployments: work is verified locally, and every merge to `main` deploys to production, which stays locked and in test mode until launch (SPEC §11.1). Tidy and harden the foundations first (clean-up, migrations, the production lock, roles, CI), then the content model, then the design system and donation flow, then pages and forms. Release 1 is everything an editor and a donor need. Release 2 adds the remaining journeys and the quality pass.
 
 ## 2. Principles
 
@@ -15,23 +15,23 @@ Build on the existing Payload + Next.js repo. Tidy and harden the foundations fi
 
 ## 3. Milestones
 
-**Release 1, 16 October 2026: M0–M3 (T001–T015, T017, T018).** **Release 2, date to be confirmed: M4–M5 (T016, T019–T022, T024–T028).**
+**Release 1, 16 October 2026: M0–M3 (T001–T015, T017, T018, T029, T030).** **Release 2, date to be confirmed: M4–M5 (T016, T019–T022, T024–T028).**
 
 ### M0: Foundations
 
-T001 tooling and clean-up · T002 CI · T003 migrations baseline · T004 roles and access.
+T001 tooling and clean-up · T002 CI · T003 migrations baseline and migrate on deploy · T017 production lock and test mode · T004 roles and access · T029 Airtable base design.
 
 ### M1: Content model and design system
 
-T005 tokens and fonts · T006 globals · T007 core collections · T008 supporting collections · T009 shell and blocks.
+T005 tokens and fonts · T006 globals · T007 core collections · T008 form submissions · T009 shell and blocks.
 
 ### M2: Release 1 features
 
-T010 donations · T011 pages and seed · T012 form system · T013 Airtable and email · T014 Release 1 forms · T015 tracking.
+T010 donations · T011 pages and seed · T012 form system · T013 Airtable and email · T014 Release 1 forms · T030 cookie consent · T015 tracking.
 
 ### M3: Release 1 launch
 
-T017 environments and deployment · T018 Release 1 launch.
+T018 Release 1 launch.
 
 ### M4: Release 2 features
 
@@ -45,18 +45,20 @@ T024 accessibility · T025 performance · T026 end-to-end suite · T027 go-live.
 
 ```
 T001 ─┬─ T002
-      ├─ T003 ─ T004 ─ T006 ─ T007 ─ T008
-      └─ T005 ─ T009 (needs T006, T007)
-T009 ─┬─ T010 (needs T006)
-      ├─ T011 (needs T007, T008)
-      └─ T012 (needs T008) ─ T013 ─ T014
-T009 ─ T015
-T009 ─ T016
-T011 ─ T028
-T010 + T011 + T014 + T015 ─ T017 ─ T018
-T014 ─ T019
-T009 + T008 ─ T020, T021
-T013 + T010 ─ T022
+      ├─ T003 ─┬─ T004 ─ T006 ─ T007 ─ T008
+      │        └─ T017
+      └─ T005
+T029 (no dependencies; Amagi signs off the Airtable base)
+T005 + T006 + T007 + T017 ─ T009
+T009 ─┬─ T010
+      ├─ T011
+      └─ T012 (needs T008) ─ T013 (needs T029) ─ T014 (needs T011)
+T006 + T009 ─ T030
+T010 + T011 + T012 + T030 ─ T015
+T010 + T011 + T014 + T015 + T017 ─ T018
+
+Release 2:
+T009 ─ T016 · T011 ─ T028 · T014 ─ T019 · T011 + T019 ─ T020 ─ T021 · T010 + T013 ─ T022
 T016, T019..T022, T028 ─ T024, T025, T026 ─ T027
 ```
 
@@ -85,10 +87,12 @@ T016, T019..T022, T028 ─ T024, T025, T026 ─ T027
 
 ## 6. Risks
 
-| Risk                                                      | Mitigation                                                          |
-| --------------------------------------------------------- | ------------------------------------------------------------------- |
-| Amagi inputs arrive late (copy, dropdown values, amounts) | Content lives in the CMS; seed placeholders; editors fill in later  |
-| Vercel Hobby limits before launch                         | Nothing in Release 1 needs Pro; T018 moves to Amagi's Pro team      |
-| A migration breaks the live deployment                    | Backward-compatible migrations (SPEC §11.2); Instant Rollback       |
-| Tracking spec changes                                     | Event names and attributes centralised in `src/lib/tracking/`       |
-| Existing users locked out by roles                        | T004 backfills existing users to `admin`                            |
+| Risk                                                      | Mitigation                                                                                                             |
+| --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Amagi inputs arrive late (copy, dropdown values, amounts) | Content lives in the CMS; seed placeholders; editors fill in later                                                     |
+| Vercel Hobby limits before launch                         | Nothing in Release 1 needs Pro; T018 moves to Amagi's Pro team                                                         |
+| An automated merge breaks production                      | Locked and in test mode until launch; Instant Rollback; D9 decides the gate after launch                               |
+| Content or test data leaks before launch                  | Site lock (T017) shows Coming Soon to anonymous visitors; test mode keeps Stripe, Airtable and email off live accounts |
+| A migration breaks the live deployment                    | Backward-compatible migrations (SPEC §11.2); Instant Rollback                                                          |
+| Tracking spec changes                                     | Event names and attributes centralised in `src/lib/tracking/`                                                          |
+| Existing users locked out by roles                        | T004 backfills existing users to `admin`                                                                               |

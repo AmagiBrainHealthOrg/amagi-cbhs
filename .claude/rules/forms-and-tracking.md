@@ -27,7 +27,7 @@ Every form includes:
 - a honeypot field and a server-side rate limit;
 - accessible errors (`aria-describedby`, `aria-invalid`, focus moved to the first error).
 
-Submission order is fixed: validate server-side → save to `form-submissions` → sync to Airtable in `afterChange` → send the confirmation email → redirect to the thank-you page.
+Submission order is fixed (SPEC §8.2): validate server-side → rate limit → save to `form-submissions` → send the confirmation email → redirect to the thank-you page → `syncSubmission(id)` in Next's `after()`. Never sync from an `afterChange` hook: the status update would trigger it again.
 
 **Never collect health information.** No diagnosis, symptoms, health history or clinical fields on any form.
 
@@ -48,5 +48,5 @@ Submission order is fixed: validate server-side → save to `form-submissions` �
 
 ## Environments
 
-- Outside production, form submissions are marked `isTest: true`, emails go to the sandbox or a single internal address, and Airtable writes go to the staging base with `Test` ticked.
-- Stripe runs in test mode everywhere except production.
+- Test mode is `!isLive()` (`src/utils/site.ts`, SPEC §11.1), never `NODE_ENV` or `VERCEL_ENV`. In test mode, form submissions are marked `isTest: true`, emails go only to `EMAIL_SANDBOX_TO`, Airtable writes go to the test base with `Test` ticked, and Stripe uses test keys.
+- Production runs in test mode until launch.

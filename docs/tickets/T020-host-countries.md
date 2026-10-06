@@ -3,10 +3,10 @@ id: T020
 title: Host Countries index and profiles
 milestone: M4
 release: 2
-depends_on: [T008, T009]
-migrations: false
+depends_on: [T009, T011, T019]
+migrations: true
 requires_human: false
-spec: ['SPEC §4.3', 'SPEC §5.1']
+spec: ['SPEC §4.3', 'SPEC §5.1', 'SPEC §6.3']
 skills: []
 ---
 
@@ -16,6 +16,9 @@ skills: []
 
 **In**
 
+- `host-countries` collection per SPEC §5.1, with drafts; `territory` validates against `dropdowns.territories`.
+- `hostCountriesTeaser` block config and renderer, added to the `pages` layout.
+- Migration.
 - `/host-countries`: grid of published host countries.
 - `/host-countries/[slug]`: profile template (country lead with photo and bio, week overview, activities, local partner logos, Relay form block pre-filled with the country's territory, Donate banner).
 - Page context sets `territory` to the country's value.
@@ -30,5 +33,9 @@ skills: []
   - _Verify (browser):_ with 10 published countries, the index shows all 10 without layout breakage at 390px.
 - [ ] **AC3**: Territory context is correct.
   - _Verify (browser):_ on a profile, `window.dataLayer[0].territory` equals the country's territory value, and the Relay form's territory is pre-selected.
-- [ ] **AC4**: Gates pass.
+- [ ] **AC4**: Territory validation works.
+  - _Verify (api):_ with `dropdowns.territories` set to `[{label:"Jamaica",value:"jamaica"}]`, creating a host country with `territory: "mars"` returns 400 and with `"jamaica"` returns 201.
+- [ ] **AC5**: Migration applies from empty.
+  - _Verify (db):_ fresh database migrates; the tables exist.
+- [ ] **AC6**: Gates pass.
   - _Verify (cli):_ `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build` exits 0.

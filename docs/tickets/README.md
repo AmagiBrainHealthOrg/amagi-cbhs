@@ -10,59 +10,61 @@ Release scope and dates are in SPEC §11.3. Every Release 1 ticket goes before a
 
 ## M0: Foundations
 
-| ID                                    | Title                                                | Depends on | Mig | Human | Status |
-| ------------------------------------- | ---------------------------------------------------- | ---------- | --- | ----- | ------ |
-| [T001](./T001-tooling-and-cleanup.md) | Repo clean-up, scripts, env validation and preflight | —          |     | ✔     | todo   |
-| [T002](./T002-ci-pipeline.md)         | GitHub Actions CI                                    | T001       |     |       | todo   |
-| [T003](./T003-migrations-baseline.md) | Switch to migrations and create the baseline         | T001       | ✔   | ✔     | todo   |
-| [T004](./T004-roles-and-access.md)    | User roles, backfill and access helpers              | T003       | ✔   |       | todo   |
+| ID                                        | Title                                                           | Depends on | Mig | Human | Status |
+| ----------------------------------------- | --------------------------------------------------------------- | ---------- | --- | ----- | ------ |
+| [T001](./T001-tooling-and-cleanup.md)     | Repo clean-up, scripts, env validation and preflight            | —          |     | ✔     | todo   |
+| [T002](./T002-ci-pipeline.md)             | GitHub Actions CI                                               | T001       |     |       | todo   |
+| [T003](./T003-migrations-baseline.md)     | Switch to migrations, create the baseline and migrate on deploy | T001       | ✔   | ✔     | todo   |
+| [T004](./T004-roles-and-access.md)        | User roles, backfill and access helpers                         | T003       | ✔   |       | todo   |
+| [T017](./T017-environments-and-deploy.md) | Lock production until launch, test mode and health check        | T003       |     | ✔     | todo   |
+| [T029](./T029-airtable-base-design.md)    | Airtable base design for sign-off                               | —          |     | ✔     | todo   |
 
 ## M1: Content model and design system
 
-| ID                                       | Title                                                                           | Depends on       | Mig | Human | Status |
-| ---------------------------------------- | ------------------------------------------------------------------------------- | ---------------- | --- | ----- | ------ |
-| [T005](./T005-tokens-and-fonts.md)       | Design tokens and fonts                                                         | T001             |     |       | todo   |
-| [T006](./T006-globals.md)                | Globals: header, footer, donation settings, anchor day, dropdowns, integrations | T004             | ✔   |       | todo   |
-| [T007](./T007-core-collections.md)       | Collections: pages (blocks), news, partners, supporters, FAQs                   | T006             | ✔   |       | todo   |
-| [T008](./T008-supporting-collections.md) | Collections: host countries, sessions, form submissions                         | T007             | ✔   |       | todo   |
-| [T009](./T009-shell-and-blocks.md)       | App shell, components and block renderers                                       | T005, T006, T007 |     |       | todo   |
+| ID                                 | Title                                                                           | Depends on             | Mig | Human | Status |
+| ---------------------------------- | ------------------------------------------------------------------------------- | ---------------------- | --- | ----- | ------ |
+| [T005](./T005-tokens-and-fonts.md) | Design tokens and fonts                                                         | T001                   |     |       | todo   |
+| [T006](./T006-globals.md)          | Globals: header, footer, donation settings, anchor day, dropdowns, integrations | T004                   | ✔   |       | todo   |
+| [T007](./T007-core-collections.md) | Collections: pages (blocks), news, partners, supporters, FAQs                   | T006                   | ✔   |       | todo   |
+| [T008](./T008-form-submissions.md) | Collection: form submissions                                                    | T007                   | ✔   |       | todo   |
+| [T009](./T009-shell-and-blocks.md) | App shell, components and block renderers                                       | T005, T006, T007, T017 |     |       | todo   |
 
 ## M2: Release 1 features
 
-| ID                                   | Title                                                   | Depends on       | Mig | Human | Status |
-| ------------------------------------ | ------------------------------------------------------- | ---------------- | --- | ----- | ------ |
-| [T010](./T010-donations.md)          | Donations: amount chooser, Stripe Checkout, thank-you   | T006, T009       |     |       | todo   |
-| [T011](./T011-pages-and-seed.md)     | Release 1 pages, partner announcements and seed script  | T007, T008, T009 |     |       | todo   |
-| [T012](./T012-form-system.md)        | Shared form system                                      | T008, T009       |     |       | todo   |
-| [T013](./T013-airtable-and-email.md) | Airtable sync and email adapter                         | T012             |     | ✔     | todo   |
-| [T014](./T014-release-1-forms.md)    | Register Interest and Call to Action consultation forms | T013             |     |       | todo   |
-| [T015](./T015-tracking.md)           | Data layer, Google Tag Manager and events               | T009             |     |       | todo   |
+| ID                                   | Title                                                   | Depends on             | Mig | Human | Status |
+| ------------------------------------ | ------------------------------------------------------- | ---------------------- | --- | ----- | ------ |
+| [T010](./T010-donations.md)          | Donations: amount chooser, Stripe Checkout, thank-you   | T006, T009             |     | ✔     | todo   |
+| [T011](./T011-pages-and-seed.md)     | Release 1 pages, partner announcements and seed script  | T007, T008, T009, T017 |     |       | todo   |
+| [T012](./T012-form-system.md)        | Shared form system                                      | T008, T009, T017       | ✔   |       | todo   |
+| [T013](./T013-airtable-and-email.md) | Airtable sync and email adapter                         | T012, T029             |     | ✔     | todo   |
+| [T014](./T014-release-1-forms.md)    | Register Interest and Call to Action consultation forms | T011, T013             |     |       | todo   |
+| [T015](./T015-tracking.md)           | Data layer, Google Tag Manager and events               | T010, T011, T012, T030 |     |       | todo   |
+| [T030](./T030-cookie-consent.md)     | Cookie consent banner                                   | T006, T009             |     |       | todo   |
 
 ## M3: Release 1 launch
 
-| ID                                        | Title                               | Depends on                   | Mig | Human | Status |
-| ----------------------------------------- | ----------------------------------- | ---------------------------- | --- | ----- | ------ |
-| [T017](./T017-environments-and-deploy.md) | Staging on Vercel                   | T010, T011, T014, T015       | ✔   | ✔     | todo   |
-| [T018](./T018-release-1-launch.md)        | Release 1 launch                    | T017                         |     | ✔     | todo   |
+| ID                                 | Title            | Depends on                   | Mig | Human | Status |
+| ---------------------------------- | ---------------- | ---------------------------- | --- | ----- | ------ |
+| [T018](./T018-release-1-launch.md) | Release 1 launch | T010, T011, T014, T015, T017 |     | ✔     | todo   |
 
 # Release 2: date to be confirmed
 
 ## M4: Release 2 features
 
-| ID                                 | Title                                     | Depends on | Mig | Human | Status |
-| ---------------------------------- | ----------------------------------------- | ---------- | --- | ----- | ------ |
-| [T019](./T019-release-2-forms.md)  | Partner, Relay and Contact/media forms    | T014       |     |       | todo   |
-| [T020](./T020-host-countries.md)   | Host Countries index and profiles         | T008, T009 |     |       | todo   |
-| [T021](./T021-programme.md)        | Programme page with filters               | T008, T009 |     |       | todo   |
-| [T022](./T022-donation-webhook.md) | Stripe webhook records donations in Airtable | T010, T013 |     | ✔     | todo   |
-| [T016](./T016-video-block.md)      | Video block                               | T009       | ✔   |       | todo   |
-| [T028](./T028-substack.md)         | Substack posts on News                    | T011       | ✔   |       | todo   |
+| ID                                 | Title                                        | Depends on       | Mig | Human | Status |
+| ---------------------------------- | -------------------------------------------- | ---------------- | --- | ----- | ------ |
+| [T019](./T019-release-2-forms.md)  | Partner, Relay and Contact/media forms       | T014             |     |       | todo   |
+| [T020](./T020-host-countries.md)   | Host Countries index and profiles            | T009, T011, T019 | ✔   |       | todo   |
+| [T021](./T021-programme.md)        | Programme page with filters                  | T009, T020       | ✔   |       | todo   |
+| [T022](./T022-donation-webhook.md) | Stripe webhook records donations in Airtable | T010, T013       |     | ✔     | todo   |
+| [T016](./T016-video-block.md)      | Video block                                  | T009             | ✔   |       | todo   |
+| [T028](./T028-substack.md)         | Substack posts on News                       | T011             | ✔   |       | todo   |
 
 ## M5: Quality and go-live
 
-| ID                              | Title                         | Depends on             | Mig | Human | Status |
-| ------------------------------- | ----------------------------- | ---------------------- | --- | ----- | ------ |
-| [T024](./T024-accessibility.md) | Accessibility audit and fixes | T019, T020, T021 |     |       | todo   |
-| [T025](./T025-performance.md)   | Performance pass              | T019, T020, T021 |     |       | todo   |
-| [T026](./T026-e2e-suite.md)     | End-to-end suite              | T019, T020, T021, T022 |     |       | todo   |
-| [T027](./T027-go-live.md)       | Full go-live                  | T024, T025, T026       |     | ✔     | todo   |
+| ID                              | Title                         | Depends on                         | Mig | Human | Status |
+| ------------------------------- | ----------------------------- | ---------------------------------- | --- | ----- | ------ |
+| [T024](./T024-accessibility.md) | Accessibility audit and fixes | T016, T019, T020, T021, T028       |     |       | todo   |
+| [T025](./T025-performance.md)   | Performance pass              | T016, T019, T020, T021, T028       |     |       | todo   |
+| [T026](./T026-e2e-suite.md)     | End-to-end suite              | T016, T019, T020, T021, T022, T028 |     |       | todo   |
+| [T027](./T027-go-live.md)       | Full go-live                  | T024, T025, T026                   |     | ✔     | todo   |

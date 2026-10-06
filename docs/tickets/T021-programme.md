@@ -3,10 +3,10 @@ id: T021
 title: Programme page with filters
 milestone: M4
 release: 2
-depends_on: [T008, T009]
-migrations: false
+depends_on: [T009, T020]
+migrations: true
 requires_human: false
-spec: ['SPEC §4.3', 'SPEC §9.5']
+spec: ['SPEC §4.3', 'SPEC §5.1', 'SPEC §9.5']
 skills: []
 ---
 
@@ -16,6 +16,8 @@ skills: []
 
 **In**
 
+- `sessions` collection per SPEC §5.1, with drafts; `territory` validates against `dropdowns.territories` (reuse T020's validator).
+- Migration.
 - `/programme`: sessions grouped by day; filters for stream, day, territory and format, driven by URL search params (shareable, works without JavaScript via a form GET).
 - Each session links to `lumaUrl` as an outbound, tracked link.
 - Empty state when filters match nothing.
@@ -28,5 +30,7 @@ skills: []
   - _Verify (browser):_ each session link has `data-destination-type="luma"` and opens the Luma URL.
 - [ ] **AC3**: Empty state renders.
   - _Verify (browser):_ a filter combination with no sessions shows the empty state.
-- [ ] **AC4**: Gates pass.
+- [ ] **AC4**: Migration applies from empty.
+  - _Verify (db):_ fresh database migrates; `sessions` exists.
+- [ ] **AC5**: Gates pass.
   - _Verify (cli):_ `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build` exits 0.
