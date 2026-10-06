@@ -2,16 +2,15 @@
 
 ## Where we are
 
-- Session: 0 (setup only).
-- Done: agentic setup files committed; T001 (PR #9).
-- In flight: none.
+- Done: T001 (#9), T002, T003 (#11), T005 (#12); Vercel deploy fix (#13; production builds run again); donation mockup (#14).
+- In flight: T004 and T017, left as uncommitted work in `.claude/worktrees/agent-a7fcc53c109a3d48b` (T004: role field, migration, access helpers) and `.claude/worktrees/agent-afd50bb3287dc0302` (T017: worktree is corrupted, almost every file deleted; re-dispatch fresh).
 - Parked or blocked: none.
 
 ## Ready to start now
 
-- **T029** (Airtable base design) has no dependencies: start it now so Amagi can sign off D7 before T013.
-- T002, T003 (migration) and T005 can run in parallel. T003 is the only migration ticket in flight.
-- After T003: T017 (production lock and health check) and T004 (migration) can run in parallel.
+- Finish T004 (migration) from its worktree, and re-dispatch T017 fresh; they can run in parallel.
+- **T029** (Airtable base design) has no dependencies: start it so Amagi can sign off D7 before T013.
+- After T004: T006 (migration), then T007, then T009 (also needs T017).
 
 ## Decisions and conventions
 
@@ -27,7 +26,8 @@
 - Local databases are named `amagi_cbhs_<id>`; dev server port is `3000 + <numeric id>`.
 - Under the Claude Code sandbox, local ports, Docker and `pg_dump` to production need the sandbox bypass; run `tsx` scripts as `node --import tsx scripts/<name>.ts` and the Supabase CLI with `DO_NOT_TRACK=1`.
 - Browser checks use the system Chrome: `chromium.launch({ channel: 'chrome' })`.
-- No favicon yet (browsers log a `/favicon.ico` 404); pick it up in T005 or T009.
+- No favicon yet (browsers log a `/favicon.ico` 404); pick it up in T009.
+- `/donate`, `/donate/checkout` and `/donate/thank-you` are a mockup (#14): hard-coded amounts and copy in `donate/mockup.ts`, a placeholder checkout with no payment inputs, noindex and a Mockup banner. T010 replaces it with `donation-settings` (T006) and real Stripe Checkout; delete `mockup.ts` and `checkout/` then.
 
 ## Open questions for the user
 
@@ -37,5 +37,5 @@
 - D6: Release 2 date.
 - D7: Airtable base structure and field list (T029 drafts it; blocks T013).
 - D8: whether donor name and email go to Airtable (affects T022).
-- Vercel cancelled every production build ("Canceled by Ignored Build Step") after #8, even with system env vars exposed. `ignoreCommand` was replaced with `git.deploymentEnabled` (main only). If builds still fail to run, check that `main` is the production branch.
+- White text on `--orange` (the sitewide Donate button) is 2.37:1, below WCAG AA 4.5:1. Darken the orange, use dark text, or make the label large bold text? Needs a design decision (Heather Kong).
 - D9: after launch, whether merges keep deploying straight to production (affects T018).

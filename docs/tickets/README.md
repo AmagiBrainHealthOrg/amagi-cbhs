@@ -10,20 +10,20 @@ Release scope and dates are in SPEC §11.3. Every Release 1 ticket goes before a
 
 ## M0: Foundations
 
-| ID                                        | Title                                                           | Depends on | Mig | Human | Status |
-| ----------------------------------------- | --------------------------------------------------------------- | ---------- | --- | ----- | ------ |
-| [T001](./T001-tooling-and-cleanup.md)     | Repo clean-up, scripts, env validation and preflight            | —          |     | ✔     | done   |
-| [T002](./T002-ci-pipeline.md)             | GitHub Actions CI                                               | T001       |     |       | todo   |
-| [T003](./T003-migrations-baseline.md)     | Switch to migrations, create the baseline and migrate on deploy | T001       | ✔   | ✔     | todo   |
-| [T004](./T004-roles-and-access.md)        | User roles, backfill and access helpers                         | T003       | ✔   |       | todo   |
-| [T017](./T017-environments-and-deploy.md) | Lock production until launch, test mode and health check        | T003       |     | ✔     | todo   |
-| [T029](./T029-airtable-base-design.md)    | Airtable base design for sign-off                               | —          |     | ✔     | todo   |
+| ID                                        | Title                                                           | Depends on | Mig | Human | Status      |
+| ----------------------------------------- | --------------------------------------------------------------- | ---------- | --- | ----- | ----------- |
+| [T001](./T001-tooling-and-cleanup.md)     | Repo clean-up, scripts, env validation and preflight            | —          |     | ✔     | done        |
+| [T002](./T002-ci-pipeline.md)             | GitHub Actions CI                                               | T001       |     |       | done        |
+| [T003](./T003-migrations-baseline.md)     | Switch to migrations, create the baseline and migrate on deploy | T001       | ✔   | ✔     | done        |
+| [T004](./T004-roles-and-access.md)        | User roles, backfill and access helpers                         | T003       | ✔   |       | in-progress |
+| [T017](./T017-environments-and-deploy.md) | Lock production until launch, test mode and health check        | T003       |     | ✔     | in-progress |
+| [T029](./T029-airtable-base-design.md)    | Airtable base design for sign-off                               | —          |     | ✔     | todo        |
 
 ## M1: Content model and design system
 
 | ID                                 | Title                                                                           | Depends on             | Mig | Human | Status |
 | ---------------------------------- | ------------------------------------------------------------------------------- | ---------------------- | --- | ----- | ------ |
-| [T005](./T005-tokens-and-fonts.md) | Design tokens and fonts                                                         | T001                   |     |       | todo   |
+| [T005](./T005-tokens-and-fonts.md) | Design tokens and fonts                                                         | T001                   |     |       | done   |
 | [T006](./T006-globals.md)          | Globals: header, footer, donation settings, anchor day, dropdowns, integrations | T004                   | ✔   |       | todo   |
 | [T007](./T007-core-collections.md) | Collections: pages (blocks), news, partners, supporters, FAQs                   | T006                   | ✔   |       | todo   |
 | [T008](./T008-form-submissions.md) | Collection: form submissions                                                    | T007                   | ✔   |       | todo   |
