@@ -33,6 +33,12 @@ function run(command: string, args: string[], input?: string): string {
   return result.stdout
 }
 
+function runInherited(command: string, args: string[]): void {
+  const result = spawnSync(command, args, { stdio: 'inherit' })
+  if (result.error) fail(`${command} could not start: ${result.error.message}`)
+  if (result.status !== 0) fail(`${command} exited ${result.status}`)
+}
+
 async function main() {
   const localDatabaseUrl = required('DATABASE_URL')
   const problem = localDatabaseProblem(localDatabaseUrl)
@@ -148,6 +154,9 @@ async function main() {
     console.log(`  ${table.padEnd(40)} ${count}`)
   }
   console.log(`\nObjects: ${objects}`)
+
+  console.log('\nRunning migrations…')
+  runInherited('pnpm', ['payload', 'migrate'])
 }
 
 main().catch((error: unknown) => {

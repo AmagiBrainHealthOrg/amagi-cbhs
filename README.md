@@ -36,6 +36,18 @@ The public website for the Caribbean Brain Health Summit, at amagisummit.org. Ne
    pnpm dev
    ```
 
+## Production: mark baseline migration as applied (one-time)
+
+The schema was created by Payload's dev-push before migrations were enabled. Run these two statements against the **production** Supabase database after merging T003:
+
+```sql
+delete from payload_migrations where batch = -1;
+insert into payload_migrations (name, batch, updated_at, created_at)
+  values ('20261006_141524_baseline', 1, now(), now());
+```
+
+After that, the next Vercel deploy will apply only `20261006_141525_enable_rls`.
+
 ## Checks
 
 ```bash
