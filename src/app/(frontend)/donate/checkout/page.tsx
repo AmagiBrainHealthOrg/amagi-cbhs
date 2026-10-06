@@ -9,6 +9,7 @@ type Props = { searchParams: Promise<{ amount?: string | string[]; custom?: stri
 
 // Stands in for Stripe's hosted Checkout page. It deliberately has no payment
 // inputs: card details are only ever entered on Stripe's own page.
+// TODO: delete this page; donors go straight to Stripe's hosted Checkout (T010), only when a human developer decides to.
 export default async function MockCheckoutPage({ searchParams }: Props) {
   const amount = parseAmount(await searchParams)
   if (!amount) redirect('/donate?error=amount')

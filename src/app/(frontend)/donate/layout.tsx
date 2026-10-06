@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import React from 'react'
 
+import { SiteFooter } from '@/components/SiteFooter'
 import { SiteHeader } from '@/components/SiteHeader'
 
 import './donate.css'
@@ -25,6 +26,7 @@ export default async function DonateLayout({ children }: { children: React.React
       <main className="donate-main" id="donate-main">
         {children}
       </main>
+      <SiteFooter />
     </div>
   )
 }
