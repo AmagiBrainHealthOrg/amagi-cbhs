@@ -16,12 +16,14 @@ const withBreaks = (text?: string | null) =>
 
 // TODO: read logo, navItems and donateLabel from the Payload `header` global (T006) only when a
 // human developer decides to. Until then the brand comes from the Coming Soon global.
-export async function SiteHeader() {
+type Props = { nav?: { label: string; href: string }[]; homeHref?: string }
+
+export async function SiteHeader({ nav: items = navItems, homeHref = '/' }: Props = {}) {
   const payload = await getPayload({ config })
   const data = await payload.findGlobal({ slug: 'coming-soon', depth: 1 })
   const logo = data.logo && typeof data.logo === 'object' ? data.logo : undefined
 
-  const nav = navItems.map(({ label, href }) => (
+  const nav = items.map(({ label, href }) => (
     <li key={href}>
       <Link href={href}>{label}</Link>
     </li>
@@ -32,7 +34,7 @@ export async function SiteHeader() {
       {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
       <Link
         className="coming-soon-brand"
-        href="/"
+        href={homeHref}
         aria-label="Caribbean Brain Health Summit homepage"
       >
         {logo?.url && <img src={logo.url} alt={logo.alt} />}
