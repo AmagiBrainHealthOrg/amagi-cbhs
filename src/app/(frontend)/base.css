@@ -1,0 +1,26 @@
+/* Base styles — reset, typography, focus, skip link, reduced motion.
+   No raw hex values; use tokens from tokens.css. */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { margin: 0; font-family: var(--app-font-body); font-size: var(--fs-base); line-height: var(--lh-body); color: hsl(208 100% 24%); background: var(--white); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+h1, p { margin: 0; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; }
+
+.skip-link { position: fixed; top: 8px; left: 8px; z-index: 100; transform: translateY(-180%); padding: 10px 14px; background: var(--yellow); color: var(--navy); font-size: var(--fs-xs); font-weight: 800; }
+.skip-link:focus { transform: none; }
+
+.button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 20px; border: 1px solid transparent; border-radius: 4px; font-size: var(--fs-sm); font-weight: 800; line-height: 1.2; cursor: pointer; transition: transform .2s ease, background-color .2s ease, border-color .2s ease; }
+.button:hover { transform: translateY(-1px); }
+.button:active { transform: translateY(0); }
+.button-orange { background: var(--orange); color: var(--white); box-shadow: 0 3px 7px rgba(243,144,63,.2); }
+.button-orange:hover { background: var(--orange-dark); }
+.button { font-family: var(--app-font-ui); }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

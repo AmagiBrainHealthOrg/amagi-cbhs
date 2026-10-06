@@ -1,0 +1,63 @@
+/* Design tokens — custom properties only.
+   All hex values in the codebase must trace back to this file.
+   Fonts are seeded from CSS variables injected by next/font (layout.tsx). */
+
+:root {
+  /* --- Fonts ------------------------------------------------- */
+  /* next/font injects --font-baloo-2, --font-montserrat, --font-roboto
+     onto <html>; the semantic aliases reference them here. */
+  --app-font-body: var(--font-baloo-2), system-ui, sans-serif;
+  --app-font-heading: var(--font-montserrat), system-ui, sans-serif;
+  --app-font-ui: var(--font-roboto), system-ui, sans-serif;
+  --app-font-key-statement: 'all-round-gothic', 'Arial Rounded MT Bold', 'Montserrat', system-ui, sans-serif;
+  --app-font-sans: var(--app-font-body);
+  --app-font-display: var(--app-font-heading);
+  --app-font-mono: var(--app-font-ui);
+
+  /* --- Brand colours ----------------------------------------- */
+  --primary-blue: #005baa;
+  --navy: var(--primary-blue);
+  --navy-deep: var(--primary-blue);
+  --orange: #f3903f;
+  --orange-dark: var(--red);
+  --yellow: #fcc60d;
+  --red: #e93e39;
+  --red-orange: var(--red);
+  --white: #fff;
+
+  /* --- Ink / text -------------------------------------------- */
+  --ink: #005baa;
+  --muted-ink: #56657a;
+  --muted-text: #64758a;
+  --pale-text: #e9f2fb;
+  --pale-text-light: #dceafb;
+
+  /* --- Borders / surfaces ------------------------------------ */
+  --line: #dce3eb;
+  --border-muted: #e3e7ed;
+  --divider: #a9b5c3;
+  --pale-blue: #f4f8fc;
+
+  /* --- Layout ------------------------------------------------ */
+  --max: 1160px;
+
+  /* --- Type scale -------------------------------------------- */
+  /* Eight steps, rem-based so browser font-size settings are respected.
+     Nothing sits below --fs-2xs (13px). Form controls are locked to
+     --fs-base (16px) so iOS Safari does not auto-zoom on focus.
+     The two clamps replace the previous per-breakpoint heading overrides. */
+  --fs-2xs: 0.8125rem;                        /* 13px  eyebrows, utility bar, legal */
+  --fs-xs: 0.875rem;                          /* 14px  metadata, form labels */
+  --fs-sm: 0.9375rem;                         /* 15px  buttons */
+  --fs-base: 1rem;                            /* 16px  default body, form controls */
+  --fs-md: 1.125rem;                          /* 18px  sustained reading blocks */
+  --fs-lg: 1.25rem;                           /* 20px  card headings (h3) */
+  --fs-xl: clamp(1.625rem, 3vw, 2rem);        /* 26-32px  section headings (h2) */
+  --fs-display: clamp(2.25rem, 6vw, 3.5rem);  /* 36-56px  hero and declaration */
+
+  /* --- Line heights ------------------------------------------ */
+  --lh-display: 0.95;
+  --lh-heading: 1.15;
+  --lh-body: 1.5;
+  --lh-reading: 1.6;
+}
