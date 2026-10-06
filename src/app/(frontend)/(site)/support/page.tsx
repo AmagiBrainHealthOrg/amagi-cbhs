@@ -4,7 +4,7 @@ import React from 'react'
 import { FaqList } from '@/components/FaqList'
 
 import { DonateBand, DonateButton, PhotoHero, SectionHeading } from '../_components/chrome'
-import { IconTiles, icons, TierStairs } from '../_components/graphics'
+import { IconTiles, icons, SupporterRings } from '../_components/graphics'
 import { faqs, support, supportV1 } from '../_content'
 
 export const metadata: Metadata = { title: 'Support | Caribbean Brain Health Summit (v1)' }
@@ -34,7 +34,7 @@ export default function V1SupportPage() {
           heading={support.levels.heading}
           body={support.levels.intro}
         />
-        <TierStairs levels={support.levels.items} />
+        <SupporterRings levels={support.levels.items} />
       </section>
 
       <section className="v1-band v1-band-blue" aria-labelledby="v1-safeguards-heading">

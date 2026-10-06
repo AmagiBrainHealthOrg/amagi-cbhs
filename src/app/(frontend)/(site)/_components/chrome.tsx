@@ -9,7 +9,6 @@ import { crossfadeKeyframes } from '@/utils/crossfadeKeyframes'
 
 import { donateBanner } from '../_content'
 import { caribbeanMap } from './caribbeanMap'
-import { donationSettings, formatAmount } from '../../donate/mockup'
 
 const SECONDS_PER_IMAGE = 8
 
@@ -148,24 +147,12 @@ export function MapHero({
 }
 
 export function DonateBand() {
-  const { suggestedAmounts, impact } = donationSettings
-
   return (
     <section className="v1-donate-band" aria-labelledby="v1-donate-band-title">
       <div className="v1-donate-band-inner">
-        <div>
-          <h2 id="v1-donate-band-title">{donateBanner.heading}</h2>
-          <p>{donateBanner.body}</p>
-          <DonateButton label={donateBanner.label} />
-        </div>
-        <ul className="v1-donate-band-amounts" aria-label="What a gift can do">
-          {suggestedAmounts.map((amount) => (
-            <li key={amount}>
-              <strong>{formatAmount(amount)}</strong>
-              <span>{impact[amount]}</span>
-            </li>
-          ))}
-        </ul>
+        <h2 id="v1-donate-band-title">{donateBanner.heading}</h2>
+        <p>{donateBanner.body}</p>
+        <DonateButton label={donateBanner.label} />
       </div>
     </section>
   )
