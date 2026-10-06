@@ -21,6 +21,7 @@ skills: []
 - Inject UTM values from T009's `getUtm()` into every form as hidden fields.
 - `POST /api/forms/[key]`: validate with the registry schema, honeypot check, rate limit (SPEC §8.2) counted in a new `rate_limits` table (hashed IP, window start, count; migration), create `form-submissions` (`isTest` when not `isLive()`, SPEC §11.1), redirect to `/thank-you/[key]` with `territory` and `audience_type` per SPEC §8.2.
 - `/thank-you/[key]` page using copy from the `forms` global (SPEC §8.4).
+- A link to `/privacy` beside the consent checkboxes (SPEC §4.2).
 - Accessible validation (client and server), focus to first error.
 - The `form` block now renders the selected form.
 - A test-only form definition `test-form` used by this ticket's ACs, available only when `NODE_ENV !== 'production'`.

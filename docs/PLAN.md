@@ -15,7 +15,7 @@ Build on the existing Payload + Next.js repo. There is no staging and there are 
 
 ## 3. Milestones
 
-**Release 1, 16 October 2026: M0–M3 (T001–T015, T017, T018, T029).** **Release 2, date to be confirmed: M4–M5 (T016, T019–T022, T024–T028).**
+**Release 1, 16 October 2026: M0–M3 (T001–T015, T017, T018, T029, T030).** **Release 2, date to be confirmed: M4–M5 (T016, T019–T022, T024–T028).**
 
 ### M0: Foundations
 
@@ -27,7 +27,7 @@ T005 tokens and fonts · T006 globals · T007 core collections · T008 form subm
 
 ### M2: Release 1 features
 
-T010 donations · T011 pages and seed · T012 form system · T013 Airtable and email · T014 Release 1 forms · T015 tracking.
+T010 donations · T011 pages and seed · T012 form system · T013 Airtable and email · T014 Release 1 forms · T030 cookie consent · T015 tracking.
 
 ### M3: Release 1 launch
 
@@ -53,7 +53,8 @@ T005 + T006 + T007 + T017 ─ T009
 T009 ─┬─ T010
       ├─ T011
       └─ T012 (needs T008) ─ T013 (needs T029) ─ T014 (needs T011)
-T010 + T011 + T012 ─ T015
+T006 + T009 ─ T030
+T010 + T011 + T012 + T030 ─ T015
 T010 + T011 + T014 + T015 + T017 ─ T018
 
 Release 2:

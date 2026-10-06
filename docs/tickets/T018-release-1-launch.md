@@ -16,7 +16,7 @@ skills: []
 
 Production has run locked and in test mode since T017, and editors have entered real content there, so launch is a switch, not a migration of content.
 
-Human steps: Amagi confirms whether Release 1 is public (D4), that copy is entered, the data processing agreement is signed, and the Google Tag Manager container ID is set. Tandem decides D9. Then, following `docs/DEPLOY.md`: create an Amagi-owned Vercel Pro team and transfer the project; transfer the Supabase project to Amagi's organisation (moving it to a paid plan for backups); create the production Airtable base and token; verify the Resend sending domain in Cloudflare; swap to Stripe live keys and the production Airtable base; set `SITE_LIVE=true`; unset `SITE_LOCKED` unless D4 is "editor-only"; point amagisummit.org at Vercel in Cloudflare (DNS only).
+Human steps: Amagi confirms whether Release 1 is public (D4), that copy is entered (including privacy, cookies and terms), the data processing agreement is signed, and the Google Tag Manager container ID is set. Tandem decides D9. Then, following `docs/DEPLOY.md`: create an Amagi-owned Vercel Pro team and transfer the project; transfer the Supabase project to Amagi's organisation (moving it to a paid plan for backups); create the production Airtable base and token; verify the Resend sending domain in Cloudflare; swap to Stripe live keys and the production Airtable base; set `SITE_LIVE=true`; unset `SITE_LOCKED` unless D4 is "editor-only"; point amagisummit.org at Vercel in Cloudflare (DNS only).
 
 ## Scope
 

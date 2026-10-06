@@ -56,23 +56,23 @@ All production accounts (hosting, database, storage, Stripe, email, fonts, Googl
 ### 4.1 Global
 
 - **Header:** logo, navigation, **Donate** button (primary).
-- **Footer:** privacy, cookies, terms, contact links; legal text.
+- **Footer:** privacy, cookies, terms, contact links; a "Cookie settings" link (§10.5); legal text.
 
 ### 4.2 Pages (Release 1)
 
-| Route                            | Page                           | Notes                                                                                                                                                             |
-| -------------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/`                              | Home                           | The case for supporting the Summit; dates; Anchor Day details (§5.2); Donate primary; teasers for Support and News (the Host Countries teaser joins in Release 2) |
-| `/about`                         | About                          | Summit purpose and Amagi's role. Mentions PLADRR, a follow-on event in Kingston on 3–5 February 2027                                                              |
-| `/support`                       | Support Caribbean Brain Health | Why support matters, what it enables, supporter levels, safeguards, support FAQs, Donate. Supporter list shows permission-confirmed entries only                  |
-| `/call-to-action`                | Call to Action                 | Explains the _Caribbean Call to Action on Brain Health_ and its five action areas. Hosts the consultation form (§8.3). No download, signing or endorser list      |
-| `/faqs`                          | FAQs                           | A `pages` document with a `faqList` block: expandable questions grouped by category                                                                               |
-| `/donate`                        | Donate                         | Amount chooser (§7)                                                                                                                                               |
-| `/news`                          | News                           | `news` items, newest first. Approved `substack-posts` join in Release 2 (§9.3)                                                                                    |
-| `/news/[slug]`                   | News item                      |                                                                                                                                                                   |
-| `/donate/thank-you`              | Donation thank-you             | §7                                                                                                                                                                |
-| `/thank-you/[form]`              | Form thank-you                 | §8                                                                                                                                                                |
-| `/privacy`, `/cookies`, `/terms` | Legal                          | Pages from the `pages` collection                                                                                                                                 |
+| Route                            | Page                           | Notes                                                                                                                                                                          |
+| -------------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `/`                              | Home                           | The case for supporting the Summit; dates; Anchor Day details (§5.2); Donate primary; teasers for Support and News (the Host Countries teaser joins in Release 2)              |
+| `/about`                         | About                          | Summit purpose and Amagi's role. Mentions PLADRR, a follow-on event in Kingston on 3–5 February 2027                                                                           |
+| `/support`                       | Support Caribbean Brain Health | Why support matters, what it enables, supporter levels, safeguards, support FAQs, Donate. Supporter list shows permission-confirmed entries only                               |
+| `/call-to-action`                | Call to Action                 | Explains the _Caribbean Call to Action on Brain Health_ and its five action areas. Hosts the consultation form (§8.3). No download, signing or endorser list                   |
+| `/faqs`                          | FAQs                           | A `pages` document with a `faqList` block: expandable questions grouped by category                                                                                            |
+| `/donate`                        | Donate                         | Amount chooser (§7)                                                                                                                                                            |
+| `/news`                          | News                           | `news` items, newest first. Approved `substack-posts` join in Release 2 (§9.3)                                                                                                 |
+| `/news/[slug]`                   | News item                      |                                                                                                                                                                                |
+| `/donate/thank-you`              | Donation thank-you             | §7                                                                                                                                                                             |
+| `/thank-you/[form]`              | Form thank-you                 | §8                                                                                                                                                                             |
+| `/privacy`, `/cookies`, `/terms` | Legal                          | Pages from the `pages` collection, with copy from Amagi. `/cookies` lists every cookie the site and Google Tag Manager set. Every form links to `/privacy` beside its consents |
 
 ### 4.3 Pages (Release 2)
 
@@ -118,6 +118,7 @@ Drafts, autosave and live preview are on for `pages`, `news`, `partners`, `suppo
 | `dropdowns`         | `territories`, `audienceTypes`, `industries`: each an array of `{ label, value }`                                                                        |
 | `integrations`      | `gtmContainerId`; `substackFeedUrl`, `substackUrl` (Release 2). Admin-only                                                                               |
 | `forms`             | `thankYou`: one entry per form key (§8.3), each `{ form, heading, body }`                                                                                |
+| `cookie-consent`    | `heading`, `body`, `acceptLabel`, `rejectLabel`, `settingsLabel` (the footer link)                                                                       |
 | `coming-soon`       | Existing. Retired at Release 1 launch (§11.4)                                                                                                            |
 
 ### 5.3 Dropdown values
@@ -245,7 +246,16 @@ Every CTA button and outbound link carries `data-journey`, `data-action`, `data-
 
 ### 10.4 Rules
 
-No personal data in any event or data-layer value. No advertising pixels. Google Tag Manager loads only if `integrations.gtmContainerId` is set, and only after consent if D10 requires it.
+No personal data in any event or data-layer value. No advertising pixels. Google Tag Manager loads only if `integrations.gtmContainerId` is set and the visitor has accepted analytics (§10.5).
+
+### 10.5 Cookie consent
+
+- On a first visit, a banner offers **Accept** and **Reject**, equally prominent, with a link to `/cookies`. Copy comes from the `cookie-consent` global.
+- Until the visitor accepts, Google Tag Manager doesn't load and no non-essential cookies are set. `dataLayer` pushes still happen (they set no cookies), and Google Tag Manager processes them if it loads later in the visit.
+- The choice is kept for 6 months in a first-party cookie, `cbhs_consent` (`analytics` or `rejected`), which is strictly necessary.
+- Google Consent Mode defaults go into `dataLayer` first, with every type `denied`. Accepting grants `analytics_storage` only; advertising types are never granted.
+- A "Cookie settings" link in the footer reopens the banner. Withdrawing consent is as easy as giving it: rejecting after accepting deletes the `_ga*` cookies on our domain.
+- The banner is keyboard accessible, isn't a modal, doesn't trap focus and never covers the Donate button.
 
 ## 11. Environments and deployment
 
@@ -272,10 +282,10 @@ Vercel, building `main` with the Next.js preset. Non-production deployments are 
 
 ### 11.3 Release 1 vs Release 2
 
-| Release | Date                     | Delivers                                                                                                                                                                                                                                        | Tickets                     |
-| ------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| 1       | **16 October 2026**      | Release 1 pages (§4.2); donations via Stripe Checkout with server-confirmed thank-you (§7 steps 1–4); Register Interest and Call to Action consultation forms (§8.3) with Airtable sync and email (§9.1–9.2); tracking (§10)                    | T001–T015, T017, T018, T029 |
-| 2       | To be confirmed (§13 D6) | Host Countries and Programme with Luma links (§4.3, §9.5); Substack posts on News (§9.3); video block (§9.4); donation webhook to Airtable (§7 step 5); Partner, Relay and Contact forms (§8.3); accessibility, performance and end-to-end pass | T016, T019–T022, T024–T028  |
+| Release | Date                     | Delivers                                                                                                                                                                                                                                                                               | Tickets                           |
+| ------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| 1       | **16 October 2026**      | Release 1 pages (§4.2); donations via Stripe Checkout with server-confirmed thank-you (§7 steps 1–4); Register Interest and Call to Action consultation forms (§8.3) with Airtable sync and email (§9.1–9.2); privacy, cookies and terms pages; cookie consent (§10.5); tracking (§10) | T001–T015, T017, T018, T029, T030 |
+| 2       | To be confirmed (§13 D6) | Host Countries and Programme with Luma links (§4.3, §9.5); Substack posts on News (§9.3); video block (§9.4); donation webhook to Airtable (§7 step 5); Partner, Relay and Contact forms (§8.3); accessibility, performance and end-to-end pass                                        | T016, T019–T022, T024–T028        |
 
 Every ticket's `release` frontmatter says which release it belongs to. Release 1 work takes priority: no Release 2 ticket starts while a Release 1 ticket is ready to start.
 
@@ -293,13 +303,12 @@ Copywriting and brand design; translation; analytics and dashboard configuration
 
 ## 13. Open decisions
 
-| #   | Decision                                                                                                                                                       | Owner                 | Blocks                           |
-| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------- |
-| D3  | Territory and industry values                                                                                                                                  | Amagi                 | T014 (seed can use placeholders) |
-| D4  | Whether Release 1 is public or editor-only                                                                                                                     | Amagi                 | T018                             |
-| D5  | Suggested donation amounts and currency                                                                                                                        | Amagi                 | T010 (seed can use placeholders) |
-| D6  | Release 2 date                                                                                                                                                 | Tandem + Amagi        | Release 2 scheduling             |
-| D7  | Airtable base structure and field list (§9.1)                                                                                                                  | Amagi                 | T029, T013                       |
-| D8  | Whether donor name and email go to Airtable                                                                                                                    | Amagi                 | T022                             |
-| D9  | Whether merges keep deploying straight to production after launch, or production deploys from a `production` branch that a person fast-forwards                | Tandem                | T018                             |
-| D10 | Whether analytics need a cookie consent banner before Google Tag Manager loads (depends on where Amagi is established and what Beyond Growth's container sets) | Amagi + Beyond Growth | T015, T018                       |
+| #   | Decision                                                                                                                                        | Owner          | Blocks                           |
+| --- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | -------------------------------- |
+| D3  | Territory and industry values                                                                                                                   | Amagi          | T014 (seed can use placeholders) |
+| D4  | Whether Release 1 is public or editor-only                                                                                                      | Amagi          | T018                             |
+| D5  | Suggested donation amounts and currency                                                                                                         | Amagi          | T010 (seed can use placeholders) |
+| D6  | Release 2 date                                                                                                                                  | Tandem + Amagi | Release 2 scheduling             |
+| D7  | Airtable base structure and field list (§9.1)                                                                                                   | Amagi          | T029, T013                       |
+| D8  | Whether donor name and email go to Airtable                                                                                                     | Amagi          | T022                             |
+| D9  | Whether merges keep deploying straight to production after launch, or production deploys from a `production` branch that a person fast-forwards | Tandem         | T018                             |
