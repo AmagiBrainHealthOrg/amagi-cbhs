@@ -3,7 +3,7 @@
 // TODO: hard-coded; migrate to Payload (`header` global, navItems) only when a human developer decides to.
 export const navItems = [
   { label: 'About', href: '/about' },
-  { label: 'Support', href: '/support' },
+  { label: 'Support Caribbean Brain Health', href: '/support' },
   { label: 'Call to Action', href: '/call-to-action' },
   { label: 'News', href: '/news' },
   { label: 'FAQs', href: '/faqs' },
@@ -16,7 +16,7 @@ export const footer = {
     { label: 'Cookies', href: '/cookies' },
     { label: 'Terms', href: '/terms' },
     // TODO: placeholder address; confirm Amagi's contact email. Release 2 replaces this with the /contact form.
-    { label: 'Contact', href: 'mailto:hello@amagisummit.org' },
+    { label: 'Contact', href: 'mailto:info@amagibrainhealth.org' },
   ],
   // TODO: wire to the cookie consent banner (T030, `cookie-consent` global) only when a human developer decides to.
   cookieSettingsLabel: 'Cookie settings',
@@ -134,24 +134,24 @@ export const callToAction = {
     'It sets out five areas where action would make the biggest difference to brain health in the Caribbean. Amagi is consulting on it before and during Summit week.',
   areas: [
     {
-      title: 'Awareness and stigma',
-      body: 'Help people understand brain health and talk about it openly.',
+      title: 'Brain health as workforce and development capacity',
+      body: "Brain health shapes the Caribbean's future workforce, family care capacity, productivity and economic resilience.",
     },
     {
-      title: 'Prevention and risk reduction',
-      body: 'Reduce the risks to brain health across a lifetime.',
+      title: 'Coordinated investment in brain-health infrastructure',
+      body: 'The region needs practical infrastructure for prevention, care, participation, research, learning and collaboration.',
     },
     {
-      title: 'Diagnosis and care',
-      body: 'Make timely diagnosis and good care available close to home.',
+      title: 'Workforce capacity and support for family carers',
+      body: 'Primary care teams, care workers and families need practical knowledge, clear pathways and stronger support.',
     },
     {
-      title: 'Workforce and research',
-      body: 'Build Caribbean expertise and evidence in brain health.',
+      title: 'Caribbean-specific evidence for Caribbean-specific action',
+      body: 'The Caribbean needs evidence that reflects its own populations, cultures, health systems and diaspora realities.',
     },
     {
-      title: 'Policy and financing',
-      body: 'Put brain health into national plans and budgets.',
+      title: 'Sustained coordination, review and accountability',
+      body: 'Progress requires continuing relationships, shared learning and visible follow-through beyond Summit week.',
     },
   ],
   // TODO: replace with the consultation form (T012/T014: form-submissions, Airtable sync, Resend email) only when a human developer decides to.
@@ -315,7 +315,7 @@ export const legal = {
       },
       {
         heading: 'Contact',
-        body: 'Questions about these terms can be sent to hello@amagisummit.org.',
+        body: 'Questions about these terms can be sent to info@amagibrainhealth.org.',
       },
     ],
   },
