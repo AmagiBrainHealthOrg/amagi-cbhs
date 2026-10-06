@@ -16,10 +16,10 @@ skills: [payload]
 
 **In**
 
-- `scripts/seed.ts` (`pnpm db:seed`): idempotent; creates `pages` for Home (slug `home`), About, Support, Call to Action, FAQs, Privacy, Cookies, Terms with sensible block layouts and placeholder copy marked `[PLACEHOLDER]`; seeds `dropdowns.audienceTypes` (SPEC §5.3), placeholder territories and industries, placeholder `donation-settings` amounts; header and footer.
+- `scripts/seed.ts` (`pnpm db:seed`): idempotent; creates `pages` for Home (slug `home`), About, Support, Call to Action, FAQs (a `faqList` block grouped by category), Privacy, Cookies, Terms with sensible block layouts and placeholder copy marked `[PLACEHOLDER]`; seeds `dropdowns.audienceTypes` (SPEC §5.3), placeholder territories and industries, placeholder `donation-settings` amounts; header and footer; placeholder thank-you copy in the `forms` global for every form key.
 - `/` renders the `home` page. Anonymous visitors still see Coming Soon in production while the site is locked (T017).
 - `/news` (news items, newest first) and `/news/[slug]`. Substack posts join `/news` in T028 (Release 2).
-- `/faqs` rendering the `faqs` collection by category.
+- The catch-all route returns 404 for the `home` slug, so Home is only at `/`.
 - Partner announcements per SPEC §4.4: Home `newsTeaser` shows latest announcements; partner entries link to their announcements.
 - No seed content uses forbidden wording.
 
@@ -39,5 +39,7 @@ skills: [payload]
   - _Verify (browser):_ publish one partner announcement; it appears on `/news`, in the Home news teaser and on the partner's entry.
 - [ ] **AC5**: No forbidden wording.
   - _Verify (code):_ `grep -rniE "sponsor|exhibitor|lead generation" scripts src --include=*.ts --include=*.tsx` returns nothing.
-- [ ] **AC6**: Gates pass.
+- [ ] **AC6**: No serious accessibility issues.
+  - _Verify (browser):_ an `@axe-core/playwright` scan of each page in AC2 reports no serious or critical violations.
+- [ ] **AC7**: Gates pass.
   - _Verify (cli):_ `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build` exits 0.

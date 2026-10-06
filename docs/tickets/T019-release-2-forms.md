@@ -16,7 +16,7 @@ skills: []
 
 **In**
 
-- Registry definitions for `partner`, `relay`, `contact` per SPEC §8.3, with routes `/get-involved/partner`, `/get-involved/relay`, `/contact` as `pages` with a `form` block (via seed).
+- Registry definitions for `partner`, `relay`, `contact` per SPEC §8.3 (their keys are already in the schema, so no migration), with routes `/get-involved/partner`, `/get-involved/relay`, `/contact` as `pages` with a `form` block (via seed).
 - `partner` is an organisation form (industry shown).
 - `relay` writes `territory` as its own field, so each country lead can have a filtered Airtable view.
 - `contact` shows `outlet` only when enquiry type is `media`.

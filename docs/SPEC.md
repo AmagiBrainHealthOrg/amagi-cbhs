@@ -60,18 +60,19 @@ All production accounts (hosting, database, storage, Stripe, email, fonts, Googl
 
 ### 4.2 Pages (Release 1)
 
-| Route                            | Page                           | Notes                                                                                                                                                        |
-| -------------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `/`                              | Home                           | The case for supporting the Summit; dates; Anchor Day details (§5.2); Donate primary; teasers for Support, News, Host Countries                              |
-| `/about`                         | About                          | Summit purpose and Amagi's role. Mentions PLADRR, a follow-on event in Kingston on 3–5 February 2027                                                         |
-| `/support`                       | Support Caribbean Brain Health | Why support matters, what it enables, supporter levels, safeguards, support FAQs, Donate. Supporter list shows permission-confirmed entries only             |
-| `/call-to-action`                | Call to Action                 | Explains the _Caribbean Call to Action on Brain Health_ and its five action areas. Hosts the consultation form (§8.3). No download, signing or endorser list |
-| `/faqs`                          | FAQs                           | Expandable questions                                                                                                                                         |
-| `/news`                          | News                           | `news` items, newest first. Approved `substack-posts` join in Release 2 (§9.3)                                                                               |
-| `/news/[slug]`                   | News item                      |                                                                                                                                                              |
-| `/donate/thank-you`              | Donation thank-you             | §7                                                                                                                                                           |
-| `/thank-you/[form]`              | Form thank-you                 | §8                                                                                                                                                           |
-| `/privacy`, `/cookies`, `/terms` | Legal                          | Pages from the `pages` collection                                                                                                                            |
+| Route                            | Page                           | Notes                                                                                                                                                             |
+| -------------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/`                              | Home                           | The case for supporting the Summit; dates; Anchor Day details (§5.2); Donate primary; teasers for Support and News (the Host Countries teaser joins in Release 2) |
+| `/about`                         | About                          | Summit purpose and Amagi's role. Mentions PLADRR, a follow-on event in Kingston on 3–5 February 2027                                                              |
+| `/support`                       | Support Caribbean Brain Health | Why support matters, what it enables, supporter levels, safeguards, support FAQs, Donate. Supporter list shows permission-confirmed entries only                  |
+| `/call-to-action`                | Call to Action                 | Explains the _Caribbean Call to Action on Brain Health_ and its five action areas. Hosts the consultation form (§8.3). No download, signing or endorser list      |
+| `/faqs`                          | FAQs                           | A `pages` document with a `faqList` block: expandable questions grouped by category                                                                               |
+| `/donate`                        | Donate                         | Amount chooser (§7)                                                                                                                                               |
+| `/news`                          | News                           | `news` items, newest first. Approved `substack-posts` join in Release 2 (§9.3)                                                                                    |
+| `/news/[slug]`                   | News item                      |                                                                                                                                                                   |
+| `/donate/thank-you`              | Donation thank-you             | §7                                                                                                                                                                |
+| `/thank-you/[form]`              | Form thank-you                 | §8                                                                                                                                                                |
+| `/privacy`, `/cookies`, `/terms` | Legal                          | Pages from the `pages` collection                                                                                                                                 |
 
 ### 4.3 Pages (Release 2)
 
@@ -101,8 +102,8 @@ Drafts, autosave and live preview are on for `pages`, `news`, `partners`, `suppo
 | `partners`         | `name`, `logo`, `description`, `website`, `permissionConfirmed`                                                                                                                                                          |
 | `supporters`       | `name`, `logo`, `level`, `permissionConfirmed`                                                                                                                                                                           |
 | `faqs`             | `question`, `answer`, `category`, `order`                                                                                                                                                                                |
-| `host-countries`   | `name`, `slug`, `countryLead` (name, photo, bio), `weekOverview`, `activities` (array), `localPartners` (logos), `territory` (value from dropdowns)                                                                      |
-| `sessions`         | `title`, `stream`, `day` (date), `territory`, `format` (`in-person` \| `online`), `description`, `lumaUrl`                                                                                                               |
+| `host-countries`   | Release 2. `name`, `slug`, `countryLead` (name, photo, bio), `weekOverview`, `activities` (array), `localPartners` (logos), `territory` (value from dropdowns)                                                           |
+| `sessions`         | Release 2. `title`, `stream`, `day` (date), `territory`, `format` (`in-person` \| `online`), `description`, `lumaUrl`                                                                                                    |
 | `substack-posts`   | Release 2. `title`, `url` (unique), `publishedDate`, `excerpt`, `approved` (default false)                                                                                                                               |
 | `form-submissions` | `form`, `data` (JSON), `territory`, `audienceType`, `consents` (group of 3), `utm` (group of 5), `isTest`, `airtableSyncStatus` (`pending` \| `synced` \| `failed`), `airtableSyncError`, `airtableRecordId`. Admin-only |
 
@@ -116,6 +117,7 @@ Drafts, autosave and live preview are on for `pages`, `news`, `partners`, `suppo
 | `anchor-day`        | `date`, `venue`, `moderator`, `mc` (all optional; still being confirmed)                                                                                 |
 | `dropdowns`         | `territories`, `audienceTypes`, `industries`: each an array of `{ label, value }`                                                                        |
 | `integrations`      | `gtmContainerId`; `substackFeedUrl`, `substackUrl` (Release 2). Admin-only                                                                               |
+| `forms`             | `thankYou`: one entry per form key (§8.3), each `{ form, heading, body }`                                                                                |
 | `coming-soon`       | Existing. Retired at Release 1 launch (§11.4)                                                                                                            |
 
 ### 5.3 Dropdown values
@@ -136,7 +138,7 @@ Header, Footer, Button (primary = Donate; secondary; tertiary), Section, Card, A
 
 ### 6.3 Blocks
 
-`hero`, `richText`, `cardGrid`, `donateBanner`, `logoGrid` (supporters or partners, permission-filtered), `faqList`, `newsTeaser`, `hostCountriesTeaser`, `video` (§9.4, Release 2), `form` (selects a form from §8.3), `anchorDay`, `supporterLevels`, `actionAreas`.
+`hero`, `richText`, `cardGrid`, `donateBanner`, `logoGrid` (supporters or partners, permission-filtered), `faqList`, `newsTeaser`, `hostCountriesTeaser` (Release 2), `video` (§9.4, Release 2), `form` (selects a form key from §8.3), `anchorDay`, `supporterLevels`, `actionAreas`.
 
 ## 7. Donations
 
@@ -160,12 +162,12 @@ Header, Footer, Button (primary = Donate; secondary; tertiary), Section, Card, A
 ### 8.2 Submission flow
 
 1. Client validation, then server validation (Zod).
-2. Rate limit: 5 submissions per IP per 10 minutes, counted in Postgres (the app runs serverless, so in-memory counters don't work).
+2. Rate limit: 5 submissions per IP per 10 minutes, counted in a Postgres table (the app runs serverless, so in-memory counters don't work).
 3. Create a `form-submissions` document (`airtableSyncStatus: pending`). This is the permanent record and the retry queue: a submission is never lost if Airtable is down.
-4. `afterChange` writes to Airtable (§9.1); sets `synced` (with the record ID) or `failed` with the error.
-5. Send a confirmation email.
-6. Redirect to `/thank-you/[form]`.
-7. Admins can retry failed syncs from the admin (a "Retry sync" action).
+4. Send a confirmation email.
+5. Redirect to `/thank-you/[form]?territory=<value>&audience_type=<value>` (non-personal values for `form_submit`, §10.2).
+6. After the response (Next's `after()`, so Vercel doesn't cut it short), `syncSubmission(id)` writes to Airtable (§9.1) and sets `synced` (with the record ID) or `failed` with the error. A failure also emails `SYNC_ALERT_TO`.
+7. Admins can retry failed syncs from the admin (a "Retry sync" action calling the same `syncSubmission`).
 
 ### 8.3 Forms
 
@@ -177,9 +179,11 @@ Header, Footer, Button (primary = Donate; secondary; tertiary), Section, Card, A
 | `relay`             | Brain Health Relay          | 2       | name, email, organisation (optional), proposed activity, date                             | Routed by territory: territory is its own field, so each country lead has a filtered Airtable view |
 | `contact`           | Contact and media           | 2       | name, email, enquiry type (`general` \| `media`), message, outlet (media only)            |                                                                                                    |
 
+All five keys are in the schema from Release 1 (Payload stores select options as a Postgres enum, and adding values later needs a migration). Release 2 forms add registry definitions only.
+
 ### 8.4 Thank-you pages
 
-One template; copy per form from the CMS (stored on the `form` block or a `thankYou` field on the form config).
+One template; heading and body per form key from the `forms` global (§5.2). The thank-you route only knows the form key, so copy can't live on the `form` block.
 
 ## 9. Integrations
 
@@ -227,13 +231,13 @@ Each route sets these values (default `audience_segment: "general_public"`, `jou
 
 ### 10.2 Events
 
-| Event               | When                                                       | Payload                                |
-| ------------------- | ---------------------------------------------------------- | -------------------------------------- |
-| `form_start`        | First interaction with a form, once per form per page load | `form`                                 |
-| `form_submit`       | After confirmed server success                             | `form`, `territory`, `audience_type`   |
-| `donate_click`      | Any Donate button click                                    | `location`                             |
-| `donation_complete` | Thank-you page after the session is confirmed paid         | `value`, `currency`                    |
-| `outbound_click`    | Any external link (Luma, Substack, partners)               | `destination_type`, `destination_host` |
+| Event               | When                                                                                                                                               | Payload                                |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| `form_start`        | First interaction with a form, once per form per page load                                                                                         | `form`                                 |
+| `form_submit`       | Thank-you page, once: only when the form left a pending marker in `sessionStorage`, which it then clears (refreshes and direct visits don't count) | `form`, `territory`, `audience_type`   |
+| `donate_click`      | Any Donate button click                                                                                                                            | `location`                             |
+| `donation_complete` | Thank-you page after the session is confirmed paid, once per session ID                                                                            | `value`, `currency`                    |
+| `outbound_click`    | Any external link (Luma, Substack, partners)                                                                                                       | `destination_type`, `destination_host` |
 
 ### 10.3 Data attributes
 
@@ -241,7 +245,7 @@ Every CTA button and outbound link carries `data-journey`, `data-action`, `data-
 
 ### 10.4 Rules
 
-No personal data in any event or data-layer value. No advertising pixels. Google Tag Manager loads only if `integrations.gtmContainerId` is set.
+No personal data in any event or data-layer value. No advertising pixels. Google Tag Manager loads only if `integrations.gtmContainerId` is set, and only after consent if D10 requires it.
 
 ## 11. Environments and deployment
 
@@ -268,10 +272,10 @@ Vercel, building `main` with the Next.js preset. Non-production deployments are 
 
 ### 11.3 Release 1 vs Release 2
 
-| Release | Date                     | Delivers                                                                                                                                                                                                                                        | Tickets                    |
-| ------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
-| 1       | **16 October 2026**      | Release 1 pages (§4.2); donations via Stripe Checkout with server-confirmed thank-you (§7 steps 1–4); Register Interest and Call to Action consultation forms (§8.3) with Airtable sync and email (§9.1–9.2); tracking (§10)                    | T001–T015, T017, T018      |
-| 2       | To be confirmed (§13 D6) | Host Countries and Programme with Luma links (§4.3, §9.5); Substack posts on News (§9.3); video block (§9.4); donation webhook to Airtable (§7 step 5); Partner, Relay and Contact forms (§8.3); accessibility, performance and end-to-end pass | T016, T019–T022, T024–T028 |
+| Release | Date                     | Delivers                                                                                                                                                                                                                                        | Tickets                     |
+| ------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
+| 1       | **16 October 2026**      | Release 1 pages (§4.2); donations via Stripe Checkout with server-confirmed thank-you (§7 steps 1–4); Register Interest and Call to Action consultation forms (§8.3) with Airtable sync and email (§9.1–9.2); tracking (§10)                    | T001–T015, T017, T018, T029 |
+| 2       | To be confirmed (§13 D6) | Host Countries and Programme with Luma links (§4.3, §9.5); Substack posts on News (§9.3); video block (§9.4); donation webhook to Airtable (§7 step 5); Partner, Relay and Contact forms (§8.3); accessibility, performance and end-to-end pass | T016, T019–T022, T024–T028  |
 
 Every ticket's `release` frontmatter says which release it belongs to. Release 1 work takes priority: no Release 2 ticket starts while a Release 1 ticket is ready to start.
 
@@ -289,12 +293,13 @@ Copywriting and brand design; translation; analytics and dashboard configuration
 
 ## 13. Open decisions
 
-| #   | Decision                                                                                                                                        | Owner          | Blocks                           |
-| --- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | -------------------------------- |
-| D3  | Territory and industry values                                                                                                                   | Amagi          | T014 (seed can use placeholders) |
-| D4  | Whether Release 1 is public or editor-only                                                                                                      | Amagi          | T018                             |
-| D5  | Suggested donation amounts and currency                                                                                                         | Amagi          | T010 (seed can use placeholders) |
-| D6  | Release 2 date                                                                                                                                  | Tandem + Amagi | Release 2 scheduling             |
-| D7  | Airtable base structure and field list (§9.1)                                                                                                   | Amagi          | T013                             |
-| D8  | Whether donor name and email go to Airtable                                                                                                     | Amagi          | T022                             |
-| D9  | Whether merges keep deploying straight to production after launch, or production deploys from a `production` branch that a person fast-forwards | Tandem         | T018                             |
+| #   | Decision                                                                                                                                                       | Owner                 | Blocks                           |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------- |
+| D3  | Territory and industry values                                                                                                                                  | Amagi                 | T014 (seed can use placeholders) |
+| D4  | Whether Release 1 is public or editor-only                                                                                                                     | Amagi                 | T018                             |
+| D5  | Suggested donation amounts and currency                                                                                                                        | Amagi                 | T010 (seed can use placeholders) |
+| D6  | Release 2 date                                                                                                                                                 | Tandem + Amagi        | Release 2 scheduling             |
+| D7  | Airtable base structure and field list (§9.1)                                                                                                                  | Amagi                 | T029, T013                       |
+| D8  | Whether donor name and email go to Airtable                                                                                                                    | Amagi                 | T022                             |
+| D9  | Whether merges keep deploying straight to production after launch, or production deploys from a `production` branch that a person fast-forwards                | Tandem                | T018                             |
+| D10 | Whether analytics need a cookie consent banner before Google Tag Manager loads (depends on where Amagi is established and what Beyond Growth's container sets) | Amagi + Beyond Growth | T015, T018                       |

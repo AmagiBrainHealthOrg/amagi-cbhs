@@ -36,7 +36,7 @@ Spec: `docs/SPEC.md` §5. Skill: `.claude/skills/payload/SKILL.md`.
 ## Hooks
 
 - Hooks call wrappers in `src/lib/`; they contain no external API code themselves.
-- `afterChange` hooks that call external systems must not throw back into the admin save. Record failures on the document (for example `airtableSyncStatus` and `airtableSyncError`) and log them.
+- `afterChange` hooks that call external systems must not throw back into the admin save. Record failures on the document and log them. A hook that updates its own document must pass a `context` flag and skip when it's set, or it triggers itself again.
 - Revalidate affected frontend paths or tags in `afterChange` when published content changes.
 
 ## Fields

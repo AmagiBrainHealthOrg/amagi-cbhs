@@ -16,7 +16,7 @@ skills: []
 
 **In**
 
-- `.github/workflows/ci.yml`: on pull requests and pushes to `main` (ignoring `docs/**` and `**/*.md`). Postgres 17 service; `pnpm install --frozen-lockfile`; `pnpm typecheck`; `pnpm lint`; `pnpm payload migrate`; `pnpm test:int`; `pnpm build`. Dummy env values for build-time validation. Concurrency group cancelling superseded runs.
+- `.github/workflows/ci.yml`: on pull requests and pushes to `main`, with no path filters (a required check that skips docs-only PRs would block them from merging). Postgres 17 service; `pnpm install --frozen-lockfile`; `pnpm typecheck`; `pnpm lint`; `pnpm payload migrate`; `pnpm test:int`; `pnpm build`. Dummy env values for build-time validation. Concurrency group cancelling superseded runs.
 
 **Out**
 

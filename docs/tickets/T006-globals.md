@@ -1,6 +1,6 @@
 ---
 id: T006
-title: 'Globals: header, footer, donation settings, anchor day, dropdowns, integrations'
+title: 'Globals: header, footer, donation settings, anchor day, dropdowns, integrations, forms'
 milestone: M1
 release: 1
 depends_on: [T004]
@@ -16,7 +16,7 @@ skills: [payload]
 
 **In**
 
-- Globals `header`, `footer`, `donation-settings`, `anchor-day`, `dropdowns`, `integrations` per SPEC §5.2, with drafts and live preview (except `integrations`, which has no drafts).
+- Globals `header`, `footer`, `donation-settings`, `anchor-day`, `dropdowns`, `integrations`, `forms` per SPEC §5.2, with drafts and live preview (except `integrations`, which has no drafts).
 - Access: `integrations` admin-only for read and update; others readable publicly (published only) and editable by admins and editors.
 - `src/lib/dropdowns.ts`: `getDropdowns()` returning typed `{ territories, audienceTypes, industries }`, cached per request.
 - Migration.
@@ -27,7 +27,7 @@ skills: [payload]
 
 ## Acceptance criteria
 
-- [ ] **AC1**: All six globals exist with the specified fields.
+- [ ] **AC1**: All seven globals exist with the specified fields.
   - _Verify (api):_ as admin, `GET /api/globals/<slug>` returns 200 for each slug; field names match SPEC §5.2.
 - [ ] **AC2**: Integrations are admin-only.
   - _Verify (api):_ anonymous and editor `GET /api/globals/integrations` return 403 or an empty result; admin gets the document.

@@ -15,15 +15,15 @@ Build on the existing Payload + Next.js repo. There is no staging and there are 
 
 ## 3. Milestones
 
-**Release 1, 16 October 2026: M0–M3 (T001–T015, T017, T018).** **Release 2, date to be confirmed: M4–M5 (T016, T019–T022, T024–T028).**
+**Release 1, 16 October 2026: M0–M3 (T001–T015, T017, T018, T029).** **Release 2, date to be confirmed: M4–M5 (T016, T019–T022, T024–T028).**
 
 ### M0: Foundations
 
-T001 tooling and clean-up · T002 CI · T003 migrations baseline and migrate on deploy · T017 production lock and test mode · T004 roles and access.
+T001 tooling and clean-up · T002 CI · T003 migrations baseline and migrate on deploy · T017 production lock and test mode · T004 roles and access · T029 Airtable base design.
 
 ### M1: Content model and design system
 
-T005 tokens and fonts · T006 globals · T007 core collections · T008 supporting collections · T009 shell and blocks.
+T005 tokens and fonts · T006 globals · T007 core collections · T008 form submissions · T009 shell and blocks.
 
 ### M2: Release 1 features
 
@@ -46,18 +46,18 @@ T024 accessibility · T025 performance · T026 end-to-end suite · T027 go-live.
 ```
 T001 ─┬─ T002
       ├─ T003 ─┬─ T004 ─ T006 ─ T007 ─ T008
-      │        └─ T017 (before T009, T011, T012)
-      └─ T005 ─ T009 (needs T006, T007, T017)
-T009 ─┬─ T010 (needs T006)
-      ├─ T011 (needs T007, T008)
-      └─ T012 (needs T008) ─ T013 ─ T014
-T009 ─ T015
-T009 ─ T016
-T011 ─ T028
+      │        └─ T017
+      └─ T005
+T029 (no dependencies; Amagi signs off the Airtable base)
+T005 + T006 + T007 + T017 ─ T009
+T009 ─┬─ T010
+      ├─ T011
+      └─ T012 (needs T008) ─ T013 (needs T029) ─ T014 (needs T011)
+T010 + T011 + T012 ─ T015
 T010 + T011 + T014 + T015 + T017 ─ T018
-T014 ─ T019
-T009 + T008 ─ T020, T021
-T013 + T010 ─ T022
+
+Release 2:
+T009 ─ T016 · T011 ─ T028 · T014 ─ T019 · T011 + T019 ─ T020 ─ T021 · T010 + T013 ─ T022
 T016, T019..T022, T028 ─ T024, T025, T026 ─ T027
 ```
 

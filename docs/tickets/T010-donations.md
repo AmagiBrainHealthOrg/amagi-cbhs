@@ -5,12 +5,16 @@ milestone: M2
 release: 1
 depends_on: [T006, T009]
 migrations: false
-requires_human: false
+requires_human: true
 spec: ['SPEC §7', 'SPEC §3.1']
 skills: []
 ---
 
 # T010: Donations
+
+## Context
+
+Human step: put Stripe test keys from Amagi's Stripe account in the main `.env` and in Vercel. Start Stripe's business verification for live mode now; it can take days and T018 needs it.
 
 ## Scope
 
@@ -18,7 +22,7 @@ skills: []
 
 - `src/lib/stripe.ts` (server-only Stripe client from `STRIPE_SECRET_KEY`).
 - `/donate` page: amount chooser from `donation-settings` (suggested amounts, optional custom amount with minimum), accessible radio group.
-- `POST /api/donate`: Zod-validated amount; creates a Checkout Session per SPEC §7.3 with UTM and source page in `metadata`; returns a 303 redirect to the session URL.
+- `POST /api/donate`: Zod-validated amount; creates a Checkout Session per SPEC §7.3 with UTM (from T009's `getUtm()`, sent as hidden fields) and source page in `metadata`; returns a 303 redirect to the session URL.
 - `/donate/thank-you`: retrieves the session, renders paid or unconfirmed states per SPEC §7.4, using copy from `donation-settings`.
 - Env vars `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_SITE_URL` added to `src/env.ts` and `.env.example`.
 - The `donationComplete` data-layer push is a placeholder call to `src/lib/tracking` (stubbed until T015).

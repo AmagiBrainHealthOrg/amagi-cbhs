@@ -4,7 +4,7 @@ title: Shared form system
 milestone: M2
 release: 1
 depends_on: [T008, T009, T017]
-migrations: false
+migrations: true
 requires_human: false
 spec: ['SPEC §8.1', 'SPEC §8.2', 'SPEC §8.4']
 skills: []
@@ -18,9 +18,9 @@ skills: []
 
 - `src/components/forms/`: `Form`, field components (text, email, textarea, select, checkbox), shared fields (territory, audience type, industry, three consents, UTM hidden fields, honeypot).
 - `src/forms/registry.ts`: form definitions keyed by SPEC §8.3 keys, each with a Zod schema, field list and whether it's an organisation form. Only the shape is needed now; T014 and T019 add definitions.
-- UTM capture: read on landing, store in `sessionStorage`, inject into every form.
-- `POST /api/forms/[key]`: validate with the registry schema, honeypot check, rate limit (SPEC §8.2), create `form-submissions` (`isTest` when not `isLive()`, SPEC §11.1), redirect to `/thank-you/[key]`.
-- `/thank-you/[key]` page using copy from the form block or a default.
+- Inject UTM values from T009's `getUtm()` into every form as hidden fields.
+- `POST /api/forms/[key]`: validate with the registry schema, honeypot check, rate limit (SPEC §8.2) counted in a new `rate_limits` table (hashed IP, window start, count; migration), create `form-submissions` (`isTest` when not `isLive()`, SPEC §11.1), redirect to `/thank-you/[key]` with `territory` and `audience_type` per SPEC §8.2.
+- `/thank-you/[key]` page using copy from the `forms` global (SPEC §8.4).
 - Accessible validation (client and server), focus to first error.
 - The `form` block now renders the selected form.
 - A test-only form definition `test-form` used by this ticket's ACs, available only when `NODE_ENV !== 'production'`.
@@ -41,5 +41,7 @@ skills: []
   - _Verify (browser):_ all three checkboxes render unchecked; ticking one leaves the others unchecked.
 - [ ] **AC5**: No health fields exist in any form definition.
   - _Verify (code):_ `grep -rniE "diagnos|symptom|medical|health history|condition" src/forms` returns nothing.
-- [ ] **AC6**: Gates pass.
+- [ ] **AC6**: Migration applies from empty.
+  - _Verify (db):_ fresh database migrates; the rate-limit table exists.
+- [ ] **AC7**: Gates pass.
   - _Verify (cli):_ `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build` exits 0.
