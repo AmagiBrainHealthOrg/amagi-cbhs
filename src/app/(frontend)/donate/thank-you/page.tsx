@@ -12,11 +12,13 @@ export default async function ThankYouPage({ searchParams }: Props) {
   if (status !== 'paid') {
     return (
       <section className="donate-card" aria-labelledby="thank-you-title">
+        {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
         <h1 id="thank-you-title">We couldn’t confirm your donation</h1>
         <p className="donate-lead">
           If you completed a payment, you’ll get a receipt from Stripe by email. Otherwise you can
           try again.
         </p>
+        {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
         <Link className="button button-orange" href="/donate">
           Back to donate
         </Link>
@@ -26,11 +28,13 @@ export default async function ThankYouPage({ searchParams }: Props) {
 
   return (
     <section className="donate-card" aria-labelledby="thank-you-title">
+      {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
       <p className="donate-kicker">
         {Number.isInteger(minor) && minor > 0 ? `${formatAmount(minor)} received` : 'Received'}
       </p>
       <h1 id="thank-you-title">{donationSettings.thankYouHeading}</h1>
       <p className="donate-lead">{donationSettings.thankYouBody}</p>
+      {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
       <Link className="button button-outline" href="/">
         Back to the homepage
       </Link>
