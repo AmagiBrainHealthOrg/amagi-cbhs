@@ -6,6 +6,8 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
+import { env } from './env'
+
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { ComingSoon } from './globals/ComingSoon'
@@ -23,28 +25,28 @@ export default buildConfig({
   collections: [Users, Media],
   globals: [ComingSoon],
   editor: lexicalEditor(),
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: env.PAYLOAD_SECRET,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URL || '',
+      connectionString: env.DATABASE_URL,
     },
   }),
   sharp,
   plugins: [
-    // Uploads go to Supabase Storage through its S3-compatible API.
     s3Storage({
       collections: { media: true },
-      bucket: process.env.S3_BUCKET || '',
+      bucket: env.S3_BUCKET,
+      clientUploads: true,
       config: {
-        endpoint: process.env.S3_ENDPOINT,
-        region: process.env.S3_REGION,
+        endpoint: env.S3_ENDPOINT,
+        region: env.S3_REGION,
         forcePathStyle: true,
         credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
-          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
+          accessKeyId: env.S3_ACCESS_KEY_ID,
+          secretAccessKey: env.S3_SECRET_ACCESS_KEY,
         },
       },
     }),

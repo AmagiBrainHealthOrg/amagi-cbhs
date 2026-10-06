@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { headers as getHeaders } from 'next/headers.js'
+import Link from 'next/link'
 import { getPayload } from 'payload'
 import * as QRCode from 'qrcode'
 import { ArrowRight, CalendarDays, Clock, Globe2, Mail, MapPin, Users } from 'lucide-react'
@@ -69,7 +70,9 @@ const crossfadeKeyframes = (count: number) => {
 export default async function ComingSoonPage({ searchParams }: Props) {
   const { data, draft } = await getComingSoon(searchParams)
   const logo = asMedia(data.logo)
-  const backgrounds = (data.backgroundImages ?? []).map(asMedia).filter((image) => image?.url) as Media[]
+  const backgrounds = (data.backgroundImages ?? [])
+    .map(asMedia)
+    .filter((image) => image?.url) as Media[]
   const qrCodeUrl = data.cta?.url
     ? await QRCode.toDataURL(data.cta.url, {
         errorCorrectionLevel: 'M',
@@ -87,11 +90,15 @@ export default async function ComingSoonPage({ searchParams }: Props) {
       </a>
 
       <header className="coming-soon-header">
-        <a className="coming-soon-brand" href="/" aria-label="Caribbean Brain Health Summit homepage">
+        <Link
+          className="coming-soon-brand"
+          href="/"
+          aria-label="Caribbean Brain Health Summit homepage"
+        >
           {logo?.url && <img src={logo.url} alt={logo.alt} />}
           {logo?.url && data.brandTitle && <span aria-hidden="true" />}
           {data.brandTitle && <strong>{withBreaks(data.brandTitle)}</strong>}
-        </a>
+        </Link>
       </header>
 
       <main className="coming-soon-main" id="coming-soon-main">
@@ -120,7 +127,12 @@ export default async function ComingSoonPage({ searchParams }: Props) {
           {data.cta?.url && (
             <div className="coming-soon-register">
               {data.cta.label && (
-                <a className="button button-orange coming-soon-cta" href={data.cta.url} target="_blank" rel="noreferrer">
+                <a
+                  className="button button-orange coming-soon-cta"
+                  href={data.cta.url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   {data.cta.label} <ArrowRight aria-hidden="true" />
                 </a>
               )}
@@ -129,7 +141,12 @@ export default async function ComingSoonPage({ searchParams }: Props) {
                   {data.qr?.label && <p id="coming-soon-qr-title">{data.qr.label}</p>}
                   {data.qr?.sublabel && <small>{data.qr.sublabel}</small>}
                 </div>
-                <a href={data.cta.url} target="_blank" rel="noreferrer" aria-label="Open the registration form">
+                <a
+                  href={data.cta.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open the registration form"
+                >
                   <img src={qrCodeUrl} alt="QR code for the registration form" />
                 </a>
               </aside>
