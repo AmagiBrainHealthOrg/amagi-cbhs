@@ -171,7 +171,7 @@
 .v1-ring-node.v1-ring-1 circle { fill: var(--orange); }
 .v1-ring-node.v1-ring-2 circle { fill: var(--primary-blue); }
 .v1-ring-node.v1-ring-3 circle { fill: color-mix(in srgb, var(--ink-deep) 55%, var(--primary-blue)); }
-.v1-ring-node text { fill: var(--white); font-family: var(--app-font-ui); }
+.v1-ring-node text { fill: var(--white); stroke: none; font-family: var(--app-font-ui); }
 .v1-ring-node.v1-ring-0 text { fill: var(--ink-deep); }
 .v1-rings-list { display: grid; gap: 20px; margin: 0; padding: 0; list-style: none; }
 .v1-rings-list li { display: flex; gap: 14px; align-items: flex-start; }

@@ -265,7 +265,7 @@ export function FlowDiagram({ steps }: { steps: { title: string; body: string }[
 }
 
 const RING_R = [178, 132, 90, 52]
-const RING_W = [28, 24, 20, 16]
+const RING_W = [21, 20, 16, 12]
 const SVG_C = 200
 
 export function SupporterRings({ levels }: { levels: { name: string; body: string }[] }) {
