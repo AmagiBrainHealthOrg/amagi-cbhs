@@ -14,7 +14,15 @@ import {
   StatsBand,
   WeekStrip,
 } from './_components/graphics'
-import { actionAreaIcons, callToAction, callToActionV1, home, news, roadmap, summitStart } from './_content'
+import {
+  actionAreaIcons,
+  callToAction,
+  callToActionV1,
+  home,
+  news,
+  roadmap,
+  summitStart,
+} from './_content'
 
 export const metadata: Metadata = { title: 'Caribbean Brain Health Summit 2026 (v1)' }
 
@@ -23,17 +31,19 @@ export default function V1HomePage() {
 
   return (
     <>
-      <MapHero kicker={hero.kicker} heading={hero.heading} lead={hero.lead}>
-        <div className="v1-hero-actions">
-          <DonateButton />
-          <Link className="button button-outline-light" href={hero.secondary.href}>
-            {hero.secondary.label}
-          </Link>
-        </div>
-        <Countdown target={summitStart} label="Summit week starts in" />
-      </MapHero>
+      <div className="v1-fold">
+        <MapHero kicker={hero.kicker} heading={hero.heading} lead={hero.lead}>
+          <div className="v1-hero-actions">
+            <DonateButton />
+            <Link className="button button-outline-light" href={hero.secondary.href}>
+              {hero.secondary.label}
+            </Link>
+          </div>
+          <Countdown target={summitStart} label="Summit week starts in" />
+        </MapHero>
 
-      <StatsBand stats={home.stats} />
+        <StatsBand stats={home.stats} />
+      </div>
 
       <section className="v1-section" aria-label="Why brain health">
         <Statement text={home.statement.text} source={home.statement.source} />
@@ -92,7 +102,11 @@ export default function V1HomePage() {
       <DonateBand />
 
       <section className="v1-section v1-reveal" aria-labelledby="v1-news-heading">
-        <SectionHeading id="v1-news-heading" kicker={home.news.kicker} heading={home.news.heading} />
+        <SectionHeading
+          id="v1-news-heading"
+          kicker={home.news.kicker}
+          heading={home.news.heading}
+        />
         <ul className="v1-news">
           {news.items.map(({ slug, title, date, summary }) => (
             <li key={slug}>
