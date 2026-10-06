@@ -34,6 +34,8 @@
 /* Hero */
 .v1-hero { position: relative; isolation: isolate; display: grid; align-items: center; padding: clamp(64px, 10vw, 120px) var(--v1-gutter) clamp(96px, 12vw, 150px); color: var(--white); }
 .v1-hero-map { background: linear-gradient(150deg, var(--ink-deep) 0%, color-mix(in srgb, var(--primary-blue) 80%, var(--ink-deep)) 100%); min-height: min(88dvh, 860px); }
+.v1-fold { display: flex; flex-direction: column; min-height: calc(100svh - var(--v1-header-h, 82px)); }
+.v1-fold .v1-hero-map { flex: 1; min-height: 0; }
 .v1-hero-map-bg { position: absolute; inset: 0; width: 100%; height: 100%; fill: var(--white); opacity: .07; }
 .v1-hero-inner { width: min(var(--max), 100%); margin: 0 auto; }
 .v1-hero .v1-kicker { color: var(--yellow); }
@@ -246,6 +248,7 @@
 }
 
 @media (max-width: 720px) {
+  .v1-fold { --v1-header-h: 72px; }
   .v1-map-pin text { display: none; }
   .v1-week { grid-template-columns: minmax(0, 1fr); }
   .v1-week > li { grid-template-columns: 64px 1fr; align-items: center; }
