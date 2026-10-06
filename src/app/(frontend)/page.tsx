@@ -9,6 +9,7 @@ import React from 'react'
 import { SiteHeader } from '@/components/SiteHeader'
 import config from '@/payload.config'
 import type { Media } from '@/payload-types'
+import { crossfadeKeyframes } from '@/utils/crossfadeKeyframes'
 import { RefreshRouteOnSave } from './RefreshRouteOnSave'
 
 const icons = {
@@ -54,18 +55,6 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     description: data.meta?.description || undefined,
     openGraph: image?.url ? { images: [image.url] } : undefined,
   }
-}
-
-// Builds the crossfade keyframes for however many images are set. With five
-// images this reproduces the original 40s cycle (fade in 5%, hold to 20%, out by 25%).
-const crossfadeKeyframes = (count: number) => {
-  const step = 100 / count
-  return `@keyframes coming-soon-image-cycle {
-  0% { opacity: 0; transform: scale(1); }
-  ${step / 4}% { opacity: 1; }
-  ${step}% { opacity: 1; transform: scale(1.1); }
-  ${Math.min(step * 1.25, 100)}%, 100% { opacity: 0; transform: scale(1.12); }
-}`
 }
 
 export default async function ComingSoonPage({ searchParams }: Props) {
