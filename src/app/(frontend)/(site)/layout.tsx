@@ -5,6 +5,7 @@ import { SiteFooter } from '@/components/SiteFooter'
 import { SiteHeader } from '@/components/SiteHeader'
 
 import './site.css'
+import './v1.css'
 
 export const metadata: Metadata = {
   // TODO: hard-coded; migrate to Payload (`meta` on each page) only when a human developer decides to.
@@ -17,14 +18,10 @@ export const metadata: Metadata = {
 // when a human developer decides to.
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="site-page">
+    <div className="site-page v1">
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      {/* TODO: remove once the content comes from Payload. */}
-      <p className="preview-banner" role="note">
-        Preview: placeholder content, not final.
-      </p>
       <SiteHeader />
       <main id="main">{children}</main>
       <SiteFooter />

@@ -8,6 +8,7 @@ import type { Media } from '@/payload-types'
 import { crossfadeKeyframes } from '@/utils/crossfadeKeyframes'
 
 import { donateBanner } from '../_content'
+import { caribbeanMap } from './caribbeanMap'
 import { donationSettings, formatAmount } from '../../donate/mockup'
 
 const SECONDS_PER_IMAGE = 8
@@ -98,6 +99,41 @@ export async function PhotoHero({
           />
         ))}
       </div>
+      <svg className="v1-hero-wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 80 C 240 20 480 20 720 70 S 1200 120 1440 50 V120 H0 Z" />
+      </svg>
+      <div className="v1-hero-inner">
+        {kicker && <p className="v1-kicker">{kicker}</p>}
+        <h1>{withBreaks(heading)}</h1>
+        {lead && <p className="v1-hero-lead">{lead}</p>}
+        {children}
+      </div>
+    </section>
+  )
+}
+
+export function MapHero({
+  kicker,
+  heading,
+  lead,
+  children,
+}: {
+  kicker?: string
+  heading: string
+  lead?: string
+  children?: React.ReactNode
+}) {
+  const { width, height, d } = caribbeanMap
+  return (
+    <section className="v1-hero v1-hero-map">
+      <svg
+        className="v1-hero-map-bg"
+        viewBox={`0 0 ${width} ${height}`}
+        preserveAspectRatio="xMidYMid slice"
+        aria-hidden="true"
+      >
+        <path d={d} />
+      </svg>
       <svg className="v1-hero-wave" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
         <path d="M0 80 C 240 20 480 20 720 70 S 1200 120 1440 50 V120 H0 Z" />
       </svg>

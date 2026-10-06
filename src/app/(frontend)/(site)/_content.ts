@@ -4,14 +4,6 @@
 
 export { about, callToAction, donateBanner, faqs, footer, news, support } from '@/config/placeholderContent'
 
-export const v1Nav = [
-  { label: 'About', href: '/v1/about' },
-  { label: 'Support Caribbean Brain Health', href: '/v1/support' },
-  { label: 'Call to Action', href: '/v1/call-to-action' },
-  { label: 'News', href: '/v1/news' },
-  { label: 'FAQs', href: '/v1/faqs' },
-]
-
 // Summit week starts at midnight in Kingston (UTC-5, no daylight saving).
 export const summitStart = '2026-11-16T00:00:00-05:00'
 

@@ -5,7 +5,7 @@ import React from 'react'
 import { formatDate } from '@/utils/formatDate'
 
 import { Countdown } from './_components/Countdown'
-import { DonateBand, DonateButton, PhotoHero, SectionHeading, TextLink } from './_components/chrome'
+import { DonateBand, DonateButton, MapHero, SectionHeading, TextLink } from './_components/chrome'
 import {
   ActionWheel,
   CaribbeanMap,
@@ -23,7 +23,7 @@ export default function V1HomePage() {
 
   return (
     <>
-      <PhotoHero kicker={hero.kicker} heading={hero.heading} lead={hero.lead} size="home">
+      <MapHero kicker={hero.kicker} heading={hero.heading} lead={hero.lead}>
         <div className="v1-hero-actions">
           <DonateButton />
           <Link className="button button-outline-light" href={hero.secondary.href}>
@@ -31,7 +31,7 @@ export default function V1HomePage() {
           </Link>
         </div>
         <Countdown target={summitStart} label="Summit week starts in" />
-      </PhotoHero>
+      </MapHero>
 
       <StatsBand stats={home.stats} />
 
@@ -86,7 +86,7 @@ export default function V1HomePage() {
           iconNames={actionAreaIcons}
           centre={callToActionV1.wheelCentre}
         />
-        <TextLink href="/v1/call-to-action">{home.areas.link}</TextLink>
+        <TextLink href="/call-to-action">{home.areas.link}</TextLink>
       </section>
 
       <DonateBand />
@@ -106,7 +106,7 @@ export default function V1HomePage() {
             </li>
           ))}
         </ul>
-        <TextLink href="/v1/news">{home.news.link}</TextLink>
+        <TextLink href="/news">{home.news.link}</TextLink>
       </section>
     </>
   )

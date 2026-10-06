@@ -1,35 +1,47 @@
 import type { Metadata } from 'next'
 import React from 'react'
 
-import { DonateBanner } from '@/components/DonateBanner'
-import { PageHero } from '@/components/PageHero'
-import { about } from '@/config/placeholderContent'
+import { DonateBand, PhotoHero, SectionHeading } from '../_components/chrome'
+import { FlowDiagram, Roadmap, StatsBand } from '../_components/graphics'
+import { about, aboutV1, home, roadmap } from '../_content'
 
-export const metadata: Metadata = { title: 'About | Caribbean Brain Health Summit' }
+export const metadata: Metadata = { title: 'About | Caribbean Brain Health Summit (v1)' }
 
-export default function AboutPage() {
+export default function V1AboutPage() {
+  const [why, , , after] = about.sections
+
   return (
     <>
-      <PageHero kicker={about.kicker} heading={about.heading} lead={about.lead} />
-      <section className="page-section">
-        <ul className="fact-row" aria-label="Summit at a glance">
-          {about.facts.map(({ value, label }) => (
-            <li key={label}>
-              <strong>{value}</strong>
-              <span>{label}</span>
-            </li>
-          ))}
-        </ul>
-        <div className="prose-grid">
-          {about.sections.map(({ heading, body }) => (
-            <article key={heading}>
-              <h2>{heading}</h2>
-              <p>{body}</p>
-            </article>
-          ))}
+      <PhotoHero kicker={about.kicker} heading={about.heading} lead={about.lead} />
+      <StatsBand stats={about.facts} />
+
+      <section className="v1-section v1-split v1-reveal" aria-labelledby="v1-why-heading">
+        <SectionHeading id="v1-why-heading" kicker={about.kicker} heading={why.heading} />
+        <p className="v1-lead-text">{why.body}</p>
+      </section>
+
+      <section className="v1-band v1-band-pale" aria-labelledby="v1-flow-heading">
+        <div className="v1-band-inner v1-reveal">
+          <SectionHeading
+            id="v1-flow-heading"
+            kicker={aboutV1.flow.kicker}
+            heading={aboutV1.flow.heading}
+          />
+          <FlowDiagram steps={aboutV1.flow.steps} />
         </div>
       </section>
-      <DonateBanner />
+
+      <section className="v1-section v1-reveal" aria-labelledby="v1-roadmap-heading">
+        <SectionHeading
+          id="v1-roadmap-heading"
+          kicker={home.roadmap.kicker}
+          heading={home.roadmap.heading}
+          body={after.body}
+        />
+        <Roadmap steps={roadmap} />
+      </section>
+
+      <DonateBand />
     </>
   )
 }
