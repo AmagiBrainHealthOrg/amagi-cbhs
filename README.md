@@ -28,7 +28,7 @@ The public website for the Caribbean Brain Health Summit, at amagisummit.org. Ne
    pnpm db:pull
    ```
 
-   This is one way: it reads production and replaces the local `amagi_cbhs` database and bucket. Form submissions are left out. It refuses to run unless `DATABASE_URL` and `S3_ENDPOINT` point at `127.0.0.1`.
+   This is one way: it reads production and replaces the local `amagi_cbhs` database and bucket. Form submissions are left out. It refuses to run unless `DATABASE_URL` and `S3_ENDPOINT` point at `127.0.0.1`. It finishes by running `pnpm payload migrate` on the local database, so local is production plus any migrations on your branch.
 
 6. Start the dev server at http://localhost:3000 (admin at `/admin`):
 
@@ -36,17 +36,34 @@ The public website for the Caribbean Brain Health Summit, at amagisummit.org. Ne
    pnpm dev
    ```
 
-## Production: mark baseline migration as applied (one-time)
+## Production: mark the baseline migration as applied (one-time, before merging T003)
 
-The schema was created by Payload's dev-push before migrations were enabled. Run these two statements against the **production** Supabase database after merging T003:
+Production's schema was created by Payload's dev push, which leaves a `batch = -1` marker row in `payload_migrations`. From T003 on, every Vercel build runs `pnpm payload migrate` before `next build`, and every merge to `main` deploys to production, so this marker must be fixed **before the T003 pull request merges**. It's safe to run early: the code deployed now never runs migrations, and Payload never pushes schema in production.
+
+Run this once in the Supabase SQL editor for the production project:
 
 ```sql
+begin;
 delete from payload_migrations where batch = -1;
-insert into payload_migrations (name, batch, updated_at, created_at)
-  values ('20261006_141524_baseline', 1, now(), now());
+insert into payload_migrations (name, batch)
+  select '20261006_141524_baseline', 1
+  where not exists (select 1 from payload_migrations where name = '20261006_141524_baseline');
+commit;
+
+select name, batch from payload_migrations order by id;
+-- expect exactly one row: 20261006_141524_baseline | 1
 ```
 
-After that, the next Vercel deploy will apply only `20261006_141525_enable_rls`.
+The first deploy after the merge then applies only `20261006_141525_enable_rls`.
+
+If the build runs before this is done:
+
+- With the `batch = -1` row still there, `payload migrate` stops at an interactive "you've run Payload in dev mode … would you like to proceed?" prompt. A build has no one to answer it: with no input it waits indefinitely, so the build hangs until Vercel's build timeout and the deploy fails. If the prompt is cancelled instead, Payload exits with code 0, so the build carries on and deploys without applying any migration. Never answer yes: it would run the baseline over the existing tables.
+- With the `batch = -1` row gone but no baseline row, `payload migrate` runs the baseline against the existing tables. Its first `CREATE TYPE` fails, the transaction rolls back, `migrate` exits 1 and the deploy fails without changing the database.
+
+Where the deploy fails, the previous deployment keeps serving. Run the SQL above and redeploy.
+
+Local databases pulled before the fix still carry the `batch = -1` row, so `pnpm payload migrate` (and `pnpm preflight`) stops at the same prompt. Run `pnpm db:pull` again once the SQL has run on production.
 
 ## Checks
 

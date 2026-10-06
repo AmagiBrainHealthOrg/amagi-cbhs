@@ -1,6 +1,6 @@
 import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
-export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
    CREATE TYPE "public"."enum_coming_soon_details_icon" AS ENUM('calendar', 'map-pin', 'globe', 'users', 'clock', 'mail');
   CREATE TYPE "public"."enum_coming_soon_status" AS ENUM('draft', 'published');
@@ -240,25 +240,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "_coming_soon_v_rels_media_id_idx" ON "_coming_soon_v_rels" USING btree ("media_id");`)
 }
 
-export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
-  await db.execute(sql`
-   DROP TABLE "users_sessions" CASCADE;
-  DROP TABLE "users" CASCADE;
-  DROP TABLE "media" CASCADE;
-  DROP TABLE "payload_kv" CASCADE;
-  DROP TABLE "payload_locked_documents" CASCADE;
-  DROP TABLE "payload_locked_documents_rels" CASCADE;
-  DROP TABLE "payload_preferences" CASCADE;
-  DROP TABLE "payload_preferences_rels" CASCADE;
-  DROP TABLE "payload_migrations" CASCADE;
-  DROP TABLE "coming_soon_details" CASCADE;
-  DROP TABLE "coming_soon" CASCADE;
-  DROP TABLE "coming_soon_rels" CASCADE;
-  DROP TABLE "_coming_soon_v_version_details" CASCADE;
-  DROP TABLE "_coming_soon_v" CASCADE;
-  DROP TABLE "_coming_soon_v_rels" CASCADE;
-  DROP TYPE "public"."enum_coming_soon_details_icon";
-  DROP TYPE "public"."enum_coming_soon_status";
-  DROP TYPE "public"."enum__coming_soon_v_version_details_icon";
-  DROP TYPE "public"."enum__coming_soon_v_version_status";`)
+// One-way: undoing the baseline would drop every table, including payload_migrations itself.
+export async function down(_args: MigrateDownArgs): Promise<void> {
+  throw new Error('20261006_141524_baseline is one-way and cannot be rolled back')
 }
