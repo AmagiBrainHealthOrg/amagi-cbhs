@@ -1,83 +1,71 @@
-import { Check, ShieldCheck } from 'lucide-react'
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import React from 'react'
 
-import { DonateBanner } from '@/components/DonateBanner'
 import { FaqList } from '@/components/FaqList'
-import { PageHero } from '@/components/PageHero'
-import { faqs, support } from '@/config/placeholderContent'
 
-export const metadata: Metadata = { title: 'Support | Caribbean Brain Health Summit' }
+import { DonateBand, DonateButton, PhotoHero, SectionHeading } from '../_components/chrome'
+import { IconTiles, icons, TierStairs } from '../_components/graphics'
+import { faqs, support, supportV1 } from '../_content'
 
-export default function SupportPage() {
+export const metadata: Metadata = { title: 'Support | Caribbean Brain Health Summit (v1)' }
+
+export default function V1SupportPage() {
   const supportFaqs = faqs.filter(({ category }) => category === support.faqCategory)
 
   return (
     <>
-      <PageHero kicker={support.kicker} heading={support.heading} lead={support.lead} />
+      <PhotoHero kicker={support.kicker} heading={support.heading} lead={support.lead}>
+        <div className="v1-hero-actions">
+          <DonateButton />
+        </div>
+      </PhotoHero>
 
-      <section className="page-section" aria-labelledby="enables-title">
-        <h2 id="enables-title">{support.enables.heading}</h2>
-        <ul className="card-grid">
-          {support.enables.items.map(({ title, body }) => (
-            <li key={title} className="card">
-              <h3>{title}</h3>
-              <p>{body}</p>
-            </li>
+      <section className="v1-section v1-reveal" aria-labelledby="v1-enables-heading">
+        <SectionHeading id="v1-enables-heading" heading={support.enables.heading} />
+        <IconTiles items={support.enables.items} iconNames={supportV1.enablesIcons} />
+      </section>
+
+      <DonateBand />
+
+      <section className="v1-section v1-reveal" aria-labelledby="v1-levels-heading">
+        <SectionHeading
+          id="v1-levels-heading"
+          kicker="For organisations"
+          heading={support.levels.heading}
+          body={support.levels.intro}
+        />
+        <TierStairs levels={support.levels.items} />
+      </section>
+
+      <section className="v1-band v1-band-blue" aria-labelledby="v1-safeguards-heading">
+        <div className="v1-band-inner v1-reveal">
+          <SectionHeading id="v1-safeguards-heading" heading={support.safeguards.heading} tone="dark" />
+          <ul className="v1-badges">
+            {support.safeguards.items.map((item, index) => {
+              const Icon = icons[supportV1.safeguardIcons[index]]
+              return (
+                <li key={item}>
+                  <Icon aria-hidden="true" />
+                  <p>{item}</p>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      </section>
+
+      <section className="v1-section v1-reveal" aria-labelledby="v1-supporters-heading">
+        <SectionHeading id="v1-supporters-heading" heading={support.supporters.heading} />
+        <ul className="v1-logo-slots" aria-label="Supporter logos, coming soon">
+          {Array.from({ length: 6 }, (_, index) => (
+            <li key={index} aria-hidden="true" />
           ))}
         </ul>
+        <p className="v1-muted">{support.supporters.empty}</p>
       </section>
 
-      <DonateBanner />
-
-      <section className="page-section" aria-labelledby="levels-title">
-        <h2 id="levels-title">{support.levels.heading}</h2>
-        <p className="section-intro">{support.levels.intro}</p>
-        <ul className="card-grid card-grid-3">
-          {support.levels.items.map(({ name, amount, perks }) => (
-            <li key={name} className="card level-card">
-              <h3>{name}</h3>
-              <p className="level-amount">{amount}</p>
-              <ul className="tick-list">
-                {perks.map((perk) => (
-                  <li key={perk}>
-                    <Check aria-hidden="true" />
-                    {perk}
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-        <p className="section-intro">
-          {/* TODO: link to the Partner form (Release 2, T019) only when a human developer decides to. */}
-          Want to talk about supporting the Summit? <Link href="/faqs">Read the FAQs</Link> or get
-          in touch.
-        </p>
-      </section>
-
-      <section className="page-section page-section-tint" aria-labelledby="safeguards-title">
-        <h2 id="safeguards-title">{support.safeguards.heading}</h2>
-        <ul className="tick-list">
-          {support.safeguards.items.map((item) => (
-            <li key={item}>
-              <ShieldCheck aria-hidden="true" />
-              {item}
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="page-section" aria-labelledby="supporters-title">
-        <h2 id="supporters-title">{support.supporters.heading}</h2>
-        {/* TODO: render the `logoGrid` block from the Payload `supporters` collection, only
-            entries with permissionConfirmed, only when a human developer decides to. */}
-        <p className="empty-state">{support.supporters.empty}</p>
-      </section>
-
-      <section className="page-section" aria-labelledby="support-faqs-title">
-        <h2 id="support-faqs-title">Questions about supporting</h2>
+      <section className="v1-section v1-reveal" aria-labelledby="v1-support-faqs-heading">
+        <SectionHeading id="v1-support-faqs-heading" heading="Questions about supporting" />
         <FaqList groups={supportFaqs} showCategories={false} />
       </section>
     </>
