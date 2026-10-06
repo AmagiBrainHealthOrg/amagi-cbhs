@@ -53,3 +53,7 @@ node_modules/
 .verification/
 PROMPT.local.md
 .idea/
+
+# Supabase CLI
+/supabase/.branches
+/supabase/.temp

@@ -1,67 +1,46 @@
-# Payload Blank Template
+# Caribbean Brain Health Summit 2026
 
-This template comes configured with the bare minimum to get started on anything you need.
+The public website for the Caribbean Brain Health Summit, at amagisummit.org. Next.js and Payload CMS on Supabase, hosted on Vercel. What we build is in `docs/SPEC.md`; how and in what order is in `docs/PLAN.md`.
 
-## Quick start
+## Local setup
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+1. Install [Docker](https://docs.docker.com/get-docker/) and keep it running. You also need Node 20+, pnpm and the PostgreSQL client tools (`pg_dump`, `psql`).
+2. Install dependencies:
 
-## Quick Start - local setup
+   ```bash
+   pnpm install
+   ```
 
-To spin up this template locally, follow these steps:
+3. Start the local Supabase stack (Postgres on port 54322, Storage on 54321):
 
-### Clone
+   ```bash
+   pnpm supabase start
+   ```
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+4. Copy `.env.example` to `.env` and fill it in:
+   - `PAYLOAD_SECRET`: any long random string.
+   - `S3_ACCESS_KEY_ID` and `S3_SECRET_ACCESS_KEY`: the local Storage S3 keys from `pnpm supabase status`.
+   - `PULL_*`: production's database connection string and Storage S3 credentials, from the Supabase dashboard.
 
-### Development
+5. Pull production's schema, content and media into the local stack:
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URL` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+   ```bash
+   pnpm db:pull
+   ```
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+   This is one way: it reads production and replaces the local `amagi_cbhs` database and bucket. Form submissions are left out. It refuses to run unless `DATABASE_URL` and `S3_ENDPOINT` point at `127.0.0.1`.
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+6. Start the dev server at http://localhost:3000 (admin at `/admin`):
 
-#### Docker (Optional)
+   ```bash
+   pnpm dev
+   ```
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+## Checks
 
-To do so, follow these steps:
+```bash
+pnpm typecheck && pnpm lint && pnpm test:int && pnpm build
+pnpm preflight   # the above plus stack, git, gh and migration checks
+```
 
-- Modify the `MONGODB_URL` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URL` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
-
-## How it works
-
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
-
-### Collections
-
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
-
-- #### Users (Authentication)
-
-  Users are auth-enabled collections that have access to the admin panel.
-
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/3.x/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
-
-- #### Media
-
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
-
-### Docker
-
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
-
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
-
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
-
-## Questions
-
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+See `CLAUDE.md` for the full command list and the rules for working in this repo.
