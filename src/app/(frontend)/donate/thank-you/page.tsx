@@ -5,6 +5,9 @@ import { donationSettings, formatAmount } from '../mockup'
 
 type Props = { searchParams: Promise<{ status?: string | string[]; amount?: string | string[] }> }
 
+// TODO: read session_id, retrieve the Stripe Checkout Session server-side and show thank-you only if payment_status is paid (T010), only when a human developer decides to.
+// TODO: push donation_complete (value, currency) to the data layer once per session ID (T015), only when a human developer decides to.
+// TODO: the Stripe webhook records the donation in Airtable (Release 2, T022), only when a human developer decides to.
 export default async function ThankYouPage({ searchParams }: Props) {
   const { status, amount } = await searchParams
   const minor = Number(amount)

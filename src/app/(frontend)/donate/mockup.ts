@@ -25,6 +25,7 @@ export const donationSettings = {
     'Your gift helps bring the Caribbean Brain Health Summit to communities across the region and online.',
 }
 
+// TODO: validate amounts with Zod in POST /api/donate against the Payload `donation-settings` global (T010), only when a human developer decides to.
 export const formatAmount = (minor: number) =>
   new Intl.NumberFormat('en-US', {
     style: 'currency',

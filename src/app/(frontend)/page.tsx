@@ -118,6 +118,7 @@ export default async function ComingSoonPage({ searchParams }: Props) {
           {data.cta?.url && (
             <div className="coming-soon-register">
               <div className="coming-soon-actions">
+                {/* TODO: push the donate_click data-layer event (T015) only when a human developer decides to. */}
                 <Link
                   className="button button-orange coming-soon-cta"
                   href="/donate"

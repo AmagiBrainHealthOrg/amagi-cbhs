@@ -5,7 +5,7 @@
 .button-outline:hover { background: var(--pale-blue); }
 .button svg { width: 17px; height: 17px; }
 
-.donate-page { min-height: 100dvh; display: grid; grid-template-rows: auto auto 1fr; background: var(--pale-blue); color: var(--ink-deep); }
+.donate-page { min-height: 100dvh; display: grid; grid-template-rows: auto auto 1fr auto; background: var(--pale-blue); color: var(--ink-deep); }
 .donate-mockup-banner { padding: 8px 16px; background: var(--yellow); color: var(--ink-deep); font-family: var(--app-font-ui); font-size: var(--fs-2xs); font-weight: 700; text-align: center; }
 .donate-header { display: flex; align-items: center; min-height: 72px; padding: 12px clamp(16px, 5vw, 72px); border-bottom: 1px solid var(--border-muted); background: var(--white); }
 .donate-brand { color: var(--primary-blue); font-family: var(--app-font-heading); font-size: var(--fs-sm); font-weight: 700; letter-spacing: -.02em; }

@@ -35,6 +35,8 @@ export default async function DonatePage({ searchParams }: Props) {
       </section>
 
       <section className="donate-card" aria-label="Make a donation">
+        {/* TODO: POST to /api/donate, which validates the amount and creates a Stripe Checkout Session with UTM and source page in metadata (T010), only when a human developer decides to. */}
+        {/* TODO: send UTM values as hidden fields from getUtm() (T009/T010), only when a human developer decides to. */}
         <form action="/donate/checkout" method="get" className="donate-form">
           <fieldset>
             {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
