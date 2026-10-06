@@ -37,5 +37,5 @@
 - D6: Release 2 date.
 - D7: Airtable base structure and field list (T029 drafts it; blocks T013).
 - D8: whether donor name and email go to Airtable (affects T022).
-- Vercel cancels every production build ("Canceled by Ignored Build Step") since `vercel.json` landed in #8; production still runs pre-#8 code. Check Vercel exposes system env vars and that `main` is the production branch.
+- Vercel cancelled every production build ("Canceled by Ignored Build Step") after #8, even with system env vars exposed. `ignoreCommand` was replaced with `git.deploymentEnabled` (main only). If builds still fail to run, check that `main` is the production branch.
 - D9: after launch, whether merges keep deploying straight to production (affects T018).
