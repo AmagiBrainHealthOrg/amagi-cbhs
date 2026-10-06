@@ -273,7 +273,7 @@ Two environment variables control behaviour, and both are unset locally:
 
 ### 11.2 Hosting
 
-Vercel, building `main` with the Next.js preset. Non-production deployments are switched off (`ignoreCommand` in `vercel.json`). Until launch the project is on Tandem's Hobby team; in T018 it moves to an Amagi-owned Pro team (Hobby is for non-commercial use and runs cron at most once a day). Cloudflare manages DNS only, with no proxying in front of Vercel.
+Vercel, building `main` with the Next.js preset. Non-production deployments are switched off (`git.deploymentEnabled` in `vercel.json` allows `main` only). Until launch the project is on Tandem's Hobby team; in T018 it moves to an Amagi-owned Pro team (Hobby is for non-commercial use and runs cron at most once a day). Cloudflare manages DNS only, with no proxying in front of Vercel.
 
 - **Database:** Supabase Postgres through the transaction pooler (port 6543). The direct address is IPv6-only and Vercel can't reach it. The build pre-renders pages and connects to the database, so `DATABASE_URL` is set for every environment.
 - **Storage:** Supabase Storage through its S3 API, with `clientUploads: true` so admin uploads go straight to storage and avoid Vercel's 4.5 MB request limit.
