@@ -6,7 +6,7 @@ export { about, callToAction, donateBanner, faqs, footer, news, support } from '
 
 export const v1Nav = [
   { label: 'About', href: '/v1/about' },
-  { label: 'Support', href: '/v1/support' },
+  { label: 'Support Caribbean Brain Health', href: '/v1/support' },
   { label: 'Call to Action', href: '/v1/call-to-action' },
   { label: 'News', href: '/v1/news' },
   { label: 'FAQs', href: '/v1/faqs' },
@@ -25,7 +25,7 @@ export const home = {
   stats: [
     { value: '7', label: 'days of free activity' },
     { value: '5', label: 'host countries' },
-    { value: '1', label: 'Anchor Day in Kingston' },
+    { value: '1', label: 'Anchor Day in Jamaica' },
     { value: '5', label: 'action areas for policy' },
   ],
   // TODO: placeholder statistic (WHO, March 2024); Amagi to confirm the figure and source.
@@ -42,7 +42,7 @@ export const home = {
   week: {
     kicker: 'Summit week',
     heading: 'Seven days, one region',
-    body: 'Local activity runs all week. The Anchor Day brings everyone together in Kingston.',
+    body: 'Local activity runs all week. The Anchor Day takes place in Jamaica.',
   },
   roadmap: {
     kicker: 'The road ahead',
@@ -78,7 +78,7 @@ export const summitWeek = [
   { day: 'Mon', date: '16', label: 'Opening', body: 'Launch events in every host country' },
   { day: 'Tue', date: '17', label: 'Local activity', body: 'Community sessions and screenings' },
   { day: 'Wed', date: '18', label: 'Local activity', body: 'Workshops for practitioners' },
-  { day: 'Thu', date: '19', label: 'Anchor Day', body: 'The region meets in Kingston', anchor: true },
+  { day: 'Thu', date: '19', label: 'Anchor Day', body: 'The Anchor Day takes place in Jamaica', anchor: true },
   { day: 'Fri', date: '20', label: 'Local activity', body: 'Youth and family sessions' },
   { day: 'Sat', date: '21', label: 'Online day', body: 'Sessions for the diaspora' },
   { day: 'Sun', date: '22', label: 'Close', body: 'Reflections and next steps' },
@@ -104,7 +104,8 @@ export const roadmap: Milestone[] = [
   { when: '2027', title: 'Call to Action published', body: 'A shared agenda goes to governments.', status: 'next' },
 ]
 
-export const actionAreaIcons = ['megaphone', 'shield', 'stethoscope', 'graduation', 'landmark'] as const
+// 1 workforce/development, 2 infrastructure, 3 care, 4 evidence, 5 accountability
+export const actionAreaIcons = ['users', 'landmark', 'hand-heart', 'graduation', 'badge-check'] as const
 
 export const aboutV1 = {
   flow: {

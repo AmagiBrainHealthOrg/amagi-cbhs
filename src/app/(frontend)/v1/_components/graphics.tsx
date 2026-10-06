@@ -74,8 +74,7 @@ export function CaribbeanMap({ online }: { online: string }) {
         aria-labelledby="v1-map-title"
       >
         <title id="v1-map-title">
-          Map of the Caribbean showing the host countries, with Kingston, Jamaica, as the Anchor Day
-          location
+          Map of the Caribbean showing the host countries, with Jamaica as the Anchor Day location
         </title>
         <defs>
           <pattern id="v1-map-dots" width="18" height="18" patternUnits="userSpaceOnUse">
