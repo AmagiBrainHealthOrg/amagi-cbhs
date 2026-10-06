@@ -20,7 +20,7 @@ The public website for the **Caribbean Brain Health Summit 2026 (CBHS)**, run by
 - **CMS:** Payload CMS 3 (`payload`, `@payloadcms/next`, Lexical rich text, live preview)
 - **Database:** Supabase Postgres via `@payloadcms/db-postgres`. Locally the Supabase CLI stack; deployed environments use the transaction pooler (SPEC §11.2)
 - **Media:** Supabase Storage via `@payloadcms/storage-s3` (S3 API, client uploads)
-- **Hosting:** Vercel (SPEC §11.2)
+- **Hosting:** Vercel (SPEC §11.2). No staging and no preview deployments: every merge to `main` deploys to production, which stays locked and in test mode until launch (SPEC §11.1)
 - **Payments:** Stripe Checkout (hosted). No card data on our site, ever
 - **Email:** Resend via Payload's email adapter
 - **CRM:** Airtable via its REST API (SPEC §9.1). No Google Sheets
@@ -44,7 +44,7 @@ pnpm db:seed             # Seed local content (added in T011)
 pnpm preflight           # Orchestrator preflight (added in T001)
 
 pnpm supabase start                  # Local Postgres and Storage
-pnpm db:pull                         # Pull staging schema and data (added in T001)
+pnpm db:pull                         # Pull production schema and data (added in T001)
 ```
 
 After any collection, global or field change:
@@ -89,7 +89,7 @@ Use the Payload skill at `.claude/skills/payload/` (start with `SKILL.md`). Rule
 - **Copy belongs in the CMS.** Never hard-code copy an editor might change. Dropdown values come from the `dropdowns` global.
 - **Accessibility:** WCAG 2.1 AA.
 - **Secrets** live in environment variables. Never print, log or commit them.
-- **Remote databases are read-only from dev machines.** `pnpm db:pull` copies staging down; nothing goes up. Never run `pnpm supabase db push`, `pnpm supabase db pull`, `pnpm supabase db reset` or `pnpm supabase migration`. Payload migrations are the only schema changes, and they reach staging and production only through deploys.
+- **Remote databases are read-only from dev machines.** `pnpm db:pull` copies production down; nothing goes up. Never run `pnpm supabase db push`, `pnpm supabase db pull`, `pnpm supabase db reset` or `pnpm supabase migration`. Payload migrations are the only schema changes, and they reach production only by merging to `main`.
 - **Migrations are backward compatible.** The previous deployment runs against the new schema until the switch: add first, drop or rename in a later release.
 
 ## Code quality

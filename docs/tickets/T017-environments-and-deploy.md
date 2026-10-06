@@ -1,49 +1,47 @@
 ---
 id: T017
-title: Staging on Vercel
-milestone: M3
+title: Lock production until launch, test mode and health check
+milestone: M0
 release: 1
-depends_on: [T010, T011, T014, T015]
-migrations: true
+depends_on: [T003]
+migrations: false
 requires_human: true
 spec: ['SPEC §11.1', 'SPEC §11.2', 'SPEC §3.5']
 skills: [payload]
 ---
 
-# T017: Staging on Vercel
+# T017: Lock production until launch, test mode and health check
 
 ## Context
 
-The Vercel project already builds `main` on Tandem's Hobby team (SPEC §11.2). This ticket makes that deployment a proper staging environment. Production comes in T018.
+There is no staging (SPEC §11.1): every merge to `main` deploys to production. Until launch, production must show only Coming Soon to the public, and every integration must run in test mode. This ticket lands early so later tickets can merge safely.
 
-Human steps: set the staging environment variables in Vercel (transaction-pooler `DATABASE_URL`, `PAYLOAD_SECRET`, `S3_*`, Stripe test keys, Resend, `AIRTABLE_TOKEN` and `AIRTABLE_BASE_ID` for the staging base, basic-auth credentials, `SITE_ENV=staging`); turn on automatic RLS in the staging Supabase project; add a DNS-only Cloudflare record for the staging hostname. Never put these values in the repo.
+Human steps: in the Vercel project, confirm the production branch is `main`, and set `SITE_LOCKED=true` for Production (leave `SITE_LIVE` unset). In the Supabase project, turn on automatic RLS for new tables. Never put these values in the repo.
 
 ## Scope
 
 **In**
 
-- `vercel-build` script: `pnpm payload migrate` when `VERCEL_ENV=production`, then `next build`. Previews never migrate.
-- `/api/health`: 200 when the database answers, 503 otherwise. Exempt from basic auth.
-- Staging protection in `src/proxy.ts` when `SITE_ENV=staging`: basic auth and `X-Robots-Tag: noindex`. Preview deployments use Vercel's deployment protection.
-- Migration enabling RLS on every table in `public` (idempotent; loops over `pg_tables`), so new environments get it without manual SQL.
-- Staging behaviour: Stripe test mode, `isTest` submissions, staging Airtable base, email sandbox.
-- `docs/DEPLOY.md`: deploy (merge to `main`), roll back (Vercel Instant Rollback, only to a deployment whose code works with the current schema), migrations, rotating secrets, moving the project to Amagi's Pro team (used by T018).
+- `src/env.ts`: optional `SITE_LIVE` and `SITE_LOCKED`; helpers `isLive()` and `isLocked()` in `src/utils/site.ts`. Later tickets use `isLive()` wherever they need test mode (SPEC §11.1) and never read `NODE_ENV` or `VERCEL_ENV` for it.
+- Site lock per SPEC §11.1 in `src/proxy.ts`: when `isLocked()`, anonymous requests to frontend routes are rewritten to the Coming Soon page; every response carries `X-Robots-Tag: noindex`. Authenticated CMS users pass through. Verify the session (for example `payload.auth({ headers })`), not just the presence of the cookie. `/admin`, `/api/*` and `/_next/*` are not locked.
+- Move the Coming Soon page from `/` to its own route for the lock to rewrite to. `/` keeps showing it until T011 replaces `/` with Home.
+- `robots.txt` disallows everything while locked.
+- `/api/health`: 200 when the database answers, 503 otherwise.
+- `docs/DEPLOY.md`: deploy (merge to `main`), roll back (Vercel Instant Rollback, only to a deployment whose code works with the current schema), migrations, rotating secrets, launch (set `SITE_LIVE`, unset `SITE_LOCKED`, swap to live keys and the production Airtable base), and moving the Vercel and Supabase projects to Amagi (used by T018).
 
 **Out**
 
-- Production and the Pro team move (T018).
+- Launch and the ownership move (T018).
 
 ## Acceptance criteria
 
-- [ ] **AC1**: Staging serves the app behind basic auth.
-  - _Verify (deploy):_ `curl -i https://<staging>/about` returns 401; with credentials returns 200 and `X-Robots-Tag: noindex`.
-- [ ] **AC2**: Staging is isolated.
-  - _Verify (deploy):_ a staging form submission lands in the staging Airtable base with `Test` ticked; a staging donation uses Stripe test mode.
-- [ ] **AC3**: Migrations run on `main` deployments only.
-  - _Verify (deploy):_ the build log of a `main` deployment shows `payload migrate` completing before `next build`; a preview deployment's log doesn't run it.
-- [ ] **AC4**: The Data API exposes nothing.
-  - _Verify (db + deploy):_ on staging, `select count(*) from pg_tables where schemaname = 'public' and not rowsecurity` returns 0, and `curl -s "https://<ref>.supabase.co/rest/v1/users?select=*" -H "apikey: <anon key>"` returns no rows.
-- [ ] **AC5**: Health check works.
-  - _Verify (deploy):_ `curl -i https://<staging>/api/health` returns 200 without credentials.
-- [ ] **AC6**: Gates pass.
+- [ ] **AC1**: Anonymous visitors see only Coming Soon while locked.
+  - _Verify (api):_ with `SITE_LOCKED=true`, anonymous `curl -i /does-not-exist` returns 200 with the Coming Soon headline and `X-Robots-Tag: noindex`; logged in (cookie from `POST /api/users/login`), the same URL returns 404. `/admin/login` and `/api/health` respond normally without a session. With `SITE_LOCKED` unset, the anonymous request returns 404.
+- [ ] **AC2**: A forged cookie doesn't unlock the site.
+  - _Verify (api):_ with `SITE_LOCKED=true`, `curl -i -b "payload-token=forged" /does-not-exist` returns the Coming Soon page.
+- [ ] **AC3**: Test mode is the default.
+  - _Verify (unit):_ `tests/int/site.int.spec.ts` covers `isLive()` and `isLocked()` for unset, `true` and other values.
+- [ ] **AC4**: Production is locked after merge.
+  - _Verify (deploy, after merge):_ `curl -i https://<production>/does-not-exist` returns the Coming Soon page with `X-Robots-Tag: noindex`; `curl -i https://<production>/api/health` returns 200.
+- [ ] **AC5**: Gates pass.
   - _Verify (cli):_ `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build` exits 0.

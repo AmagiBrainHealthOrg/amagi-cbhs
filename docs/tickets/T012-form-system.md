@@ -3,7 +3,7 @@ id: T012
 title: Shared form system
 milestone: M2
 release: 1
-depends_on: [T008, T009]
+depends_on: [T008, T009, T017]
 migrations: false
 requires_human: false
 spec: ['SPEC §8.1', 'SPEC §8.2', 'SPEC §8.4']
@@ -19,7 +19,7 @@ skills: []
 - `src/components/forms/`: `Form`, field components (text, email, textarea, select, checkbox), shared fields (territory, audience type, industry, three consents, UTM hidden fields, honeypot).
 - `src/forms/registry.ts`: form definitions keyed by SPEC §8.3 keys, each with a Zod schema, field list and whether it's an organisation form. Only the shape is needed now; T014 and T019 add definitions.
 - UTM capture: read on landing, store in `sessionStorage`, inject into every form.
-- `POST /api/forms/[key]`: validate with the registry schema, honeypot check, rate limit (SPEC §8.2), create `form-submissions` (with `isTest` outside production), redirect to `/thank-you/[key]`.
+- `POST /api/forms/[key]`: validate with the registry schema, honeypot check, rate limit (SPEC §8.2), create `form-submissions` (`isTest` when not `isLive()`, SPEC §11.1), redirect to `/thank-you/[key]`.
 - `/thank-you/[key]` page using copy from the form block or a default.
 - Accessible validation (client and server), focus to first error.
 - The `form` block now renders the selected form.

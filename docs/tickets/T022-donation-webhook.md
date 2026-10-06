@@ -14,7 +14,7 @@ skills: []
 
 ## Context
 
-Human steps: register the webhook endpoint in Stripe (staging and production) and set `STRIPE_WEBHOOK_SECRET` on each host.
+Human steps: register the production webhook endpoint in Stripe, in test mode until launch and in live mode after it, and set `STRIPE_WEBHOOK_SECRET` in Vercel. Locally, `stripe listen` provides the secret.
 
 ## Scope
 
