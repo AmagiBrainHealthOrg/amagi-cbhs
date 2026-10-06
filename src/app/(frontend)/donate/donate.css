@@ -29,7 +29,7 @@
 .donate-amount input:focus-visible + span { outline: 2px solid var(--ink-deep); outline-offset: 2px; box-shadow: 0 0 0 2px var(--white); }
 .donate-custom { display: grid; gap: 6px; }
 .donate-custom label { font-family: var(--app-font-ui); font-size: var(--fs-xs); font-weight: 700; }
-.donate-custom input { min-height: 44px; padding: 0 12px; border: 1px solid var(--divider); border-radius: 4px; font-size: var(--fs-base); }
+.donate-custom input { min-height: 44px; padding: 0 12px; border: 1px solid var(--muted-text); border-radius: 4px; font-size: var(--fs-base); }
 .donate-custom small { color: var(--muted-text); font-family: var(--app-font-ui); font-size: var(--fs-2xs); }
 .donate-submit { justify-self: start; min-height: 50px; padding-inline: 24px; }
 
@@ -39,7 +39,7 @@
 .mock-checkout-label { display: flex; align-items: center; gap: 6px; font-family: var(--app-font-ui); font-size: var(--fs-xs); font-weight: 700; color: var(--muted-ink); }
 .mock-checkout-label svg { width: 15px; height: 15px; }
 .mock-checkout-fields { display: grid; gap: 10px; }
-.mock-checkout-fields span { display: flex; align-items: center; min-height: 44px; padding: 0 12px; border-radius: 4px; background: var(--pale-blue); color: var(--muted-text); font-family: var(--app-font-ui); font-size: var(--fs-xs); }
+.mock-checkout-fields span { display: flex; align-items: center; min-height: 44px; padding: 0 12px; border-radius: 4px; background: var(--pale-blue); color: var(--muted-ink); font-family: var(--app-font-ui); font-size: var(--fs-xs); }
 .mock-checkout-actions { display: grid; gap: 10px; }
 .donate-back { justify-self: center; color: var(--primary-blue); font-family: var(--app-font-ui); font-size: var(--fs-xs); text-decoration: underline; }
 

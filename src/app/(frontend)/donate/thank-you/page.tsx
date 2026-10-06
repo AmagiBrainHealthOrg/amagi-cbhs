@@ -3,7 +3,7 @@ import React from 'react'
 
 import { donationSettings, formatAmount } from '../mockup'
 
-type Props = { searchParams: Promise<{ status?: string; amount?: string }> }
+type Props = { searchParams: Promise<{ status?: string | string[]; amount?: string | string[] }> }
 
 export default async function ThankYouPage({ searchParams }: Props) {
   const { status, amount } = await searchParams
@@ -31,7 +31,7 @@ export default async function ThankYouPage({ searchParams }: Props) {
       </p>
       <h1 id="thank-you-title">{donationSettings.thankYouHeading}</h1>
       <p className="donate-lead">{donationSettings.thankYouBody}</p>
-      <Link className="button button-orange" href="/">
+      <Link className="button button-outline" href="/">
         Back to the homepage
       </Link>
     </section>

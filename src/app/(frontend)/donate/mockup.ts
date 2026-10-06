@@ -17,6 +17,9 @@ export const formatAmount = (minor: number) =>
     maximumFractionDigits: minor % 100 === 0 ? 0 : 2,
   }).format(minor / 100)
 
+// Stripe's largest single charge in USD.
+export const STRIPE_MAX_AMOUNT = 99_999_999
+
 type AmountParams = { amount?: string | string[]; custom?: string | string[] }
 
 // Returns the amount in minor units, or undefined if it isn't a valid donation.
@@ -31,8 +34,7 @@ export function parseAmount({ amount, custom }: AmountParams): number | undefine
   }
 
   if (!donationSettings.allowCustomAmount || !customValue) return undefined
-  const major = Number(customValue)
-  if (!Number.isFinite(major)) return undefined
-  const minor = Math.round(major * 100)
-  return minor >= donationSettings.minimumAmount ? minor : undefined
+  if (!/^\d+(\.\d{1,2})?$/.test(customValue)) return undefined
+  const minor = Math.round(Number(customValue) * 100)
+  return minor >= donationSettings.minimumAmount && minor <= STRIPE_MAX_AMOUNT ? minor : undefined
 }

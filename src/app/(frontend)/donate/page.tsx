@@ -1,7 +1,8 @@
 import { ArrowRight } from 'lucide-react'
 import React from 'react'
 
-import { donationSettings, formatAmount } from './mockup'
+import { CustomAmountInput } from './CustomAmountInput'
+import { donationSettings, formatAmount, STRIPE_MAX_AMOUNT } from './mockup'
 
 type Props = { searchParams: Promise<{ error?: string }> }
 
@@ -48,12 +49,13 @@ export default async function DonatePage({ searchParams }: Props) {
           {allowCustomAmount && (
             <div className="donate-custom">
               <label htmlFor="donate-custom">Other amount (USD)</label>
-              <input
+              <CustomAmountInput
                 id="donate-custom"
                 name="custom"
                 type="number"
                 inputMode="decimal"
                 min={minimumAmount / 100}
+                max={STRIPE_MAX_AMOUNT / 100}
                 step="0.01"
                 aria-describedby="donate-custom-hint"
               />
