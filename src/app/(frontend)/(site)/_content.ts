@@ -20,7 +20,7 @@ export const home = {
     { value: '1', label: 'Anchor Day in Jamaica' },
     { value: '5', label: 'action areas for policy' },
   ],
-  // TODO: placeholder statistic (WHO, March 2024); Amagi to confirm the figure and source.
+  // Source: WHO news release, 14 March 2024 (GBD 2021, The Lancet Neurology).
   statement: {
     text: 'More than 1 in 3 people worldwide live with a condition that affects the brain or nervous system.',
     source: 'World Health Organization, 2024',
