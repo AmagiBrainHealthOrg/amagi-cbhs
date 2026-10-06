@@ -3,15 +3,14 @@
 ## Where we are
 
 - Session: 0 (setup only).
-- Done: agentic setup files committed.
+- Done: agentic setup files committed; T001 (PR #9).
 - In flight: none.
 - Parked or blocked: none.
 
 ## Ready to start now
 
 - **T029** (Airtable base design) has no dependencies: start it now so Amagi can sign off D7 before T013.
-- **T001** must be done in a normal session (it creates `pnpm preflight`). After it merges, `/orchestrate` can run.
-- After T001: T002, T003 (migration) and T005 can run in parallel. T003 is the only migration ticket in flight.
+- T002, T003 (migration) and T005 can run in parallel. T003 is the only migration ticket in flight.
 - After T003: T017 (production lock and health check) and T004 (migration) can run in parallel.
 
 ## Decisions and conventions
@@ -26,6 +25,9 @@
 - Existing users are backfilled to `admin` in T004; new users default to `editor`.
 - Copy and dropdown values live in the CMS; seed placeholders are marked `[PLACEHOLDER]`.
 - Local databases are named `amagi_cbhs_<id>`; dev server port is `3000 + <numeric id>`.
+- Under the Claude Code sandbox, local ports, Docker and `pg_dump` to production need the sandbox bypass; run `tsx` scripts as `node --import tsx scripts/<name>.ts` and the Supabase CLI with `DO_NOT_TRACK=1`.
+- Browser checks use the system Chrome: `chromium.launch({ channel: 'chrome' })`.
+- No favicon yet (browsers log a `/favicon.ico` 404); pick it up in T005 or T009.
 
 ## Open questions for the user
 
@@ -35,4 +37,5 @@
 - D6: Release 2 date.
 - D7: Airtable base structure and field list (T029 drafts it; blocks T013).
 - D8: whether donor name and email go to Airtable (affects T022).
+- Vercel cancels every production build ("Canceled by Ignored Build Step") since `vercel.json` landed in #8; production still runs pre-#8 code. Check Vercel exposes system env vars and that `main` is the production branch.
 - D9: after launch, whether merges keep deploying straight to production (affects T018).
