@@ -13,12 +13,14 @@ export default async function DonatePage({ searchParams }: Props) {
   return (
     <div className="donate-layout">
       <section className="donate-why" aria-labelledby="donate-title">
+        {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
         <p className="donate-kicker">Support the Summit</p>
         <h1 id="donate-title">Give to Caribbean brain health</h1>
         <p className="donate-lead">
           The Caribbean Brain Health Summit brings brain health to communities across the region, in
           person and online, from 16 to 22 November 2026. Your gift makes it possible.
         </p>
+        {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
         <h2>What your gift supports</h2>
         <ul className="donate-reasons">
           {donationSettings.reasons.map((reason) => (
@@ -28,14 +30,16 @@ export default async function DonatePage({ searchParams }: Props) {
             </li>
           ))}
         </ul>
+        {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
         <p className="donate-note">Amagi Health Ltd runs the Summit.</p>
       </section>
 
       <section className="donate-card" aria-label="Make a donation">
-
         <form action="/donate/checkout" method="get" className="donate-form">
           <fieldset>
+            {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
             <legend>Choose an amount</legend>
+            {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
             {error && (
               <p className="donate-error" role="alert">
                 Please choose an amount, or enter one of at least {formatAmount(minimumAmount)}.
@@ -57,6 +61,7 @@ export default async function DonatePage({ searchParams }: Props) {
                 <label className="donate-amount">
                   <input type="radio" name="amount" value="custom" />
                   <span>
+                    {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
                     <strong>Other</strong>
                     <small>Choose your own amount</small>
                   </span>
@@ -65,6 +70,7 @@ export default async function DonatePage({ searchParams }: Props) {
             </div>
             {allowCustomAmount && (
               <div className="donate-custom">
+                {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
                 <label htmlFor="donate-custom">Other amount (USD)</label>
                 <CustomAmountInput
                   id="donate-custom"
@@ -76,15 +82,18 @@ export default async function DonatePage({ searchParams }: Props) {
                   step="0.01"
                   aria-describedby="donate-custom-hint"
                 />
+                {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
                 <small id="donate-custom-hint">
                   Select “Other” and enter at least {formatAmount(minimumAmount)}.
                 </small>
               </div>
             )}
           </fieldset>
+          {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
           <button type="submit" className="button button-orange donate-submit">
             Continue to payment <ArrowRight aria-hidden="true" />
           </button>
+          {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
           <p className="donate-note">You’ll pay securely on Stripe’s checkout page.</p>
         </form>
       </section>

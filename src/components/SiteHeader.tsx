@@ -21,6 +21,7 @@ export async function SiteHeader() {
 
   return (
     <header className="coming-soon-header site-header">
+      {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
       <Link
         className="coming-soon-brand"
         href="/"
@@ -37,6 +38,7 @@ export async function SiteHeader() {
         data-action="donate_click"
         data-destination-type="internal"
       >
+        {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
         <Heart aria-hidden="true" /> Donate
       </Link>
     </header>

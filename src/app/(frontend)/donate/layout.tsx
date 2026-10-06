@@ -6,6 +6,7 @@ import { SiteHeader } from '@/components/SiteHeader'
 import './donate.css'
 
 export const metadata: Metadata = {
+  // TODO: hard-coded; migrate to Payload only when a human developer decides to.
   title: 'Donate | Caribbean Brain Health Summit',
   robots: { index: false, follow: false },
 }
@@ -16,6 +17,7 @@ export default async function DonateLayout({ children }: { children: React.React
       <a className="skip-link" href="#donate-main">
         Skip to content
       </a>
+      {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
       <p className="donate-mockup-banner" role="note">
         Mockup: no payment is taken and nothing is sent to Stripe.
       </p>

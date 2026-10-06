@@ -125,6 +125,7 @@ export default async function ComingSoonPage({ searchParams }: Props) {
                   data-action="donate_click"
                   data-destination-type="internal"
                 >
+                  {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
                   <Heart aria-hidden="true" /> Donate
                 </Link>
                 {data.cta.label && (
