@@ -47,7 +47,7 @@ export const about = {
       body: 'Each host country runs its own programme of free, local activities during Summit week, alongside online sessions anyone can join. An Anchor Day in Kingston brings the region together in one place.',
     },
     {
-      heading: 'Amagi’s role',
+      heading: "Amagi's role",
       body: 'Amagi Health Ltd convenes the Summit. Amagi works with country leads, local partners and supporters to plan the week, and leads the consultation on the Caribbean Call to Action on Brain Health.',
     },
     {
@@ -90,37 +90,39 @@ export const support = {
   },
   levels: {
     heading: 'Supporter levels',
-    intro: 'Organisations and individuals can support the Summit at any level.',
+    intro: "If your organisation is interested in supporting CBHS, we will develop a proposal that reflects your priorities while preserving the Summit's independence.",
     items: [
       {
-        name: 'Friend',
-        amount: 'From $250',
-        perks: ['Thanks on the Support page, with your permission', 'Summit updates'],
+        name: 'Founding Regional Supporter',
+        body: 'Enables core Caribbean brain-health infrastructure across digital access, country participation, independent convening and accountable follow-through.',
       },
       {
-        name: 'Champion',
-        amount: 'From $2,500',
-        perks: ['Everything for Friends', 'Recognition at a host-country session'],
+        name: 'Regional Supporter',
+        body: 'Helps extend participation, connection and learning across Caribbean countries and diaspora communities.',
       },
       {
-        name: 'Regional supporter',
-        amount: 'From $10,000',
-        perks: ['Everything for Champions', 'Recognition at the Anchor Day in Kingston'],
+        name: 'Access & Participation Supporter',
+        body: 'Enables a defined public-interest area, such as caregiver inclusion, country leadership, primary-care education, digital access or lived-experience participation.',
+      },
+      {
+        name: 'Community Supporter',
+        body: 'Provides financial or in-kind support that helps local and regional CBHS activity remain accessible, inclusive and independently delivered.',
       },
     ],
   },
   safeguards: {
     heading: 'Our safeguards',
     items: [
-      'Supporters have no say over the programme or the Call to Action.',
-      'We only name a supporter once they’ve confirmed we may.',
-      'Payments go through Stripe. We never see or store card details.',
+      'Supporters do not control programme content, speakers, participant selection, research, policy recommendations or the Call to Action.',
+      'Supporters do not receive attendee contact lists, individual-level analytics or direct-marketing rights.',
+      "Support does not imply endorsement of a supporter's products or commercial interests.",
+      'Supporter recognition is separate from educational, clinical, research and policy content.',
     ],
   },
   // TODO: list from the Payload `supporters` collection, filtered on permissionConfirmed, only when a human developer decides to.
   supporters: {
     heading: 'Our supporters',
-    empty: 'Supporters will appear here once they’ve given permission to be named.',
+    empty: "Supporters will appear here once they've given permission to be named.",
   },
   faqCategory: 'Donations and support',
 }
@@ -177,7 +179,7 @@ export const faqs = [
       {
         question: 'Where is the Anchor Day?',
         answer:
-          'In Kingston, Jamaica. We’ll publish the venue and timings here once they’re confirmed.',
+          "In Kingston, Jamaica. We'll publish the venue and timings here once they're confirmed.",
       },
     ],
   },
@@ -186,7 +188,7 @@ export const faqs = [
     items: [
       {
         question: 'How do I stay updated?',
-        answer: 'Register your interest and we’ll email you when the programme is published.',
+        answer: "Register your interest and we'll email you when the programme is published.",
       },
       {
         question: 'Can my organisation run an activity?',
@@ -297,7 +299,7 @@ export const legal = {
       },
       {
         heading: 'Changing your mind',
-        body: 'Use “Cookie settings” in the footer at any time. Rejecting deletes the analytics cookies on our domain.',
+        body: 'Use "Cookie settings" in the footer at any time. Rejecting deletes the analytics cookies on our domain.',
       },
     ],
   },
@@ -311,7 +313,7 @@ export const legal = {
       },
       {
         heading: 'Donations',
-        body: 'Donations are processed by Stripe on Amagi Health Ltd’s behalf.',
+        body: "Donations are processed by Stripe on Amagi Health Ltd's behalf.",
       },
       {
         heading: 'Contact',
