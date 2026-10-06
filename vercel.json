@@ -1,4 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "ignoreCommand": "[ \"$VERCEL_ENV\" != \"production\" ]"
+  "ignoreCommand": "[ \"$VERCEL_ENV\" != \"production\" ]",
+  "buildCommand": "pnpm payload migrate && pnpm build"
 }
