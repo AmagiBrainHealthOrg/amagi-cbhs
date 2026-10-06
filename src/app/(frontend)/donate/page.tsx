@@ -53,9 +53,6 @@ export default async function DonatePage({ searchParams }: Props) {
                   <input type="radio" name="amount" value={amount} defaultChecked={index === 1} />
                   <span>
                     <strong>{formatAmount(amount)}</strong>
-                    {donationSettings.impact[amount] && (
-                      <small>{donationSettings.impact[amount]}</small>
-                    )}
                   </span>
                 </label>
               ))}
@@ -65,7 +62,6 @@ export default async function DonatePage({ searchParams }: Props) {
                   <span>
                     {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
                     <strong>Other</strong>
-                    <small>Choose your own amount</small>
                   </span>
                 </label>
               )}

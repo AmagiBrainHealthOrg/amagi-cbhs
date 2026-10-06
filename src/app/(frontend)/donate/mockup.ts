@@ -7,13 +7,6 @@ export const donationSettings = {
   allowCustomAmount: true,
   minimumAmount: 500,
   // TODO: hard-coded; migrate to Payload only when a human developer decides to.
-  impact: {
-    2500: 'Prints brain health guides for a community session',
-    5000: 'Helps a local activity host run a session in their country',
-    10000: 'Brings an online session to viewers across the region',
-    25000: 'Supports a country programme during Summit week',
-  } as Record<number, string>,
-  // TODO: hard-coded; migrate to Payload only when a human developer decides to.
   reasons: [
     'Seven days of activity across several Caribbean countries and online, 16–22 November 2026',
     'Free sessions on dementia, stroke, mental health and healthy ageing for the public',
