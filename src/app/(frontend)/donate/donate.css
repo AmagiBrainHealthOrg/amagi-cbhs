@@ -21,10 +21,10 @@
 .donate-form fieldset { display: grid; gap: 14px; margin: 0; padding: 0; border: 0; }
 .donate-form legend { margin-bottom: 12px; padding: 0; font-family: var(--app-font-heading); font-size: var(--fs-lg); font-weight: 700; color: var(--primary-blue); }
 .donate-error { padding: 10px 12px; border-left: 4px solid var(--red); background: var(--pale-blue); font-family: var(--app-font-ui); font-size: var(--fs-xs); }
-.donate-amounts { display: grid; gap: 10px; }
+.donate-amounts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .donate-amount { position: relative; }
 .donate-amount input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
-.donate-amount span { display: grid; grid-template-columns: 88px 1fr; align-items: center; gap: 16px; min-height: 60px; padding: 12px 18px; border: 2px solid var(--line); border-radius: 6px; font-family: var(--app-font-ui); font-size: var(--fs-md); font-weight: 700; color: var(--primary-blue); }
+.donate-amount span { display: flex; align-items: center; justify-content: center; min-height: 60px; padding: 12px 18px; border: 2px solid var(--line); border-radius: 6px; font-family: var(--app-font-ui); font-size: var(--fs-md); font-weight: 700; color: var(--primary-blue); }
 .donate-amount input:checked + span { border-color: var(--primary-blue); background: var(--primary-blue); color: var(--white); }
 .donate-amount input:focus-visible + span { outline: 2px solid var(--ink-deep); outline-offset: 2px; box-shadow: 0 0 0 2px var(--white); }
 .donate-custom { display: grid; gap: 6px; }
@@ -63,5 +63,5 @@
 
 @media (max-width: 880px) {
   .donate-layout { grid-template-columns: 1fr; }
-  .donate-amount span { grid-template-columns: 72px 1fr; gap: 12px; padding-inline: 14px; }
+  .donate-amount span { padding-inline: 14px; }
 }

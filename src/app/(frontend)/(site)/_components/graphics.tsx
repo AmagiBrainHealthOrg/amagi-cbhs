@@ -264,27 +264,37 @@ export function FlowDiagram({ steps }: { steps: { title: string; body: string }[
   )
 }
 
-export function TierStairs({
-  levels,
-}: {
-  levels: { name: string; amount: string; perks: string[] }[]
-}) {
+const RING_R = [178, 132, 90, 52]
+const RING_W = [21, 20, 16, 12]
+const SVG_C = 200
+
+export function SupporterRings({ levels }: { levels: { name: string; body: string }[] }) {
   return (
-    <ol className="v1-tiers">
-      {levels.map(({ name, amount, perks }, index) => (
-        <li key={name} style={{ '--v1-tier': index } as React.CSSProperties}>
-          <div className="v1-tier-step">
-            <p className="v1-tier-amount">{amount}</p>
-            <h3>{name}</h3>
-          </div>
-          <ul>
-            {perks.map((perk) => (
-              <li key={perk}>{perk}</li>
-            ))}
-          </ul>
-        </li>
-      ))}
-    </ol>
+    <div className="v1-rings">
+      <svg className="v1-rings-svg" viewBox="0 0 400 400" aria-hidden="true">
+        {levels.map((_, i) => (
+          <circle key={i} className={`v1-ring v1-ring-${i}`} cx={SVG_C} cy={SVG_C} r={RING_R[i]} fill="none" strokeWidth={RING_W[i]} />
+        ))}
+        <circle cx={SVG_C} cy={SVG_C} r={26} className="v1-ring-centre" />
+        {levels.map((_, i) => (
+          <g key={i} className={`v1-ring-node v1-ring-${i}`}>
+            <circle cx={SVG_C} cy={SVG_C - RING_R[i]} r={15} />
+            <text x={SVG_C} y={SVG_C - RING_R[i] + 5} textAnchor="middle" fontSize="13" fontWeight="700">{i + 1}</text>
+          </g>
+        ))}
+      </svg>
+      <ol className="v1-rings-list">
+        {levels.map(({ name, body }, i) => (
+          <li key={name} className={`v1-ring-${i}`}>
+            <span aria-hidden="true">{i + 1}</span>
+            <div>
+              <h3>{name}</h3>
+              <p>{body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
   )
 }
 

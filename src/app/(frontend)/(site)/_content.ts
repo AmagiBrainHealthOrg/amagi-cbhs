@@ -114,7 +114,7 @@ export const aboutV1 = {
 
 export const supportV1 = {
   enablesIcons: ['users', 'video', 'hand-heart', 'file-text'] as const,
-  safeguardIcons: ['scale', 'badge-check', 'lock'] as const,
+  safeguardIcons: ['scale', 'badge-check', 'lock', 'file-text'] as const,
 }
 
 export const callToActionV1 = {
