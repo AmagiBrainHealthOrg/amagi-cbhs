@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import React from 'react'
+
+import { SiteHeader } from '@/components/SiteHeader'
 
 import './donate.css'
 
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-export default function DonateLayout({ children }: { children: React.ReactNode }) {
+export default async function DonateLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="donate-page">
       <a className="skip-link" href="#donate-main">
@@ -18,11 +19,7 @@ export default function DonateLayout({ children }: { children: React.ReactNode }
       <p className="donate-mockup-banner" role="note">
         Mockup: no payment is taken and nothing is sent to Stripe.
       </p>
-      <header className="donate-header">
-        <Link href="/" className="donate-brand">
-          Caribbean Brain Health Summit 2026
-        </Link>
-      </header>
+      <SiteHeader />
       <main className="donate-main" id="donate-main">
         {children}
       </main>

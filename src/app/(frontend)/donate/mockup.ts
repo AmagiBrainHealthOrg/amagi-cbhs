@@ -5,6 +5,17 @@ export const donationSettings = {
   currency: 'usd',
   allowCustomAmount: true,
   minimumAmount: 500,
+  impact: {
+    2500: 'Prints brain health guides for a community session',
+    5000: 'Helps a local activity host run a session in their country',
+    10000: 'Brings an online session to viewers across the region',
+    25000: 'Supports a country programme during Summit week',
+  } as Record<number, string>,
+  reasons: [
+    'Seven days of activity across several Caribbean countries and online, 16–22 November 2026',
+    'Free sessions on dementia, stroke, mental health and healthy ageing for the public',
+    'A Caribbean Call to Action on Brain Health, shaped by communities and policymakers',
+  ],
   thankYouHeading: 'Thank you for your donation',
   thankYouBody:
     'Your gift helps bring the Caribbean Brain Health Summit to communities across the region and online.',

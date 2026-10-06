@@ -3,9 +3,10 @@ import { headers as getHeaders } from 'next/headers.js'
 import Link from 'next/link'
 import { getPayload } from 'payload'
 import * as QRCode from 'qrcode'
-import { ArrowRight, CalendarDays, Clock, Globe2, Mail, MapPin, Users } from 'lucide-react'
+import { ArrowRight, CalendarDays, Clock, Globe2, Heart, Mail, MapPin, Users } from 'lucide-react'
 import React from 'react'
 
+import { SiteHeader } from '@/components/SiteHeader'
 import config from '@/payload.config'
 import type { Media } from '@/payload-types'
 import { RefreshRouteOnSave } from './RefreshRouteOnSave'
@@ -89,17 +90,7 @@ export default async function ComingSoonPage({ searchParams }: Props) {
         Skip to content
       </a>
 
-      <header className="coming-soon-header">
-        <Link
-          className="coming-soon-brand"
-          href="/"
-          aria-label="Caribbean Brain Health Summit homepage"
-        >
-          {logo?.url && <img src={logo.url} alt={logo.alt} />}
-          {logo?.url && data.brandTitle && <span aria-hidden="true" />}
-          {data.brandTitle && <strong>{withBreaks(data.brandTitle)}</strong>}
-        </Link>
-      </header>
+      <SiteHeader />
 
       <main className="coming-soon-main" id="coming-soon-main">
         <div className="coming-soon-background" aria-hidden="true">
@@ -126,16 +117,27 @@ export default async function ComingSoonPage({ searchParams }: Props) {
 
           {data.cta?.url && (
             <div className="coming-soon-register">
-              {data.cta.label && (
-                <a
+              <div className="coming-soon-actions">
+                <Link
                   className="button button-orange coming-soon-cta"
-                  href={data.cta.url}
-                  target="_blank"
-                  rel="noreferrer"
+                  href="/donate"
+                  data-journey="donate"
+                  data-action="donate_click"
+                  data-destination-type="internal"
                 >
-                  {data.cta.label} <ArrowRight aria-hidden="true" />
-                </a>
-              )}
+                  <Heart aria-hidden="true" /> Donate
+                </Link>
+                {data.cta.label && (
+                  <a
+                    className="button button-outline-light coming-soon-cta"
+                    href={data.cta.url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {data.cta.label} <ArrowRight aria-hidden="true" />
+                  </a>
+                )}
+              </div>
               <aside className="coming-soon-qr" aria-labelledby="coming-soon-qr-title">
                 <div>
                   {data.qr?.label && <p id="coming-soon-qr-title">{data.qr.label}</p>}
