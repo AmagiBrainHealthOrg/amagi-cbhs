@@ -131,7 +131,7 @@ Audience types (`value`): `country_lead`, `activity_host`, `partner_organisation
 
 ### 6.1 Tokens
 
-Brand tokens are in `src/app/(frontend)/styles.css` (ported from the previous site): primary blue `#005baa`, orange `#f3903f`, yellow `#fcc60d`, red `#e93e39`; fonts Baloo 2 (body), Montserrat (headings), Roboto (UI), All Round Gothic (key statements, Adobe Fonts).
+Brand tokens are in `src/app/(frontend)/tokens.css` (ported from the previous site; custom properties only): primary blue `#005baa`, orange `#f3903f`, yellow `#fcc60d`, red `#e93e39`; fonts Baloo 2 (body), Montserrat (headings), Roboto (UI), All Round Gothic (key statements, Adobe Fonts).
 
 ### 6.2 Components
 

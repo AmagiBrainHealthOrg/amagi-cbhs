@@ -11,7 +11,7 @@ Spec: `docs/SPEC.md` §6.
 
 ## Tokens only
 
-- Colours, fonts, spacing and radii come from the CSS custom properties in `src/app/(frontend)/styles.css` (ported from the previous site). Never use raw hex values in components.
+- Colours, fonts, spacing and radii come from the CSS custom properties in `src/app/(frontend)/tokens.css` (ported from the previous site). Never use raw hex values in components.
 - Brand colours: primary blue `--primary-blue`, orange `--orange`, yellow `--yellow`, red `--red`.
 - Fonts: body `--app-font-body` (Baloo 2), headings `--app-font-heading` (Montserrat), UI `--app-font-ui` (Roboto), key statements `--app-font-key-statement` (All Round Gothic).
 

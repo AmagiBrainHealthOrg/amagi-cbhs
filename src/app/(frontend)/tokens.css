@@ -27,6 +27,7 @@
 
   /* --- Ink / text -------------------------------------------- */
   --ink: #005baa;
+  --ink-deep: hsl(208 100% 24%);
   --muted-ink: #56657a;
   --muted-text: #64758a;
   --pale-text: #e9f2fb;
