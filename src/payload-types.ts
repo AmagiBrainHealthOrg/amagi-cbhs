@@ -88,9 +88,25 @@ export interface Config {
   };
   fallbackLocale: null;
   globals: {
+    header: Header;
+    footer: Footer;
+    'donation-settings': DonationSetting;
+    'anchor-day': AnchorDay;
+    dropdowns: Dropdown;
+    integrations: Integration;
+    forms: Form;
+    'cookie-consent': CookieConsent;
     'coming-soon': ComingSoon;
   };
   globalsSelect: {
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+    'donation-settings': DonationSettingsSelect<false> | DonationSettingsSelect<true>;
+    'anchor-day': AnchorDaySelect<false> | AnchorDaySelect<true>;
+    dropdowns: DropdownsSelect<false> | DropdownsSelect<true>;
+    integrations: IntegrationsSelect<false> | IntegrationsSelect<true>;
+    forms: FormsSelect<false> | FormsSelect<true>;
+    'cookie-consent': CookieConsentSelect<false> | CookieConsentSelect<true>;
     'coming-soon': ComingSoonSelect<false> | ComingSoonSelect<true>;
   };
   locale: null;
@@ -327,6 +343,255 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: number;
+  logo?: (number | null) | Media;
+  /**
+   * Line breaks are kept.
+   */
+  brandTitle?: string | null;
+  navItems?:
+    | {
+        label: string;
+        /**
+         * A path such as /about, a full URL, or a mailto: link.
+         */
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * The Donate button in the header.
+   */
+  donateLabel?: string | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  /**
+   * The cookie settings link is added after these; its label is on Cookie Consent.
+   */
+  links?:
+    | {
+        label: string;
+        /**
+         * A path such as /about, a full URL, or a mailto: link.
+         */
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  tagline?: string | null;
+  legalText?: string | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "donation-settings".
+ */
+export interface DonationSetting {
+  id: number;
+  suggestedAmounts?:
+    | {
+        /**
+         * In cents: 2500 is $25.00.
+         */
+        amount: number;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Three-letter ISO code in lower case, as Stripe expects.
+   */
+  currency?: string | null;
+  allowCustomAmount?: boolean | null;
+  /**
+   * Smallest custom amount. In cents: 2500 is $25.00.
+   */
+  minimumAmount?: number | null;
+  /**
+   * Copy on /donate.
+   */
+  page?: {
+    kicker?: string | null;
+    heading?: string | null;
+    lead?: string | null;
+    reasonsHeading?: string | null;
+    reasons?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    note?: string | null;
+    amountLegend?: string | null;
+    /**
+     * The "Other" amount option.
+     */
+    otherLabel?: string | null;
+    /**
+     * Label on the custom amount input.
+     */
+    otherAmountLabel?: string | null;
+    /**
+     * Hint under the custom amount input. Use {minimum} for the minimum amount.
+     */
+    otherAmountHint?: string | null;
+    submitLabel?: string | null;
+    securePaymentNote?: string | null;
+    /**
+     * Shown when no valid amount is chosen. Use {minimum} for the minimum amount.
+     */
+    errorText?: string | null;
+  };
+  /**
+   * Line above the heading. Use {amount} for the amount given.
+   */
+  thankYouKicker?: string | null;
+  thankYouHeading?: string | null;
+  thankYouBody?: string | null;
+  thankYouLinkLabel?: string | null;
+  /**
+   * Shown when Stripe has not confirmed the payment.
+   */
+  unconfirmedHeading?: string | null;
+  unconfirmedBody?: string | null;
+  unconfirmedLinkLabel?: string | null;
+  /**
+   * Copy shown by every Donate banner block.
+   */
+  banner?: {
+    heading?: string | null;
+    body?: string | null;
+    /**
+     * Button label.
+     */
+    label?: string | null;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Every field is optional while the details are being confirmed.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "anchor-day".
+ */
+export interface AnchorDay {
+  id: number;
+  date?: string | null;
+  venue?: string | null;
+  moderator?: string | null;
+  mc?: string | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dropdowns".
+ */
+export interface Dropdown {
+  id: number;
+  territories?:
+    | {
+        label: string;
+        /**
+         * Stored on submissions and sent to Airtable. Avoid changing it once in use.
+         */
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  audienceTypes?:
+    | {
+        label: string;
+        /**
+         * Stored on submissions and sent to Airtable. Avoid changing it once in use.
+         */
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  industries?:
+    | {
+        label: string;
+        /**
+         * Stored on submissions and sent to Airtable. Avoid changing it once in use.
+         */
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "integrations".
+ */
+export interface Integration {
+  id: number;
+  /**
+   * For example GTM-ABC1234.
+   */
+  gtmContainerId?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "forms".
+ */
+export interface Form {
+  id: number;
+  /**
+   * One entry per form, shown on /thank-you/<form> after it is sent.
+   */
+  thankYou?:
+    | {
+        form: 'register-interest' | 'cta-consultation' | 'partner' | 'relay' | 'contact';
+        heading: string;
+        body?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cookie-consent".
+ */
+export interface CookieConsent {
+  id: number;
+  heading?: string | null;
+  body?: string | null;
+  acceptLabel?: string | null;
+  rejectLabel?: string | null;
+  /**
+   * The footer link that reopens the cookie banner.
+   */
+  settingsLabel?: string | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "coming-soon".
  */
 export interface ComingSoon {
@@ -379,6 +644,188 @@ export interface ComingSoon {
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  logo?: T;
+  brandTitle?: T;
+  navItems?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        id?: T;
+      };
+  donateLabel?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  links?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        id?: T;
+      };
+  tagline?: T;
+  legalText?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "donation-settings_select".
+ */
+export interface DonationSettingsSelect<T extends boolean = true> {
+  suggestedAmounts?:
+    | T
+    | {
+        amount?: T;
+        id?: T;
+      };
+  currency?: T;
+  allowCustomAmount?: T;
+  minimumAmount?: T;
+  page?:
+    | T
+    | {
+        kicker?: T;
+        heading?: T;
+        lead?: T;
+        reasonsHeading?: T;
+        reasons?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        note?: T;
+        amountLegend?: T;
+        otherLabel?: T;
+        otherAmountLabel?: T;
+        otherAmountHint?: T;
+        submitLabel?: T;
+        securePaymentNote?: T;
+        errorText?: T;
+      };
+  thankYouKicker?: T;
+  thankYouHeading?: T;
+  thankYouBody?: T;
+  thankYouLinkLabel?: T;
+  unconfirmedHeading?: T;
+  unconfirmedBody?: T;
+  unconfirmedLinkLabel?: T;
+  banner?:
+    | T
+    | {
+        heading?: T;
+        body?: T;
+        label?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "anchor-day_select".
+ */
+export interface AnchorDaySelect<T extends boolean = true> {
+  date?: T;
+  venue?: T;
+  moderator?: T;
+  mc?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "dropdowns_select".
+ */
+export interface DropdownsSelect<T extends boolean = true> {
+  territories?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  audienceTypes?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  industries?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "integrations_select".
+ */
+export interface IntegrationsSelect<T extends boolean = true> {
+  gtmContainerId?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "forms_select".
+ */
+export interface FormsSelect<T extends boolean = true> {
+  thankYou?:
+    | T
+    | {
+        form?: T;
+        heading?: T;
+        body?: T;
+        id?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cookie-consent_select".
+ */
+export interface CookieConsentSelect<T extends boolean = true> {
+  heading?: T;
+  body?: T;
+  acceptLabel?: T;
+  rejectLabel?: T;
+  settingsLabel?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
