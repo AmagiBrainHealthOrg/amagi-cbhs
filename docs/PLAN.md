@@ -39,7 +39,7 @@ T019 remaining forms · T020 Host Countries · T021 programme · T022 donation w
 
 ### M5: Quality and go-live
 
-T024 accessibility · T025 performance · T026 end-to-end suite · T027 go-live.
+T024 accessibility · T025 performance · T027 go-live. (T026 end-to-end suite is deferred.)
 
 ## 4. Dependency graph
 
@@ -59,7 +59,7 @@ T010 + T011 + T014 + T015 + T017 ─ T018
 
 Release 2:
 T009 ─ T016 · T011 ─ T028 · T014 ─ T019 · T011 + T019 ─ T020 ─ T021 · T010 + T013 ─ T022
-T016, T019..T022, T028 ─ T024, T025, T026 ─ T027
+T016, T019..T022, T028 ─ T024, T025 ─ T027
 ```
 
 ## 5. Practices
@@ -73,7 +73,7 @@ T016, T019..T022, T028 ─ T024, T025, T026 ─ T027
 ### 5.2 Testing by layer
 
 - **Vitest (`tests/int/`):** access helpers, hooks, validation schemas, Airtable and Stripe wrappers (with recorded fixtures), Substack parsing.
-- **Playwright (`tests/e2e/`):** pages render, forms submit, donation flow in Stripe test mode, editor vs admin permissions, draft preview.
+- **Browser checks:** done per ticket with the system Chrome (INSTRUCTIONS §2.3). There is no automated end-to-end suite for now (T026 deferred).
 
 ### 5.3 Definition of done (every ticket)
 

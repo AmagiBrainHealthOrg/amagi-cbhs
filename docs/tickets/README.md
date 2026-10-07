@@ -62,9 +62,9 @@ Release scope and dates are in SPEC §11.3. Every Release 1 ticket goes before a
 
 ## M5: Quality and go-live
 
-| ID                              | Title                         | Depends on                         | Mig | Human | Status |
-| ------------------------------- | ----------------------------- | ---------------------------------- | --- | ----- | ------ |
-| [T024](./T024-accessibility.md) | Accessibility audit and fixes | T016, T019, T020, T021, T028       |     |       | todo   |
-| [T025](./T025-performance.md)   | Performance pass              | T016, T019, T020, T021, T028       |     |       | todo   |
-| [T026](./T026-e2e-suite.md)     | End-to-end suite              | T016, T019, T020, T021, T022, T028 |     |       | todo   |
-| [T027](./T027-go-live.md)       | Full go-live                  | T024, T025, T026                   |     | ✔     | todo   |
+| ID                              | Title                         | Depends on                         | Mig | Human | Status   |
+| ------------------------------- | ----------------------------- | ---------------------------------- | --- | ----- | -------- |
+| [T024](./T024-accessibility.md) | Accessibility audit and fixes | T016, T019, T020, T021, T028       |     |       | todo     |
+| [T025](./T025-performance.md)   | Performance pass              | T016, T019, T020, T021, T028       |     |       | todo     |
+| [T026](./T026-e2e-suite.md)     | End-to-end suite              | T016, T019, T020, T021, T022, T028 |     |       | deferred |
+| [T027](./T027-go-live.md)       | Full go-live                  | T024, T025                         |     | ✔     | todo     |
