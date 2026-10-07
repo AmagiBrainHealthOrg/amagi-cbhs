@@ -3,13 +3,14 @@ import React from 'react'
 
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
+import { getGlobal } from '@/lib/globals'
 
 import './donate.css'
 
-export const metadata: Metadata = {
-  // TODO: hard-coded; migrate to Payload only when a human developer decides to.
-  title: 'Donate | Caribbean Brain Health Summit',
-  robots: { index: false, follow: false },
+export async function generateMetadata(): Promise<Metadata> {
+  const { donateLabel, brandTitle } = await getGlobal('header')
+  const title = [donateLabel, brandTitle?.replace(/\s+/g, ' ')].filter(Boolean).join(' | ')
+  return { title: title || undefined, robots: { index: false, follow: false } }
 }
 
 export default async function DonateLayout({ children }: { children: React.ReactNode }) {
@@ -18,7 +19,7 @@ export default async function DonateLayout({ children }: { children: React.React
       <a className="skip-link" href="#donate-main">
         Skip to content
       </a>
-      {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
+      {/* TODO: hard-coded mockup-only text; T010 removes the mockup banner. */}
       <p className="donate-mockup-banner" role="note">
         Mockup: no payment is taken and nothing is sent to Stripe.
       </p>

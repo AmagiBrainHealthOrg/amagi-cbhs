@@ -1,37 +1,38 @@
 import { ArrowRight, Check } from 'lucide-react'
 import React from 'react'
 
+import { getGlobal } from '@/lib/globals'
+
 import { CustomAmountInput } from './CustomAmountInput'
-import { donationSettings, formatAmount, STRIPE_MAX_AMOUNT } from './mockup'
+import { fill, formatAmount, STRIPE_MAX_AMOUNT, suggestedAmounts } from './mockup'
 
 type Props = { searchParams: Promise<{ error?: string }> }
 
 export default async function DonatePage({ searchParams }: Props) {
-  const { error } = await searchParams
-  const { suggestedAmounts, allowCustomAmount, minimumAmount } = donationSettings
+  const [{ error }, settings] = await Promise.all([searchParams, getGlobal('donation-settings')])
+  const { allowCustomAmount, minimumAmount, currency } = settings
+  const page = settings.page ?? {}
+  const amounts = suggestedAmounts(settings)
+  const minimum = formatAmount(minimumAmount ?? 0, currency)
 
   return (
     <div className="donate-layout">
       <section className="donate-why" aria-labelledby="donate-title">
-        {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
-        <p className="donate-kicker">Support the Summit</p>
-        <h1 id="donate-title">Give to Caribbean brain health</h1>
-        <p className="donate-lead">
-          The Caribbean Brain Health Summit brings brain health to communities across the region, in
-          person and online, from 16 to 22 November 2026. Your gift makes it possible.
-        </p>
-        {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
-        <h2>What your gift supports</h2>
-        <ul className="donate-reasons">
-          {donationSettings.reasons.map((reason) => (
-            <li key={reason}>
-              <Check aria-hidden="true" />
-              {reason}
-            </li>
-          ))}
-        </ul>
-        {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
-        <p className="donate-note">Amagi Health Ltd runs the Summit.</p>
+        {page.kicker && <p className="donate-kicker">{page.kicker}</p>}
+        <h1 id="donate-title">{page.heading}</h1>
+        {page.lead && <p className="donate-lead">{page.lead}</p>}
+        {page.reasonsHeading && <h2>{page.reasonsHeading}</h2>}
+        {page.reasons && page.reasons.length > 0 && (
+          <ul className="donate-reasons">
+            {page.reasons.map(({ id, text }) => (
+              <li key={id ?? text}>
+                <Check aria-hidden="true" />
+                {text}
+              </li>
+            ))}
+          </ul>
+        )}
+        {page.note && <p className="donate-note">{page.note}</p>}
       </section>
 
       <section className="donate-card" aria-label="Make a donation">
@@ -39,20 +40,18 @@ export default async function DonatePage({ searchParams }: Props) {
         {/* TODO: send UTM values as hidden fields from getUtm() (T009/T010), only when a human developer decides to. */}
         <form action="/donate/checkout" method="get" className="donate-form">
           <fieldset>
-            {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
-            <legend>Choose an amount</legend>
-            {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
+            <legend>{page.amountLegend}</legend>
             {error && (
               <p className="donate-error" role="alert">
-                Please choose an amount, or enter one of at least {formatAmount(minimumAmount)}.
+                {fill(page.errorText, 'minimum', minimum)}
               </p>
             )}
             <div className="donate-amounts">
-              {suggestedAmounts.map((amount, index) => (
+              {amounts.map((amount, index) => (
                 <label key={amount} className="donate-amount">
                   <input type="radio" name="amount" value={amount} defaultChecked={index === 1} />
                   <span>
-                    <strong>{formatAmount(amount)}</strong>
+                    <strong>{formatAmount(amount, currency)}</strong>
                   </span>
                 </label>
               ))}
@@ -60,39 +59,34 @@ export default async function DonatePage({ searchParams }: Props) {
                 <label className="donate-amount">
                   <input type="radio" name="amount" value="custom" />
                   <span>
-                    {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
-                    <strong>Other</strong>
+                    <strong>{page.otherLabel}</strong>
                   </span>
                 </label>
               )}
             </div>
             {allowCustomAmount && (
               <div className="donate-custom">
-                {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
-                <label htmlFor="donate-custom">Other amount (USD)</label>
+                <label htmlFor="donate-custom">{page.otherAmountLabel}</label>
                 <CustomAmountInput
                   id="donate-custom"
                   name="custom"
                   type="number"
                   inputMode="decimal"
-                  min={minimumAmount / 100}
+                  min={(minimumAmount ?? 0) / 100}
                   max={STRIPE_MAX_AMOUNT / 100}
                   step="0.01"
                   aria-describedby="donate-custom-hint"
                 />
-                {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
                 <small id="donate-custom-hint">
-                  Select “Other” and enter at least {formatAmount(minimumAmount)}.
+                  {fill(page.otherAmountHint, 'minimum', minimum)}
                 </small>
               </div>
             )}
           </fieldset>
-          {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
           <button type="submit" className="button button-orange donate-submit">
-            Continue to payment <ArrowRight aria-hidden="true" />
+            {page.submitLabel} <ArrowRight aria-hidden="true" />
           </button>
-          {/* TODO: hard-coded; migrate to Payload only when a human developer decides to. */}
-          <p className="donate-note">You’ll pay securely on Stripe’s checkout page.</p>
+          {page.securePaymentNote && <p className="donate-note">{page.securePaymentNote}</p>}
         </form>
       </section>
     </div>

@@ -4,6 +4,7 @@ import React from 'react'
 import { Button } from '@/components/Button'
 import { Section } from '@/components/Section'
 import { Teaser } from '@/components/Teaser'
+import { newsTypeLabel } from '@/config/news'
 import config from '@/payload.config'
 
 import type { BlockProps } from './types'
@@ -13,7 +14,7 @@ export async function NewsTeaserBlock({ block, blockId }: BlockProps<'newsTeaser
   const { docs } = await payload.find({
     collection: 'news',
     sort: '-publishedDate',
-    limit: block.limit,
+    ...(block.showAll ? { pagination: false } : { limit: block.limit ?? undefined }),
     depth: 0,
     overrideAccess: false,
   })
@@ -22,13 +23,15 @@ export async function NewsTeaserBlock({ block, blockId }: BlockProps<'newsTeaser
     <Section {...block} blockId={blockId} className="v1-reveal">
       {docs.length > 0 && (
         <ul className="v1-news">
-          {docs.map(({ id, slug, title, publishedDate, summary }) => (
+          {docs.map(({ id, slug, title, publishedDate, summary, type }) => (
             <Teaser
               key={id}
               href={`/news/${slug}`}
               title={title}
               date={publishedDate}
               summary={summary}
+              label={block.showAll ? newsTypeLabel(type) : undefined}
+              headingLevel={block.heading ? 'h3' : 'h2'}
             />
           ))}
         </ul>

@@ -14,7 +14,7 @@ export function RichTextBlock({ block, blockId }: BlockProps<'richText'>) {
       <section className="page-section legal-body" id={anchorId || undefined}>
         {heading && <h2>{heading}</h2>}
         {intro && <p>{intro}</p>}
-        <RichText data={content} />
+        <RichText data={content} disableContainer />
       </section>
     )
   }

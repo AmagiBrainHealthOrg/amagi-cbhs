@@ -8,7 +8,11 @@ import type { BlockProps } from './types'
 export function HostMapBlock({ block, blockId }: BlockProps<'hostMap'>) {
   return (
     <Section {...block} blockId={blockId} className="v1-split">
-      <CaribbeanMap countries={block.countries ?? []} online={block.onlineLabel} />
+      <CaribbeanMap
+        countries={block.countries ?? []}
+        online={block.onlineLabel}
+        anchorLabel={block.anchorLabel}
+      />
     </Section>
   )
 }

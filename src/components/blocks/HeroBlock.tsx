@@ -41,7 +41,7 @@ export function HeroBlock({ block }: BlockProps<'hero'>) {
         </div>
       )}
       {countdown?.target && countdown.label && (
-        <Countdown target={countdown.target} label={countdown.label} />
+        <Countdown target={countdown.target} label={countdown.label} units={countdown.units} />
       )}
     </>
   )

@@ -74,9 +74,11 @@ export type MapCountry = {
 export function CaribbeanMap({
   countries,
   online,
+  anchorLabel,
 }: {
   countries: MapCountry[]
   online?: string | null
+  anchorLabel?: string | null
 }) {
   const { width, height, d } = caribbeanMap
   const anchor = countries.find((country) => country.anchor)
@@ -117,7 +119,7 @@ export function CaribbeanMap({
               y={y + 6}
               textAnchor={labelSide === 'left' ? 'end' : 'start'}
             >
-              {isAnchor ? `${name} · Anchor Day` : name}
+              {isAnchor && anchorLabel ? `${name} · ${anchorLabel}` : name}
             </text>
           </g>
         ))}
@@ -127,7 +129,7 @@ export function CaribbeanMap({
           <li key={name} className={isAnchor ? 'v1-map-list-anchor' : undefined}>
             <span aria-hidden="true" />
             <strong>{name}</strong>
-            <small>{isAnchor ? 'Anchor Day' : city}</small>
+            <small>{isAnchor && anchorLabel ? anchorLabel : city}</small>
           </li>
         ))}
         {online && (
@@ -149,7 +151,7 @@ export type WeekDay = {
   anchor?: boolean | null
 }
 
-export function WeekStrip({ days }: { days: WeekDay[] }) {
+export function WeekStrip({ days, month }: { days: WeekDay[]; month?: string | null }) {
   return (
     <ol className="v1-week">
       {days.map(({ day, date, label, body, anchor: isAnchor }, index) => (
@@ -157,7 +159,7 @@ export function WeekStrip({ days }: { days: WeekDay[] }) {
           <p className="v1-week-date">
             <span>{day}</span>
             <strong>{date}</strong>
-            <span>Nov</span>
+            {month && <span>{month}</span>}
           </p>
           <div>
             <h3>{label}</h3>
@@ -176,9 +178,17 @@ export type Step = {
   status: 'done' | 'now' | 'next'
 }
 
-const statusLabel = { done: 'Done', now: 'We are here', next: 'Coming up' }
+export type StatusLabels = { done?: string | null; now?: string | null; next?: string | null }
 
-export function Roadmap({ steps, numbered = false }: { steps: Step[]; numbered?: boolean }) {
+export function Roadmap({
+  steps,
+  numbered = false,
+  statusLabels,
+}: {
+  steps: Step[]
+  numbered?: boolean
+  statusLabels?: StatusLabels | null
+}) {
   const nowIndex = steps.findIndex((step) => step.status === 'now')
   const progress = nowIndex < 0 ? 0 : (nowIndex + 0.5) / steps.length
 
@@ -192,10 +202,12 @@ export function Roadmap({ steps, numbered = false }: { steps: Step[]; numbered?:
           <span className="v1-roadmap-node" aria-hidden="true">
             {numbered ? index + 1 : null}
           </span>
-          <p className="v1-roadmap-status">
-            <span className="v1-sr-only">Status: </span>
-            {statusLabel[status]}
-          </p>
+          {statusLabels?.[status] && (
+            <p className="v1-roadmap-status">
+              <span className="v1-sr-only">Status: </span>
+              {statusLabels[status]}
+            </p>
+          )}
           {when && <p className="v1-roadmap-when">{when}</p>}
           <h3>{title}</h3>
           {body && <p>{body}</p>}
