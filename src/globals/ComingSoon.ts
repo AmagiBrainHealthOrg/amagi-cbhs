@@ -18,10 +18,9 @@ export const ComingSoon: GlobalConfig = {
     read: () => true,
     update: isAdminOrEditor,
   },
+  // Retired (SPEC §11.4): hidden, but kept so no migration drops its tables. T027 removes it.
   admin: {
-    livePreview: {
-      url: '/?preview=true',
-    },
+    hidden: true,
   },
   versions: {
     drafts: {
@@ -46,7 +45,11 @@ export const ComingSoon: GlobalConfig = {
         {
           label: 'Hero',
           fields: [
-            { name: 'kicker', type: 'text', admin: { description: 'Small uppercase line above the headline.' } },
+            {
+              name: 'kicker',
+              type: 'text',
+              admin: { description: 'Small uppercase line above the headline.' },
+            },
             {
               name: 'headline',
               type: 'textarea',
@@ -82,7 +85,12 @@ export const ComingSoon: GlobalConfig = {
               type: 'array',
               labels: { singular: 'Detail', plural: 'Details' },
               fields: [
-                { name: 'icon', type: 'select', options: [...detailIcons], defaultValue: 'calendar' },
+                {
+                  name: 'icon',
+                  type: 'select',
+                  options: [...detailIcons],
+                  defaultValue: 'calendar',
+                },
                 { name: 'title', type: 'text', required: true },
                 { name: 'subtitle', type: 'text' },
               ],
