@@ -14,6 +14,11 @@ export const HostMap: Block = {
       admin: { description: 'The extra line for online sessions.' },
     },
     {
+      name: 'anchorLabel',
+      type: 'text',
+      admin: { description: 'Shown beside the country that hosts the Anchor Day.' },
+    },
+    {
       name: 'countries',
       type: 'array',
       labels: { singular: 'Country', plural: 'Countries' },

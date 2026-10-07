@@ -59,6 +59,21 @@ export const Hero: Block = {
           admin: { date: { pickerAppearance: 'dayAndTime' } },
         },
         { name: 'label', type: 'text' },
+        {
+          name: 'units',
+          type: 'group',
+          admin: { description: 'Labels under the numbers.' },
+          fields: [
+            {
+              type: 'row',
+              fields: [
+                { name: 'days', type: 'text' },
+                { name: 'hours', type: 'text' },
+                { name: 'minutes', type: 'text' },
+              ],
+            },
+          ],
+        },
       ],
     },
     {

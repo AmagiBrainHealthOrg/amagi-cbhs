@@ -1,9 +1,12 @@
 import type { GlobalConfig } from 'payload'
 
+import { revalidateGlobalAfterChange } from '@/hooks/revalidate'
+
 import { contentGlobal } from './shared'
 
 export const CookieConsent: GlobalConfig = {
   slug: 'cookie-consent',
+  hooks: { afterChange: [revalidateGlobalAfterChange] },
   ...contentGlobal('/?preview=true'),
   fields: [
     { name: 'heading', type: 'text' },

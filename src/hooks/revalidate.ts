@@ -1,5 +1,10 @@
 import { revalidatePath } from 'next/cache'
-import type { CollectionAfterChangeHook, CollectionAfterDeleteHook, PayloadRequest } from 'payload'
+import type {
+  CollectionAfterChangeHook,
+  CollectionAfterDeleteHook,
+  GlobalAfterChangeHook,
+  PayloadRequest,
+} from 'payload'
 
 type Doc = Record<string, unknown> & { _status?: 'draft' | 'published' | null }
 
@@ -38,6 +43,14 @@ export const revalidateAfterDelete =
     revalidate(req, targetsFor(doc))
     return doc
   }
+
+// Globals the shell or the donate pages read appear on every page.
+export const revalidateGlobalAfterChange: GlobalAfterChangeHook = ({ doc, previousDoc, req }) => {
+  if (doc?._status === 'published' || previousDoc?._status === 'published') {
+    revalidate(req, [{ path: '/', type: 'layout' }])
+  }
+  return doc
+}
 
 // For content that blocks can show on any page (logo grids, FAQ lists).
 export const everyPage: TargetsFor = () => [{ path: '/', type: 'layout' }]

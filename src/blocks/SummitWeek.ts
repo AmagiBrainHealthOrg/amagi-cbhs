@@ -9,6 +9,11 @@ export const SummitWeek: Block = {
   fields: [
     ...sectionFields,
     {
+      name: 'monthLabel',
+      type: 'text',
+      admin: { description: 'Shown under each date, e.g. Nov.' },
+    },
+    {
       name: 'days',
       type: 'array',
       labels: { singular: 'Day', plural: 'Days' },

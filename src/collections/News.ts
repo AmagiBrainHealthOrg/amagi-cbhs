@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
+import { newsTypeOptions } from '@/config/news'
 import { publishedOrAuthenticated } from '@/access/publishedOrAuthenticated'
 import { slugField } from '@/fields/slug'
 import { everyPage, revalidateAfterChange, revalidateAfterDelete } from '@/hooks/revalidate'
@@ -47,10 +48,7 @@ export const News: CollectionConfig = {
       type: 'select',
       required: true,
       defaultValue: 'news',
-      options: [
-        { label: 'News', value: 'news' },
-        { label: 'Partner announcement', value: 'partner-announcement' },
-      ],
+      options: [...newsTypeOptions],
       admin: { position: 'sidebar' },
     },
     {
