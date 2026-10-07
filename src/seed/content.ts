@@ -664,18 +664,18 @@ export const seedGlobals = (images: SeedImages): Globals => ({
     minimumAmount: 500,
     page: {
       kicker: 'Support the Summit',
-      heading: 'Give to Caribbean brain health',
-      lead: 'The Caribbean Brain Health Summit brings brain health to communities across the region, in person and online, from 16 to 22 November 2026. Your gift makes it possible.',
+      heading: 'Help build a stronger regional response',
+      lead: 'The Caribbean Brain Health Summit is a Caribbean-led effort to connect people, knowledge, services and institutions around brain health, dementia, ageing and family care. To stay open, accessible, locally led and independently governed, it needs your support.',
       reasonsHeading: 'What your gift supports',
       reasons: [
         {
-          text: 'Seven days of activity across several Caribbean countries and online, 16–22 November 2026',
+          text: 'Making it possible for people and communities who might otherwise be left out to take part',
         },
         {
-          text: 'Free sessions on dementia, stroke, mental health and healthy ageing for the public',
+          text: 'An Anchor Day in Jamaica and activity across the Caribbean and beyond, 16–22 November 2026',
         },
         {
-          text: 'A Caribbean Call to Action on Brain Health, shaped by communities and policymakers',
+          text: 'Learning, relationships and commitments that carry on after Summit week',
         },
       ],
       note: 'Amagi Health Ltd runs the Summit.',
