@@ -20,7 +20,7 @@ The public website for the **Caribbean Brain Health Summit 2026 (CBHS)**, run by
 - **CMS:** Payload CMS 3 (`payload`, `@payloadcms/next`, Lexical rich text, live preview)
 - **Database:** Supabase Postgres via `@payloadcms/db-postgres`. Locally the Supabase CLI stack; deployed environments use the transaction pooler (SPEC §11.2)
 - **Media:** Supabase Storage via `@payloadcms/storage-s3` (S3 API, client uploads)
-- **Hosting:** Vercel (SPEC §11.2). No staging and no preview deployments: every merge to `main` deploys to production, which stays locked and in test mode until launch (SPEC §11.1)
+- **Hosting:** Vercel (SPEC §11.2). No staging and no preview deployments: every merge to `main` deploys to production, which is public and stays in test mode until launch (SPEC §11.1)
 - **Payments:** Stripe Checkout (hosted). No card data on our site, ever
 - **Email:** Resend via Payload's email adapter
 - **CRM:** Airtable via its REST API (SPEC §9.1). No Google Sheets

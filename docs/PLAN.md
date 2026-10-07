@@ -2,7 +2,7 @@
 
 ## 1. Strategy
 
-Build on the existing Payload + Next.js repo. There is no staging and there are no preview deployments: work is verified locally, and every merge to `main` deploys to production, which stays locked and in test mode until launch (SPEC §11.1). Tidy and harden the foundations first (clean-up, migrations, the production lock, roles, CI), then the content model, then the design system and donation flow, then pages and forms. Release 1 is everything an editor and a donor need. Release 2 adds the remaining journeys and the quality pass.
+Build on the existing Payload + Next.js repo. There is no staging and there are no preview deployments: work is verified locally, and every merge to `main` deploys to production, which is public and stays in test mode until launch (SPEC §11.1). Tidy and harden the foundations first (clean-up, migrations, test mode, roles, CI), then the content model, then the design system and donation flow, then pages and forms. Release 1 is everything an editor and a donor need. Release 2 adds the remaining journeys and the quality pass.
 
 ## 2. Principles
 
@@ -19,7 +19,7 @@ Build on the existing Payload + Next.js repo. There is no staging and there are 
 
 ### M0: Foundations
 
-T001 tooling and clean-up · T002 CI · T003 migrations baseline and migrate on deploy · T017 production lock and test mode · T004 roles and access · T029 Airtable base design.
+T001 tooling and clean-up · T002 CI · T003 migrations baseline and migrate on deploy · T017 test mode, health check and Coming Soon retirement · T004 roles and access · T029 Airtable base design.
 
 ### M1: Content model and design system
 
@@ -87,12 +87,12 @@ T016, T019..T022, T028 ─ T024, T025, T026 ─ T027
 
 ## 6. Risks
 
-| Risk                                                      | Mitigation                                                                                                             |
-| --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| Amagi inputs arrive late (copy, dropdown values, amounts) | Content lives in the CMS; seed placeholders; editors fill in later                                                     |
-| Vercel Hobby limits before launch                         | Nothing in Release 1 needs Pro; T018 moves to Amagi's Pro team                                                         |
-| An automated merge breaks production                      | Locked and in test mode until launch; Instant Rollback; D9 decides the gate after launch                               |
-| Content or test data leaks before launch                  | Site lock (T017) shows Coming Soon to anonymous visitors; test mode keeps Stripe, Airtable and email off live accounts |
-| A migration breaks the live deployment                    | Backward-compatible migrations (SPEC §11.2); Instant Rollback                                                          |
-| Tracking spec changes                                     | Event names and attributes centralised in `src/lib/tracking/`                                                          |
-| Existing users locked out by roles                        | T004 backfills existing users to `admin`                                                                               |
+| Risk                                                      | Mitigation                                                                 |
+| --------------------------------------------------------- | -------------------------------------------------------------------------- |
+| Amagi inputs arrive late (copy, dropdown values, amounts) | Content lives in the CMS; seed placeholders; editors fill in later         |
+| Vercel Hobby limits before launch                         | Nothing in Release 1 needs Pro; T018 moves to Amagi's Pro team             |
+| An automated merge breaks production                      | Test mode until launch; Instant Rollback; D9 decides the gate after launch |
+| Test data leaks before launch                             | Test mode (T017) keeps Stripe, Airtable and email off live accounts        |
+| A migration breaks the live deployment                    | Backward-compatible migrations (SPEC §11.2); Instant Rollback              |
+| Tracking spec changes                                     | Event names and attributes centralised in `src/lib/tracking/`              |
+| Existing users locked out by roles                        | T004 backfills existing users to `admin`                                   |

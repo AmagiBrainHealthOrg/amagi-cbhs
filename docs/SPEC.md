@@ -119,7 +119,7 @@ Drafts, autosave and live preview are on for `pages`, `news`, `partners`, `suppo
 | `integrations`      | `gtmContainerId`; `substackFeedUrl`, `substackUrl` (Release 2). Admin-only                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | `forms`             | `thankYou`: one entry per form key (§8.3), each `{ form, heading, body }`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `cookie-consent`    | `heading`, `body`, `acceptLabel`, `rejectLabel`, `settingsLabel` (the footer link)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| `coming-soon`       | Existing. Retired at Release 1 launch (§11.4)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| `coming-soon`       | Retired: no longer rendered, hidden in the admin by T017 (§11.4)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 
 ### 5.3 Dropdown values
 
@@ -291,12 +291,11 @@ No personal data in any event or data-layer value. No advertising pixels. Google
 There is no staging environment and there are no preview deployments. Work is verified locally, and every merge to `main` deploys to production.
 
 - **Local:** the Supabase CLI stack (`pnpm supabase start`): Postgres on port 54322 and S3-compatible Storage. Schema and content come one way from production with `pnpm db:pull` (§11.5).
-- **Production:** the Vercel deployment of `main` on the one Supabase project. Locked and in test mode until launch (T018). Editors enter real content here from the start, so nothing is copied between environments at launch.
+- **Production:** the Vercel deployment of `main` on the one Supabase project. Public from the start, serving the site as built so far, and in test mode until launch (T018). Editors enter real content here from the start, so nothing is copied between environments at launch.
 
-Two environment variables control behaviour, and both are unset locally:
+One environment variable controls behaviour, and it is unset locally:
 
 - **`SITE_LIVE=true`** switches off test mode. In test mode, Stripe uses test keys, submissions are saved with `isTest: true`, Airtable writes go to the test base with `Test` ticked, and email goes only to `EMAIL_SANDBOX_TO`. Set in production at launch.
-- **`SITE_LOCKED=true`** shows the Coming Soon page on every frontend route to anyone not logged in to the CMS, and sends `X-Robots-Tag: noindex`. Logged-in CMS users see the whole site, including drafts with `?preview=true`, so Amagi reviews new work as draft pages. `/admin`, `/api/*` and static assets are not locked. Set in production until launch, or after it if D4 is "editor-only".
 
 ### 11.2 Hosting
 
@@ -318,7 +317,7 @@ Every ticket's `release` frontmatter says which release it belongs to. Release 1
 
 ### 11.4 Coming Soon
 
-`/` renders Home from T011. Until launch, the Coming Soon page is what the site lock shows anonymous visitors (§11.1). Remove the global in a later migration once launch is confirmed and the lock is no longer needed.
+`/` renders Home from T011, and there is no site lock (§11.1), so nothing renders the Coming Soon page. T011's content migration copied its logo and background images into the `header` global and the Home hero. T017 hides the `coming-soon` global in the admin but keeps it in the config, so no migration drops its tables. T027 removes it and drops the tables, once nothing reads it (the T011 content migration and `src/seed/` read its images).
 
 ### 11.5 Local data pull
 
@@ -333,7 +332,6 @@ Copywriting and brand design; translation; analytics and dashboard configuration
 | #   | Decision                                                                                                                                        | Owner          | Blocks                           |
 | --- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | -------------------------------- |
 | D3  | Territory and industry values                                                                                                                   | Amagi          | T014 (seed can use placeholders) |
-| D4  | Whether Release 1 is public or editor-only                                                                                                      | Amagi          | T018                             |
 | D5  | Suggested donation amounts and currency                                                                                                         | Amagi          | T010 (seed can use placeholders) |
 | D6  | Release 2 date                                                                                                                                  | Tandem + Amagi | Release 2 scheduling             |
 | D7  | Airtable base structure and field list (§9.1)                                                                                                   | Amagi          | T029, T013                       |

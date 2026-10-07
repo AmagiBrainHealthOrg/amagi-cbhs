@@ -20,7 +20,7 @@ skills: [payload]
 - A data migration (SPEC §6.4) that applies that content through the Local API, creating each document or global value only if it's missing. This is how the content reaches production.
 - `scripts/seed.ts` (`pnpm db:seed`) runs the same content locally.
 - The hard-coded page routes, `placeholderContent.ts`, `_content.ts` and the donate copy in `mockup.ts` are deleted; pages, header, footer and donate read Payload. The mockup-only text (mockup banner, simulated checkout) stays until T010 removes the mockup.
-- `/` renders the `home` page. Anonymous visitors still see Coming Soon in production while the site is locked (T017).
+- `/` renders the `home` page, publicly (there is no site lock, SPEC §11.1).
 - `/news` (news items, newest first) and `/news/[slug]`. Substack posts join `/news` in T028 (Release 2).
 - The catch-all route returns 404 for the `home` slug, so Home is only at `/`.
 - Partner announcements per SPEC §4.4: Home `newsTeaser` shows latest announcements; partner entries link to their announcements.
@@ -28,7 +28,7 @@ skills: [payload]
 
 **Out**
 
-- Unlocking the site (T018).
+- Switching off test mode (T018).
 
 ## Acceptance criteria
 
