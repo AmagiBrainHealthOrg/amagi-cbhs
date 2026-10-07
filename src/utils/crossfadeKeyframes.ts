@@ -2,7 +2,7 @@
 // images this reproduces the original 40s cycle (fade in 5%, hold to 20%, out by 25%).
 export const crossfadeKeyframes = (count: number) => {
   const step = 100 / count
-  return `@keyframes coming-soon-image-cycle {
+  return `@keyframes hero-image-cycle {
   0% { opacity: 0; transform: scale(1); }
   ${step / 4}% { opacity: 1; }
   ${step}% { opacity: 1; transform: scale(1.1); }
