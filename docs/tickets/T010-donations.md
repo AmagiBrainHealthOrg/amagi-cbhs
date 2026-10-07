@@ -14,7 +14,7 @@ skills: []
 
 ## Context
 
-Human step: put Stripe test keys from Amagi's Stripe account in the main `.env` and in Vercel. Start Stripe's business verification for live mode now; it can take days and T018 needs it.
+Human steps: production uses live Stripe keys from the start (SPEC §11.1), so complete Stripe's business verification for live mode and put the live key in Vercel. On Vercel the site URL falls back to `VERCEL_PROJECT_PRODUCTION_URL`, so it needs no setting. Use test keys locally where you can. The user checks the live flow with a small real donation and refunds it.
 
 ## Scope
 
@@ -34,7 +34,7 @@ Human step: put Stripe test keys from Amagi's Stripe account in the main `.env` 
 ## Acceptance criteria
 
 - [ ] **AC1**: Checkout sessions are created with the right amount.
-  - _Verify (api):_ with Stripe test keys, `curl -i -X POST /api/donate -d amount=2500` returns 303 to `https://checkout.stripe.com/...`; the Stripe API (`stripe checkout sessions retrieve` or SDK) shows `amount_total: 2500` and the metadata.
+  - _Verify (api):_ with a Stripe key, `curl -i -X POST /api/donate -d amount=2500` returns 303 to `https://checkout.stripe.com/...`; the Stripe API (`stripe checkout sessions retrieve` or SDK) shows `amount_total: 2500` and the metadata.
 - [ ] **AC2**: Invalid amounts are rejected.
   - _Verify (api):_ amount below `minimumAmount`, zero, negative or non-numeric returns 400; a valid amount still returns 303.
 - [ ] **AC3**: Paid sessions show thank-you.

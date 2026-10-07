@@ -92,7 +92,7 @@ T016, T019..T022, T028 ─ T024, T025 ─ T027
 | Amagi inputs arrive late (copy, dropdown values, amounts) | Content lives in the CMS; seed placeholders; editors fill in later         |
 | Vercel Hobby limits before launch                         | Nothing in Release 1 needs Pro; T018 moves to Amagi's Pro team             |
 | An automated merge breaks production                      | Test mode until launch; Instant Rollback; D9 decides the gate after launch |
-| Test data leaks before launch                             | Test mode (T017) keeps Stripe, Airtable and email off live accounts        |
+| Test data leaks before launch                             | Test mode (T017) keeps Airtable and email off live accounts        |
 | A migration breaks the live deployment                    | Backward-compatible migrations (SPEC §11.2); Instant Rollback              |
 | Tracking spec changes                                     | Event names and attributes centralised in `src/lib/tracking/`              |
 | Existing users locked out by roles                        | T004 backfills existing users to `admin`                                   |

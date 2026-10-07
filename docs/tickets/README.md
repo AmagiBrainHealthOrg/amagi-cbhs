@@ -16,7 +16,7 @@ Release scope and dates are in SPEC §11.3. Every Release 1 ticket goes before a
 | [T002](./T002-ci-pipeline.md)             | GitHub Actions CI                                               | T001       |     |       | done        |
 | [T003](./T003-migrations-baseline.md)     | Switch to migrations, create the baseline and migrate on deploy | T001       | ✔   | ✔     | done        |
 | [T004](./T004-roles-and-access.md)        | User roles, backfill and access helpers                         | T003       | ✔   |       | done        |
-| [T017](./T017-environments-and-deploy.md) | Test mode, health check and Coming Soon retirement              | T003       |     | ✔     | todo        |
+| [T017](./T017-environments-and-deploy.md) | Test mode, health check and Coming Soon retirement              | T003       |     | ✔     | done        |
 | [T029](./T029-airtable-base-design.md)    | Airtable base design for sign-off                               | —          |     | ✔     | in-progress |
 
 ## M1: Content model and design system
@@ -39,7 +39,7 @@ Release scope and dates are in SPEC §11.3. Every Release 1 ticket goes before a
 | [T013](./T013-airtable-and-email.md) | Airtable sync and email adapter                                    | T012, T029             |     | ✔     | todo   |
 | [T014](./T014-release-1-forms.md)    | Register Interest and Call to Action consultation forms            | T011, T013             |     |       | todo   |
 | [T015](./T015-tracking.md)           | Data layer, Google Tag Manager and events                          | T010, T011, T012, T030 |     |       | todo   |
-| [T030](./T030-cookie-consent.md)     | Cookie consent banner                                              | T006, T009             |     |       | todo   |
+| [T030](./T030-cookie-consent.md)     | Cookie consent banner                                              | T006, T009             |     |       | done   |
 
 ## M3: Release 1 launch
 
