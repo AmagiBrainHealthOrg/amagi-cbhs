@@ -1,4 +1,4 @@
-import { getPayload, Payload } from 'payload'
+import { getPayload, Payload, type RequiredDataFromCollectionSlug } from 'payload'
 import config from '@/payload.config'
 
 import { describe, it, beforeAll, afterAll, expect } from 'vitest'
@@ -53,7 +53,11 @@ describe('Access helpers', () => {
   })
 
   describe('publishedOrAuthenticated', () => {
-    it('returns true for authenticated user', () => {
+    it('returns true for admin', () => {
+      expect(publishedOrAuthenticated({ req: makeReq({ role: 'admin' }) } as never)).toBe(true)
+    })
+
+    it('returns true for editor', () => {
       expect(publishedOrAuthenticated({ req: makeReq({ role: 'editor' }) } as never)).toBe(true)
     })
 
@@ -126,7 +130,7 @@ describe('Access helpers', () => {
         data: {
           email: 't004-default@test.local',
           password: 'Test1234!',
-        },
+        } as RequiredDataFromCollectionSlug<'users'>,
       })
       expect(newUser.role).toBe('editor')
     })
