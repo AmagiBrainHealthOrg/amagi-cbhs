@@ -48,5 +48,5 @@ Submission order is fixed (SPEC §8.2): validate server-side → rate limit → 
 
 ## Environments
 
-- Test mode is `!isLive()` (`src/utils/site.ts`, SPEC §11.1), never `NODE_ENV` or `VERCEL_ENV`. In test mode, form submissions are marked `isTest: true`, emails go only to `EMAIL_SANDBOX_TO`, Airtable writes go to the test base with `Test` ticked, and Stripe uses test keys.
+- Test mode is `!isLive()` (`src/utils/site.ts`, SPEC §11.1), never `NODE_ENV` or `VERCEL_ENV`. In test mode, form submissions are marked `isTest: true`, emails go only to `EMAIL_SANDBOX_TO`, and Airtable writes go to the test base with `Test` ticked. Stripe is outside test mode: production uses live keys from the start.
 - Production runs in test mode until launch.
