@@ -22,7 +22,7 @@ Human steps: Amagi confirms copy, host country content and programme sessions ar
 
 - Deploy Release 2 to production.
 - Run the smoke test extended with Release 2 routes.
-- Remove the `coming-soon` global and page in a migration, if Amagi agrees.
+- Remove the `coming-soon` global from the config and drop its tables in a migration (SPEC §11.4). First make the T011 content migration and `src/seed/` stop reading it, so a fresh database still migrates.
 
 ## Acceptance criteria
 

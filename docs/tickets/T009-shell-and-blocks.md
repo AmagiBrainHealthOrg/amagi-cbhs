@@ -28,7 +28,7 @@ skills: []
 
 **Out**
 
-- Specific page content and removing the hard-coded copy (T011). The site lock (T017) decides what anonymous visitors see.
+- Specific page content and removing the hard-coded copy (T011).
 
 ## Acceptance criteria
 
