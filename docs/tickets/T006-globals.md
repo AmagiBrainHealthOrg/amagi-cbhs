@@ -16,14 +16,14 @@ skills: [payload]
 
 **In**
 
-- Globals `header`, `footer`, `donation-settings`, `anchor-day`, `dropdowns`, `integrations`, `forms`, `cookie-consent` per SPEC §5.2, with drafts and live preview (except `integrations`, which has no drafts).
+- Globals `header`, `footer`, `donation-settings`, `anchor-day`, `dropdowns`, `integrations`, `forms`, `cookie-consent` per SPEC §5.2, with drafts and live preview (except `integrations`, which has no drafts). This includes the fields that hold the current site's copy: `header.brandTitle`, `footer.tagline`, and the `page`, `unconfirmed*` and `banner` copy on `donation-settings`.
 - Access: `integrations` admin-only for read and update; others readable publicly (published only) and editable by admins and editors.
 - `src/lib/dropdowns.ts`: `getDropdowns()` returning typed `{ territories, audienceTypes, industries }`, cached per request.
 - Migration.
 
 **Out**
 
-- Frontend rendering (T009). Seed values (T011). Substack fields on `integrations` (T028, Release 2).
+- Frontend rendering (T009). Seed values and the content migration (T011). Substack fields on `integrations` (T028, Release 2).
 
 ## Acceptance criteria
 

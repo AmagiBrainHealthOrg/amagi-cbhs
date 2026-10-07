@@ -18,9 +18,9 @@ skills: []
 
 - Components from SPEC §6.2 in `src/components/`. Button supports `primary`, `secondary`, `tertiary` and requires tracking attributes (`journey`, `action`, `destinationType` props → `data-*`).
 - Header (from `header` global) with the Donate button as primary, linking to `/donate`. Accessible mobile navigation.
-- Footer (from `footer` global).
-- Block renderers in `src/components/blocks/` for every block in SPEC §6.3 except `video` (T016) and `hostCountriesTeaser` (T020), with a `RenderBlocks` switch. The `form` block renders a placeholder until T012; `logoGrid` filters by `permissionConfirmed`.
-- Catch-all route `src/app/(frontend)/[...slug]/page.tsx` rendering `pages` by slug, with draft preview (`?preview=true` + authenticated) and `RefreshRouteOnSave`.
+- Footer (from `footer` global; cookie settings label from `cookie-consent`).
+- Block renderers in `src/components/blocks/` for every block in SPEC §6.3 except `video` (T016) and `hostCountriesTeaser` (T020), with a `RenderBlocks` switch. Port them from the current graphics components (`src/app/(frontend)/(site)/_components/`) so the design and CSS stay as they are. The `form` block renders a placeholder until T012; `logoGrid` filters by `permissionConfirmed`.
+- Route `src/app/(frontend)/(site)/[slug]/page.tsx` rendering `pages` by slug, with draft preview (`?preview=true` + authenticated) and `RefreshRouteOnSave`. The existing hard-coded page routes stay until T011 replaces them.
 - `generateMetadata` from `meta`.
 - UTM capture (SPEC §8.1): a small client component in the root layout reads the five `utm_*` parameters on landing and stores them in `sessionStorage` for the visit, with a `getUtm()` helper. Donations (T010) and forms (T012) both read it.
 - `not-found` and `error` boundaries using the ErrorState component.
@@ -28,7 +28,7 @@ skills: []
 
 **Out**
 
-- Specific page content (T011). `/` stays Coming Soon until T018.
+- Specific page content and removing the hard-coded copy (T011). The site lock (T017) decides what anonymous visitors see.
 
 ## Acceptance criteria
 
