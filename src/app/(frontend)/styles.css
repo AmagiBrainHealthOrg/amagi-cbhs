@@ -67,3 +67,13 @@
   .hero-image { opacity: 0; animation: none !important; }
   .hero-image:first-child, .hero-background style + .hero-image { opacity: 1; transform: none; }
 }
+
+/* Cookie banner (SPEC §10.5): in the page flow and sticky, so it never covers the header. */
+.cookie-banner { position: sticky; bottom: 0; z-index: 20; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; padding: 20px clamp(16px, 5vw, 72px); border-top: 1px solid var(--line); background: var(--white); box-shadow: 0 -6px 20px rgba(0,0,0,.08); color: var(--ink-deep); font-family: var(--app-font-ui); font-size: var(--fs-xs); line-height: var(--lh-body); }
+.cookie-banner-text { display: grid; gap: 6px; flex: 1 1 420px; max-width: 760px; }
+.cookie-banner h2 { margin: 0; color: var(--primary-blue); font-family: var(--app-font-heading); font-size: var(--fs-base); font-weight: 700; line-height: var(--lh-heading); }
+.cookie-banner a { color: var(--primary-blue); font-weight: 700; text-decoration: underline; }
+.cookie-banner-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.cookie-banner-actions .button { flex: 1 1 auto; min-width: 120px; }
+.site-footer-button { padding: 0; border: 0; background: none; color: var(--primary-blue); font-weight: 700; cursor: pointer; }
+.site-footer-button:hover { text-decoration: underline; }

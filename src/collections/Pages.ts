@@ -3,11 +3,20 @@ import type { CollectionConfig } from 'payload'
 import { publishedOrAuthenticated } from '@/access/publishedOrAuthenticated'
 import { pageBlocks } from '@/blocks'
 import { slugField } from '@/fields/slug'
-import { pagePath, revalidateAfterChange, revalidateAfterDelete } from '@/hooks/revalidate'
+import {
+  everyPage,
+  pagePath,
+  revalidateAfterChange,
+  revalidateAfterDelete,
+} from '@/hooks/revalidate'
 
 import { drafts, editorialAccess } from './shared'
 
-const targets = (doc: Record<string, unknown>) => [{ path: pagePath(doc.slug) }]
+// Every page's cookie banner links to the cookies page by its title.
+const targets = (doc: Record<string, unknown>) =>
+  doc.slug === 'cookies'
+    ? [{ path: pagePath(doc.slug) }, ...everyPage(doc)]
+    : [{ path: pagePath(doc.slug) }]
 
 export const Pages: CollectionConfig = {
   slug: 'pages',

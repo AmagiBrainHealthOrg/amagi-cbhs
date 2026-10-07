@@ -1,13 +1,17 @@
 import Link from 'next/link'
 import React from 'react'
 
+import { getCookieBanner } from '@/lib/cookieBanner'
 import { getGlobal } from '@/lib/globals'
 
+import { CookieSettingsButton } from './CookieBanner'
+
 export async function Footer() {
-  const [{ links, tagline, legalText }, { settingsLabel }] = await Promise.all([
+  const [{ links, tagline, legalText }, cookieBanner] = await Promise.all([
     getGlobal('footer'),
-    getGlobal('cookie-consent'),
+    getCookieBanner(),
   ])
+  const settingsLabel = cookieBanner?.settingsLabel
 
   return (
     <footer className="site-footer">
@@ -21,8 +25,7 @@ export async function Footer() {
             ))}
             {settingsLabel && (
               <li>
-                {/* T030 makes this reopen the cookie banner (SPEC §10.5). */}
-                <Link href="/cookies">{settingsLabel}</Link>
+                <CookieSettingsButton label={settingsLabel} />
               </li>
             )}
           </ul>
