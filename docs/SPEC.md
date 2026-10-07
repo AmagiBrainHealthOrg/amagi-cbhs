@@ -182,6 +182,7 @@ The copy on `main` before T011 reaches production through an idempotent Payload 
 
 ### 8.1 Shared fields
 
+- `phone` (optional, phone or WhatsApp, with country code) on every form
 - `territory` (select, required), `audienceType` (select, required), `industry` (select, organisation forms only)
 - Hidden: `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content` (captured from the landing URL, kept in `sessionStorage` for the visit)
 - Consents (three unticked checkboxes, independent): `consentContact`, `consentPublicName`, `consentShareStory`
@@ -221,7 +222,7 @@ Airtable is Amagi's CRM. The site writes to it directly through the Airtable RES
 
 - `src/lib/airtable.ts`, authenticated with a personal access token scoped to one base (`AIRTABLE_TOKEN`, `AIRTABLE_BASE_ID`). Two bases: a test base and the production base, which is in Amagi's name.
 - Base structure (Amagi signs it off, §13 D7):
-  - `Contacts`: one record per person, upserted by email (Airtable's `performUpsert` on `Email`). Name, organisation, territory, audience type, industry, the three consents (latest values), first and latest UTM, first seen and last seen.
+  - `Contacts`: one record per person, upserted by email (Airtable's `performUpsert` on `Email`). Name, phone (latest given), organisation, territory, audience type, industry, the three consents (latest values), first and latest UTM, first seen and last seen.
   - One table per form key (§8.3), each record linked to its contact and holding that form's fields, UTM, consents as given, source page, submitted at and the Payload submission ID.
   - `Donations` (§7 step 5).
 - Table and field names live in one place, `src/config/airtable.ts`, so the base can be renamed without code changes elsewhere. `pnpm airtable:check` reads the base schema and fails if a table or field the code needs is missing.
