@@ -10,7 +10,15 @@ import { env } from './env'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { AnchorDay } from './globals/AnchorDay'
 import { ComingSoon } from './globals/ComingSoon'
+import { CookieConsent } from './globals/CookieConsent'
+import { DonationSettings } from './globals/DonationSettings'
+import { Dropdowns } from './globals/Dropdowns'
+import { Footer } from './globals/Footer'
+import { Forms } from './globals/Forms'
+import { Header } from './globals/Header'
+import { Integrations } from './globals/Integrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -23,7 +31,17 @@ export default buildConfig({
     },
   },
   collections: [Users, Media],
-  globals: [ComingSoon],
+  globals: [
+    Header,
+    Footer,
+    DonationSettings,
+    AnchorDay,
+    Dropdowns,
+    Integrations,
+    Forms,
+    CookieConsent,
+    ComingSoon,
+  ],
   editor: lexicalEditor(),
   secret: env.PAYLOAD_SECRET,
   typescript: {
