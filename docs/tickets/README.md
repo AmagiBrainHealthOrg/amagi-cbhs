@@ -15,7 +15,7 @@ Release scope and dates are in SPEC §11.3. Every Release 1 ticket goes before a
 | [T001](./T001-tooling-and-cleanup.md)     | Repo clean-up, scripts, env validation and preflight            | —          |     | ✔     | done        |
 | [T002](./T002-ci-pipeline.md)             | GitHub Actions CI                                               | T001       |     |       | done        |
 | [T003](./T003-migrations-baseline.md)     | Switch to migrations, create the baseline and migrate on deploy | T001       | ✔   | ✔     | done        |
-| [T004](./T004-roles-and-access.md)        | User roles, backfill and access helpers                         | T003       | ✔   |       | in-progress |
+| [T004](./T004-roles-and-access.md)        | User roles, backfill and access helpers                         | T003       | ✔   |       | review      |
 | [T017](./T017-environments-and-deploy.md) | Lock production until launch, test mode and health check        | T003       |     | ✔     | in-progress |
 | [T029](./T029-airtable-base-design.md)    | Airtable base design for sign-off                               | —          |     | ✔     | todo        |
 
