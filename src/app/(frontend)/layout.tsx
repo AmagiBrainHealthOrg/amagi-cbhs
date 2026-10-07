@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { CookieBanner } from '@/components/CookieBanner'
+import { PageTrail } from '@/components/PageTrail'
 import { UtmCapture } from '@/components/UtmCapture'
 import { consentDefaultsScript } from '@/lib/consent'
 import { getCookieBanner } from '@/lib/cookieBanner'
@@ -23,6 +24,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       </head>
       <body>
         <UtmCapture />
+        <PageTrail />
         {children}
         {cookieBanner && <CookieBanner {...cookieBanner.banner} />}
       </body>

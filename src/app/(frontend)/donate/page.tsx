@@ -3,8 +3,10 @@ import React from 'react'
 
 import { getGlobal } from '@/lib/globals'
 
+import { fill, formatAmount, STRIPE_MAX_AMOUNT, suggestedAmounts } from '@/utils/donation'
+
 import { CustomAmountInput } from './CustomAmountInput'
-import { fill, formatAmount, STRIPE_MAX_AMOUNT, suggestedAmounts } from './mockup'
+import { DonateHiddenFields } from './DonateHiddenFields'
 
 type Props = { searchParams: Promise<{ error?: string }> }
 
@@ -36,9 +38,8 @@ export default async function DonatePage({ searchParams }: Props) {
       </section>
 
       <section className="donate-card" aria-label="Make a donation">
-        {/* TODO: POST to /api/donate, which validates the amount and creates a Stripe Checkout Session with UTM and source page in metadata (T010), only when a human developer decides to. */}
-        {/* TODO: send UTM values as hidden fields from getUtm() (T009/T010), only when a human developer decides to. */}
-        <form action="/donate/checkout" method="get" className="donate-form">
+        <form action="/api/donate" method="post" className="donate-form">
+          <DonateHiddenFields />
           <fieldset>
             <legend>{page.amountLegend}</legend>
             {error && (

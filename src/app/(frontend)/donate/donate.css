@@ -1,12 +1,11 @@
-/* Donate mockup rules.
+/* Donate page rules.
    No raw hex values; use tokens from tokens.css. */
 
 .button-outline { border-color: var(--primary-blue); color: var(--primary-blue); background: var(--white); }
 .button-outline:hover { background: var(--pale-blue); }
 .button svg { width: 17px; height: 17px; }
 
-.donate-page { min-height: 100dvh; display: grid; grid-template-rows: auto auto 1fr auto; background: var(--pale-blue); color: var(--ink-deep); }
-.donate-mockup-banner { padding: 8px 16px; background: var(--yellow); color: var(--ink-deep); font-family: var(--app-font-ui); font-size: var(--fs-2xs); font-weight: 700; text-align: center; }
+.donate-page { min-height: 100dvh; display: grid; grid-template-rows: auto 1fr auto; background: var(--pale-blue); color: var(--ink-deep); }
 .donate-header { display: flex; align-items: center; min-height: 72px; padding: 12px clamp(16px, 5vw, 72px); border-bottom: 1px solid var(--border-muted); background: var(--white); }
 .donate-brand { color: var(--primary-blue); font-family: var(--app-font-heading); font-size: var(--fs-sm); font-weight: 700; letter-spacing: -.02em; }
 .donate-main { display: grid; justify-items: center; align-content: start; padding: clamp(32px, 6vw, 72px) 16px; }
@@ -33,18 +32,8 @@
 .donate-custom small { color: var(--muted-text); font-family: var(--app-font-ui); font-size: var(--fs-2xs); }
 .donate-submit { justify-self: start; min-height: 50px; padding-inline: 24px; }
 
-.mock-checkout { width: min(880px, 100%); grid-template-columns: 1fr 1.2fr; gap: 32px; align-items: start; }
-.mock-checkout-summary { display: grid; gap: 10px; }
-.mock-checkout-stripe { display: grid; gap: 14px; padding: 20px; border: 1px dashed var(--divider); border-radius: 8px; }
-.mock-checkout-label { display: flex; align-items: center; gap: 6px; font-family: var(--app-font-ui); font-size: var(--fs-xs); font-weight: 700; color: var(--muted-ink); }
-.mock-checkout-label svg { width: 15px; height: 15px; }
-.mock-checkout-fields { display: grid; gap: 10px; }
-.mock-checkout-fields span { display: flex; align-items: center; min-height: 44px; padding: 0 12px; border-radius: 4px; background: var(--pale-blue); color: var(--muted-ink); font-family: var(--app-font-ui); font-size: var(--fs-xs); }
-.mock-checkout-actions { display: grid; gap: 10px; }
-.donate-back { justify-self: center; color: var(--primary-blue); font-family: var(--app-font-ui); font-size: var(--fs-xs); text-decoration: underline; }
 
 @media (max-width: 720px) {
-  .mock-checkout { grid-template-columns: 1fr; }
   .donate-submit { width: 100%; }
 }
 
