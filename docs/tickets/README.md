@@ -34,7 +34,7 @@ Release scope and dates are in SPEC §11.3. Every Release 1 ticket goes before a
 | ID                                   | Title                                                              | Depends on             | Mig | Human | Status |
 | ------------------------------------ | ------------------------------------------------------------------ | ---------------------- | --- | ----- | ------ |
 | [T010](./T010-donations.md)          | Donations: amount chooser, Stripe Checkout, thank-you              | T006, T009             |     | ✔     | todo   |
-| [T011](./T011-pages-and-seed.md)     | Release 1 pages, content migration, partner announcements and seed | T007, T009, T017       | ✔   |       | todo   |
+| [T011](./T011-pages-and-seed.md)     | Release 1 pages, content migration, partner announcements and seed | T007, T009, T017       | ✔   |       | review |
 | [T012](./T012-form-system.md)        | Shared form system                                                 | T008, T009, T017       | ✔   |       | todo   |
 | [T013](./T013-airtable-and-email.md) | Airtable sync and email adapter                                    | T012, T029             |     | ✔     | todo   |
 | [T014](./T014-release-1-forms.md)    | Register Interest and Call to Action consultation forms            | T011, T013             |     |       | todo   |
