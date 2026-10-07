@@ -72,6 +72,7 @@ export interface Config {
     partners: Partner;
     supporters: Supporter;
     faqs: Faq;
+    'form-submissions': FormSubmission;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -86,6 +87,7 @@ export interface Config {
     partners: PartnersSelect<false> | PartnersSelect<true>;
     supporters: SupportersSelect<false> | SupportersSelect<true>;
     faqs: FaqsSelect<false> | FaqsSelect<true>;
+    'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -814,6 +816,49 @@ export interface Faq {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "form-submissions".
+ */
+export interface FormSubmission {
+  id: number;
+  form: 'register-interest' | 'cta-consultation' | 'partner' | 'relay' | 'contact';
+  /**
+   * The person's answers: name, email, phone and the form's own fields (SPEC §8.1, §8.3).
+   */
+  data:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  territory?: string | null;
+  audienceType?: string | null;
+  consents?: {
+    contact?: boolean | null;
+    publicName?: boolean | null;
+    shareStory?: boolean | null;
+  };
+  utm?: {
+    source?: string | null;
+    medium?: string | null;
+    campaign?: string | null;
+    term?: string | null;
+    content?: string | null;
+  };
+  /**
+   * Submitted before launch or from a non-production environment.
+   */
+  isTest?: boolean | null;
+  airtableSyncStatus: 'pending' | 'synced' | 'failed';
+  airtableSyncError?: string | null;
+  airtableRecordId?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -882,6 +927,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'faqs';
         value: number | Faq;
+      } | null)
+    | ({
+        relationTo: 'form-submissions';
+        value: number | FormSubmission;
       } | null)
     | ({
         relationTo: 'media';
@@ -1343,6 +1392,38 @@ export interface FaqsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "form-submissions_select".
+ */
+export interface FormSubmissionsSelect<T extends boolean = true> {
+  form?: T;
+  data?: T;
+  territory?: T;
+  audienceType?: T;
+  consents?:
+    | T
+    | {
+        contact?: T;
+        publicName?: T;
+        shareStory?: T;
+      };
+  utm?:
+    | T
+    | {
+        source?: T;
+        medium?: T;
+        campaign?: T;
+        term?: T;
+        content?: T;
+      };
+  isTest?: T;
+  airtableSyncStatus?: T;
+  airtableSyncError?: T;
+  airtableRecordId?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
