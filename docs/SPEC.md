@@ -296,7 +296,9 @@ There is no staging environment and there are no preview deployments. Work is ve
 
 One environment variable controls behaviour, and it is unset locally:
 
-- **`SITE_LIVE=true`** switches off test mode. In test mode, Stripe uses test keys, submissions are saved with `isTest: true`, Airtable writes go to the test base with `Test` ticked, and email goes only to `EMAIL_SANDBOX_TO`. Set in production at launch.
+- **`SITE_LIVE=true`** switches off test mode. In test mode, submissions are saved with `isTest: true`, Airtable writes go to the test base with `Test` ticked, and email goes only to `EMAIL_SANDBOX_TO`. Set in production at launch.
+
+Stripe is outside test mode: production uses Amagi's live Stripe keys from the start, so donations are real as soon as the donate page is deployed. Local development uses Stripe test keys.
 
 ### 11.2 Hosting
 

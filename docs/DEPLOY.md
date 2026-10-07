@@ -7,7 +7,7 @@ How the site reaches production and how to change it safely. Background: SPEC §
 - **Local:** the Supabase CLI stack. See `CLAUDE.md` and SPEC §11.5 for `pnpm db:pull`.
 - **Production:** the Vercel deployment of `main`, on the one Supabase project. There is no staging and there are no preview deployments (`git.deploymentEnabled` in `vercel.json` builds `main` only).
 
-Production is public and runs in **test mode** until launch: `SITE_LIVE` is unset, so Stripe uses test keys, submissions are saved with `isTest: true`, Airtable writes go to the test base, and email goes only to `EMAIL_SANDBOX_TO` (SPEC §11.1). Code checks this with `isLive()` from `src/utils/site.ts`, never with `NODE_ENV` or `VERCEL_ENV`.
+Production is public and runs in **test mode** until launch: `SITE_LIVE` is unset, so submissions are saved with `isTest: true`, Airtable writes go to the test base, and email goes only to `EMAIL_SANDBOX_TO` (SPEC §11.1). Stripe is not in test mode: production uses live keys from the start, so donations are real before launch. Code checks this with `isLive()` from `src/utils/site.ts`, never with `NODE_ENV` or `VERCEL_ENV`.
 
 ## Deploy
 
@@ -52,10 +52,9 @@ Changing `PAYLOAD_SECRET` signs every editor out. Changing the database password
 
 ## Launch (T018)
 
-1. Swap Stripe to live keys in Vercel Production.
-2. Point Airtable at the production base: set its token and base ID in Vercel Production.
-3. Set `SITE_LIVE=true` in Vercel Production. Any other value, or unset, keeps test mode.
-4. Redeploy, then check `/`, `/api/health` and a small live donation.
+1. Point Airtable at the production base: set its token and base ID in Vercel Production.
+2. Set `SITE_LIVE=true` in Vercel Production. Any other value, or unset, keeps test mode.
+3. Redeploy, then check `/` and `/api/health`.
 
 ## Move the projects to Amagi (T018)
 
