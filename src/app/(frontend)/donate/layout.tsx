@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import React from 'react'
 
-import { SiteFooter } from '@/components/SiteFooter'
-import { SiteHeader } from '@/components/SiteHeader'
+import { Footer } from '@/components/Footer'
+import { Header } from '@/components/Header'
 
 import './donate.css'
 
@@ -22,11 +22,11 @@ export default async function DonateLayout({ children }: { children: React.React
       <p className="donate-mockup-banner" role="note">
         Mockup: no payment is taken and nothing is sent to Stripe.
       </p>
-      <SiteHeader />
+      <Header />
       <main className="donate-main" id="donate-main">
         {children}
       </main>
-      <SiteFooter />
+      <Footer />
     </div>
   )
 }

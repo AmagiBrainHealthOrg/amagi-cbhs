@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import React from 'react'
 
 import { DonateBand, PhotoHero, SectionHeading } from '../_components/chrome'
-import { FlowDiagram, Roadmap, StatsBand } from '../_components/graphics'
+import { FlowDiagram, Roadmap, StatsBand } from '@/components/graphics/graphics'
 import { about, aboutV1, home, roadmap } from '../_content'
 
 export const metadata: Metadata = { title: 'About | Caribbean Brain Health Summit (v1)' }
