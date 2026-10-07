@@ -18,6 +18,7 @@ type DonationSessionInput = {
   amount: number
   currency: string
   productName: string
+  productDescription?: string
   sourcePage: string
   utm: Utm
 }
@@ -27,6 +28,7 @@ export async function createDonationSession({
   amount,
   currency,
   productName,
+  productDescription,
   sourcePage,
   utm,
 }: DonationSessionInput): Promise<string> {
@@ -39,7 +41,14 @@ export async function createDonationSession({
     line_items: [
       {
         quantity: 1,
-        price_data: { currency, unit_amount: amount, product_data: { name: productName } },
+        price_data: {
+          currency,
+          unit_amount: amount,
+          product_data: {
+            name: productName,
+            ...(productDescription && { description: productDescription }),
+          },
+        },
       },
     ],
     metadata,

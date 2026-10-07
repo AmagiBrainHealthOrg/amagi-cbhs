@@ -55,6 +55,22 @@ describe('createDonationSession', () => {
       cancel_url: 'https://site.test/about',
     })
   })
+
+  it('adds the item description when one is set', async () => {
+    mocks.create.mockResolvedValue({ id: 'cs_test_2', url: 'https://checkout.stripe.com/c/pay/2' })
+    await createDonationSession({
+      amount: 2500,
+      currency: 'usd',
+      productName: 'Donation',
+      productDescription: 'Supporting brain health',
+      sourcePage: '/donate',
+      utm,
+    })
+    expect(mocks.create.mock.calls[0][0].line_items[0].price_data.product_data).toEqual({
+      name: 'Donation',
+      description: 'Supporting brain health',
+    })
+  })
 })
 
 describe('getPaidDonation', () => {

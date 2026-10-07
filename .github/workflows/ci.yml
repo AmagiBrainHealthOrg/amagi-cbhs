@@ -66,6 +66,9 @@ jobs:
       - name: Migrate
         run: pnpm payload migrate
 
+      - name: Seed
+        run: pnpm db:seed
+
       - name: Test (integration)
         run: pnpm test:int
 

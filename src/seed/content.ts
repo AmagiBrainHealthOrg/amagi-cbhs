@@ -126,7 +126,10 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
         heading: 'One Caribbean.\nOne brain health future.',
         lead: 'A week of free sessions across the region and online, and a shared plan for what comes next. Your gift makes it happen.',
         showDonateButton: true,
-        secondaryLink: { label: 'See the week', href: '#week' },
+        secondaryLink: {
+          label: 'Register interest',
+          href: 'https://docs.google.com/forms/d/e/1FAIpQLSc6bRt1sDcugHVcBylaqHgDqZ9rNUSHuVYmacJZk0UbQZ7lnQ/viewform',
+        },
         // Summit week starts at midnight in Kingston (UTC-5, no daylight saving).
         countdown: {
           target: '2026-11-16T05:00:00.000Z',
@@ -662,21 +665,21 @@ export const seedGlobals = (images: SeedImages): Globals => ({
     currency: 'usd',
     allowCustomAmount: true,
     minimumAmount: 500,
+    checkoutItemName: 'Donation to Caribbean brain health',
+    checkoutItemDescription:
+      'Supporting a Caribbean-led response to brain health, dementia, ageing and family care.',
     page: {
-      kicker: 'Support the Summit',
-      heading: 'Give to Caribbean brain health',
-      lead: 'The Caribbean Brain Health Summit brings brain health to communities across the region, in person and online, from 16 to 22 November 2026. Your gift makes it possible.',
+      kicker: 'Support the movement',
+      heading: 'Help build a stronger regional response',
+      lead: 'Brain health, dementia, ageing and family care need a Caribbean response, led from the Caribbean. The Caribbean Brain Health Summit connects the people, knowledge, services and institutions to build it. To stay open, accessible, locally led and independently governed, this work needs your support.',
       reasonsHeading: 'What your gift supports',
       reasons: [
-        {
-          text: 'Seven days of activity across several Caribbean countries and online, 16–22 November 2026',
-        },
-        {
-          text: 'Free sessions on dementia, stroke, mental health and healthy ageing for the public',
-        },
-        {
-          text: 'A Caribbean Call to Action on Brain Health, shaped by communities and policymakers',
-        },
+        { text: 'Digital access' },
+        { text: 'Country leadership' },
+        { text: 'Caregiver and lived-experience inclusion' },
+        { text: 'Primary care and workforce readiness' },
+        { text: 'Measurement and accountability' },
+        { text: 'Independent programme delivery and follow-through' },
       ],
       note: 'Amagi Health Ltd runs the Summit.',
       amountLegend: 'Choose an amount',
@@ -690,15 +693,15 @@ export const seedGlobals = (images: SeedImages): Globals => ({
     thankYouKicker: '{amount} received',
     thankYouHeading: 'Thank you for your donation',
     thankYouBody:
-      'Your gift helps bring the Caribbean Brain Health Summit to communities across the region and online.',
+      'Your gift helps build a Caribbean-led response to brain health, during Summit week and long after it.',
     thankYouLinkLabel: 'Back to the homepage',
     unconfirmedHeading: 'We couldn’t confirm your donation',
     unconfirmedBody:
       'If you completed a payment, you’ll get a receipt from Stripe by email. Otherwise you can try again.',
     unconfirmedLinkLabel: 'Back to donate',
     banner: {
-      heading: 'Help bring brain health to every Caribbean community',
-      body: 'Your gift funds free sessions, local activity hosts and the Caribbean Call to Action on Brain Health.',
+      heading: 'Help build a stronger regional response',
+      body: 'Back a Caribbean-led movement for brain health, dementia and family care.',
       label: 'Donate',
     },
   },

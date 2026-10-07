@@ -166,7 +166,7 @@ Icons are chosen from a fixed list that matches the design's icon set.
 
 ### 6.4 Content migration
 
-The copy on `main` before T011 reaches production through an idempotent Payload data migration (T011): it creates each page, news item, FAQ and global value only if it is missing, so it never overwrites an editor's changes. `pnpm db:seed` runs the same content locally.
+The copy on `main` before T011 reaches production through an idempotent Payload data migration (T011): it creates each page, news item, FAQ and global value only if it is missing, so it never overwrites an editor's changes. `pnpm db:seed` runs the same content locally. Production has run it, and it is now a no-op: it wrote through the current config, so it broke fresh databases once a later migration added a column to seeded content. Fresh databases (local and CI) run `pnpm payload migrate` then `pnpm db:seed`. New seeded values reach production only through editors.
 
 ## 7. Donations
 

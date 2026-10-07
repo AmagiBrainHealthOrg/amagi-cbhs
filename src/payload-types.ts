@@ -1622,6 +1622,14 @@ export interface DonationSetting {
     errorText?: string | null;
   };
   /**
+   * The item donors see on Stripe's checkout page. Defaults to the site name.
+   */
+  checkoutItemName?: string | null;
+  /**
+   * Shown under the item name on the checkout page.
+   */
+  checkoutItemDescription?: string | null;
+  /**
    * Line above the heading. Use {amount} for the amount given.
    */
   thankYouKicker?: string | null;
@@ -1887,6 +1895,8 @@ export interface DonationSettingsSelect<T extends boolean = true> {
         securePaymentNote?: T;
         errorText?: T;
       };
+  checkoutItemName?: T;
+  checkoutItemDescription?: T;
   thankYouKicker?: T;
   thankYouHeading?: T;
   thankYouBody?: T;
