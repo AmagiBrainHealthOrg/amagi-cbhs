@@ -1,5 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
+import { isAdminOrEditor } from '@/access/isAdminOrEditor'
+
 export const detailIcons = [
   { label: 'Calendar', value: 'calendar' },
   { label: 'Map pin', value: 'map-pin' },
@@ -12,6 +14,10 @@ export const detailIcons = [
 export const ComingSoon: GlobalConfig = {
   slug: 'coming-soon',
   label: 'Coming Soon Page',
+  access: {
+    read: () => true,
+    update: isAdminOrEditor,
+  },
   admin: {
     livePreview: {
       url: '/?preview=true',
