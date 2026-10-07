@@ -2,22 +2,22 @@ import Link from 'next/link'
 import React from 'react'
 
 import { getGlobal } from '@/lib/globals'
+import { getPaidDonation } from '@/lib/stripe'
+import { fill, formatAmount } from '@/utils/donation'
 
-import { fill, formatAmount } from '../mockup'
+import { DonationCompleteTracker } from './DonationCompleteTracker'
 
-type Props = { searchParams: Promise<{ status?: string | string[]; amount?: string | string[] }> }
+type Props = { searchParams: Promise<{ session_id?: string | string[] }> }
 
-// TODO: read session_id, retrieve the Stripe Checkout Session server-side and show thank-you only if payment_status is paid (T010), only when a human developer decides to.
-// TODO: push donation_complete (value, currency) to the data layer once per session ID (T015), only when a human developer decides to.
-// TODO: the Stripe webhook records the donation in Airtable (Release 2, T022), only when a human developer decides to.
+// SPEC §7.4. The Stripe webhook records the donation in Airtable in Release 2 (T022).
 export default async function ThankYouPage({ searchParams }: Props) {
-  const [{ status, amount }, settings] = await Promise.all([
-    searchParams,
+  const { session_id } = await searchParams
+  const [settings, donation] = await Promise.all([
     getGlobal('donation-settings'),
+    getPaidDonation(Array.isArray(session_id) ? session_id[0] : session_id),
   ])
-  const minor = Number(amount)
 
-  if (status !== 'paid') {
+  if (!donation) {
     return (
       <section className="donate-card" aria-labelledby="thank-you-title">
         <h1 id="thank-you-title">{settings.unconfirmedHeading}</h1>
@@ -31,12 +31,19 @@ export default async function ThankYouPage({ searchParams }: Props) {
     )
   }
 
-  const hasAmount = Number.isInteger(minor) && minor > 0
   return (
     <section className="donate-card" aria-labelledby="thank-you-title">
-      {hasAmount && settings.thankYouKicker && (
+      <DonationCompleteTracker
+        value={donation.amount / 100}
+        currency={donation.currency.toUpperCase()}
+      />
+      {settings.thankYouKicker && (
         <p className="donate-kicker">
-          {fill(settings.thankYouKicker, 'amount', formatAmount(minor, settings.currency))}
+          {fill(
+            settings.thankYouKicker,
+            'amount',
+            formatAmount(donation.amount, donation.currency),
+          )}
         </p>
       )}
       <h1 id="thank-you-title">{settings.thankYouHeading}</h1>
