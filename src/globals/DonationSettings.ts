@@ -105,6 +105,24 @@ export const DonationSettings: GlobalConfig = {
           ],
         },
         {
+          label: 'Checkout',
+          fields: [
+            {
+              name: 'checkoutItemName',
+              type: 'text',
+              admin: {
+                description:
+                  "The item donors see on Stripe's checkout page. Defaults to the site name.",
+              },
+            },
+            {
+              name: 'checkoutItemDescription',
+              type: 'textarea',
+              admin: { description: 'Shown under the item name on the checkout page.' },
+            },
+          ],
+        },
+        {
           label: 'Thank you',
           fields: [
             {

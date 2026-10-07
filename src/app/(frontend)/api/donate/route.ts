@@ -36,7 +36,10 @@ export async function POST(request: Request) {
       amount,
       currency: settings.currency || 'usd',
       productName:
-        header.brandTitle?.replace(/\s+/g, ' ').trim() || new URL(env.NEXT_PUBLIC_SITE_URL).host,
+        settings.checkoutItemName?.trim() ||
+        header.brandTitle?.replace(/\s+/g, ' ').trim() ||
+        new URL(env.NEXT_PUBLIC_SITE_URL).host,
+      productDescription: settings.checkoutItemDescription?.trim() || undefined,
       sourcePage: sourcePagePath(form.get('source_page')),
       utm,
     })
