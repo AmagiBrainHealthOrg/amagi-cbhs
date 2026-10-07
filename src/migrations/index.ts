@@ -4,6 +4,7 @@ import * as migration_20261006_144657_add_user_role from './20261006_144657_add_
 import * as migration_20261007_135743_t006_globals from './20261007_135743_t006_globals'
 import * as migration_20261007_140638_t007_collections from './20261007_140638_t007_collections'
 import * as migration_20261007_144302_t011_copy_fields from './20261007_144302_t011_copy_fields'
+import * as migration_20261007_144558_t011_content from './20261007_144558_t011_content'
 
 export const migrations = [
   {
@@ -35,5 +36,10 @@ export const migrations = [
     up: migration_20261007_144302_t011_copy_fields.up,
     down: migration_20261007_144302_t011_copy_fields.down,
     name: '20261007_144302_t011_copy_fields',
+  },
+  {
+    up: migration_20261007_144558_t011_content.up,
+    down: migration_20261007_144558_t011_content.down,
+    name: '20261007_144558_t011_content',
   },
 ]
