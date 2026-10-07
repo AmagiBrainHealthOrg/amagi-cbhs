@@ -18,9 +18,9 @@ export async function Header() {
   ))
 
   return (
-    <header className="coming-soon-header site-header">
+    <header className="site-header">
       {(logo || brandTitle) && (
-        <Link className="coming-soon-brand" href="/">
+        <Link className="site-brand" href="/">
           {/* With a brand title the logo is decorative; without one, its alt names the link. */}
           {logo && <img src={logo.url!} alt={brandTitle ? '' : logo.alt} />}
           {logo && brandTitle && <span aria-hidden="true" />}

@@ -8,6 +8,7 @@ const schema = z.object({
   S3_REGION: z.string().min(1),
   S3_ACCESS_KEY_ID: z.string().min(1),
   S3_SECRET_ACCESS_KEY: z.string().min(1),
+  SITE_LIVE: z.string().optional(),
 })
 
 const parsed = schema.safeParse(process.env)

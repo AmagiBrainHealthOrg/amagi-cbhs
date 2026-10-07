@@ -45,12 +45,12 @@ export function PhotoHero({
 }: Props & { images: Media[]; size?: 'home' | 'page' }) {
   return (
     <section className={`v1-hero v1-hero-${size}`}>
-      <div className="coming-soon-background" aria-hidden="true">
+      <div className="hero-background" aria-hidden="true">
         {images.length > 1 && <style>{crossfadeKeyframes(images.length)}</style>}
         {images.map((image, index) => (
           <img
             key={image.id}
-            className={`coming-soon-image${images.length === 1 ? ' coming-soon-image-static' : ''}`}
+            className={`hero-image${images.length === 1 ? ' hero-image-static' : ''}`}
             src={image.url!}
             alt=""
             style={{
