@@ -60,19 +60,19 @@ All production accounts (hosting, database, storage, Stripe, email, fonts, Googl
 
 ### 4.2 Pages (Release 1)
 
-| Route                            | Page                           | Notes                                                                                                                                                                          |
-| -------------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `/`                              | Home                           | The case for supporting the Summit; dates; Anchor Day details (§5.2); Donate primary; teasers for Support and News (the Host Countries teaser joins in Release 2)              |
-| `/about`                         | About                          | Summit purpose and Amagi's role. Mentions PLADRR, a follow-on event in Kingston on 3–5 February 2027                                                                           |
-| `/support`                       | Support Caribbean Brain Health | Why support matters, what it enables, supporter levels, safeguards, support FAQs, Donate. Supporter list shows permission-confirmed entries only                               |
-| `/call-to-action`                | Call to Action                 | Explains the _Caribbean Call to Action on Brain Health_ and its five action areas. Hosts the consultation form (§8.3). No download, signing or endorser list                   |
-| `/faqs`                          | FAQs                           | A `pages` document with a `faqList` block: expandable questions grouped by category                                                                                            |
-| `/donate`                        | Donate                         | Amount chooser (§7)                                                                                                                                                            |
-| `/news`                          | News                           | `news` items, newest first. Approved `substack-posts` join in Release 2 (§9.3)                                                                                                 |
-| `/news/[slug]`                   | News item                      |                                                                                                                                                                                |
-| `/donate/thank-you`              | Donation thank-you             | §7                                                                                                                                                                             |
-| `/thank-you/[form]`              | Form thank-you                 | §8                                                                                                                                                                             |
-| `/privacy`, `/cookies`, `/terms` | Legal                          | Pages from the `pages` collection, with copy from Amagi. `/cookies` lists every cookie the site and Google Tag Manager set. Every form links to `/privacy` beside its consents |
+| Route                            | Page                           | Notes                                                                                                                                                                              |
+| -------------------------------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/`                              | Home                           | The `home` page. The case for supporting the Summit; dates; Anchor Day details (§5.2); Donate primary; teasers for Support and News (the Host Countries teaser joins in Release 2) |
+| `/about`                         | About                          | Summit purpose and Amagi's role. Mentions PLADRR, a follow-on event in Kingston on 3–5 February 2027                                                                               |
+| `/support`                       | Support Caribbean Brain Health | Why support matters, what it enables, supporter levels, safeguards, support FAQs, Donate. Supporter list shows permission-confirmed entries only                                   |
+| `/call-to-action`                | Call to Action                 | Explains the _Caribbean Call to Action on Brain Health_ and its five action areas. Hosts the consultation form (§8.3). No download, signing or endorser list                       |
+| `/faqs`                          | FAQs                           | A `pages` document with a `faqList` block: expandable questions grouped by category                                                                                                |
+| `/donate`                        | Donate                         | Amount chooser (§7)                                                                                                                                                                |
+| `/news`                          | News                           | `news` items, newest first. Approved `substack-posts` join in Release 2 (§9.3)                                                                                                     |
+| `/news/[slug]`                   | News item                      |                                                                                                                                                                                    |
+| `/donate/thank-you`              | Donation thank-you             | §7                                                                                                                                                                                 |
+| `/thank-you/[form]`              | Form thank-you                 | §8                                                                                                                                                                                 |
+| `/privacy`, `/cookies`, `/terms` | Legal                          | Pages from the `pages` collection, with copy from Amagi. `/cookies` lists every cookie the site and Google Tag Manager set. Every form links to `/privacy` beside its consents     |
 
 ### 4.3 Pages (Release 2)
 
@@ -109,17 +109,17 @@ Drafts, autosave and live preview are on for `pages`, `news`, `partners`, `suppo
 
 ### 5.2 Globals
 
-| Slug                | Fields                                                                                                                                                   |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `header`            | `logo`, `navItems`, `donateLabel`                                                                                                                        |
-| `footer`            | `links`, `legalText`                                                                                                                                     |
-| `donation-settings` | `suggestedAmounts` (array of integers, minor units), `currency` (default `usd`), `allowCustomAmount`, `minimumAmount`, `thankYouHeading`, `thankYouBody` |
-| `anchor-day`        | `date`, `venue`, `moderator`, `mc` (all optional; still being confirmed)                                                                                 |
-| `dropdowns`         | `territories`, `audienceTypes`, `industries`: each an array of `{ label, value }`                                                                        |
-| `integrations`      | `gtmContainerId`; `substackFeedUrl`, `substackUrl` (Release 2). Admin-only                                                                               |
-| `forms`             | `thankYou`: one entry per form key (§8.3), each `{ form, heading, body }`                                                                                |
-| `cookie-consent`    | `heading`, `body`, `acceptLabel`, `rejectLabel`, `settingsLabel` (the footer link)                                                                       |
-| `coming-soon`       | Existing. Retired at Release 1 launch (§11.4)                                                                                                            |
+| Slug                | Fields                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `header`            | `logo`, `brandTitle` (line breaks kept), `navItems`, `donateLabel`                                                                                                                                                                                                                                                                                                                                                                                                |
+| `footer`            | `links`, `tagline`, `legalText`. The cookie settings link label comes from `cookie-consent.settingsLabel`                                                                                                                                                                                                                                                                                                                                                         |
+| `donation-settings` | `suggestedAmounts` (array of integers, minor units), `currency` (default `usd`), `allowCustomAmount`, `minimumAmount`, `thankYouHeading`, `thankYouBody`; `page` (the `/donate` copy: kicker, heading, lead, reasons heading and list, note, amount legend, "Other" labels, submit label, secure-payment note, error text); `unconfirmedHeading`, `unconfirmedBody` (§7 step 4); `banner` (`heading`, `body`, `label`: the copy every `donateBanner` block shows) |
+| `anchor-day`        | `date`, `venue`, `moderator`, `mc` (all optional; still being confirmed)                                                                                                                                                                                                                                                                                                                                                                                          |
+| `dropdowns`         | `territories`, `audienceTypes`, `industries`: each an array of `{ label, value }`                                                                                                                                                                                                                                                                                                                                                                                 |
+| `integrations`      | `gtmContainerId`; `substackFeedUrl`, `substackUrl` (Release 2). Admin-only                                                                                                                                                                                                                                                                                                                                                                                        |
+| `forms`             | `thankYou`: one entry per form key (§8.3), each `{ form, heading, body }`                                                                                                                                                                                                                                                                                                                                                                                         |
+| `cookie-consent`    | `heading`, `body`, `acceptLabel`, `rejectLabel`, `settingsLabel` (the footer link)                                                                                                                                                                                                                                                                                                                                                                                |
+| `coming-soon`       | Existing. Retired at Release 1 launch (§11.4)                                                                                                                                                                                                                                                                                                                                                                                                                     |
 
 ### 5.3 Dropdown values
 
@@ -139,7 +139,34 @@ Header, Footer, Button (primary = Donate; secondary; tertiary), Section, Card, A
 
 ### 6.3 Blocks
 
-`hero`, `richText`, `cardGrid`, `donateBanner`, `logoGrid` (supporters or partners, permission-filtered), `faqList`, `newsTeaser`, `hostCountriesTeaser` (Release 2), `video` (§9.4, Release 2), `form` (selects a form key from §8.3), `anchorDay`, `supporterLevels`, `actionAreas`.
+Blocks match the graphics-led design on `main`. Section blocks share optional `kicker`, `heading`, `intro`, `background` (`white` | `pale` | `blue`) and `anchorId` fields.
+
+| Block                 | Content                                                                                                                                                                                  |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `hero`                | `style` (`map` \| `photo` \| `plain`), kicker, heading, lead, `images` (photo style, crossfade), Donate button toggle, secondary link, countdown (target, label), `stats` (value, label) |
+| `richText`            | Section fields and Lexical `content`; `layout` (`split` \| `prose`, prose for legal pages)                                                                                               |
+| `statement`           | Key statement with `source`                                                                                                                                                              |
+| `hostMap`             | Section fields, online label, `countries` (name, city, map x/y, anchor, label side). Replaced by `host-countries` data in Release 2                                                      |
+| `summitWeek`          | Section fields, `days` (day, date, label, body, anchor)                                                                                                                                  |
+| `roadmap`             | Section fields, `numbered`, `steps` (when, title, body, status `done` \| `now` \| `next`)                                                                                                |
+| `flow`                | Section fields, `steps` (title, body)                                                                                                                                                    |
+| `cardGrid`            | Section fields, `style` (`tiles` \| `badges`), `items` (icon, title, body)                                                                                                               |
+| `actionAreas`         | Section fields, centre label, `areas` (icon, title, body), link                                                                                                                          |
+| `supporterLevels`     | Section fields, `levels` (name, body)                                                                                                                                                    |
+| `logoGrid`            | Section fields, source (`supporters` \| `partners`, permission-filtered), empty text                                                                                                     |
+| `faqList`             | Section fields, optional category filter, show category headings                                                                                                                         |
+| `newsTeaser`          | Section fields, number of items, link label                                                                                                                                              |
+| `donateBanner`        | No fields; copy from `donation-settings.banner`                                                                                                                                          |
+| `form`                | Section fields, form key from §8.3                                                                                                                                                       |
+| `anchorDay`           | Section fields; details from the `anchor-day` global                                                                                                                                     |
+| `hostCountriesTeaser` | Release 2                                                                                                                                                                                |
+| `video`               | Release 2 (§9.4)                                                                                                                                                                         |
+
+Icons are chosen from a fixed list that matches the design's icon set.
+
+### 6.4 Content migration
+
+The copy on `main` before T011 reaches production through an idempotent Payload data migration (T011): it creates each page, news item, FAQ and global value only if it is missing, so it never overwrites an editor's changes. `pnpm db:seed` runs the same content locally.
 
 ## 7. Donations
 
