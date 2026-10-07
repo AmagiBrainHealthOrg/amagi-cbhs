@@ -5,6 +5,7 @@ import * as migration_20261007_135743_t006_globals from './20261007_135743_t006_
 import * as migration_20261007_140638_t007_collections from './20261007_140638_t007_collections'
 import * as migration_20261007_144302_t011_copy_fields from './20261007_144302_t011_copy_fields'
 import * as migration_20261007_144558_t011_content from './20261007_144558_t011_content'
+import * as migration_20261007_174846_t008_form_submissions from './20261007_174846_t008_form_submissions'
 
 export const migrations = [
   {
@@ -41,5 +42,10 @@ export const migrations = [
     up: migration_20261007_144558_t011_content.up,
     down: migration_20261007_144558_t011_content.down,
     name: '20261007_144558_t011_content',
+  },
+  {
+    up: migration_20261007_174846_t008_form_submissions.up,
+    down: migration_20261007_174846_t008_form_submissions.down,
+    name: '20261007_174846_t008_form_submissions',
   },
 ]

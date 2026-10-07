@@ -16,7 +16,7 @@ skills: [payload]
 
 **In**
 
-- `form-submissions` per SPEC §5.1: admin-only for every operation; `form` (select of the five form keys); `data` as JSON; `consents` group of three checkboxes; `utm` group of five text fields; `isTest`; `airtableSyncStatus` default `pending`; `airtableSyncError`; `airtableRecordId`. No drafts.
+- `form-submissions` per SPEC §5.1: admin-only for every operation; `form` (select of all five form keys, SPEC §8.3); `data` as JSON (name, email, the optional `phone` from SPEC §8.1 and each form's extra fields); `territory` and `audienceType` (text: values come from the `dropdowns` global); `consents` group of three checkboxes; `utm` group of five text fields; `isTest`; `airtableSyncStatus` default `pending`; `airtableSyncError`; `airtableRecordId`. No drafts.
 - Migration.
 
 **Out**
