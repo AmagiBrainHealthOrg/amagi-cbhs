@@ -1,28 +1,31 @@
 import { Heart } from 'lucide-react'
-import Link from 'next/link'
 import React from 'react'
 
-import { donateBanner } from '@/config/placeholderContent'
+import { getGlobal } from '@/lib/globals'
 
-// TODO: becomes the `donateBanner` block rendered from Payload `pages` (T009) only when a human
-// developer decides to.
-export function DonateBanner() {
+import { Button } from './Button'
+
+// Copy comes from `donation-settings.banner` (SPEC §6.3), so every banner on the site matches.
+export async function DonateBanner({ id = 'donate-banner' }: { id?: string }) {
+  const { banner } = await getGlobal('donation-settings')
+  if (!banner?.heading || !banner.label) return null
+
+  const titleId = `${id}-title`
   return (
-    <section className="donate-banner" aria-labelledby="donate-banner-title">
-      <div>
-        <h2 id="donate-banner-title">{donateBanner.heading}</h2>
-        <p>{donateBanner.body}</p>
+    <section className="v1-donate-band" aria-labelledby={titleId}>
+      <div className="v1-donate-band-inner">
+        <h2 id={titleId}>{banner.heading}</h2>
+        {banner.body && <p>{banner.body}</p>}
+        <Button
+          href="/donate"
+          variant="primary"
+          journey="donate"
+          action="donate"
+          className="v1-donate-button"
+        >
+          <Heart aria-hidden="true" /> {banner.label}
+        </Button>
       </div>
-      {/* TODO: push the donate_click data-layer event (T015) only when a human developer decides to. */}
-      <Link
-        className="button button-orange donate-banner-button"
-        href="/donate"
-        data-journey="donate"
-        data-action="donate_click"
-        data-destination-type="internal"
-      >
-        <Heart aria-hidden="true" /> {donateBanner.label}
-      </Link>
     </section>
   )
 }

@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import React from 'react'
 
-import { SiteFooter } from '@/components/SiteFooter'
-import { SiteHeader } from '@/components/SiteHeader'
+import { Footer } from '@/components/Footer'
+import { Header } from '@/components/Header'
 
 import './site.css'
 import './v1.css'
@@ -22,9 +22,9 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <SiteHeader />
+      <Header />
       <main id="main">{children}</main>
-      <SiteFooter />
+      <Footer />
     </div>
   )
 }

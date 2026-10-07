@@ -10,6 +10,8 @@
 
 .button-outline-light { border-color: rgba(255,255,255,.85); background: transparent; color: var(--white); }
 .button-outline-light:hover { background: rgba(255,255,255,.12); }
+.button-outline { border-color: var(--primary-blue); background: transparent; color: var(--primary-blue); }
+.button-outline:hover { background: var(--pale-blue); }
 
 .site-header { justify-content: space-between; gap: 16px 28px; }
 .site-nav { margin-left: auto; }

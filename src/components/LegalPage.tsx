@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { PageHero } from '@/components/PageHero'
+import { PlainHero } from '@/components/Hero'
 
 type Props = { title: string; intro: string; sections: { heading: string; body: string }[] }
 
@@ -9,7 +9,7 @@ type Props = { title: string; intro: string; sections: { heading: string; body: 
 export function LegalPage({ title, intro, sections }: Props) {
   return (
     <>
-      <PageHero heading={title} lead={intro} />
+      <PlainHero heading={title} lead={intro} />
       <section className="page-section legal-body">
         {sections.map(({ heading, body }) => (
           <React.Fragment key={heading}>

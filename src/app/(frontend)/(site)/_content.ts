@@ -2,7 +2,7 @@
 // it will become, so editors can manage the graphics later.
 // TODO: hard-coded; migrate to Payload blocks only when a human developer decides to.
 
-export { about, callToAction, donateBanner, faqs, footer, news, support } from '@/config/placeholderContent'
+export { about, callToAction, faqs, news, support } from '@/config/placeholderContent'
 
 // Summit week starts at midnight in Kingston (UTC-5, no daylight saving).
 export const summitStart = '2026-11-16T00:00:00-05:00'
@@ -61,7 +61,14 @@ export const hostCountries = [
   { name: 'Jamaica', city: 'Kingston', x: 365, y: 285, anchor: true, labelSide: 'left' },
   { name: 'The Bahamas', city: 'Nassau', x: 349, y: 73, anchor: false, labelSide: 'right' },
   { name: 'Barbados', city: 'Bridgetown', x: 858, y: 432, anchor: false, labelSide: 'left' },
-  { name: 'Trinidad and Tobago', city: 'Port of Spain', x: 803, y: 506, anchor: false, labelSide: 'left' },
+  {
+    name: 'Trinidad and Tobago',
+    city: 'Port of Spain',
+    x: 803,
+    y: 506,
+    anchor: false,
+    labelSide: 'left',
+  },
   { name: 'Cayman Islands', city: 'George Town', x: 233, y: 246, anchor: false, labelSide: 'left' },
 ] as const
 
@@ -70,7 +77,13 @@ export const summitWeek = [
   { day: 'Mon', date: '16', label: 'Opening', body: 'Launch events in every host country' },
   { day: 'Tue', date: '17', label: 'Local activity', body: 'Community sessions and screenings' },
   { day: 'Wed', date: '18', label: 'Local activity', body: 'Workshops for practitioners' },
-  { day: 'Thu', date: '19', label: 'Anchor Day', body: 'The Anchor Day takes place in Jamaica', anchor: true },
+  {
+    day: 'Thu',
+    date: '19',
+    label: 'Anchor Day',
+    body: 'The Anchor Day takes place in Jamaica',
+    anchor: true,
+  },
   { day: 'Fri', date: '20', label: 'Local activity', body: 'Youth and family sessions' },
   { day: 'Sat', date: '21', label: 'Online day', body: 'Sessions for the diaspora' },
   { day: 'Sun', date: '22', label: 'Close', body: 'Reflections and next steps' },
@@ -84,27 +97,56 @@ export type Milestone = {
 }
 
 export const roadmap: Milestone[] = [
-  { when: 'Sep 2026', title: 'Dates announced', body: 'Summit week confirmed for November.', status: 'done' },
+  {
+    when: 'Sep 2026',
+    title: 'Dates announced',
+    body: 'Summit week confirmed for November.',
+    status: 'done',
+  },
   {
     when: 'Sep–Nov 2026',
     title: 'Consultation open',
     body: 'Anyone can comment on the Call to Action.',
     status: 'now',
   },
-  { when: '16–22 Nov 2026', title: 'Summit week', body: 'Free sessions across the region and online.', status: 'next' },
-  { when: '3–5 Feb 2027', title: 'PLADRR, Kingston', body: 'The follow-on event continues the work.', status: 'next' },
-  { when: '2027', title: 'Call to Action published', body: 'A shared agenda goes to governments.', status: 'next' },
+  {
+    when: '16–22 Nov 2026',
+    title: 'Summit week',
+    body: 'Free sessions across the region and online.',
+    status: 'next',
+  },
+  {
+    when: '3–5 Feb 2027',
+    title: 'PLADRR, Kingston',
+    body: 'The follow-on event continues the work.',
+    status: 'next',
+  },
+  {
+    when: '2027',
+    title: 'Call to Action published',
+    body: 'A shared agenda goes to governments.',
+    status: 'next',
+  },
 ]
 
 // 1 workforce/development, 2 infrastructure, 3 care, 4 evidence, 5 accountability
-export const actionAreaIcons = ['users', 'landmark', 'hand-heart', 'graduation', 'badge-check'] as const
+export const actionAreaIcons = [
+  'users',
+  'landmark',
+  'hand-heart',
+  'graduation',
+  'badge-check',
+] as const
 
 export const aboutV1 = {
   flow: {
     kicker: 'How it works',
     heading: 'From one convener to every community',
     steps: [
-      { title: 'Amagi Health', body: 'Convenes the Summit and leads the Call to Action consultation.' },
+      {
+        title: 'Amagi Health',
+        body: 'Convenes the Summit and leads the Call to Action consultation.',
+      },
       { title: 'Country leads', body: 'Plan each host country’s week with local partners.' },
       { title: 'Activity hosts', body: 'Run free sessions on the ground and online.' },
       { title: 'Communities', body: 'Take part, share what works and shape what comes next.' },

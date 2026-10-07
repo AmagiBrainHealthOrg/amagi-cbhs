@@ -1,4 +1,7 @@
 import React from 'react'
+
+import { UtmCapture } from '@/components/UtmCapture'
+
 import './tokens.css'
 import './base.css'
 import './styles.css'
@@ -12,7 +15,10 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       <head>
         <link rel="stylesheet" href="https://use.typekit.net/ebg5tit.css" />
       </head>
-      <body>{children}</body>
+      <body>
+        <UtmCapture />
+        {children}
+      </body>
     </html>
   )
 }

@@ -4,7 +4,7 @@ import React from 'react'
 
 import { formatDate } from '@/utils/formatDate'
 
-import { Countdown } from './_components/Countdown'
+import { Countdown } from '@/components/graphics/Countdown'
 import { DonateBand, DonateButton, MapHero, SectionHeading, TextLink } from './_components/chrome'
 import {
   ActionWheel,
@@ -13,15 +13,17 @@ import {
   Statement,
   StatsBand,
   WeekStrip,
-} from './_components/graphics'
+} from '@/components/graphics/graphics'
 import {
   actionAreaIcons,
   callToAction,
   callToActionV1,
   home,
+  hostCountries,
   news,
   roadmap,
   summitStart,
+  summitWeek,
 } from './_content'
 
 export const metadata: Metadata = { title: 'Caribbean Brain Health Summit 2026 (v1)' }
@@ -58,7 +60,7 @@ export default function V1HomePage() {
             body={home.map.body}
             tone="dark"
           />
-          <CaribbeanMap online={home.map.online} />
+          <CaribbeanMap countries={[...hostCountries]} online={home.map.online} />
         </div>
       </section>
 
@@ -69,7 +71,7 @@ export default function V1HomePage() {
           heading={home.week.heading}
           body={home.week.body}
         />
-        <WeekStrip />
+        <WeekStrip days={summitWeek} />
       </section>
 
       <section className="v1-band v1-band-pale" aria-labelledby="v1-roadmap-heading">
@@ -92,8 +94,10 @@ export default function V1HomePage() {
           body={home.areas.body}
         />
         <ActionWheel
-          areas={callToAction.areas}
-          iconNames={actionAreaIcons}
+          areas={callToAction.areas.map((area, index) => ({
+            ...area,
+            icon: actionAreaIcons[index],
+          }))}
           centre={callToActionV1.wheelCentre}
         />
         <TextLink href="/call-to-action">{home.areas.link}</TextLink>

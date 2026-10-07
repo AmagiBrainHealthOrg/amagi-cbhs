@@ -4,7 +4,7 @@ import React from 'react'
 import { FaqList } from '@/components/FaqList'
 
 import { DonateBand, DonateButton, PhotoHero, SectionHeading } from '../_components/chrome'
-import { IconTiles, icons, SupporterRings } from '../_components/graphics'
+import { IconTiles, icons, SupporterRings } from '@/components/graphics/graphics'
 import { faqs, support, supportV1 } from '../_content'
 
 export const metadata: Metadata = { title: 'Support | Caribbean Brain Health Summit (v1)' }
@@ -22,7 +22,12 @@ export default function V1SupportPage() {
 
       <section className="v1-section v1-reveal" aria-labelledby="v1-enables-heading">
         <SectionHeading id="v1-enables-heading" heading={support.enables.heading} />
-        <IconTiles items={support.enables.items} iconNames={supportV1.enablesIcons} />
+        <IconTiles
+          items={support.enables.items.map((item, index) => ({
+            ...item,
+            icon: supportV1.enablesIcons[index % supportV1.enablesIcons.length],
+          }))}
+        />
       </section>
 
       <DonateBand />
@@ -39,7 +44,11 @@ export default function V1SupportPage() {
 
       <section className="v1-band v1-band-blue" aria-labelledby="v1-safeguards-heading">
         <div className="v1-band-inner v1-reveal">
-          <SectionHeading id="v1-safeguards-heading" heading={support.safeguards.heading} tone="dark" />
+          <SectionHeading
+            id="v1-safeguards-heading"
+            heading={support.safeguards.heading}
+            tone="dark"
+          />
           <ul className="v1-badges">
             {support.safeguards.items.map((item, index) => {
               const Icon = icons[supportV1.safeguardIcons[index]]
