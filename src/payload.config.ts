@@ -10,6 +10,11 @@ import { env } from './env'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Faqs } from './collections/Faqs'
+import { News } from './collections/News'
+import { Pages } from './collections/Pages'
+import { Partners } from './collections/Partners'
+import { Supporters } from './collections/Supporters'
 import { AnchorDay } from './globals/AnchorDay'
 import { ComingSoon } from './globals/ComingSoon'
 import { CookieConsent } from './globals/CookieConsent'
@@ -30,7 +35,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [Pages, News, Partners, Supporters, Faqs, Media, Users],
   globals: [
     Header,
     Footer,

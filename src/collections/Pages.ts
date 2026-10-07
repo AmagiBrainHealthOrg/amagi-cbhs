@@ -1,0 +1,55 @@
+import type { CollectionConfig } from 'payload'
+
+import { publishedOrAuthenticated } from '@/access/publishedOrAuthenticated'
+import { pageBlocks } from '@/blocks'
+import { slugField } from '@/fields/slug'
+import { pagePath, revalidateAfterChange, revalidateAfterDelete } from '@/hooks/revalidate'
+
+import { drafts, editorialAccess } from './shared'
+
+const targets = (doc: Record<string, unknown>) => [{ path: pagePath(doc.slug) }]
+
+export const Pages: CollectionConfig = {
+  slug: 'pages',
+  access: { read: publishedOrAuthenticated, ...editorialAccess },
+  admin: {
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'slug', '_status', 'updatedAt'],
+    description: 'The page with slug "home" is the home page.',
+    livePreview: {
+      url: ({ data }) => `${pagePath(data?.slug ?? 'home')}?preview=true`,
+    },
+  },
+  versions: drafts,
+  hooks: {
+    afterChange: [revalidateAfterChange(targets)],
+    afterDelete: [revalidateAfterDelete(targets)],
+  },
+  fields: [
+    { name: 'title', type: 'text', required: true },
+    slugField(),
+    {
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'Content',
+          fields: [{ name: 'layout', type: 'blocks', blocks: pageBlocks }],
+        },
+        {
+          label: 'SEO',
+          fields: [
+            {
+              name: 'meta',
+              type: 'group',
+              fields: [
+                { name: 'title', type: 'text' },
+                { name: 'description', type: 'textarea' },
+                { name: 'image', type: 'upload', relationTo: 'media' },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+}

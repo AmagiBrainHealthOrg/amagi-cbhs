@@ -67,8 +67,13 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    users: User;
+    pages: Page;
+    news: News;
+    partners: Partner;
+    supporters: Supporter;
+    faqs: Faq;
     media: Media;
+    users: User;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -76,8 +81,13 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
+    news: NewsSelect<false> | NewsSelect<true>;
+    partners: PartnersSelect<false> | PartnersSelect<true>;
+    supporters: SupportersSelect<false> | SupportersSelect<true>;
+    faqs: FaqsSelect<false> | FaqsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -138,6 +148,643 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * The page with slug "home" is the home page.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  /**
+   * Generated from the title when left empty.
+   */
+  slug: string;
+  layout?:
+    | (
+        | HeroBlock
+        | RichTextBlock
+        | StatementBlock
+        | HostMapBlock
+        | SummitWeekBlock
+        | RoadmapBlock
+        | FlowBlock
+        | CardGridBlock
+        | ActionAreasBlock
+        | SupporterLevelsBlock
+        | LogoGridBlock
+        | FaqListBlock
+        | NewsTeaserBlock
+        | DonateBannerBlock
+        | FormBlock
+        | AnchorDayBlock
+      )[]
+    | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock".
+ */
+export interface HeroBlock {
+  style: 'map' | 'photo' | 'plain';
+  kicker?: string | null;
+  /**
+   * Line breaks are kept.
+   */
+  heading: string;
+  lead?: string | null;
+  /**
+   * Shown as a slow crossfade. Set the focal point on each image to control cropping.
+   */
+  images?: (number | Media)[] | null;
+  showDonateButton?: boolean | null;
+  /**
+   * Optional second button.
+   */
+  secondaryLink?: {
+    label?: string | null;
+    /**
+     * A path such as /about, a full URL, or a mailto: link.
+     */
+    href?: string | null;
+  };
+  /**
+   * Optional. Counts down to the target time.
+   */
+  countdown?: {
+    target?: string | null;
+    label?: string | null;
+  };
+  /**
+   * Figures shown in a band under the hero.
+   */
+  stats?:
+    | {
+        value: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt: string;
+  _objectKey?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichTextBlock".
+ */
+export interface RichTextBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  layout: 'split' | 'prose';
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'richText';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatementBlock".
+ */
+export interface StatementBlock {
+  text: string;
+  source?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'statement';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HostMapBlock".
+ */
+export interface HostMapBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  /**
+   * The extra line for online sessions.
+   */
+  onlineLabel?: string | null;
+  countries?:
+    | {
+        name: string;
+        city?: string | null;
+        /**
+         * Position on the map grid, 0–932, left to right.
+         */
+        x: number;
+        /**
+         * Position on the map grid, 0–660, top to bottom.
+         */
+        y: number;
+        labelSide: 'left' | 'right';
+        anchor?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hostMap';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SummitWeekBlock".
+ */
+export interface SummitWeekBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  days?:
+    | {
+        /**
+         * Short name, e.g. Mon.
+         */
+        day: string;
+        /**
+         * Day of the month, e.g. 16.
+         */
+        date: string;
+        label: string;
+        body?: string | null;
+        anchor?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'summitWeek';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoadmapBlock".
+ */
+export interface RoadmapBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  /**
+   * Number the steps instead of showing their timing.
+   */
+  numbered?: boolean | null;
+  steps?:
+    | {
+        when?: string | null;
+        title: string;
+        status: 'done' | 'now' | 'next';
+        body?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'roadmap';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FlowBlock".
+ */
+export interface FlowBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  steps?:
+    | {
+        title: string;
+        body?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'flow';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CardGridBlock".
+ */
+export interface CardGridBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  style: 'tiles' | 'badges';
+  items?:
+    | {
+        icon:
+          | 'megaphone'
+          | 'shield'
+          | 'stethoscope'
+          | 'graduation'
+          | 'landmark'
+          | 'users'
+          | 'video'
+          | 'hand-heart'
+          | 'file-text'
+          | 'scale'
+          | 'badge-check'
+          | 'lock';
+        /**
+         * Optional for badges.
+         */
+        title?: string | null;
+        body: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'cardGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ActionAreasBlock".
+ */
+export interface ActionAreasBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  /**
+   * Text in the middle of the wheel.
+   */
+  centreLabel?: string | null;
+  areas?:
+    | {
+        icon:
+          | 'megaphone'
+          | 'shield'
+          | 'stethoscope'
+          | 'graduation'
+          | 'landmark'
+          | 'users'
+          | 'video'
+          | 'hand-heart'
+          | 'file-text'
+          | 'scale'
+          | 'badge-check'
+          | 'lock';
+        title: string;
+        body?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Optional link under the wheel.
+   */
+  link?: {
+    label?: string | null;
+    /**
+     * A path such as /about, a full URL, or a mailto: link.
+     */
+    href?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'actionAreas';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SupporterLevelsBlock".
+ */
+export interface SupporterLevelsBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  levels?:
+    | {
+        name: string;
+        body?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'supporterLevels';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LogoGridBlock".
+ */
+export interface LogoGridBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  /**
+   * Only entries with permission confirmed are shown.
+   */
+  source: 'supporters' | 'partners';
+  /**
+   * Shown when nobody can be listed yet.
+   */
+  emptyText?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'logoGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FaqListBlock".
+ */
+export interface FaqListBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  /**
+   * Show only FAQs in this category. Leave empty to show every FAQ.
+   */
+  category?: string | null;
+  showCategories?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'faqList';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NewsTeaserBlock".
+ */
+export interface NewsTeaserBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  limit: number;
+  /**
+   * Label for the link to /news.
+   */
+  linkLabel?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'newsTeaser';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DonateBannerBlock".
+ */
+export interface DonateBannerBlock {
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'donateBanner';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FormBlock".
+ */
+export interface FormBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  form: 'register-interest' | 'cta-consultation' | 'partner' | 'relay' | 'contact';
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'form';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AnchorDayBlock".
+ */
+export interface AnchorDayBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'anchorDay';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news".
+ */
+export interface News {
+  id: number;
+  title: string;
+  /**
+   * Generated from the title when left empty.
+   */
+  slug: string;
+  publishedDate: string;
+  type: 'news' | 'partner-announcement';
+  partner?: (number | null) | Partner;
+  summary: string;
+  image?: (number | null) | Media;
+  body?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners".
+ */
+export interface Partner {
+  id: number;
+  name: string;
+  logo?: (number | null) | Media;
+  description?: string | null;
+  website?: string | null;
+  /**
+   * The name and logo appear on the site only once the partner has given permission.
+   */
+  permissionConfirmed?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "supporters".
+ */
+export interface Supporter {
+  id: number;
+  name: string;
+  logo?: (number | null) | Media;
+  level?: ('founding-regional' | 'regional' | 'access-participation' | 'community') | null;
+  /**
+   * The name and logo appear on the site only once the supporter has given permission.
+   */
+  permissionConfirmed?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs".
+ */
+export interface Faq {
+  id: number;
+  question: string;
+  answer: string;
+  /**
+   * FAQs with the same category are grouped together. An FAQ list block can filter by it.
+   */
+  category: string;
+  /**
+   * Lower numbers come first.
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
@@ -166,26 +813,6 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  _objectKey?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -209,12 +836,32 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'users';
-        value: number | User;
+        relationTo: 'pages';
+        value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'news';
+        value: number | News;
+      } | null)
+    | ({
+        relationTo: 'partners';
+        value: number | Partner;
+      } | null)
+    | ({
+        relationTo: 'supporters';
+        value: number | Supporter;
+      } | null)
+    | ({
+        relationTo: 'faqs';
+        value: number | Faq;
       } | null)
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: number | User;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -260,6 +907,419 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  layout?:
+    | T
+    | {
+        hero?: T | HeroBlockSelect<T>;
+        richText?: T | RichTextBlockSelect<T>;
+        statement?: T | StatementBlockSelect<T>;
+        hostMap?: T | HostMapBlockSelect<T>;
+        summitWeek?: T | SummitWeekBlockSelect<T>;
+        roadmap?: T | RoadmapBlockSelect<T>;
+        flow?: T | FlowBlockSelect<T>;
+        cardGrid?: T | CardGridBlockSelect<T>;
+        actionAreas?: T | ActionAreasBlockSelect<T>;
+        supporterLevels?: T | SupporterLevelsBlockSelect<T>;
+        logoGrid?: T | LogoGridBlockSelect<T>;
+        faqList?: T | FaqListBlockSelect<T>;
+        newsTeaser?: T | NewsTeaserBlockSelect<T>;
+        donateBanner?: T | DonateBannerBlockSelect<T>;
+        form?: T | FormBlockSelect<T>;
+        anchorDay?: T | AnchorDayBlockSelect<T>;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroBlock_select".
+ */
+export interface HeroBlockSelect<T extends boolean = true> {
+  style?: T;
+  kicker?: T;
+  heading?: T;
+  lead?: T;
+  images?: T;
+  showDonateButton?: T;
+  secondaryLink?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  countdown?:
+    | T
+    | {
+        target?: T;
+        label?: T;
+      };
+  stats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichTextBlock_select".
+ */
+export interface RichTextBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  content?: T;
+  layout?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatementBlock_select".
+ */
+export interface StatementBlockSelect<T extends boolean = true> {
+  text?: T;
+  source?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HostMapBlock_select".
+ */
+export interface HostMapBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  onlineLabel?: T;
+  countries?:
+    | T
+    | {
+        name?: T;
+        city?: T;
+        x?: T;
+        y?: T;
+        labelSide?: T;
+        anchor?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SummitWeekBlock_select".
+ */
+export interface SummitWeekBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  days?:
+    | T
+    | {
+        day?: T;
+        date?: T;
+        label?: T;
+        body?: T;
+        anchor?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RoadmapBlock_select".
+ */
+export interface RoadmapBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  numbered?: T;
+  steps?:
+    | T
+    | {
+        when?: T;
+        title?: T;
+        status?: T;
+        body?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FlowBlock_select".
+ */
+export interface FlowBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  steps?:
+    | T
+    | {
+        title?: T;
+        body?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CardGridBlock_select".
+ */
+export interface CardGridBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  style?: T;
+  items?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        body?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ActionAreasBlock_select".
+ */
+export interface ActionAreasBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  centreLabel?: T;
+  areas?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        body?: T;
+        id?: T;
+      };
+  link?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SupporterLevelsBlock_select".
+ */
+export interface SupporterLevelsBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  levels?:
+    | T
+    | {
+        name?: T;
+        body?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LogoGridBlock_select".
+ */
+export interface LogoGridBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  source?: T;
+  emptyText?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FaqListBlock_select".
+ */
+export interface FaqListBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  category?: T;
+  showCategories?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NewsTeaserBlock_select".
+ */
+export interface NewsTeaserBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  limit?: T;
+  linkLabel?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DonateBannerBlock_select".
+ */
+export interface DonateBannerBlockSelect<T extends boolean = true> {
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FormBlock_select".
+ */
+export interface FormBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  form?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AnchorDayBlock_select".
+ */
+export interface AnchorDayBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news_select".
+ */
+export interface NewsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  publishedDate?: T;
+  type?: T;
+  partner?: T;
+  summary?: T;
+  image?: T;
+  body?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "partners_select".
+ */
+export interface PartnersSelect<T extends boolean = true> {
+  name?: T;
+  logo?: T;
+  description?: T;
+  website?: T;
+  permissionConfirmed?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "supporters_select".
+ */
+export interface SupportersSelect<T extends boolean = true> {
+  name?: T;
+  logo?: T;
+  level?: T;
+  permissionConfirmed?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs_select".
+ */
+export interface FaqsSelect<T extends boolean = true> {
+  question?: T;
+  answer?: T;
+  category?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  _objectKey?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
@@ -281,25 +1341,6 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
- */
-export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  _objectKey?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
