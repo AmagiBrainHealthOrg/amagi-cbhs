@@ -107,7 +107,7 @@ export function CaribbeanMap({ online }: { online: string }) {
               y={y + 6}
               textAnchor={labelSide === 'left' ? 'end' : 'start'}
             >
-              {isAnchor ? `${city} · Anchor Day` : name}
+              {isAnchor ? `${name} · Anchor Day` : name}
             </text>
           </g>
         ))}
@@ -117,7 +117,7 @@ export function CaribbeanMap({ online }: { online: string }) {
           <li key={name} className={isAnchor ? 'v1-map-list-anchor' : undefined}>
             <span aria-hidden="true" />
             <strong>{name}</strong>
-            <small>{isAnchor ? `${city}, Anchor Day` : city}</small>
+            <small>{isAnchor ? 'Anchor Day' : city}</small>
           </li>
         ))}
         <li className="v1-map-list-online">
