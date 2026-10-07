@@ -24,7 +24,7 @@ The public website for the **Caribbean Brain Health Summit 2026 (CBHS)**, run by
 - **Payments:** Stripe Checkout (hosted). No card data on our site, ever
 - **Email:** Resend via Payload's email adapter
 - **CRM:** Airtable via its REST API (SPEC §9.1). No Google Sheets
-- **Testing:** Vitest (integration, `tests/int/`) and Playwright (end to end, `tests/e2e/`)
+- **Testing:** Vitest (integration, `tests/int/`). No Playwright for now: browser checks use the system Chrome (`docs/tickets/INSTRUCTIONS.md` §2.3), and never run `playwright install`
 - **Package manager:** pnpm
 
 ## Commands
@@ -35,7 +35,6 @@ pnpm build               # Production build
 pnpm lint                # ESLint
 pnpm typecheck           # tsc --noEmit
 pnpm test:int            # Vitest
-pnpm test:e2e            # Playwright
 pnpm generate:types      # Regenerate src/payload-types.ts
 pnpm generate:importmap  # Regenerate the admin import map
 pnpm payload migrate:create --skip-empty <name>   # Schema change → migration

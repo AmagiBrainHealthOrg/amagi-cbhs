@@ -20,7 +20,7 @@ skills: []
 
 **Out**
 
-- End-to-end tests in CI (T026).
+- End-to-end tests in CI (T026, deferred).
 
 ## Acceptance criteria
 

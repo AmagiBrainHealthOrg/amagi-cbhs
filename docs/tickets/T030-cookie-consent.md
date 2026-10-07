@@ -38,6 +38,6 @@ Analytics cookies need consent before they're set (SPEC §10.5). Google Tag Mana
 - [ ] **AC3**: The choice can be changed.
   - _Verify (browser):_ the footer's "Cookie settings" reopens the banner; Reject after Accept sets `cbhs_consent=rejected` and removes `_ga*` cookies.
 - [ ] **AC4**: The banner is accessible.
-  - _Verify (browser):_ keyboard-only, both buttons can be reached and used; focus is not trapped; an `@axe-core/playwright` scan with the banner open reports no serious or critical violations. Screenshots at 390px and 1280px.
+  - _Verify (browser):_ keyboard-only, both buttons can be reached and used; focus is not trapped; a Lighthouse accessibility audit (system Chrome) with the banner open reports no failing audits. Screenshots at 390px and 1280px.
 - [ ] **AC5**: Gates pass.
   - _Verify (cli):_ `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build` exits 0.

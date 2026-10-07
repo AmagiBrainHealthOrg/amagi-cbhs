@@ -12,6 +12,8 @@ skills: []
 
 # T026: End-to-end suite
 
+**Deferred:** no Playwright for now. Browser checks are done per ticket with the system Chrome (INSTRUCTIONS §2.3).
+
 ## Scope
 
 **In**

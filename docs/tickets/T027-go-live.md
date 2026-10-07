@@ -3,7 +3,7 @@ id: T027
 title: Full go-live
 milestone: M5
 release: 2
-depends_on: [T024, T025, T026]
+depends_on: [T024, T025]
 migrations: false
 requires_human: true
 spec: ['SPEC §11.3']

@@ -16,7 +16,7 @@ skills: []
 
 **In**
 
-- `@axe-core/playwright` scan of every route; fix all serious and critical issues.
+- Lighthouse accessibility audit (axe-based, run with the system Chrome) of every route; fix every failing audit.
 - Keyboard-only walkthrough: navigation, Donate flow up to Stripe, every form.
 - Contrast check of all token pairs used for text.
 - Findings and fixes listed in the report.
@@ -24,8 +24,8 @@ skills: []
 ## Acceptance criteria
 
 - [ ] **AC1**: No serious or critical axe violations.
-  - _Verify (browser):_ `tests/e2e/a11y.e2e.spec.ts` scans every route and passes with zero serious/critical violations.
+  - _Verify (browser):_ `npx lighthouse <url> --only-categories=accessibility` with the system Chrome reports no failing audits on every route; list each route's score in the report.
 - [ ] **AC2**: Keyboard-only flows complete.
-  - _Verify (browser):_ a Playwright script using only keyboard input completes a form submission and reaches Stripe Checkout from the Donate button.
+  - _Verify (browser):_ a `puppeteer-core` script (system Chrome) using only keyboard input completes a form submission and reaches Stripe Checkout from the Donate button.
 - [ ] **AC3**: Gates pass.
   - _Verify (cli):_ `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build` exits 0.
