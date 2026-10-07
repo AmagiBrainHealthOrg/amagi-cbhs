@@ -62,7 +62,7 @@ export const hostCountries = [
   { name: 'The Bahamas', city: 'Nassau', x: 349, y: 73, anchor: false, labelSide: 'right' },
   { name: 'Barbados', city: 'Bridgetown', x: 858, y: 432, anchor: false, labelSide: 'left' },
   { name: 'Trinidad and Tobago', city: 'Port of Spain', x: 803, y: 506, anchor: false, labelSide: 'left' },
-  { name: 'Guyana', city: 'Georgetown', x: 899, y: 621, anchor: false, labelSide: 'left' },
+  { name: 'Cayman Islands', city: 'George Town', x: 233, y: 246, anchor: false, labelSide: 'left' },
 ] as const
 
 // TODO: the Anchor Day date comes from the `anchor-day` global once Amagi confirms it.

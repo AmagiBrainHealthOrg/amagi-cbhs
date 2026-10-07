@@ -44,7 +44,7 @@ export const about = {
     },
     {
       heading: 'How it works',
-      body: 'Each host country runs its own programme of free, local activities during Summit week, alongside online sessions anyone can join. An Anchor Day in Kingston brings the region together in one place.',
+      body: 'Each host country runs its own programme of free, local activities during Summit week, alongside online sessions anyone can join. An Anchor Day in Jamaica brings the region together in one place.',
     },
     {
       heading: "Amagi's role",
@@ -179,7 +179,7 @@ export const faqs = [
       {
         question: 'Where is the Anchor Day?',
         answer:
-          "In Kingston, Jamaica. We'll publish the venue and timings here once they're confirmed.",
+          "In Jamaica. We'll publish the venue and timings here once they're confirmed.",
       },
     ],
   },
@@ -231,7 +231,7 @@ export const news = {
         'The Caribbean Brain Health Summit will run for a week across several Caribbean countries and online.',
       body: [
         'The Caribbean Brain Health Summit will run from 16 to 22 November 2026, with activities in several Caribbean countries and sessions online.',
-        'Each host country will run its own programme of free local activities, and an Anchor Day in Kingston will bring the region together.',
+        'Each host country will run its own programme of free local activities, and an Anchor Day in Jamaica will bring the region together.',
       ],
     },
     {
