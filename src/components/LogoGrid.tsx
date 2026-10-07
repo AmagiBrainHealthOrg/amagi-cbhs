@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 import type { Media } from '@/payload-types'
@@ -8,6 +9,8 @@ export type Logo = {
   name: string
   logo?: number | Media | null
   website?: string | null
+  /** The partner's latest announcement (SPEC §4.4). */
+  announcement?: { href: string; title: string }
 }
 
 const PLACEHOLDER_SLOTS = 6
@@ -29,7 +32,7 @@ export function LogoGrid({ logos, emptyText }: { logos: Logo[]; emptyText?: stri
 
   return (
     <ul className="v1-logos">
-      {logos.map(({ id, name, logo, website }) => {
+      {logos.map(({ id, name, logo, website, announcement }) => {
         const image = logo && typeof logo === 'object' && logo.url ? logo : undefined
         const content = image ? (
           <Image
@@ -42,21 +45,26 @@ export function LogoGrid({ logos, emptyText }: { logos: Logo[]; emptyText?: stri
         ) : (
           <span>{name}</span>
         )
+        const entry = website ? (
+          <a
+            href={website}
+            rel="noopener"
+            data-journey="awareness"
+            data-action="outbound"
+            data-destination-type="external"
+          >
+            {content}
+          </a>
+        ) : (
+          content
+        )
+        if (!announcement) return <li key={id}>{entry}</li>
         return (
-          <li key={id}>
-            {website ? (
-              <a
-                href={website}
-                rel="noopener"
-                data-journey="awareness"
-                data-action="outbound"
-                data-destination-type="external"
-              >
-                {content}
-              </a>
-            ) : (
-              content
-            )}
+          <li key={id} className="v1-logo-entry">
+            <div>{entry}</div>
+            <Link className="v1-logo-news" href={announcement.href}>
+              {announcement.title}
+            </Link>
           </li>
         )
       })}

@@ -15,6 +15,21 @@ export const Roadmap: Block = {
       admin: { description: 'Number the steps instead of showing their timing.' },
     },
     {
+      name: 'statusLabels',
+      type: 'group',
+      admin: { description: 'The status line shown above each step.' },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            { name: 'done', type: 'text' },
+            { name: 'now', type: 'text' },
+            { name: 'next', type: 'text' },
+          ],
+        },
+      ],
+    },
+    {
       name: 'steps',
       type: 'array',
       labels: { singular: 'Step', plural: 'Steps' },

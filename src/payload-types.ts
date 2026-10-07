@@ -222,6 +222,14 @@ export interface HeroBlock {
   countdown?: {
     target?: string | null;
     label?: string | null;
+    /**
+     * Labels under the numbers.
+     */
+    units?: {
+      days?: string | null;
+      hours?: string | null;
+      minutes?: string | null;
+    };
   };
   /**
    * Figures shown in a band under the hero.
@@ -324,6 +332,10 @@ export interface HostMapBlock {
    * The extra line for online sessions.
    */
   onlineLabel?: string | null;
+  /**
+   * Shown beside the country that hosts the Anchor Day.
+   */
+  anchorLabel?: string | null;
   countries?:
     | {
         name: string;
@@ -361,6 +373,10 @@ export interface SummitWeekBlock {
    * Lets links jump to this section, e.g. "week" for /#week.
    */
   anchorId?: string | null;
+  /**
+   * Shown under each date, e.g. Nov.
+   */
+  monthLabel?: string | null;
   days?:
     | {
         /**
@@ -401,6 +417,14 @@ export interface RoadmapBlock {
    * Number the steps instead of showing their timing.
    */
   numbered?: boolean | null;
+  /**
+   * The status line shown above each step.
+   */
+  statusLabels?: {
+    done?: string | null;
+    now?: string | null;
+    next?: string | null;
+  };
   steps?:
     | {
         when?: string | null;
@@ -635,7 +659,11 @@ export interface NewsTeaserBlock {
    * Lets links jump to this section, e.g. "week" for /#week.
    */
   anchorId?: string | null;
-  limit: number;
+  /**
+   * For the News page: lists every item with its type, newest first.
+   */
+  showAll?: boolean | null;
+  limit?: number | null;
   /**
    * Label for the link to /news.
    */
@@ -965,6 +993,13 @@ export interface HeroBlockSelect<T extends boolean = true> {
     | {
         target?: T;
         label?: T;
+        units?:
+          | T
+          | {
+              days?: T;
+              hours?: T;
+              minutes?: T;
+            };
       };
   stats?:
     | T
@@ -1012,6 +1047,7 @@ export interface HostMapBlockSelect<T extends boolean = true> {
   background?: T;
   anchorId?: T;
   onlineLabel?: T;
+  anchorLabel?: T;
   countries?:
     | T
     | {
@@ -1036,6 +1072,7 @@ export interface SummitWeekBlockSelect<T extends boolean = true> {
   intro?: T;
   background?: T;
   anchorId?: T;
+  monthLabel?: T;
   days?:
     | T
     | {
@@ -1060,6 +1097,13 @@ export interface RoadmapBlockSelect<T extends boolean = true> {
   background?: T;
   anchorId?: T;
   numbered?: T;
+  statusLabels?:
+    | T
+    | {
+        done?: T;
+        now?: T;
+        next?: T;
+      };
   steps?:
     | T
     | {
@@ -1202,6 +1246,7 @@ export interface NewsTeaserBlockSelect<T extends boolean = true> {
   intro?: T;
   background?: T;
   anchorId?: T;
+  showAll?: T;
   limit?: T;
   linkLabel?: T;
   id?: T;

@@ -8,7 +8,7 @@ import type { BlockProps } from './types'
 export function SummitWeekBlock({ block, blockId }: BlockProps<'summitWeek'>) {
   return (
     <Section {...block} blockId={blockId} className="v1-reveal">
-      <WeekStrip days={block.days ?? []} />
+      <WeekStrip days={block.days ?? []} month={block.monthLabel} />
     </Section>
   )
 }
