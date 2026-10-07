@@ -15,26 +15,26 @@ Release scope and dates are in SPEC §11.3. Every Release 1 ticket goes before a
 | [T001](./T001-tooling-and-cleanup.md)     | Repo clean-up, scripts, env validation and preflight            | —          |     | ✔     | done        |
 | [T002](./T002-ci-pipeline.md)             | GitHub Actions CI                                               | T001       |     |       | done        |
 | [T003](./T003-migrations-baseline.md)     | Switch to migrations, create the baseline and migrate on deploy | T001       | ✔   | ✔     | done        |
-| [T004](./T004-roles-and-access.md)        | User roles, backfill and access helpers                         | T003       | ✔   |       | review      |
-| [T017](./T017-environments-and-deploy.md) | Test mode, health check and Coming Soon retirement              | T003       |     | ✔     | in-progress |
-| [T029](./T029-airtable-base-design.md)    | Airtable base design for sign-off                               | —          |     | ✔     | todo        |
+| [T004](./T004-roles-and-access.md)        | User roles, backfill and access helpers                         | T003       | ✔   |       | done        |
+| [T017](./T017-environments-and-deploy.md) | Test mode, health check and Coming Soon retirement              | T003       |     | ✔     | todo        |
+| [T029](./T029-airtable-base-design.md)    | Airtable base design for sign-off                               | —          |     | ✔     | in-progress |
 
 ## M1: Content model and design system
 
 | ID                                 | Title                                                                           | Depends on             | Mig | Human | Status |
 | ---------------------------------- | ------------------------------------------------------------------------------- | ---------------------- | --- | ----- | ------ |
 | [T005](./T005-tokens-and-fonts.md) | Design tokens and fonts                                                         | T001                   |     |       | done   |
-| [T006](./T006-globals.md)          | Globals: header, footer, donation settings, anchor day, dropdowns, integrations | T004                   | ✔   |       | review |
-| [T007](./T007-core-collections.md) | Collections: pages (blocks), news, partners, supporters, FAQs                   | T006                   | ✔   |       | review |
+| [T006](./T006-globals.md)          | Globals: header, footer, donation settings, anchor day, dropdowns, integrations | T004                   | ✔   |       | done   |
+| [T007](./T007-core-collections.md) | Collections: pages (blocks), news, partners, supporters, FAQs                   | T006                   | ✔   |       | done   |
 | [T008](./T008-form-submissions.md) | Collection: form submissions                                                    | T007                   | ✔   |       | todo   |
-| [T009](./T009-shell-and-blocks.md) | App shell, components and block renderers                                       | T005, T006, T007, T017 |     |       | review |
+| [T009](./T009-shell-and-blocks.md) | App shell, components and block renderers                                       | T005, T006, T007, T017 |     |       | done   |
 
 ## M2: Release 1 features
 
 | ID                                   | Title                                                              | Depends on             | Mig | Human | Status |
 | ------------------------------------ | ------------------------------------------------------------------ | ---------------------- | --- | ----- | ------ |
 | [T010](./T010-donations.md)          | Donations: amount chooser, Stripe Checkout, thank-you              | T006, T009             |     | ✔     | todo   |
-| [T011](./T011-pages-and-seed.md)     | Release 1 pages, content migration, partner announcements and seed | T007, T009, T017       | ✔   |       | review |
+| [T011](./T011-pages-and-seed.md)     | Release 1 pages, content migration, partner announcements and seed | T007, T009, T017       | ✔   |       | done   |
 | [T012](./T012-form-system.md)        | Shared form system                                                 | T008, T009, T017       | ✔   |       | todo   |
 | [T013](./T013-airtable-and-email.md) | Airtable sync and email adapter                                    | T012, T029             |     | ✔     | todo   |
 | [T014](./T014-release-1-forms.md)    | Register Interest and Call to Action consultation forms            | T011, T013             |     |       | todo   |
