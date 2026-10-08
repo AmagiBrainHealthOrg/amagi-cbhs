@@ -34,6 +34,7 @@ export default async function ThankYouPage({ searchParams }: Props) {
   return (
     <section className="donate-card" aria-labelledby="thank-you-title">
       <DonationCompleteTracker
+        sessionId={donation.sessionId}
         value={donation.amount / 100}
         currency={donation.currency.toUpperCase()}
       />
