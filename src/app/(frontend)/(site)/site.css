@@ -72,3 +72,5 @@
 .legal-body { max-width: 760px; }
 .legal-body h2 { margin-top: 28px; font-size: var(--fs-lg); }
 .legal-body h2:first-child { margin-top: 0; }
+.legal-body h3 { margin-top: 20px; font-size: var(--fs-md); }
+.legal-body p, .legal-body ul { margin-block: 0 12px; }
