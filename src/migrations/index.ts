@@ -8,6 +8,7 @@ import * as migration_20261007_144558_t011_content from './20261007_144558_t011_
 import * as migration_20261007_174846_t008_form_submissions from './20261007_174846_t008_form_submissions'
 import * as migration_20261007_190003_donation_checkout_item from './20261007_190003_donation_checkout_item'
 import * as migration_20261008_163317_partners_order_logo_grid_display from './20261008_163317_partners_order_logo_grid_display'
+import * as migration_20261008_170000_release_1_content from './20261008_170000_release_1_content'
 
 export const migrations = [
   {
@@ -59,5 +60,10 @@ export const migrations = [
     up: migration_20261008_163317_partners_order_logo_grid_display.up,
     down: migration_20261008_163317_partners_order_logo_grid_display.down,
     name: '20261008_163317_partners_order_logo_grid_display',
+  },
+  {
+    up: migration_20261008_170000_release_1_content.up,
+    down: migration_20261008_170000_release_1_content.down,
+    name: '20261008_170000_release_1_content',
   },
 ]
