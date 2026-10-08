@@ -1,7 +1,7 @@
 import { getPayload } from 'payload'
 import React from 'react'
 
-import { type Logo, LogoGrid } from '@/components/LogoGrid'
+import { type Logo, LogoGrid, LogoMarquee } from '@/components/LogoGrid'
 import { Section } from '@/components/Section'
 import config from '@/payload.config'
 
@@ -40,13 +40,18 @@ export async function LogoGridBlock({ block, blockId }: BlockProps<'logoGrid'>) 
     where: {
       and: [{ _status: { equals: 'published' } }, { permissionConfirmed: { equals: true } }],
     },
-    sort: 'name',
+    sort: block.source === 'partners' ? ['order', 'name'] : 'name',
     depth: 1,
     pagination: false,
     overrideAccess: false,
   })
+  const marquee = block.display === 'marquee'
+  if (marquee && docs.length === 0) return null
+
   const announcements =
-    block.source === 'partners' ? await latestAnnouncements(docs.map(({ id }) => id)) : new Map()
+    block.source === 'partners' && !marquee
+      ? await latestAnnouncements(docs.map(({ id }) => id))
+      : new Map()
   const logos: Logo[] = docs.map(({ id, name, logo, ...rest }) => ({
     id,
     name,
@@ -57,7 +62,11 @@ export async function LogoGridBlock({ block, blockId }: BlockProps<'logoGrid'>) 
 
   return (
     <Section {...block} blockId={blockId} className="v1-reveal">
-      <LogoGrid logos={logos} emptyText={block.emptyText} />
+      {marquee ? (
+        <LogoMarquee logos={logos} />
+      ) : (
+        <LogoGrid logos={logos} emptyText={block.emptyText} />
+      )}
     </Section>
   )
 }
