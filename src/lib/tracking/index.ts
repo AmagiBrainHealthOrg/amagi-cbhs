@@ -15,9 +15,9 @@ const send = (...args: TrackArgs) => {
 }
 
 // Outbound link clicks are Plausible's own "Outbound Link: Click" event.
-export function startAnalytics(domain: string) {
+export function startAnalytics({ domain, endpoint }: { domain: string; endpoint?: string }) {
   if (started) return
-  init({ domain, outboundLinks: true })
+  init({ domain, endpoint, outboundLinks: true })
   started = true
   for (const args of pending.splice(0)) track(...args)
 }

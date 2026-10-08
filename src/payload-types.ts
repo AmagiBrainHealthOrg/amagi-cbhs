@@ -1745,6 +1745,10 @@ export interface Integration {
    */
   plausibleDomain?: string | null;
   /**
+   * Where Plausible runs, for example https://plausible.zestdev.uk. Leave empty for plausible.io.
+   */
+  plausibleHost?: string | null;
+  /**
    * For example GTM-ABC1234.
    */
   gtmContainerId?: string | null;
@@ -1992,6 +1996,7 @@ export interface DropdownsSelect<T extends boolean = true> {
  */
 export interface IntegrationsSelect<T extends boolean = true> {
   plausibleDomain?: T;
+  plausibleHost?: T;
   gtmContainerId?: T;
   updatedAt?: T;
   createdAt?: T;

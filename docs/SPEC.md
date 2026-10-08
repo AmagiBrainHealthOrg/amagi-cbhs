@@ -251,7 +251,7 @@ Sessions link out to Luma event pages (`lumaUrl`), tracked as outbound clicks. N
 
 ### 10.1 Plausible
 
-Plausible Analytics through `@plausible-analytics/tracker`, started in the root layout only when `integrations.plausibleDomain` is set (empty turns analytics off). It sets no cookies and stores nothing in the browser, so it runs without consent. Pageviews (including client-side navigation) and outbound link clicks are captured automatically; the events below go through `src/lib/tracking/`. Each custom event needs a matching goal in Plausible, and `donation_complete` a revenue goal in USD.
+Plausible Analytics through `@plausible-analytics/tracker`, started in the root layout only when `integrations.plausibleDomain` is set (empty turns analytics off). Events go to the self-hosted Plausible at `integrations.plausibleHost` (`https://` and the host only, for example `https://plausible.zestdev.uk`); empty sends them to plausible.io. It sets no cookies and stores nothing in the browser, so it runs without consent. Pageviews (including client-side navigation) and outbound link clicks are captured automatically; the events below go through `src/lib/tracking/`. Each custom event needs a matching goal in Plausible, and `donation_complete` a revenue goal in USD.
 
 ### 10.2 Events
 
