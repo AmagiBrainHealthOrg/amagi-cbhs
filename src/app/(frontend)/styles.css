@@ -47,7 +47,8 @@
 
 .site-header { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 16px 28px; min-height: 82px; padding: 12px clamp(20px, 5vw, 72px); border-bottom: 1px solid var(--border-muted); background: rgba(255,255,255,.98); }
 .site-brand { display: inline-flex; align-items: center; gap: 11px; }
-.site-brand img { display: block; width: 88px; height: auto; }
+/* Sized by height, so the near-square CBHS 2026 lockup and wider marks both fit the bar. */
+.site-brand img { display: block; width: auto; height: auto; max-width: 120px; max-height: 58px; }
 .site-brand > span { width: 1px; height: 34px; background: var(--divider); }
 .site-brand strong { color: var(--primary-blue); font-family: var(--app-font-heading); font-size: var(--fs-sm); font-weight: 700; letter-spacing: -.035em; line-height: 1.12; }
 .hero-background { position: absolute; z-index: -2; inset: 0; overflow: hidden; background: var(--navy); }
@@ -57,7 +58,7 @@
 
 @media (max-width: 720px) {
   .site-header { min-height: 72px; padding-block: 10px; }
-  .site-brand img { width: 76px; }
+  .site-brand img { max-width: 100px; max-height: 50px; }
   .site-brand strong { font-size: var(--fs-2xs); }
   .hero-background::after { background: linear-gradient(180deg, rgba(0,91,170,.97) 0%, rgba(0,91,170,.91) 62%, rgba(0,91,170,.78) 100%); }
   .site-header-donate { min-height: 40px; padding-inline: 14px; }

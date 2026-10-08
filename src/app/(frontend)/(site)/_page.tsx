@@ -50,7 +50,8 @@ export const pageMetadata = (page: Page | undefined): Metadata => {
   return {
     title: page.meta?.title || page.title,
     description: page.meta?.description || undefined,
-    openGraph: image?.url ? { images: [{ url: image.url, alt: image.alt }] } : undefined,
+    // Left unset without an image, so the default opengraph-image applies.
+    ...(image?.url && { openGraph: { images: [{ url: image.url, alt: image.alt }] } }),
   }
 }
 

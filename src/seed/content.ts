@@ -2,7 +2,8 @@ import type { DataFromGlobalSlug, RequiredDataFromCollectionSlug } from 'payload
 
 import type { Page } from '@/payload-types'
 
-import { paragraph, paragraphs, richText, sections } from './lexical'
+import { cookiesContent, privacyContent, termsContent } from './legal'
+import { paragraph, paragraphs, richText } from './lexical'
 
 // The site copy as it stood on `main` before T011 (SPEC §6.4). The content migration and
 // `pnpm db:seed` apply it, creating only what is missing.
@@ -103,10 +104,10 @@ const photoHero = (
 const legalPage = (
   title: string,
   intro: string,
-  items: { heading: string; body: string }[],
+  content: Extract<Layout[number], { blockType: 'richText' }>['content'],
 ): Layout => [
   { blockType: 'hero', style: 'plain', heading: title, lead: intro, showDonateButton: false },
-  { blockType: 'richText', layout: 'prose', background: 'white', content: sections(items) },
+  { blockType: 'richText', layout: 'prose', background: 'white', content },
 ]
 
 type SeedPage = RequiredDataFromCollectionSlug<'pages'>
@@ -222,6 +223,13 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
         background: 'white',
         limit: 3,
         linkLabel: 'All news',
+      },
+      {
+        blockType: 'logoGrid',
+        heading: 'Our partners',
+        background: 'white',
+        source: 'partners',
+        display: 'marquee',
       },
     ],
   },
@@ -376,6 +384,7 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
         heading: 'Our supporters',
         background: 'white',
         source: 'supporters',
+        display: 'grid',
         emptyText: "Supporters will appear here once they've given permission to be named.",
       },
       {
@@ -460,26 +469,9 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
     slug: 'privacy',
     meta: meta('Privacy'),
     layout: legalPage(
-      'Privacy',
-      'How Amagi Health Ltd collects and uses personal data on this site. Amagi will supply the final wording.',
-      [
-        {
-          heading: 'Who we are',
-          body: 'Amagi Health Ltd runs the Caribbean Brain Health Summit and this website.',
-        },
-        {
-          heading: 'What we collect',
-          body: 'The details you give us in our forms, and, if you accept analytics cookies, how you use the site.',
-        },
-        {
-          heading: 'Donations',
-          body: 'Payments are handled by Stripe. We never see or store your card details.',
-        },
-        {
-          heading: 'Your rights',
-          body: 'You can ask to see, correct or delete the personal data we hold about you.',
-        },
-      ],
+      'Privacy policy',
+      'How Amagi Health Ltd collects, uses and protects personal data on this site.',
+      privacyContent,
     ),
   },
   {
@@ -488,21 +480,8 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
     meta: meta('Cookies'),
     layout: legalPage(
       'Cookies',
-      'The cookies this site and Google Tag Manager set. Amagi will supply the final wording.',
-      [
-        {
-          heading: 'Strictly necessary',
-          body: 'cbhs_consent remembers your cookie choice for 6 months.',
-        },
-        {
-          heading: 'Analytics (only if you accept)',
-          body: '_ga and _ga_* are set by Google Analytics to count visits. They last up to 2 years.',
-        },
-        {
-          heading: 'Changing your mind',
-          body: 'Use "Cookie settings" in the footer at any time. Rejecting deletes the analytics cookies on our domain.',
-        },
-      ],
+      'The cookies and similar technologies this site uses, and how to control them.',
+      cookiesContent,
     ),
   },
   {
@@ -510,25 +489,25 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
     slug: 'terms',
     meta: meta('Terms'),
     layout: legalPage(
-      'Terms',
-      'The terms for using this website. Amagi will supply the final wording.',
-      [
-        {
-          heading: 'Using this site',
-          body: 'This site is run by Amagi Health Ltd for information about the Caribbean Brain Health Summit.',
-        },
-        {
-          heading: 'Donations',
-          body: "Donations are processed by Stripe on Amagi Health Ltd's behalf.",
-        },
-        {
-          heading: 'Contact',
-          body: 'Questions about these terms can be sent to info@amagibrainhealth.org.',
-        },
-      ],
+      'Terms of use',
+      'The terms for using this website and donating through it.',
+      termsContent,
     ),
   },
 ]
+
+// TODO: confirm RDS's full name with Amagi. Logos are uploaded in the admin (CI has no storage),
+// and permission is ticked here only so local databases show the banner: on production an editor
+// ticks it once each partner has agreed (CLAUDE.md hard rules).
+export const seedPartners: RequiredDataFromCollectionSlug<'partners'>[] = [
+  'Angels of the West Indies',
+  'Caribbean Tech Collective',
+  'RDS',
+  'Resilient Health Communities',
+  "The British Caribbean Doctors' and Dentists Association",
+  "Virgin Islands Alzheimer's Association",
+  'World Dementia Council',
+].map((name) => ({ name, permissionConfirmed: true }))
 
 export const seedNews: RequiredDataFromCollectionSlug<'news'>[] = [
   {

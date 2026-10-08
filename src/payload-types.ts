@@ -613,6 +613,10 @@ export interface LogoGridBlock {
    */
   source: 'supporters' | 'partners';
   /**
+   * The banner scrolls once there are 5 or more logos; with fewer it shows them in a row. With none, the section is hidden.
+   */
+  display: 'grid' | 'marquee';
+  /**
    * Shown when nobody can be listed yet.
    */
   emptyText?: string | null;
@@ -760,15 +764,30 @@ export interface News {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Partner logos appear in logo grids and the scrolling partner banner once published with permission confirmed.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "partners".
  */
 export interface Partner {
   id: number;
+  /**
+   * The organisation's full name. Screen readers read it out for the logo.
+   */
   name: string;
+  /**
+   * A transparent PNG, SVG or WebP works best, around 480 pixels wide. Logos on a solid background should be on white.
+   */
   logo?: (number | null) | Media;
   description?: string | null;
+  /**
+   * Optional. The full address, starting https://
+   */
   website?: string | null;
+  /**
+   * Lower numbers come first. Partners without a number follow, A to Z.
+   */
+  order?: number | null;
   /**
    * The name and logo appear on the site only once the partner has given permission.
    */
@@ -1266,6 +1285,7 @@ export interface LogoGridBlockSelect<T extends boolean = true> {
   background?: T;
   anchorId?: T;
   source?: T;
+  display?: T;
   emptyText?: T;
   id?: T;
   blockName?: T;
@@ -1362,6 +1382,7 @@ export interface PartnersSelect<T extends boolean = true> {
   logo?: T;
   description?: T;
   website?: T;
+  order?: T;
   permissionConfirmed?: T;
   updatedAt?: T;
   createdAt?: T;

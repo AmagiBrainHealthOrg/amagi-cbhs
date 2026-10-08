@@ -198,6 +198,7 @@ export const sampleBlocks: LayoutBlock[] = [
     heading: 'Logo grid · supporters from the CMS',
     background: 'white',
     source: 'supporters',
+    display: 'grid',
     emptyText: 'Shown when no supporter has confirmed permission yet.',
   },
   {
