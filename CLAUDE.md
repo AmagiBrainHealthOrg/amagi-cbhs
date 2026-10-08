@@ -55,6 +55,25 @@ After any collection, global or field change:
 
 After adding or moving an admin component, run `pnpm generate:importmap`.
 
+## Migrations
+
+Vercel runs `pnpm payload migrate` before every build, so a migration reaches production when it merges to `main`. Nothing else writes to production's database from here.
+
+**Content** goes into `src/seed/` for fresh databases (local and CI run `pnpm payload migrate`, then `pnpm db:seed`). Seeds never overwrite existing content. To bring new content to production too, write a data migration that follows `src/migrations/20261008_170000_release_1_content.ts`:
+
+- Write it by hand and register it in `src/migrations/index.ts`. `migrate:create` waits on a prompt when the schema hasn't changed.
+- Do nothing on a fresh database (no `home` page yet), so it never writes through a later config (SPEC §6.4).
+- Fill only what is missing or still placeholder. Never overwrite an editor's change.
+- Pass a new `context` object to every Local API call. The storage plugin sets flags on the context, and a shared object silently stops later uploads.
+- Keep images in `src/seed/media/` and upload them with `filePath`, without the migration's `req`.
+
+Test before merging:
+
+1. Copy the local database into a scratch one: `create database amagi_cbhs_<name>`, then `pg_dump …/amagi_cbhs | psql …/amagi_cbhs_<name>`.
+2. Reset the scratch copy to what production holds, then run `DATABASE_URL=…/amagi_cbhs_<name> pnpm payload migrate`.
+3. Check the pages, and check `storage.objects` in the local `postgres` database for every upload.
+4. On an empty database, run migrate, then `pnpm db:seed` twice. The migration should log that it skipped, and the second seed should create nothing.
+
 ## Next.js 16
 
 This is not the Next.js in your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing framework code.

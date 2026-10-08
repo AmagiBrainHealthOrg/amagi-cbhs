@@ -90,6 +90,15 @@ const actionAreas = {
 
 const donateBanner = { blockType: 'donateBanner' } as const
 
+// Home, directly below the hero.
+export const partnerBanner = {
+  blockType: 'logoGrid',
+  heading: 'Our partners',
+  background: 'white',
+  source: 'partners',
+  display: 'marquee',
+} as const
+
 const photoHero = (
   images: SeedImages,
   hero: { kicker: string; heading: string; lead?: string; showDonateButton?: boolean },
@@ -144,6 +153,7 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
           { value: '5', label: 'action areas for policy' },
         ],
       },
+      partnerBanner,
       {
         blockType: 'statement',
         // Source: WHO news release, 14 March 2024 (GBD 2021, The Lancet Neurology).
@@ -223,13 +233,6 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
         background: 'white',
         limit: 3,
         linkLabel: 'All news',
-      },
-      {
-        blockType: 'logoGrid',
-        heading: 'Our partners',
-        background: 'white',
-        source: 'partners',
-        display: 'marquee',
       },
     ],
   },
@@ -496,18 +499,26 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
   },
 ]
 
-// TODO: confirm RDS's full name with Amagi. Logos are uploaded in the admin (CI has no storage),
-// and permission is ticked here only so local databases show the banner: on production an editor
-// ticks it once each partner has agreed (CLAUDE.md hard rules).
-export const seedPartners: RequiredDataFromCollectionSlug<'partners'>[] = [
-  'Angels of the West Indies',
-  'Caribbean Tech Collective',
-  'RDS',
-  'Resilient Health Communities',
-  "The British Caribbean Doctors' and Dentists Association",
-  "Virgin Islands Alzheimer's Association",
-  'World Dementia Council',
-].map((name) => ({ name, permissionConfirmed: true }))
+// Amagi confirmed permission for all seven (Ishtar Govia, 8 October 2026). Logo files are in
+// src/seed/media/partners; the seed leaves them out because CI has no storage, and the
+// release_1_content migration uploads them on existing databases.
+// TODO: confirm RDS's full name with Amagi.
+export const partnerLogos = [
+  { name: 'Angels of the West Indies', file: 'angels-of-the-west-indies.webp' },
+  { name: 'Caribbean Tech Collective', file: 'caribbean-tech-collective.webp' },
+  { name: 'RDS', file: 'rds.webp' },
+  { name: 'Resilient Health Communities', file: 'resilient-health-communities.webp' },
+  { name: "The British Caribbean Doctors' and Dentists Association", file: 'bcdd.webp' },
+  {
+    name: "Virgin Islands Alzheimer's Association",
+    file: 'virgin-islands-alzheimers-association.webp',
+  },
+  { name: 'World Dementia Council', file: 'world-dementia-council.webp' },
+]
+
+export const seedPartners: RequiredDataFromCollectionSlug<'partners'>[] = partnerLogos.map(
+  ({ name }) => ({ name, permissionConfirmed: true }),
+)
 
 export const seedNews: RequiredDataFromCollectionSlug<'news'>[] = [
   {
