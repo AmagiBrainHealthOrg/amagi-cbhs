@@ -98,8 +98,8 @@ export const privacyContent = richText(
       'Our hosting provider records technical details of each visit, such as your IP address, browser and the pages you request, to keep the site secure and running. Our lawful basis is our legitimate interest in running a secure website.',
     ],
     [
-      bold('Analytics, only if you accept. '),
-      'If you accept analytics cookies, Google Analytics records how the site is used, such as which pages are visited and roughly where visitors are. It does not tell us who you are. Our lawful basis is your consent, which you can withdraw through "Cookie settings" at the bottom of every page.',
+      bold('Analytics. '),
+      'Plausible Analytics counts visits and shows us which pages are useful: the page, the site that sent you, your browser, device type and country, and whether you clicked Donate or completed a donation (the amount, never who gave it). It sets no cookies, stores nothing in your browser and does not identify you. Your IP address is used only to tell visits apart for a day and is never stored. Our lawful basis is our legitimate interest in understanding how the site is used.',
     ],
     [
       bold('Fonts. '),
@@ -127,10 +127,8 @@ export const privacyContent = richText(
     [bold('Airtable'), ' holds our contact records, so we can manage registrations.'],
     [bold('Resend'), ' sends the emails the website sends, such as form confirmations.'],
     [bold('Stripe'), ' processes donations.'],
-    [
-      bold('Google'),
-      ' provides Google Tag Manager and Google Analytics, used only if you accept analytics cookies. Some of our forms may also be hosted on Google Forms.',
-    ],
+    [bold('Plausible Analytics'), ' counts visits to the site, with data stored in the EU.'],
+    [bold('Google'), ' hosts some of our forms on Google Forms.'],
     [bold('Adobe'), ' provides some of the fonts on the site.'],
     [
       bold('Our web developer and analytics agency'),
@@ -150,7 +148,6 @@ export const privacyContent = richText(
   bullets(
     'Form submissions and contact records: for up to 3 years after you last contacted us, unless you ask us to delete them sooner.',
     'Donation records: 6 years after the end of the financial year in which you donated, as UK law requires for financial records.',
-    'Analytics data: up to 14 months.',
     'Server logs: a short period, set by our hosting provider, usually no more than 30 days.',
     'Emails: for as long as we need them to deal with your enquiry, and no more than 3 years.',
   ),
@@ -205,7 +202,7 @@ export const cookiesContent = richText(
 
   heading('What cookies are'),
   paragraph(
-    'Cookies are small files a website stores in your browser. Session storage is similar, but is cleared when you close the tab. Some are needed for the site to work. Others, such as analytics cookies, are only set if you agree.',
+    'Cookies are small files a website stores in your browser. Session storage is similar, but is cleared when you close the tab. This site only uses the ones it needs to work. Our analytics uses neither.',
   ),
 
   heading('Strictly necessary'),
@@ -213,26 +210,13 @@ export const cookiesContent = richText(
   bullets(
     cookie(
       'cbhs_consent',
-      "(cookie, set by us). Remembers whether you accepted or rejected analytics cookies, so we don't ask on every page. Lasts 6 months.",
+      "(cookie, set by us). Remembers your answer to the cookie banner, so we don't ask on every page. Lasts 6 months.",
     ),
   ),
 
-  heading('Analytics (only if you accept)'),
+  heading('Analytics'),
   paragraph(
-    'These are set by Google Analytics, through Google Tag Manager, only after you choose to accept analytics cookies. They help us count visits and see which pages are useful. They do not tell us who you are, and we never use them for advertising.',
-  ),
-  bullets(
-    cookie(
-      '_ga',
-      '(cookie, set by Google). Tells visits from different browsers apart. Lasts 2 years.',
-    ),
-    cookie(
-      '_ga_<container ID>',
-      '(cookie, set by Google). Keeps track of your current visit. Lasts 2 years.',
-    ),
-  ),
-  paragraph(
-    'If you reject analytics cookies after accepting them, we delete these cookies from your browser.',
+    'We use Plausible Analytics to count visits and see which pages are useful. It sets no cookies and stores nothing in your browser, so there is nothing to accept or reject for analytics. It does not identify you, and we never use it for advertising.',
   ),
 
   heading('Session storage'),
@@ -247,6 +231,10 @@ export const cookiesContent = richText(
     cookie(
       'cbhs_page_trail',
       '(set by us). Remembers the page you were on before, so a donation can record which page it started from.',
+    ),
+    cookie(
+      'cbhs_donation_tracked',
+      '(set by us). After a donation, stops it being counted twice if you reload the thank-you page.',
     ),
   ),
 
