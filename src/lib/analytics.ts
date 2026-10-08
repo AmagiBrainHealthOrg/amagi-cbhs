@@ -5,14 +5,20 @@ import { cache } from 'react'
 
 import config from '@/payload.config'
 
-// The integrations global is admin-only, but the Plausible domain isn't secret: it ships in the
-// page either way. Null turns analytics off.
-export const getPlausibleDomain = cache(async () => {
+export type PlausibleSettings = { domain: string; endpoint?: string }
+
+// The integrations global is admin-only, but these settings aren't secret: they ship in the page
+// either way. Null (no domain) turns analytics off; no host means plausible.io.
+export const getPlausibleSettings = cache(async (): Promise<PlausibleSettings | null> => {
   const payload = await getPayload({ config })
-  const { plausibleDomain } = await payload.findGlobal({
+  const { plausibleDomain, plausibleHost } = await payload.findGlobal({
     slug: 'integrations',
-    select: { plausibleDomain: true },
+    select: { plausibleDomain: true, plausibleHost: true },
     overrideAccess: true,
   })
-  return plausibleDomain || null
+  if (!plausibleDomain) return null
+  return {
+    domain: plausibleDomain,
+    endpoint: plausibleHost ? `${plausibleHost}/api/event` : undefined,
+  }
 })

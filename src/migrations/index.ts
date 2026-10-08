@@ -10,6 +10,7 @@ import * as migration_20261007_190003_donation_checkout_item from './20261007_19
 import * as migration_20261008_163317_partners_order_logo_grid_display from './20261008_163317_partners_order_logo_grid_display'
 import * as migration_20261008_170000_release_1_content from './20261008_170000_release_1_content'
 import * as migration_20261008_174216_plausible_domain from './20261008_174216_plausible_domain'
+import * as migration_20261008_175856_plausible_host from './20261008_175856_plausible_host'
 import * as migration_20261008_180000_plausible_legal_copy from './20261008_180000_plausible_legal_copy'
 
 export const migrations = [
@@ -72,6 +73,11 @@ export const migrations = [
     up: migration_20261008_174216_plausible_domain.up,
     down: migration_20261008_174216_plausible_domain.down,
     name: '20261008_174216_plausible_domain',
+  },
+  {
+    up: migration_20261008_175856_plausible_host.up,
+    down: migration_20261008_175856_plausible_host.down,
+    name: '20261008_175856_plausible_host',
   },
   {
     up: migration_20261008_180000_plausible_legal_copy.up,

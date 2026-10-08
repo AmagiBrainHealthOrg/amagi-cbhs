@@ -25,6 +25,19 @@ export const Integrations: GlobalConfig = {
         'Use the bare domain, for example amagisummit.org.',
     },
     {
+      name: 'plausibleHost',
+      type: 'text',
+      label: 'Plausible host',
+      admin: {
+        description:
+          'Where Plausible runs, for example https://plausible.zestdev.uk. Leave empty for plausible.io.',
+      },
+      validate: (value: string | null | undefined) =>
+        !value ||
+        /^https:\/\/[a-z0-9.-]+$/.test(value) ||
+        'Use https:// and the host only, for example https://plausible.zestdev.uk.',
+    },
+    {
       name: 'gtmContainerId',
       type: 'text',
       label: 'Google Tag Manager container ID',
