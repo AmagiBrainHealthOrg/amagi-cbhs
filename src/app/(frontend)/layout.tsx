@@ -1,10 +1,12 @@
 import type { Metadata } from 'next'
 import React from 'react'
 
+import { Analytics } from '@/components/Analytics'
 import { CookieBanner } from '@/components/CookieBanner'
 import { env } from '@/env'
 import { PageTrail } from '@/components/PageTrail'
 import { UtmCapture } from '@/components/UtmCapture'
+import { getPlausibleDomain } from '@/lib/analytics'
 import { consentDefaultsScript } from '@/lib/consent'
 import { getCookieBanner } from '@/lib/cookieBanner'
 
@@ -18,7 +20,10 @@ export const metadata: Metadata = { metadataBase: new URL(env.NEXT_PUBLIC_SITE_U
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
-  const cookieBanner = await getCookieBanner()
+  const [cookieBanner, plausibleDomain] = await Promise.all([
+    getCookieBanner(),
+    getPlausibleDomain(),
+  ])
 
   return (
     <html lang="en" className={`${baloo2.variable} ${montserrat.variable} ${roboto.variable}`}>
@@ -28,6 +33,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
         <link rel="stylesheet" href="https://use.typekit.net/ebg5tit.css" />
       </head>
       <body>
+        {plausibleDomain && <Analytics domain={plausibleDomain} />}
         <UtmCapture />
         <PageTrail />
         {children}

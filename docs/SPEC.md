@@ -7,7 +7,7 @@ The source of truth for **what** we build. Tickets cite sections as `SPEC §x.y`
 - **Client:** Amagi Health Ltd. Contact and single approver: Dr Ishtar Govia.
 - **Event:** Caribbean Brain Health Summit 2026, 16–22 November 2026, across several Caribbean countries and online.
 - **Domain:** amagisummit.org. DNS on Cloudflare.
-- **Analytics partner:** Beyond Growth. They configure Google Tag Manager and dashboards; we expose the data layer and events (§10).
+- **Analytics:** Plausible Analytics, cookieless (§10). Amagi's account; goals are set up in Plausible.
 - **Brand designer:** Heather Kong. Supplies logo, colours, fonts and per-country logo variants.
 - **Editors:** 3–5 non-technical Amagi staff manage all copy in the CMS.
 
@@ -249,26 +249,19 @@ Sessions link out to Luma event pages (`lumaUrl`), tracked as outbound clicks. N
 
 ## 10. Tracking
 
-### 10.1 Data layer
+### 10.1 Plausible
 
-In the root layout, before the Google Tag Manager snippet:
-
-```js
-window.dataLayer = window.dataLayer || []
-window.dataLayer.push({ page_type, audience_segment, journey, territory })
-```
-
-Each route sets these values (default `audience_segment: "general_public"`, `journey: "awareness"`, `territory: "not_specified"`).
+Plausible Analytics through `@plausible-analytics/tracker`, started in the root layout only when `integrations.plausibleDomain` is set (empty turns analytics off). It sets no cookies and stores nothing in the browser, so it runs without consent. Pageviews (including client-side navigation) and outbound link clicks are captured automatically; the events below go through `src/lib/tracking/`. Each custom event needs a matching goal in Plausible, and `donation_complete` a revenue goal in USD.
 
 ### 10.2 Events
 
-| Event               | When                                                                                                                                               | Payload                                |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| `form_start`        | First interaction with a form, once per form per page load                                                                                         | `form`                                 |
-| `form_submit`       | Thank-you page, once: only when the form left a pending marker in `sessionStorage`, which it then clears (refreshes and direct visits don't count) | `form`, `territory`, `audience_type`   |
-| `donate_click`      | Any Donate button click                                                                                                                            | `location`                             |
-| `donation_complete` | Thank-you page after the session is confirmed paid, once per session ID                                                                            | `value`, `currency`                    |
-| `outbound_click`    | Any external link (Luma, Substack, partners)                                                                                                       | `destination_type`, `destination_host` |
+| Event                  | When                                                                                                                                               | Props                                |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| `form_start`           | First interaction with a form, once per form per page load                                                                                         | `form`                               |
+| `form_submit`          | Thank-you page, once: only when the form left a pending marker in `sessionStorage`, which it then clears (refreshes and direct visits don't count) | `form`, `territory`, `audience_type` |
+| `donate_click`         | Any Donate button click (`data-action="donate"`)                                                                                                   | `location` (the page path)           |
+| `donation_complete`    | Thank-you page after the session is confirmed paid, once per session ID                                                                            | Revenue: amount and currency         |
+| `Outbound Link: Click` | Any external link (Luma, Substack, partners). Plausible's own event                                                                                | `url`                                |
 
 ### 10.3 Data attributes
 
@@ -276,15 +269,15 @@ Every CTA button and outbound link carries `data-journey`, `data-action`, `data-
 
 ### 10.4 Rules
 
-No personal data in any event or data-layer value. No advertising pixels. Google Tag Manager loads only if `integrations.gtmContainerId` is set and the visitor has accepted analytics (§10.5).
+No personal data in any event or prop. No advertising pixels. Plausible replaced the planned Google Tag Manager and Google Analytics on 8 October 2026; `integrations.gtmContainerId` and the Consent Mode defaults stay until T015 removes them.
 
 ### 10.5 Cookie consent
 
+Analytics sets no cookies, so the site sets no non-essential cookies and needs no consent for analytics. The banner from T030 still shows until we decide whether to remove it (§13 D10):
+
 - On a first visit, a banner offers **Accept** and **Reject**, equally prominent, with a link to `/cookies`. Copy comes from the `cookie-consent` global.
-- Until the visitor accepts, Google Tag Manager doesn't load and no non-essential cookies are set. `dataLayer` pushes still happen (they set no cookies), and Google Tag Manager processes them if it loads later in the visit.
 - The choice is kept for 6 months in a first-party cookie, `cbhs_consent` (`analytics` or `rejected`), which is strictly necessary.
-- Google Consent Mode defaults go into `dataLayer` first, with every type `denied`. Accepting grants `analytics_storage` only; advertising types are never granted.
-- A "Cookie settings" link in the footer reopens the banner. Withdrawing consent is as easy as giving it: rejecting after accepting deletes the `_ga*` cookies on our domain.
+- A "Cookie settings" link in the footer reopens the banner.
 - The banner is keyboard accessible, isn't a modal, doesn't trap focus and never covers the Donate button.
 
 ## 11. Environments and deployment
@@ -342,3 +335,4 @@ Copywriting and brand design; translation; analytics and dashboard configuration
 | D7  | Airtable base structure and field list (§9.1)                                                                                                   | Amagi          | T029, T013                       |
 | D8  | Whether donor name and email go to Airtable                                                                                                     | Amagi          | T022                             |
 | D9  | Whether merges keep deploying straight to production after launch, or production deploys from a `production` branch that a person fast-forwards | Tandem         | T018                             |
+| D10 | Whether to remove the cookie banner now that analytics is cookieless (§10.5)                                                                    | Tandem         | T015                             |

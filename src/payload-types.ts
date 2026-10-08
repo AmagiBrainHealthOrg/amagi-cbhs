@@ -1741,6 +1741,10 @@ export interface Dropdown {
 export interface Integration {
   id: number;
   /**
+   * The site domain exactly as added in Plausible, for example amagisummit.org. Leave empty to turn analytics off.
+   */
+  plausibleDomain?: string | null;
+  /**
    * For example GTM-ABC1234.
    */
   gtmContainerId?: string | null;
@@ -1987,6 +1991,7 @@ export interface DropdownsSelect<T extends boolean = true> {
  * via the `definition` "integrations_select".
  */
 export interface IntegrationsSelect<T extends boolean = true> {
+  plausibleDomain?: T;
   gtmContainerId?: T;
   updatedAt?: T;
   createdAt?: T;

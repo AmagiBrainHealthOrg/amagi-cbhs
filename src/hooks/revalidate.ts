@@ -52,6 +52,12 @@ export const revalidateGlobalAfterChange: GlobalAfterChangeHook = ({ doc, previo
   return doc
 }
 
+// For globals without drafts that the shell reads (integrations): every save goes live.
+export const revalidateUndraftedGlobalAfterChange: GlobalAfterChangeHook = ({ doc, req }) => {
+  revalidate(req, [{ path: '/', type: 'layout' }])
+  return doc
+}
+
 // For content that blocks can show on any page (logo grids, FAQ lists).
 export const everyPage: TargetsFor = () => [{ path: '/', type: 'layout' }]
 

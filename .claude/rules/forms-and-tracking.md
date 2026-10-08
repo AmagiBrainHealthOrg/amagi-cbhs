@@ -33,12 +33,12 @@ Submission order is fixed (SPEC §8.2): validate server-side → rate limit → 
 
 ## Tracking
 
-- `window.dataLayer` is initialised and page context pushed **before** the Google Tag Manager snippet loads.
-- Page context keys: `page_type`, `audience_segment`, `journey`, `territory`.
-- Events: `form_start` (once per form per page load), `form_submit` (only after confirmed success), `donate_click`, `donation_complete`, `outbound_click`.
-- Data attribute names are fixed: `data-journey`, `data-action`, `data-destination-type`. Never rename them.
-- **No personal data** in any event or data-layer value: no names, emails, phone numbers or free text. `donation_complete` carries amount and currency only.
-- No advertising pixels.
+- Analytics is Plausible (SPEC §10.1). Send events only through `src/lib/tracking/`, which queues them until Plausible starts.
+- Events: `form_start` (once per form per page load), `form_submit` (only after confirmed success), `donate_click`, `donation_complete` (revenue, once per Stripe session). Outbound clicks are Plausible's own.
+- Data attribute names are fixed: `data-journey`, `data-action`, `data-destination-type`. Never rename them. `donate_click` listens for `data-action="donate"`.
+- **No personal data** in any event or prop: no names, emails, phone numbers or free text. `donation_complete` carries amount and currency only.
+- Nothing that sets cookies or browser storage for analytics, and no advertising pixels.
+- Headless Chrome is ignored by Plausible: set `window.__plausible = true` before the page loads to test events.
 
 ## Stripe
 

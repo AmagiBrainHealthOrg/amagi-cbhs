@@ -24,6 +24,7 @@ The public website for the **Caribbean Brain Health Summit 2026 (CBHS)**, run by
 - **Payments:** Stripe Checkout (hosted). No card data on our site, ever
 - **Email:** Resend via Payload's email adapter
 - **CRM:** Airtable via its REST API (SPEC §9.1). No Google Sheets
+- **Analytics:** Plausible via `@plausible-analytics/tracker` (SPEC §10). Cookieless; on only when `integrations.plausibleDomain` is set. No Google Analytics
 - **Testing:** Vitest (integration, `tests/int/`). No Playwright for now: browser checks use the system Chrome (`docs/tickets/INSTRUCTIONS.md` §2.3), and never run `playwright install`
 - **Package manager:** pnpm
 
@@ -99,7 +100,7 @@ Use the Payload skill at `.claude/skills/payload/` (start with `SKILL.md`). Rule
 ## Hard rules
 
 - **No card data on our site.** Payments only on Stripe's hosted Checkout page.
-- **No personal data in tracking.** Names, emails, phone numbers and free text never go into `dataLayer` or any analytics event.
+- **No personal data in tracking.** Names, emails, phone numbers and free text never go into any analytics event or prop.
 - **No advertising pixels.**
 - **No health questions** on any form (no diagnosis, health history or clinical data).
 - **Wording:** never use "sponsor", "exhibitor" or "lead generation" in UI copy, labels or seed content.
