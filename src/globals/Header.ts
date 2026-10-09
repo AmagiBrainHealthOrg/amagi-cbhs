@@ -3,11 +3,12 @@ import type { GlobalConfig } from 'payload'
 import { revalidateGlobalAfterChange } from '@/hooks/revalidate'
 
 import { contentGlobal, linkFields } from './shared'
+import { previewUrl } from '@/utils/preview'
 
 export const Header: GlobalConfig = {
   slug: 'header',
   hooks: { afterChange: [revalidateGlobalAfterChange] },
-  ...contentGlobal('/?preview=true'),
+  ...contentGlobal(previewUrl('/')),
   fields: [
     { name: 'logo', type: 'upload', relationTo: 'media' },
     {

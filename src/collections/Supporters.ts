@@ -4,6 +4,7 @@ import { publishedAndPermittedOrAuthenticated } from '@/access/publishedAndPermi
 import { everyPage, revalidateAfterChange, revalidateAfterDelete } from '@/hooks/revalidate'
 
 import { drafts, editorialAccess } from './shared'
+import { previewUrl } from '@/utils/preview'
 
 export const Supporters: CollectionConfig = {
   slug: 'supporters',
@@ -11,7 +12,7 @@ export const Supporters: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'level', 'permissionConfirmed', '_status'],
-    livePreview: { url: '/support?preview=true' },
+    livePreview: { url: previewUrl('/support') },
   },
   versions: drafts,
   hooks: {

@@ -3,11 +3,12 @@ import type { GlobalConfig } from 'payload'
 import { revalidateGlobalAfterChange } from '@/hooks/revalidate'
 
 import { contentGlobal, linkFields } from './shared'
+import { previewUrl } from '@/utils/preview'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
   hooks: { afterChange: [revalidateGlobalAfterChange] },
-  ...contentGlobal('/?preview=true'),
+  ...contentGlobal(previewUrl('/')),
   fields: [
     {
       name: 'links',

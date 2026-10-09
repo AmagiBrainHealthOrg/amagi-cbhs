@@ -4,6 +4,7 @@ import { publishedOrAuthenticated } from '@/access/publishedOrAuthenticated'
 import { everyPage, revalidateAfterChange, revalidateAfterDelete } from '@/hooks/revalidate'
 
 import { drafts, editorialAccess } from './shared'
+import { previewUrl } from '@/utils/preview'
 
 export const Faqs: CollectionConfig = {
   slug: 'faqs',
@@ -12,7 +13,7 @@ export const Faqs: CollectionConfig = {
   admin: {
     useAsTitle: 'question',
     defaultColumns: ['question', 'category', 'order', '_status'],
-    livePreview: { url: '/faqs?preview=true' },
+    livePreview: { url: previewUrl('/faqs') },
   },
   defaultSort: 'order',
   versions: drafts,

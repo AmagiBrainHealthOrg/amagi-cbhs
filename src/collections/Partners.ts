@@ -4,6 +4,7 @@ import { publishedAndPermittedOrAuthenticated } from '@/access/publishedAndPermi
 import { everyPage, revalidateAfterChange, revalidateAfterDelete } from '@/hooks/revalidate'
 
 import { drafts, editorialAccess } from './shared'
+import { previewUrl } from '@/utils/preview'
 
 export const Partners: CollectionConfig = {
   slug: 'partners',
@@ -13,7 +14,7 @@ export const Partners: CollectionConfig = {
     defaultColumns: ['name', 'order', 'permissionConfirmed', '_status'],
     description:
       'Partner logos appear in logo grids and the scrolling partner banner once published with permission confirmed.',
-    livePreview: { url: '/?preview=true' },
+    livePreview: { url: previewUrl('/') },
   },
   versions: drafts,
   hooks: {

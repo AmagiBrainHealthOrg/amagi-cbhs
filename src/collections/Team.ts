@@ -4,6 +4,7 @@ import { publishedOrAuthenticated } from '@/access/publishedOrAuthenticated'
 import { everyPage, revalidateAfterChange, revalidateAfterDelete } from '@/hooks/revalidate'
 
 import { drafts, editorialAccess } from './shared'
+import { previewUrl } from '@/utils/preview'
 
 // The Summit team: the convenor and the country leads and liaisons. Listed by the team block.
 export const Team: CollectionConfig = {
@@ -14,7 +15,7 @@ export const Team: CollectionConfig = {
     useAsTitle: 'name',
     defaultColumns: ['name', 'country', 'order', '_status'],
     description: 'People shown in team sections, such as on the About page, once published.',
-    livePreview: { url: '/about?preview=true' },
+    livePreview: { url: previewUrl('/about') },
   },
   versions: drafts,
   hooks: {

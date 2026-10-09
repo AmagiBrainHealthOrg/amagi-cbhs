@@ -1,8 +1,9 @@
 import type { GlobalConfig } from 'payload'
 
 import { contentGlobal } from './shared'
+import { previewUrl } from '@/utils/preview'
 
-const base = contentGlobal('/?preview=true')
+const base = contentGlobal(previewUrl('/'))
 
 export const AnchorDay: GlobalConfig = {
   slug: 'anchor-day',
