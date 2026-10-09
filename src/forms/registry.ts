@@ -19,6 +19,8 @@ export type FieldDef = {
   wide?: boolean
   min?: string
   max?: string
+  /** Numbered, coloured badges on each option, as on the Call to Action page. */
+  numbered?: boolean
   /** Shown, and validated, only while another field holds the choice with this ID. */
   showWhen?: { field: FieldName; choiceId: string }
 }
@@ -137,6 +139,7 @@ export const formRegistry: Record<FormKey, FormDefinition> = {
         control: 'radios',
         required: true,
         wide: true,
+        numbered: true,
       },
       followUp,
     ],

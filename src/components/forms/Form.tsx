@@ -69,6 +69,7 @@ export function Form({ formKey, fields, submitLabel, notice, idPrefix }: Props) 
     <form
       ref={formRef}
       className="form"
+      data-form={formKey}
       action={formAction}
       onSubmit={onSubmit}
       onChange={onChange}
