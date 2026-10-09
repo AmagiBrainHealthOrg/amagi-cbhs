@@ -60,7 +60,9 @@ export function parseDonationAmount(
     : undefined
 }
 
+// A same-site path, or undefined for anything else (full URLs, protocol-relative, query strings).
+export const sitePath = (value: unknown): string | undefined =>
+  typeof value === 'string' && /^\/(?![/\\])[^\s?#]{0,199}$/.test(value) ? value : undefined
+
 // A same-site path for the cancel URL and metadata; anything else falls back to /donate.
-export function sourcePagePath(value: unknown): string {
-  return typeof value === 'string' && /^\/(?![/\\])[^\s?#]{0,199}$/.test(value) ? value : '/donate'
-}
+export const sourcePagePath = (value: unknown): string => sitePath(value) ?? '/donate'

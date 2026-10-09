@@ -12,6 +12,7 @@ import { allowSubmission } from '@/lib/rateLimit'
 import { syncSubmission } from '@/lib/syncSubmission'
 import config from '@/payload.config'
 import { isLive } from '@/utils/site'
+import { sitePath } from '@/utils/donation'
 import { UTM_KEYS } from '@/utils/utm'
 
 import {
@@ -107,6 +108,7 @@ export async function submitForm(
         term: utm('utm_term'),
         content: utm('utm_content'),
       },
+      sourcePage: sitePath(form.get('source_page')),
       isTest: !isLive(),
       airtableSyncStatus: 'pending',
     },
