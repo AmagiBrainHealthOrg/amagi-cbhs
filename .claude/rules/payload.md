@@ -31,7 +31,7 @@ Spec: `docs/SPEC.md` §5. Skill: `.claude/skills/payload/SKILL.md`.
 ## Drafts and preview
 
 - The collections and globals listed in SPEC §5 use `versions.drafts` with autosave and live preview, following `src/globals/ComingSoon.ts`.
-- The frontend reads drafts only when `?preview=true` and the request is authenticated.
+- The frontend reads drafts only in Next draft mode (set by `/api/preview`, which needs a signed-in user) and for an authenticated request. Never read `searchParams` or `headers()` on a public page to decide this: it makes the page render per request and disables caching.
 
 ## Hooks
 

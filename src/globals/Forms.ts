@@ -3,10 +3,11 @@ import type { GlobalConfig } from 'payload'
 import { formOptions } from '@/config/forms'
 
 import { contentGlobal } from './shared'
+import { previewUrl } from '@/utils/preview'
 
 export const Forms: GlobalConfig = {
   slug: 'forms',
-  ...contentGlobal('/thank-you/register-interest?preview=true'),
+  ...contentGlobal(previewUrl('/thank-you/register-interest')),
   fields: [
     {
       name: 'thankYou',

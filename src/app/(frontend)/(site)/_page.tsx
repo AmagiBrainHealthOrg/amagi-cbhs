@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { headers } from 'next/headers'
+import { draftMode, headers } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import React, { cache } from 'react'
@@ -15,17 +15,17 @@ export type RouteProps<P> = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-// Drafts only for a logged-in CMS user who asks for them (SPEC §5, Payload rules).
-export const previewUser = async (searchParams: RouteProps<unknown>['searchParams']) => {
-  const { preview } = await searchParams
-  if (preview !== 'true') return null
+// Drafts only for a signed-in CMS user in draft mode (/api/preview). Reading searchParams or
+// headers otherwise would render every page per request and turn off caching.
+export const previewUser = async () => {
+  if (!(await draftMode()).isEnabled) return null
   const payload = await getPayload({ config })
   return (await payload.auth({ headers: await headers() })).user
 }
 
-const findPage = cache(async (slug: string, draft: boolean) => {
+export const findPage = cache(async (slug: string) => {
   const payload = await getPayload({ config })
-  const user = draft ? (await payload.auth({ headers: await headers() })).user : null
+  const user = await previewUser()
   const { docs } = await payload.find({
     collection: 'pages',
     where: { slug: { equals: slug } },
@@ -37,11 +37,6 @@ const findPage = cache(async (slug: string, draft: boolean) => {
   })
   return { page: docs[0], draft: Boolean(user) }
 })
-
-export const resolvePage = async (
-  slug: string,
-  searchParams: RouteProps<unknown>['searchParams'],
-) => findPage(slug, (await searchParams).preview === 'true')
 
 export const pageMetadata = (page: Page | undefined): Metadata => {
   if (!page) return {}

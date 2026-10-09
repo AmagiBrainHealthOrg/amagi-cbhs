@@ -1,7 +1,6 @@
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import { ArrowLeft } from 'lucide-react'
 import type { Metadata } from 'next'
-import { headers } from 'next/headers'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
@@ -13,13 +12,16 @@ import config from '@/payload.config'
 import { formatDate } from '@/utils/formatDate'
 
 import { RefreshRouteOnSave } from '../../../RefreshRouteOnSave'
-import type { RouteProps } from '../../_page'
+import { previewUser, type RouteProps } from '../../_page'
 
 type Props = RouteProps<{ slug: string }>
 
-const findItem = cache(async (slug: string, wantsPreview: boolean) => {
+// Each page renders on its first visit, then serves from cache until a publish revalidates it.
+export const generateStaticParams = () => []
+
+const findItem = cache(async (slug: string) => {
   const payload = await getPayload({ config })
-  const user = wantsPreview ? (await payload.auth({ headers: await headers() })).user : null
+  const user = await previewUser()
   const { docs } = await payload.find({
     collection: 'news',
     where: { slug: { equals: slug } },
@@ -32,10 +34,7 @@ const findItem = cache(async (slug: string, wantsPreview: boolean) => {
   return { item: docs[0], draft: Boolean(user) }
 })
 
-const resolve = async ({ params, searchParams }: Props) => {
-  const [{ slug }, query] = await Promise.all([params, searchParams])
-  return findItem(slug, query.preview === 'true')
-}
+const resolve = async ({ params }: Props) => findItem((await params).slug)
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { item } = await resolve(props)

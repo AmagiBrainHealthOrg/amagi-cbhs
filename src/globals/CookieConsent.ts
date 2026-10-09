@@ -3,8 +3,9 @@ import type { GlobalConfig } from 'payload'
 import { revalidateGlobalAfterChange } from '@/hooks/revalidate'
 
 import { contentGlobal } from './shared'
+import { previewUrl } from '@/utils/preview'
 
-const content = contentGlobal('/?preview=true')
+const content = contentGlobal(previewUrl('/'))
 
 export const CookieConsent: GlobalConfig = {
   slug: 'cookie-consent',

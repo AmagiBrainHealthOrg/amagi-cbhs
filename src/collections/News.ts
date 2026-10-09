@@ -6,6 +6,7 @@ import { slugField } from '@/fields/slug'
 import { everyPage, revalidateAfterChange, revalidateAfterDelete } from '@/hooks/revalidate'
 
 import { drafts, editorialAccess } from './shared'
+import { previewUrl } from '@/utils/preview'
 
 // Home's news teaser, the index and the item itself; a partner announcement also shows on the
 // partner's entry, which any page's logo grid can render (SPEC §4.4).
@@ -24,7 +25,7 @@ export const News: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'type', 'publishedDate', '_status'],
     livePreview: {
-      url: ({ data }) => `/news/${data?.slug ?? ''}?preview=true`,
+      url: ({ data }) => previewUrl(`/news/${data?.slug ?? ''}`),
     },
   },
   defaultSort: '-publishedDate',

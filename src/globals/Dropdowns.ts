@@ -1,6 +1,7 @@
 import type { ArrayField, GlobalConfig } from 'payload'
 
 import { contentGlobal } from './shared'
+import { previewUrl } from '@/utils/preview'
 
 const options = (name: string, singular: string, plural: string): ArrayField => ({
   name,
@@ -26,7 +27,7 @@ const options = (name: string, singular: string, plural: string): ArrayField => 
 
 export const Dropdowns: GlobalConfig = {
   slug: 'dropdowns',
-  ...contentGlobal('/?preview=true'),
+  ...contentGlobal(previewUrl('/')),
   fields: [
     options('territories', 'Territory', 'Territories'),
     options('audienceTypes', 'Audience type', 'Audience types'),

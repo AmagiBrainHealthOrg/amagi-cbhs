@@ -11,6 +11,7 @@ import {
 } from '@/hooks/revalidate'
 
 import { drafts, editorialAccess } from './shared'
+import { previewUrl } from '@/utils/preview'
 
 // Every page's cookie banner links to the cookies page by its title.
 const targets = (doc: Record<string, unknown>) =>
@@ -26,7 +27,7 @@ export const Pages: CollectionConfig = {
     defaultColumns: ['title', 'slug', '_status', 'updatedAt'],
     description: 'The page with slug "home" is the home page.',
     livePreview: {
-      url: ({ data }) => `${pagePath(data?.slug ?? 'home')}?preview=true`,
+      url: ({ data }) => previewUrl(pagePath(data?.slug ?? 'home')),
     },
   },
   versions: drafts,

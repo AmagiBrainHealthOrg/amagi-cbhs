@@ -3,6 +3,7 @@ import type { GlobalConfig, NumberFieldSingleValidation } from 'payload'
 import { revalidateGlobalAfterChange } from '@/hooks/revalidate'
 
 import { contentGlobal } from './shared'
+import { previewUrl } from '@/utils/preview'
 
 const positiveInteger: NumberFieldSingleValidation = (value) =>
   value === null ||
@@ -17,7 +18,7 @@ const amountToken = 'Use {amount} for the amount given.'
 export const DonationSettings: GlobalConfig = {
   slug: 'donation-settings',
   hooks: { afterChange: [revalidateGlobalAfterChange] },
-  ...contentGlobal('/donate?preview=true'),
+  ...contentGlobal(previewUrl('/donate')),
   fields: [
     {
       type: 'tabs',
