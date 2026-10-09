@@ -1,0 +1,328 @@
+{
+  "title": "Home",
+  "slug": "home",
+  "layout": [
+    {
+      "id": "6ac669afdb1be8005335f68a",
+      "style": "map",
+      "kicker": "Caribbean Brain Health Summit · 16–22 November 2026",
+      "heading": "One Caribbean.\nOne brain health future.",
+      "lead": "A week of free sessions across the region and online, and a shared plan for what comes next. Your gift makes it happen.",
+      "showDonateButton": true,
+      "blockName": null,
+      "stats": [
+        {
+          "id": "6ac669afdb1be8005335f686",
+          "value": "7",
+          "label": "days of free activity"
+        },
+        {
+          "id": "6ac669afdb1be8005335f687",
+          "value": "5",
+          "label": "host countries"
+        },
+        {
+          "id": "6ac669afdb1be8005335f688",
+          "value": "1",
+          "label": "Anchor Day in Jamaica"
+        },
+        {
+          "id": "6ac669afdb1be8005335f689",
+          "value": "5",
+          "label": "action areas for policy"
+        }
+      ],
+      "blockType": "hero",
+      "images": [],
+      "secondaryLink": {
+        "label": "Register your interest",
+        "href": "/register"
+      },
+      "extraLink": {
+        "label": "Partner with the Summit",
+        "href": "/partner"
+      },
+      "countdown": {
+        "target": "2026-11-16T05:00:00.000Z",
+        "label": "Summit week starts in",
+        "units": {
+          "days": "days",
+          "hours": "hours",
+          "minutes": "minutes"
+        }
+      }
+    },
+    {
+      "id": "6ac7cd1edf61c300531be980",
+      "kicker": null,
+      "heading": "Our partners",
+      "intro": null,
+      "background": "white",
+      "anchorId": null,
+      "source": "partners",
+      "display": "marquee",
+      "emptyText": null,
+      "blockName": null,
+      "blockType": "logoGrid"
+    },
+    {
+      "id": "6ac669afdb1be8005335f68b",
+      "text": "More than 1 in 3 people worldwide live with a condition that affects the brain or nervous system.",
+      "source": "World Health Organization, 2024",
+      "blockName": null,
+      "blockType": "statement"
+    },
+    {
+      "id": "6ac669afdb1be8005335f691",
+      "kicker": "Where it happens",
+      "heading": "Across the region, and online",
+      "intro": "Each host country runs its own programme of free, local activity. Online sessions let anyone in the region or the diaspora join in.",
+      "background": "blue",
+      "anchorId": null,
+      "onlineLabel": "Plus online sessions, open to everyone",
+      "anchorLabel": "Anchor Day",
+      "blockName": null,
+      "countries": [
+        {
+          "id": "6ac669afdb1be8005335f68c",
+          "name": "Jamaica",
+          "city": "Kingston",
+          "x": 365,
+          "y": 285,
+          "labelSide": "left",
+          "anchor": true
+        },
+        {
+          "id": "6ac669afdb1be8005335f68d",
+          "name": "The Bahamas",
+          "city": "Nassau",
+          "x": 349,
+          "y": 73,
+          "labelSide": "right",
+          "anchor": false
+        },
+        {
+          "id": "6ac669afdb1be8005335f68e",
+          "name": "Barbados",
+          "city": "Bridgetown",
+          "x": 858,
+          "y": 432,
+          "labelSide": "left",
+          "anchor": false
+        },
+        {
+          "id": "6ac669afdb1be8005335f68f",
+          "name": "Trinidad and Tobago",
+          "city": "Port of Spain",
+          "x": 803,
+          "y": 506,
+          "labelSide": "left",
+          "anchor": false
+        },
+        {
+          "id": "6ac669afdb1be8005335f690",
+          "name": "Cayman Islands",
+          "city": "George Town",
+          "x": 233,
+          "y": 246,
+          "labelSide": "left",
+          "anchor": false
+        }
+      ],
+      "blockType": "hostMap"
+    },
+    {
+      "id": "6ac669afdb1be8005335f699",
+      "kicker": "Summit week",
+      "heading": "Seven days, one region",
+      "intro": "Local activity runs all week. The Anchor Day takes place in Jamaica.",
+      "background": "white",
+      "anchorId": "week",
+      "monthLabel": "Nov",
+      "blockName": null,
+      "days": [
+        {
+          "id": "6ac669afdb1be8005335f692",
+          "day": "Mon",
+          "date": "16",
+          "label": "Opening",
+          "body": "Launch events in every host country",
+          "anchor": false
+        },
+        {
+          "id": "6ac669afdb1be8005335f693",
+          "day": "Tue",
+          "date": "17",
+          "label": "Local activity",
+          "body": "Community sessions and screenings",
+          "anchor": false
+        },
+        {
+          "id": "6ac669afdb1be8005335f694",
+          "day": "Wed",
+          "date": "18",
+          "label": "Local activity",
+          "body": "Workshops for practitioners",
+          "anchor": false
+        },
+        {
+          "id": "6ac669afdb1be8005335f695",
+          "day": "Thu",
+          "date": "19",
+          "label": "Anchor Day",
+          "body": "The Anchor Day takes place in Jamaica",
+          "anchor": false
+        },
+        {
+          "id": "6ac669afdb1be8005335f696",
+          "day": "Fri",
+          "date": "20",
+          "label": "Local activity",
+          "body": "Youth and family sessions",
+          "anchor": false
+        },
+        {
+          "id": "6ac669afdb1be8005335f697",
+          "day": "Sat",
+          "date": "21",
+          "label": "Online day",
+          "body": "Sessions for the diaspora",
+          "anchor": false
+        },
+        {
+          "id": "6ac669afdb1be8005335f698",
+          "day": "Sun",
+          "date": "22",
+          "label": "Close",
+          "body": "Reflections and next steps",
+          "anchor": false
+        }
+      ],
+      "blockType": "summitWeek"
+    },
+    {
+      "id": "6ac669afdb1be8005335f69f",
+      "kicker": "The road ahead",
+      "heading": "From consultation to policy",
+      "intro": "The Summit is one step on a longer road. Here’s where we are and what your support carries forward.",
+      "background": "pale",
+      "anchorId": null,
+      "numbered": false,
+      "blockName": null,
+      "steps": [
+        {
+          "id": "6ac669afdb1be8005335f69a",
+          "when": "Sep 2026",
+          "title": "Dates announced",
+          "status": "done",
+          "body": "Summit week confirmed for November."
+        },
+        {
+          "id": "6ac669afdb1be8005335f69b",
+          "when": "Sep–Nov 2026",
+          "title": "Consultation open",
+          "status": "now",
+          "body": "Anyone can comment on the Call to Action."
+        },
+        {
+          "id": "6ac669afdb1be8005335f69c",
+          "when": "16–22 Nov 2026",
+          "title": "Summit week",
+          "status": "next",
+          "body": "Free sessions across the region and online."
+        },
+        {
+          "id": "6ac669afdb1be8005335f69d",
+          "when": "3–5 Feb 2027",
+          "title": "PLADRR, Kingston",
+          "status": "next",
+          "body": "The follow-on event continues the work."
+        },
+        {
+          "id": "6ac669afdb1be8005335f69e",
+          "when": "2027",
+          "title": "Call to Action published",
+          "status": "next",
+          "body": "A shared agenda goes to governments."
+        }
+      ],
+      "blockType": "roadmap",
+      "statusLabels": {
+        "done": "Done",
+        "now": "We are here",
+        "next": "Coming up"
+      }
+    },
+    {
+      "id": "6ac669afdb1be8005335f6a5",
+      "kicker": "Caribbean Call to Action on Brain Health",
+      "heading": "Five areas for action",
+      "intro": "A policy statement shaped by communities, practitioners and policymakers. Summit week feeds straight into it.",
+      "background": "white",
+      "anchorId": null,
+      "centreLabel": "Caribbean brain health",
+      "blockName": null,
+      "areas": [
+        {
+          "id": "6ac669afdb1be8005335f6a0",
+          "icon": "users",
+          "title": "Brain health as workforce and development capacity",
+          "body": "Brain health shapes the Caribbean's future workforce, family care capacity, productivity and economic resilience."
+        },
+        {
+          "id": "6ac669afdb1be8005335f6a1",
+          "icon": "landmark",
+          "title": "Coordinated investment in brain-health infrastructure",
+          "body": "The region needs practical infrastructure for prevention, care, participation, research, learning and collaboration."
+        },
+        {
+          "id": "6ac669afdb1be8005335f6a2",
+          "icon": "hand-heart",
+          "title": "Workforce capacity and support for family carers",
+          "body": "Primary care teams, care workers and families need practical knowledge, clear pathways and stronger support."
+        },
+        {
+          "id": "6ac669afdb1be8005335f6a3",
+          "icon": "graduation",
+          "title": "Caribbean-specific evidence for Caribbean-specific action",
+          "body": "The Caribbean needs evidence that reflects its own populations, cultures, health systems and diaspora realities."
+        },
+        {
+          "id": "6ac669afdb1be8005335f6a4",
+          "icon": "badge-check",
+          "title": "Sustained coordination, review and accountability",
+          "body": "Progress requires continuing relationships, shared learning and visible follow-through beyond Summit week."
+        }
+      ],
+      "blockType": "actionAreas",
+      "link": {
+        "label": "Read the Call to Action",
+        "href": "/call-to-action"
+      }
+    },
+    {
+      "id": "6ac669afdb1be8005335f6a6",
+      "blockName": null,
+      "blockType": "donateBanner"
+    },
+    {
+      "id": "6ac669afdb1be8005335f6a7",
+      "kicker": "News",
+      "heading": "Latest from the Summit",
+      "intro": null,
+      "background": "white",
+      "anchorId": null,
+      "showAll": false,
+      "limit": 3,
+      "linkLabel": "All news",
+      "blockName": null,
+      "blockType": "newsTeaser"
+    }
+  ],
+  "meta": {
+    "title": "Caribbean Brain Health Summit 2026",
+    "description": null,
+    "image": null
+  },
+  "_status": "published"
+}
