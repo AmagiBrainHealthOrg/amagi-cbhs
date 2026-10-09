@@ -85,3 +85,11 @@ Open questions for Amagi Health about the CBHS 2026 website and its Airtable bas
 14. **Changing Minds.** What is the Substack address for "Subscribe to Changing Minds"? The button is left out until we have it.
 
 15. **"Propose an activity" form.** Your copy has a separate "Host an Activity" form. The site has one form for both, "Propose a Brain Health Relay activity" at `/relay`. Is one form enough?
+
+## Team (About page)
+
+16. **Roles.** The folder is called "Country Leads/Liaisons", but it doesn't say who is which. The site shows each person's country, and only Ishtar's role ("Convenor"). What role should each person show, for example "Country lead, Jamaica"?
+
+17. **Michèle Saunders Clavery's photo.** The headshot has a grey-and-white checkerboard printed into its background (a transparency pattern saved into the image). Could she send a photo with a plain background?
+
+18. **Trinidad and Tobago.** Michèle is listed under Trinidad and Dr Naila Edwards under Tobago, as in your folder. Should both say "Trinidad and Tobago"?

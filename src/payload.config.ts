@@ -15,6 +15,7 @@ import { Faqs } from './collections/Faqs'
 import { News } from './collections/News'
 import { Pages } from './collections/Pages'
 import { Partners } from './collections/Partners'
+import { Team } from './collections/Team'
 import { Supporters } from './collections/Supporters'
 import { FormSubmissions } from './collections/FormSubmissions'
 import { AnchorDay } from './globals/AnchorDay'
@@ -37,7 +38,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Pages, News, Partners, Supporters, Faqs, FormSubmissions, Media, Users],
+  collections: [Pages, News, Partners, Supporters, Team, Faqs, FormSubmissions, Media, Users],
   globals: [
     Header,
     Footer,

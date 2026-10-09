@@ -16,6 +16,7 @@ import { RoadmapBlock } from './RoadmapBlock'
 import { StatementBlock } from './StatementBlock'
 import { SummitWeekBlock } from './SummitWeekBlock'
 import { SupporterLevelsBlock } from './SupporterLevelsBlock'
+import { TeamBlock } from './TeamBlock'
 import type { LayoutBlock } from './types'
 
 type RenderProps = {
@@ -49,6 +50,8 @@ function RenderBlock({ block, blockId, actionAreas }: RenderProps) {
       return <SupporterLevelsBlock block={block} blockId={blockId} />
     case 'logoGrid':
       return <LogoGridBlock block={block} blockId={blockId} />
+    case 'team':
+      return <TeamBlock block={block} blockId={blockId} />
     case 'faqList':
       return <FaqListBlock block={block} blockId={blockId} />
     case 'newsTeaser':

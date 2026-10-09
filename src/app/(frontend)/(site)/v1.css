@@ -1006,6 +1006,66 @@
   line-height: 1.4;
 }
 
+/* Team */
+.v1-team {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  gap: 32px 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.v1-team-member {
+  display: grid;
+  grid-template-columns: 112px 1fr;
+  align-items: start;
+  gap: 18px;
+}
+.v1-team-member img {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.v1-team-member h3 {
+  margin: 0;
+  color: var(--primary-blue);
+  font-family: var(--app-font-heading);
+  font-size: var(--fs-base);
+  line-height: var(--lh-heading);
+}
+.v1-team-member p {
+  margin: 8px 0 0;
+}
+.v1-team-member .v1-team-role {
+  margin-top: 2px;
+  color: var(--ink-deep);
+  font-family: var(--app-font-ui);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.v1-team-bio-clamped {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+.v1-team-bio-clamped p + p {
+  display: none;
+}
+.v1-team-more {
+  margin-top: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--primary-blue);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .v1-logo-slots {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
