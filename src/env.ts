@@ -44,12 +44,11 @@ const schema = z.object({
   SYNC_ALERT_TO: optional(z.email()),
 })
 
-// On Vercel, fall back to the production domain Vercel sets, so the site URL needs no manual setting.
-const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+// On Netlify, fall back to the site's primary URL Netlify sets, so the site URL needs no manual setting.
+const netlifyUrl = process.env.NETLIFY ? process.env.URL : undefined
 const parsed = schema.safeParse({
   ...process.env,
-  NEXT_PUBLIC_SITE_URL:
-    process.env.NEXT_PUBLIC_SITE_URL || (vercelUrl ? `https://${vercelUrl}` : undefined),
+  NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || netlifyUrl,
 })
 
 if (!parsed.success) {

@@ -5,15 +5,15 @@ How the site reaches production and how to change it safely. Background: SPEC §
 ## Environments
 
 - **Local:** the Supabase CLI stack. See `CLAUDE.md` and SPEC §11.5 for `pnpm db:pull`.
-- **Production:** the Vercel deployment of `main`, on the one Supabase project. There is no staging and there are no preview deployments (`git.deploymentEnabled` in `vercel.json` builds `main` only).
+- **Production:** the Netlify deployment of `main`, on the one Supabase project. There is no staging and there are no preview deployments (`netlify.toml` builds the `production` context only).
 
-Production is public and runs in **test mode** until launch: `SITE_LIVE` is unset, so submissions are saved with `isTest: true` and email goes only to `EMAIL_SANDBOX_TO` (SPEC §11.1). Stripe is not in test mode: production uses live keys from the start, so donations are real before launch. Code checks this with `isLive()` from `src/utils/site.ts`, never with `NODE_ENV` or `VERCEL_ENV`.
+Production is public and runs in **test mode** until launch: `SITE_LIVE` is unset, so submissions are saved with `isTest: true` and email goes only to `EMAIL_SANDBOX_TO` (SPEC §11.1). Stripe is not in test mode: production uses live keys from the start, so donations are real before launch. Code checks this with `isLive()` from `src/utils/site.ts`, never with `NODE_ENV` or Netlify's `CONTEXT`.
 
 ## Deploy
 
 1. Verify the change locally, including any migration (`pnpm payload migrate` against your local database).
 2. Open a PR against `main`. Gates: `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build`.
-3. Merge. Vercel builds `main` with `pnpm payload migrate && pnpm build` (`buildCommand` in `vercel.json`), so migrations run before the new code is built. The previous deployment keeps serving until the new one is ready.
+3. Merge. Netlify builds `main` with `pnpm payload migrate && pnpm build` (`command` in `netlify.toml`), so migrations run before the new code is built. The previous deployment keeps serving until the new one is ready.
 4. Check production:
 
    ```bash
@@ -25,7 +25,7 @@ A failed build leaves the previous deployment serving. Fix forward with a new PR
 
 ## Roll back
 
-Use Vercel **Instant Rollback** (project → Deployments → the deployment → Instant Rollback). It switches traffic to an earlier build; it does **not** undo migrations.
+Use Netlify's **Publish deploy** (project → Deploys → the deploy → Publish deploy). It switches traffic to an earlier build; it does **not** undo migrations.
 
 Only roll back to a deployment whose code works with the **current** schema. Because migrations are backward compatible (add first, drop or rename in a later release), the deployment immediately before a migration is normally safe. Never roll back past a release that dropped or renamed something the older code still reads.
 
@@ -41,10 +41,10 @@ After rolling back, fix forward on `main`. The next merge deploys normally and t
 
 ## Rotate a secret
 
-Secrets live only in Vercel environment variables (Production) and each developer's local `.env`. Never commit them.
+Secrets live only in Netlify environment variables (Production context) and each developer's local `.env`. Never commit them.
 
 1. Create the new value at the provider (Supabase database password or S3 key, Stripe key, Resend key, Airtable token, or a new random `PAYLOAD_SECRET`).
-2. Update it in Vercel → Project → Settings → Environment Variables → Production.
+2. Update it in Netlify → Project configuration → Environment variables (Production context), then trigger a deploy.
 3. Redeploy: Deployments → latest production deployment → Redeploy. Environment changes apply only to new deployments.
 4. Check `/api/health` and the affected feature, then revoke the old value at the provider.
 
@@ -53,19 +53,13 @@ Changing `PAYLOAD_SECRET` signs every editor out. Changing the database password
 ## Launch (T018)
 
 1. Delete the test records ("Testy Testerson") from the Airtable base. There is one base for testing and production (SPEC §9.1).
-2. Set `SITE_LIVE=true` in Vercel Production. Any other value, or unset, keeps test mode.
+2. Set `SITE_LIVE=true` in Netlify's Production context. Any other value, or unset, keeps test mode.
 3. In the admin, set Integrations → Plausible domain to `amagisummit.org`, and add that site in Plausible.
 4. Redeploy, then check `/` and `/api/health`.
 
 ## Move the projects to Amagi (T018)
 
-Until launch the Vercel project is on Tandem's Hobby team and the Supabase project may sit in Tandem's organisation (SPEC §3.5).
-
-**Vercel**
-
-1. Amagi creates a Pro team and invites a Tandem member.
-2. Tandem transfers the project: Project → Settings → General → Transfer Project, to the Amagi team.
-3. Check that the environment variables, the production branch (`main`), the Git connection and the domains came across, then redeploy and check `/api/health`.
+Until launch the Supabase project may sit in Tandem's organisation (SPEC §3.5).
 
 **Supabase**
 
@@ -75,8 +69,8 @@ Until launch the Vercel project is on Tandem's Hobby team and the Supabase proje
 
 ## One-off settings (not in the repo)
 
-- **Vercel:** production branch is `main`; `SITE_LIVE` is unset for Production until launch.
+- **Netlify:** production branch is `main`; Git-based builds (not folder uploads); site protection (password or Netlify login) is off; deploy previews and branch deploys are off; `SITE_LIVE` is unset for Production until launch.
 - **Supabase:** automatic RLS for new tables is on.
-- **Vercel Production env:** `AIRTABLE_TOKEN` and `AIRTABLE_BASE_ID` (forms read and write the base; without them forms show "unavailable"); `RESEND_API_KEY`, `EMAIL_FROM_ADDRESS` (`cbhs@noreply.amagibrainhealth.org`), `EMAIL_SANDBOX_TO` and `SYNC_ALERT_TO` (without the key, no emails are sent).
-- **Integrations (admin):** Plausible domain is `amagi-cbhs.vercel.app` until launch; Plausible host is `https://plausible.zestdev.uk`. Browsers' tracking protection blocks `plausible.io`, so the host must stay set.
+- **Netlify Production env:** `AIRTABLE_TOKEN` and `AIRTABLE_BASE_ID` (forms read and write the base; without them forms show "unavailable"); `RESEND_API_KEY`, `EMAIL_FROM_ADDRESS` (`cbhs@noreply.amagibrainhealth.org`), `EMAIL_SANDBOX_TO` and `SYNC_ALERT_TO` (without the key, no emails are sent).
+- **Integrations (admin):** Plausible domain is the Netlify site's domain until launch; Plausible host is `https://plausible.zestdev.uk`. Browsers' tracking protection blocks `plausible.io`, so the host must stay set.
 - **Plausible:** goals for `donate_click` and `donation_complete` (revenue goal, USD).

@@ -122,7 +122,7 @@ export const privacyContent = richText(
     'We do not sell your personal data. Supporters of the Summit do not receive attendee contact lists. We share personal data only with organisations that help us run the site and the Summit, and only as much as they need:',
   ),
   bullets(
-    [bold('Vercel'), ' hosts the website.'],
+    [bold('Netlify'), ' hosts the website.'],
     [bold('Supabase'), ' hosts the database and file storage behind the website.'],
     [bold('Airtable'), ' holds our contact records, so we can manage registrations.'],
     [bold('Resend'), ' sends the emails the website sends, such as form confirmations.'],
