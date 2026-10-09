@@ -45,3 +45,15 @@ describe('form tracking (SPEC §10.2)', () => {
     expect(track).toHaveBeenCalledWith('form_submit', { props: { form: 'partner' } })
   })
 })
+
+describe('donation tracking (SPEC §10.2)', () => {
+  it('sends the amount and currency as revenue and as props', async () => {
+    const { trackDonationComplete } = await import('@/lib/tracking')
+    track.mockClear()
+    trackDonationComplete({ value: 25, currency: 'usd' })
+    expect(track).toHaveBeenCalledWith('donation_complete', {
+      revenue: { amount: 25, currency: 'usd' },
+      props: { amount: '25.00', currency: 'USD' },
+    })
+  })
+})

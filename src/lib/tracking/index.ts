@@ -29,8 +29,12 @@ export function trackDonateClick(location: string) {
 
 export type DonationCompleteEvent = { value: number; currency: string }
 
+// Revenue for Plausible versions with revenue goals; the same values as props for those without.
 export function trackDonationComplete({ value, currency }: DonationCompleteEvent) {
-  send('donation_complete', { revenue: { amount: value, currency } })
+  send('donation_complete', {
+    revenue: { amount: value, currency },
+    props: { amount: value.toFixed(2), currency: currency.toUpperCase() },
+  })
 }
 
 // The path is the page that was asked for, not personal data.

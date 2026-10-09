@@ -260,19 +260,19 @@ Sessions link out to Luma event pages (`lumaUrl`), tracked as outbound clicks. N
 
 ### 10.1 Plausible
 
-Plausible Analytics through `@plausible-analytics/tracker`, started in the root layout only when `integrations.plausibleDomain` is set (empty turns analytics off). Events go to the self-hosted Plausible at `integrations.plausibleHost` (`https://` and the host only, for example `https://plausible.zestdev.uk`); empty sends them to plausible.io. It sets no cookies and stores nothing in the browser, so it runs without consent. Pageviews (including client-side navigation) and outbound link clicks are captured automatically; the events below go through `src/lib/tracking/`. Each custom event needs a matching goal in Plausible, and `donation_complete` a revenue goal in USD.
+Plausible Analytics through `@plausible-analytics/tracker`, started in the root layout only when `integrations.plausibleDomain` is set (empty turns analytics off). Events go to the self-hosted Plausible at `integrations.plausibleHost` (`https://` and the host only, for example `https://plausible.zestdev.uk`); empty sends them to plausible.io. It sets no cookies and stores nothing in the browser, so it runs without consent. Pageviews (including client-side navigation) and outbound link clicks are captured automatically; the events below go through `src/lib/tracking/`. Each custom event needs a matching goal in Plausible, and `donation_complete` a revenue goal in USD where the Plausible version offers one (the amount and currency are also sent as props, for versions that don't). Custom properties to add in Plausible: `form`, `territory`, `audience_type`, `location`, `path`, `amount`, `currency`.
 
 ### 10.2 Events
 
-| Event                  | When                                                                                                                                               | Props                                |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
-| `form_start`           | First interaction with a form, once per form per page load                                                                                         | `form`                               |
-| `form_submit`          | Thank-you page, once: only when the form left a pending marker in `sessionStorage`, which it then clears (refreshes and direct visits don't count) | `form`, `territory`, `audience_type` |
-| `donate_click`         | Any Donate button click (`data-action="donate"`)                                                                                                   | `location` (the page path)           |
-| `donation_complete`    | Thank-you page after the session is confirmed paid, once per session ID                                                                            | Revenue: amount and currency         |
-| `Outbound Link: Click` | Any external link (Luma, Substack, partners). Plausible's own event                                                                                | `url`                                |
-| `File Download`        | A link to a file (PDF, documents, archives). Plausible's own event                                                                                 | `url`                                |
-| `404`                  | The not-found page                                                                                                                                 | `path`                               |
+| Event                  | When                                                                                                                                               | Props                                   |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| `form_start`           | First interaction with a form, once per form per page load                                                                                         | `form`                                  |
+| `form_submit`          | Thank-you page, once: only when the form left a pending marker in `sessionStorage`, which it then clears (refreshes and direct visits don't count) | `form`, `territory`, `audience_type`    |
+| `donate_click`         | Any Donate button click (`data-action="donate"`)                                                                                                   | `location` (the page path)              |
+| `donation_complete`    | Thank-you page after the session is confirmed paid, once per session ID                                                                            | Revenue and props: `amount`, `currency` |
+| `Outbound Link: Click` | Any external link (Luma, Substack, partners). Plausible's own event                                                                                | `url`                                   |
+| `File Download`        | A link to a file (PDF, documents, archives). Plausible's own event                                                                                 | `url`                                   |
+| `404`                  | The not-found page                                                                                                                                 | `path`                                  |
 
 ### 10.3 Data attributes
 
