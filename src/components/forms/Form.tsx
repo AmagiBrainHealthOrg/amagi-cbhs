@@ -14,6 +14,7 @@ import {
   validate,
   type Values,
 } from '@/forms/validate'
+import { clearFormPending, markFormPending, trackFormStart } from '@/lib/tracking'
 
 import { Field } from './Field'
 import { VisitFields } from './VisitFields'
@@ -38,6 +39,7 @@ export function Form({ formKey, fields, submitLabel, notice, idPrefix }: Props) 
   const [current, setCurrent] = useState<Values>(state.values ?? {})
   const [attempt, setAttempt] = useState(0)
   const formRef = useRef<HTMLFormElement>(null)
+  const started = useRef(false)
 
   const errors = clientErrors ?? state.errors ?? {}
   const hasErrors = Object.keys(errors).length > 0
@@ -49,6 +51,17 @@ export function Form({ formKey, fields, submitLabel, notice, idPrefix }: Props) 
     else if (state.formError) formRef.current?.querySelector<HTMLElement>('.form-alert')?.focus()
   }, [attempt, state])
 
+  // A rejected submit never reaches the thank-you page, so its marker mustn't count later.
+  useEffect(() => {
+    if (state.errors || state.formError) clearFormPending(formKey)
+  }, [state, formKey])
+
+  const onFocus = () => {
+    if (started.current) return
+    started.current = true
+    trackFormStart(formKey)
+  }
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
@@ -59,6 +72,7 @@ export function Form({ formKey, fields, submitLabel, notice, idPrefix }: Props) 
       return
     }
     setClientErrors(null)
+    markFormPending(formKey)
     startTransition(() => formAction(data))
   }
 
@@ -73,6 +87,7 @@ export function Form({ formKey, fields, submitLabel, notice, idPrefix }: Props) 
       action={formAction}
       onSubmit={onSubmit}
       onChange={onChange}
+      onFocus={onFocus}
       noValidate
     >
       {(hasErrors || state.formError) && (

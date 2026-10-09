@@ -41,7 +41,8 @@ export const Integrations: GlobalConfig = {
       name: 'gtmContainerId',
       type: 'text',
       label: 'Google Tag Manager container ID',
-      admin: { description: 'For example GTM-ABC1234.' },
+      // Unused since Plausible replaced Google Tag Manager; dropped in a later release.
+      admin: { description: 'For example GTM-ABC1234.', hidden: true },
       validate: (value: string | null | undefined) =>
         !value || /^GTM-[A-Z0-9]+$/.test(value) || 'Use the format GTM-ABC1234.',
     },
