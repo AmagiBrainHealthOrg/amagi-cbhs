@@ -1,0 +1,14 @@
+# Production only: a preview build would run migrations against production's database.
+[build]
+  command = "pnpm payload migrate && pnpm build"
+  publish = ".next"
+  ignore = 'test "$CONTEXT" != "production"'
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[context.deploy-preview]
+  command = "echo 'Deploy previews are off (SPEC §11.2)' && exit 1"
+
+[context.branch-deploy]
+  command = "echo 'Branch deploys are off (SPEC §11.2)' && exit 1"

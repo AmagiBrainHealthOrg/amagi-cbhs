@@ -1,6 +1,6 @@
 # Caribbean Brain Health Summit 2026
 
-The public website for the Caribbean Brain Health Summit, at amagisummit.org. Next.js and Payload CMS on Supabase, hosted on Vercel. What we build is in `docs/SPEC.md`; how and in what order is in `docs/PLAN.md`.
+The public website for the Caribbean Brain Health Summit, at amagisummit.org. Next.js and Payload CMS on Supabase, hosted on Netlify. What we build is in `docs/SPEC.md`; how and in what order is in `docs/PLAN.md`.
 
 ## Local setup
 

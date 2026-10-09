@@ -49,7 +49,7 @@ Fast on slow Caribbean mobile connections. Targets on a throttled "Slow 4G" mobi
 
 ### 3.5 Ownership
 
-All production accounts (hosting, database, storage, Stripe, email, fonts, Google) are in Amagi's name. Exceptions until launch: the Vercel project runs on Tandem's Hobby team, and the Supabase project may sit in Tandem's organisation. In T018 the Vercel project moves to an Amagi-owned Pro team and the Supabase project transfers to Amagi's organisation.
+All production accounts (hosting, database, storage, Stripe, email, fonts, Google) are in Amagi's name. Exception until launch: the Supabase project may sit in Tandem's organisation. In T018 it transfers to Amagi's organisation.
 
 ## 4. Information architecture
 
@@ -202,7 +202,7 @@ Forms post to the `submitForm` Server Action (`src/forms/actions.ts`), so they w
 3. Create a `form-submissions` document (`airtableSyncStatus: pending`). This is the permanent record and the retry queue: a submission is never lost if Airtable is down. `data` holds the answers keyed by the §8.1 and §8.3 names; link fields hold Airtable record IDs, select fields hold choice names. `territory` and `audienceType` hold the chosen location and "describes you" labels.
 4. Send a confirmation email.
 5. Redirect to `/thank-you/[form]?territory=<location>&audience_type=<describes you>` (non-personal values for `form_submit`, §10.2).
-6. After the response (Next's `after()`, so Vercel doesn't cut it short), `syncSubmission(payload, id)` (`src/lib/syncSubmission.ts`) creates one record in the form's table (§9.1) and sets `synced` (with the record ID) or `failed` with the error. A failure also emails `SYNC_ALERT_TO`.
+6. After the response (Next's `after()`, so the serverless function doesn't cut it short), `syncSubmission(payload, id)` (`src/lib/syncSubmission.ts`) creates one record in the form's table (§9.1) and sets `synced` (with the record ID) or `failed` with the error. A failure also emails `SYNC_ALERT_TO`.
 7. Admins can retry failed syncs from the admin (a "Retry sync" action calling the same `syncSubmission`).
 
 ### 8.3 Forms
@@ -296,7 +296,7 @@ Analytics sets no cookies, so the site sets no non-essential cookies and needs n
 There is no staging environment and there are no preview deployments. Work is verified locally, and every merge to `main` deploys to production.
 
 - **Local:** the Supabase CLI stack (`pnpm supabase start`): Postgres on port 54322 and S3-compatible Storage. Schema and content come one way from production with `pnpm db:pull` (§11.5).
-- **Production:** the Vercel deployment of `main` on the one Supabase project. Public from the start, serving the site as built so far, and in test mode until launch (T018). Editors enter real content here from the start, so nothing is copied between environments at launch.
+- **Production:** the Netlify deployment of `main` on the one Supabase project. Public from the start, serving the site as built so far, and in test mode until launch (T018). Editors enter real content here from the start, so nothing is copied between environments at launch.
 
 One environment variable controls behaviour, and it is unset locally:
 
@@ -306,12 +306,12 @@ Stripe is outside test mode: production uses Amagi's live Stripe keys from the s
 
 ### 11.2 Hosting
 
-Vercel, building `main` with the Next.js preset. Non-production deployments are switched off (`git.deploymentEnabled` in `vercel.json` allows `main` only). Until launch the project is on Tandem's Hobby team; in T018 it moves to an Amagi-owned Pro team (Hobby is for non-commercial use and runs cron at most once a day). Cloudflare manages DNS only, with no proxying in front of Vercel.
+Netlify, building `main` with its Next.js runtime (detected automatically). Non-production deployments are switched off: `netlify.toml` skips every build whose context isn't `production`, and fails deploy previews and branch deploys outright, because a preview build would run migrations against production's database. Site protection stays off so the site is public. Cloudflare manages DNS only, with no proxying in front of Netlify.
 
-- **Database:** Supabase Postgres through the transaction pooler (port 6543). The direct address is IPv6-only and Vercel can't reach it. The build pre-renders pages and connects to the database, so `DATABASE_URL` is set for every environment.
-- **Storage:** Supabase Storage through its S3 API, with `clientUploads: true` so admin uploads go straight to storage and avoid Vercel's 4.5 MB request limit.
+- **Database:** Supabase Postgres through the transaction pooler (port 6543). The direct address is IPv6-only and Netlify can't reach it. The build pre-renders pages and connects to the database, so `DATABASE_URL` is set for every environment.
+- **Storage:** Supabase Storage through its S3 API, with `clientUploads: true` so admin uploads go straight to storage and avoid Netlify's 6 MB function request limit.
 - **Row-level security:** Supabase exposes the `public` schema through its Data API. Every Payload table has RLS enabled with no policies, and automatic RLS is on for new tables. Payload connects as the table owner, so it isn't affected.
-- **Migrations:** `pnpm payload migrate` runs in every Vercel build, before `next build` (`buildCommand` in `vercel.json`). The previous deployment keeps serving until the new one is ready, so every migration must work with both versions: add first, then drop or rename in a later release. Migrations reach production only by merging to `main`; verify them locally first.
+- **Migrations:** `pnpm payload migrate` runs in every Netlify build, before `next build` (`command` in `netlify.toml`). The previous deployment keeps serving until the new one is ready, so every migration must work with both versions: add first, then drop or rename in a later release. Migrations reach production only by merging to `main`; verify them locally first.
 
 ### 11.3 Release 1 vs Release 2
 
