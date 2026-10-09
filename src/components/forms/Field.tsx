@@ -89,7 +89,6 @@ export function Field({ field, id, error, defaultValue }: Props) {
         {label}
         {optional}
       </label>
-      {notes}
       {control === 'select' ? (
         <select {...common} defaultValue={common.defaultValue ?? ''}>
           <option value="">Select</option>
@@ -111,6 +110,8 @@ export function Field({ field, id, error, defaultValue }: Props) {
           max={field.max}
         />
       )}
+      {/* Below the input, so inputs side by side in the grid stay level. */}
+      {notes}
     </div>
   )
 }
