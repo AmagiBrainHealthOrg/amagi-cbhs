@@ -2,7 +2,6 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const env = vi.hoisted(() => ({
   SITE_LIVE: undefined as string | undefined,
-  EMAIL_SANDBOX_TO: 'sandbox@example.com' as string | undefined,
   SYNC_ALERT_TO: 'alerts@example.com' as string | undefined,
   NEXT_PUBLIC_SITE_URL: 'https://site.test',
 }))
@@ -10,7 +9,7 @@ const env = vi.hoisted(() => ({
 vi.mock('server-only', () => ({}))
 vi.mock('@/env', () => ({ env }))
 
-const { recipientFor, sendConfirmation, sendSyncAlert } = await import('@/lib/email')
+const { sendConfirmation, sendSyncAlert } = await import('@/lib/email')
 
 const payload = () => ({
   findGlobal: vi.fn().mockResolvedValue({
@@ -29,34 +28,19 @@ const payload = () => ({
 describe('email', () => {
   beforeEach(() => {
     env.SITE_LIVE = undefined
-    env.EMAIL_SANDBOX_TO = 'sandbox@example.com'
     env.SYNC_ALERT_TO = 'alerts@example.com'
   })
 
-  it('sends to the sandbox in test mode and to the person once live', () => {
-    expect(recipientFor('person@example.com')).toBe('sandbox@example.com')
-    env.SITE_LIVE = 'true'
-    expect(recipientFor('person@example.com')).toBe('person@example.com')
-  })
-
-  it("sends the form's thank-you copy, escaped, as the confirmation", async () => {
+  it("sends the form's thank-you copy, escaped, to the person in test mode too", async () => {
     const p = payload()
     // @ts-expect-error a partial Payload is enough here
     await sendConfirmation(p, 'relay', 'person@example.com', 'Testy <b>Testerson</b>')
     const email = p.sendEmail.mock.calls[0][0]
-    expect(email.to).toBe('sandbox@example.com')
+    expect(email.to).toBe('person@example.com')
     expect(email.subject).toBe('Thank you for proposing an activity')
     expect(email.text).toContain('Dear Testy <b>Testerson</b>,')
     expect(email.html).toContain('Dear Testy &lt;b&gt;Testerson&lt;/b&gt;,')
     expect(email.html).toContain('We will be in touch.')
-  })
-
-  it('skips the confirmation in test mode when there is no sandbox address', async () => {
-    env.EMAIL_SANDBOX_TO = undefined
-    const p = payload()
-    // @ts-expect-error a partial Payload is enough here
-    await sendConfirmation(p, 'relay', 'person@example.com')
-    expect(p.sendEmail).not.toHaveBeenCalled()
   })
 
   it('alerts SYNC_ALERT_TO with a link to the submission', async () => {

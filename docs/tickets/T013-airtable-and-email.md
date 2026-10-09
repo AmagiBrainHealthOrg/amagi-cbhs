@@ -10,7 +10,7 @@ spec: ['SPEC §8.2', 'SPEC §9.1', 'docs/AIRTABLE.md', 'SPEC §9.2']
 skills: [payload]
 ---
 
-> **Built 9 October 2026.** Confirmation emails, the sync alert and the admin Retry sync button work against Resend and the live base (tested end to end: confirmation delivered to the sandbox address, a forced failure alerted `SYNC_ALERT_TO`, retry synced it). Vercel Production needs `RESEND_API_KEY`, `EMAIL_FROM_ADDRESS`, `EMAIL_SANDBOX_TO` and `SYNC_ALERT_TO`.
+> **Built 9 October 2026.** Confirmation emails, the sync alert and the admin Retry sync button work against Resend and the live base (tested end to end: confirmation delivered, a forced failure alerted `SYNC_ALERT_TO`, retry synced it). Vercel Production needs `RESEND_API_KEY`, `EMAIL_FROM_ADDRESS` and `SYNC_ALERT_TO`. Changed later on 9 October 2026: confirmations go to the person in test mode too, so `EMAIL_SANDBOX_TO` is gone and AC3 no longer applies.
 
 # T013: Airtable sync and email adapter
 
