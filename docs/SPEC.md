@@ -271,6 +271,8 @@ Plausible Analytics through `@plausible-analytics/tracker`, started in the root 
 | `donate_click`         | Any Donate button click (`data-action="donate"`)                                                                                                   | `location` (the page path)           |
 | `donation_complete`    | Thank-you page after the session is confirmed paid, once per session ID                                                                            | Revenue: amount and currency         |
 | `Outbound Link: Click` | Any external link (Luma, Substack, partners). Plausible's own event                                                                                | `url`                                |
+| `File Download`        | A link to a file (PDF, documents, archives). Plausible's own event                                                                                 | `url`                                |
+| `404`                  | The not-found page                                                                                                                                 | `path`                               |
 
 ### 10.3 Data attributes
 

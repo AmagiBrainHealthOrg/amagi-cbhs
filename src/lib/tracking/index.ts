@@ -14,10 +14,11 @@ const send = (...args: TrackArgs) => {
   else pending.push(args)
 }
 
-// Outbound link clicks are Plausible's own "Outbound Link: Click" event.
+// Outbound link clicks and file downloads are Plausible's own "Outbound Link: Click" and
+// "File Download" events.
 export function startAnalytics({ domain, endpoint }: { domain: string; endpoint?: string }) {
   if (started) return
-  init({ domain, endpoint, outboundLinks: true })
+  init({ domain, endpoint, outboundLinks: true, fileDownloads: true })
   started = true
   for (const args of pending.splice(0)) track(...args)
 }
@@ -30,6 +31,11 @@ export type DonationCompleteEvent = { value: number; currency: string }
 
 export function trackDonationComplete({ value, currency }: DonationCompleteEvent) {
   send('donation_complete', { revenue: { amount: value, currency } })
+}
+
+// The path is the page that was asked for, not personal data.
+export function trackNotFound(path: string) {
+  send('404', { props: { path } })
 }
 
 export function trackFormStart(form: string) {
