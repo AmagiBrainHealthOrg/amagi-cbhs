@@ -1,4 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { resendAdapter } from '@payloadcms/email-resend'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
@@ -48,6 +49,15 @@ export default buildConfig({
     CookieConsent,
     ComingSoon,
   ],
+  // Without a key (CI, local without Resend) Payload writes emails to the console instead.
+  ...(env.RESEND_API_KEY &&
+    env.EMAIL_FROM_ADDRESS && {
+      email: resendAdapter({
+        apiKey: env.RESEND_API_KEY,
+        defaultFromAddress: env.EMAIL_FROM_ADDRESS,
+        defaultFromName: 'Caribbean Brain Health Summit',
+      }),
+    }),
   editor: lexicalEditor(),
   secret: env.PAYLOAD_SECRET,
   typescript: {

@@ -1,5 +1,8 @@
 import { z } from 'zod'
 
+const optional = <T extends z.ZodType>(schema: T) =>
+  z.preprocess((value) => (value === '' ? undefined : value), schema.optional())
+
 const schema = z.object({
   DATABASE_URL: z.url(),
   PAYLOAD_SECRET: z.string().min(1),
@@ -30,6 +33,15 @@ const schema = z.object({
       .regex(/^app[A-Za-z0-9]{14}$/, 'Use the base ID from the Airtable URL (app…).')
       .optional(),
   ),
+  // Optional so builds and CI run without email; without a key Payload logs emails instead.
+  RESEND_API_KEY: optional(z.string().startsWith('re_', 'Use a Resend API key (re_…).')),
+  EMAIL_FROM_ADDRESS: optional(
+    z.email('Use a full address, e.g. cbhs@noreply.amagibrainhealth.org.'),
+  ),
+  // Before launch every email goes here instead (SPEC §11.1).
+  EMAIL_SANDBOX_TO: optional(z.email()),
+  // Hears about Airtable sync failures (SPEC §8.2).
+  SYNC_ALERT_TO: optional(z.email()),
 })
 
 // On Vercel, fall back to the production domain Vercel sets, so the site URL needs no manual setting.

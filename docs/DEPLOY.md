@@ -77,5 +77,6 @@ Until launch the Vercel project is on Tandem's Hobby team and the Supabase proje
 
 - **Vercel:** production branch is `main`; `SITE_LIVE` is unset for Production until launch.
 - **Supabase:** automatic RLS for new tables is on.
+- **Vercel Production env:** `AIRTABLE_TOKEN` and `AIRTABLE_BASE_ID` (forms read and write the base; without them forms show "unavailable"); `RESEND_API_KEY`, `EMAIL_FROM_ADDRESS` (`cbhs@noreply.amagibrainhealth.org`), `EMAIL_SANDBOX_TO` and `SYNC_ALERT_TO` (without the key, no emails are sent).
 - **Integrations (admin):** Plausible domain is `amagi-cbhs.vercel.app` until launch; Plausible host is `https://plausible.zestdev.uk`. Browsers' tracking protection blocks `plausible.io`, so the host must stay set.
 - **Plausible:** goals for `donate_click` and `donation_complete` (revenue goal, USD).
