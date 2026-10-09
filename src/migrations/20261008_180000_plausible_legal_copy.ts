@@ -1,6 +1,7 @@
 import type { MigrateDownArgs, MigrateUpArgs } from '@payloadcms/db-postgres'
 
 import { seedPages } from '@/seed/content'
+import { hasContent } from '@/seed/hasContent'
 
 // Analytics moved from Google Analytics to Plausible, so the privacy and cookies drafts from
 // release_1_content change too. A page is replaced only while it still has the Google Analytics
@@ -11,7 +12,11 @@ const GOOGLE_WORDING: Record<string, string> = {
   cookies: '_ga_<container ID>',
 }
 
-export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  if (!(await hasContent(db))) {
+    payload.logger.info('plausible_legal_copy: fresh database, content comes from pnpm db:seed')
+    return
+  }
   const seeded = seedPages({ hero: [] })
   for (const [slug, wording] of Object.entries(GOOGLE_WORDING)) {
     const { docs } = await payload.find({

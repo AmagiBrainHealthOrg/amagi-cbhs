@@ -101,7 +101,13 @@ export const partnerBanner = {
 
 const photoHero = (
   images: SeedImages,
-  hero: { kicker: string; heading: string; lead?: string; showDonateButton?: boolean },
+  hero: {
+    kicker: string
+    heading: string
+    lead?: string
+    showDonateButton?: boolean
+    secondaryLink?: { label: string; href: string }
+  },
 ) => ({
   blockType: 'hero' as const,
   style: 'photo' as const,
@@ -171,6 +177,135 @@ export const formPages = (images: SeedImages): SeedPage[] => [
   }),
 ]
 
+// Buttons that lead to the forms, from the pages Amagi's copy names (SPEC §8.3).
+export const partnerLink = { label: 'Partner with the Summit', href: '/partner' }
+export const registerLink = { label: 'Register interest', href: '/register' }
+export const relayLink = { label: 'Host a Relay hour', href: '/relay' }
+export const summitWeekNav = { label: 'Summit Week', href: '/summit-week' }
+
+export const aboutContact = {
+  blockType: 'cardGrid',
+  heading: 'Contact and press enquiries',
+  intro: "Questions about the Summit, or a media request? We'll reply as soon as we can.",
+  background: 'pale',
+  style: 'tiles',
+  items: [],
+  links: [{ label: 'Get in touch', href: '/contact' }],
+} as const satisfies Layout[number]
+
+// From Amagi's Summit Week copy (4 October 2026), cut down to a line per item: each section
+// is a graphic first. The programme (T021) joins in Release 2; the Anchor Day date stays off
+// the page until it is confirmed.
+export const summitWeekPage = (images: SeedImages): SeedPage => ({
+  title: 'Summit Week',
+  slug: 'summit-week',
+  meta: meta('Summit Week'),
+  layout: [
+    photoHero(images, {
+      kicker: 'Summit Week · 16–22 November 2026',
+      heading: 'One week. Many places. One shared agenda.',
+      lead: 'Locally led activities across the Caribbean and the diaspora, connected online and brought together at an Anchor Day in Jamaica. Free to attend.',
+      secondaryLink: { label: 'Register your interest', href: '/register' },
+    }),
+    {
+      blockType: 'flow',
+      kicker: 'How the week works',
+      heading: 'The Summit goes where people are',
+      background: 'pale',
+      steps: [
+        {
+          title: 'Local hosts',
+          body: 'Organisations in each country run activities shaped by local priorities.',
+        },
+        {
+          title: 'Brain Health Relay',
+          body: 'Community groups, professional bodies and diaspora networks each host an hour.',
+        },
+        { title: 'Online sessions', body: 'Connect people across islands and time zones.' },
+        {
+          title: 'Anchor Day',
+          body: 'Turns what the region said into next steps for 2027 and beyond.',
+        },
+      ],
+    },
+    {
+      blockType: 'cardGrid',
+      kicker: 'Four streams',
+      heading: 'Four ways the week comes together',
+      background: 'white',
+      style: 'tiles',
+      // Titles become the programme's Stream filter values (T021): keep them exact.
+      items: [
+        {
+          icon: 'landmark',
+          title: 'Anchor Day',
+          body: 'Families, carers, clinicians, employers and policymakers in one conversation in Jamaica. Date and venue to be announced.',
+        },
+        {
+          icon: 'users',
+          title: 'Country Weeks',
+          body: 'Activities led by Jamaica, Barbados, Trinidad and Tobago, the Cayman Islands and The Bahamas.',
+        },
+        {
+          icon: 'hand-heart',
+          title: 'Brain Health Relay',
+          body: 'Faith groups, schools, clubs and carers’ groups each host an hour, passed from one community to the next.',
+          link: relayLink,
+        },
+        {
+          icon: 'video',
+          title: 'Online and Diaspora',
+          body: 'Sessions open to anyone, anywhere, and activities hosted by diaspora communities in the UK, the US, Canada and beyond.',
+        },
+      ],
+    },
+    {
+      blockType: 'summitWeek',
+      kicker: 'The shape of the week',
+      heading: 'Seven days, one region',
+      background: 'pale',
+      monthLabel: 'Nov',
+      days: [
+        { day: 'Mon', date: '16', label: 'Opening', body: 'The Summit opens and the Relay begins' },
+        ...(['Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as const).map((day, index) => ({
+          day,
+          date: String(17 + index),
+          label: 'Across the region',
+          body: 'Country Weeks, Relay and online sessions',
+        })),
+        { day: 'Sun', date: '22', label: 'Close', body: 'What was agreed, and what comes next' },
+      ],
+    },
+    {
+      blockType: 'cardGrid',
+      kicker: 'Host something',
+      heading: 'Could your organisation host something?',
+      intro: 'A focused activity with a real next step matters more than size.',
+      background: 'white',
+      style: 'badges',
+      items: [
+        { icon: 'users', body: 'A caregiver conversation' },
+        { icon: 'graduation', body: 'A training session' },
+        { icon: 'megaphone', body: 'A talk at your place of worship or school' },
+        { icon: 'video', body: 'A radio segment' },
+        { icon: 'hand-heart', body: 'A walk' },
+        { icon: 'badge-check', body: 'An hour of the Brain Health Relay' },
+      ],
+      links: [relayLink],
+    },
+    {
+      blockType: 'cardGrid',
+      heading: 'Can’t join live?',
+      intro: 'Selected recordings will be shared after the week. Register for programme updates.',
+      background: 'pale',
+      style: 'tiles',
+      items: [],
+      links: [{ label: 'Register your interest', href: '/register' }],
+    },
+    donateBanner,
+  ],
+})
+
 export const seedPages = (images: SeedImages): SeedPage[] => [
   {
     title: 'Home',
@@ -184,10 +319,8 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
         heading: 'One Caribbean.\nOne brain health future.',
         lead: 'A week of free sessions across the region and online, and a shared plan for what comes next. Your gift makes it happen.',
         showDonateButton: true,
-        secondaryLink: {
-          label: 'Register interest',
-          href: '/register',
-        },
+        secondaryLink: registerLink,
+        extraLink: partnerLink,
         // Summit week starts at midnight in Kingston (UTC-5, no daylight saving).
         countdown: {
           target: '2026-11-16T05:00:00.000Z',
@@ -337,6 +470,7 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
         background: 'white',
         numbered: false,
       },
+      aboutContact,
       donateBanner,
     ],
   },
@@ -350,6 +484,7 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
         heading: 'Your support makes the Summit possible',
         lead: 'The Summit is free for the public. Donations and supporters pay for the sessions, the people who run them and the work that follows.',
         showDonateButton: true,
+        secondaryLink: partnerLink,
       }),
       {
         blockType: 'cardGrid',
@@ -495,12 +630,17 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
     ],
   },
   ...formPages(images),
+  summitWeekPage(images),
   {
     title: 'FAQs',
     slug: 'faqs',
     meta: meta('FAQs'),
     layout: [
-      photoHero(images, { kicker: 'FAQs', heading: 'Frequently asked questions' }),
+      photoHero(images, {
+        kicker: 'FAQs',
+        heading: 'Frequently asked questions',
+        secondaryLink: registerLink,
+      }),
       { blockType: 'faqList', background: 'white', showCategories: true },
       donateBanner,
     ],
@@ -679,6 +819,7 @@ export const seedGlobals = (images: SeedImages): Globals => ({
     brandTitle: 'Caribbean Brain\nHealth Summit',
     navItems: [
       { label: 'About', href: '/about' },
+      summitWeekNav,
       { label: 'Support Caribbean Brain Health', href: '/support' },
       { label: 'Call to Action', href: '/call-to-action' },
       { label: 'News', href: '/news' },
@@ -691,8 +832,7 @@ export const seedGlobals = (images: SeedImages): Globals => ({
       { label: 'Privacy', href: '/privacy' },
       { label: 'Cookies', href: '/cookies' },
       { label: 'Terms', href: '/terms' },
-      // Placeholder address until Amagi confirms it; Release 2 replaces it with /contact.
-      { label: 'Contact', href: 'mailto:info@amagibrainhealth.org' },
+      { label: 'Contact', href: '/contact' },
     ],
     tagline: 'One Caribbean. One Brain Health Future.',
     legalText:

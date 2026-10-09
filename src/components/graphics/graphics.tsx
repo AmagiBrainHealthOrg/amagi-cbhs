@@ -16,7 +16,8 @@ import {
 } from 'lucide-react'
 import React from 'react'
 
-import { Card } from '@/components/Card'
+import { Button } from '@/components/Button'
+import { Card, type CardLink } from '@/components/Card'
 import type { IconKey } from '@/config/icons'
 
 import { caribbeanMap } from './caribbeanMap'
@@ -219,7 +220,12 @@ export function Roadmap({
 
 const WHEEL = { size: 440, radius: 158, node: 48 }
 
-type Item = { icon: IconName; title?: string | null; body?: string | null }
+type Item = {
+  icon: IconName
+  title?: string | null
+  body?: string | null
+  link?: CardLink
+}
 
 export function ActionWheel({
   areas,
@@ -371,13 +377,24 @@ export function IconTiles({ items }: { items: Item[] }) {
 export function Badges({ items }: { items: Item[] }) {
   return (
     <ul className="v1-badges">
-      {items.map(({ icon, title, body }, index) => {
+      {items.map(({ icon, title, body, link }, index) => {
         const Icon = icons[icon]
         return (
           <li key={index}>
             <Icon aria-hidden="true" />
             {title && <h3>{title}</h3>}
             {body && <p>{body}</p>}
+            {link?.label && link.href && (
+              <Button
+                href={link.href}
+                variant="solid"
+                journey="awareness"
+                action="card_link"
+                className="v1-card-button"
+              >
+                {link.label}
+              </Button>
+            )}
           </li>
         )
       })}

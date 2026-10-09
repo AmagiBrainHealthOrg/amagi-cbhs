@@ -3,6 +3,7 @@ import type { Payload, PayloadRequest } from 'payload'
 
 import type { Page } from '@/payload-types'
 import { formPages } from '@/seed/content'
+import { hasContent } from '@/seed/hasContent'
 import { findImages } from '@/seed/index'
 
 // The form pages (SPEC §8.3) for databases that already have content. A fresh database has no
@@ -85,9 +86,9 @@ async function consultationIntro(args: Args) {
   args.payload.logger.info('forms_content: consultation form intro replaced')
 }
 
-export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   const args = { payload, req }
-  const home = await findPage(args, 'home')
+  const home = (await hasContent(db)) ? await findPage(args, 'home') : undefined
   if (!home) {
     payload.logger.info('forms_content: fresh database, content comes from pnpm db:seed')
     return

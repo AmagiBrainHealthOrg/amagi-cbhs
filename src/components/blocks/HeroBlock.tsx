@@ -17,27 +17,32 @@ export function HeroBlock({ block }: BlockProps<'hero'>) {
     images,
     showDonateButton,
     secondaryLink,
+    extraLink,
     countdown,
     stats,
   } = block
-  const secondary = secondaryLink?.label && secondaryLink.href ? secondaryLink : undefined
+  const links = [
+    { link: secondaryLink, action: 'hero_secondary' },
+    { link: extraLink, action: 'hero_extra' },
+  ].filter(({ link }) => link?.label && link.href)
 
   const children = (
     <>
-      {(showDonateButton || secondary) && (
+      {(showDonateButton || links.length > 0) && (
         <div className="v1-hero-actions">
           {showDonateButton && <DonateButton className="v1-donate-button" />}
-          {secondary && (
+          {links.map(({ link, action }) => (
             <Button
-              href={secondary.href!}
+              key={action}
+              href={link!.href!}
               variant="secondary"
               tone="dark"
               journey="awareness"
-              action="hero_secondary"
+              action={action}
             >
-              {secondary.label}
+              {link!.label}
             </Button>
-          )}
+          ))}
         </div>
       )}
       {countdown?.target && countdown.label && (

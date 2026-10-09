@@ -219,6 +219,16 @@ export interface HeroBlock {
     href?: string | null;
   };
   /**
+   * Optional third button, after the second.
+   */
+  extraLink?: {
+    label?: string | null;
+    /**
+     * A path such as /about, a full URL, or a mailto: link.
+     */
+    href?: string | null;
+  };
+  /**
    * Optional. Counts down to the target time.
    */
   countdown?: {
@@ -504,6 +514,29 @@ export interface CardGridBlock {
          */
         title?: string | null;
         body: string;
+        /**
+         * Optional link at the foot of the card.
+         */
+        link?: {
+          label?: string | null;
+          /**
+           * A path such as /about, a full URL, or a mailto: link.
+           */
+          href?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Optional buttons under the cards.
+   */
+  links?:
+    | {
+        label: string;
+        /**
+         * A path such as /about, a full URL, or a mailto: link.
+         */
+        href: string;
         id?: string | null;
       }[]
     | null;
@@ -1056,6 +1089,12 @@ export interface HeroBlockSelect<T extends boolean = true> {
         label?: T;
         href?: T;
       };
+  extraLink?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
   countdown?:
     | T
     | {
@@ -1221,6 +1260,19 @@ export interface CardGridBlockSelect<T extends boolean = true> {
         icon?: T;
         title?: T;
         body?: T;
+        link?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+        id?: T;
+      };
+  links?:
+    | T
+    | {
+        label?: T;
+        href?: T;
         id?: T;
       };
   id?: T;

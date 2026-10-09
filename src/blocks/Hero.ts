@@ -49,6 +49,12 @@ export const Hero: Block = {
       fields: linkFields.map((field) => ({ ...field, required: false })),
     },
     {
+      name: 'extraLink',
+      type: 'group',
+      admin: { description: 'Optional third button, after the second.' },
+      fields: linkFields.map((field) => ({ ...field, required: false })),
+    },
+    {
       name: 'countdown',
       type: 'group',
       admin: { description: 'Optional. Counts down to the target time.' },
