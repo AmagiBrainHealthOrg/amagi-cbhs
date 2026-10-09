@@ -385,7 +385,13 @@ export function Badges({ items }: { items: Item[] }) {
             {title && <h3>{title}</h3>}
             {body && <p>{body}</p>}
             {link?.label && link.href && (
-              <Button href={link.href} variant="tertiary" journey="awareness" action="card_link">
+              <Button
+                href={link.href}
+                variant="solid"
+                journey="awareness"
+                action="card_link"
+                className="v1-card-button"
+              >
                 {link.label}
               </Button>
             )}

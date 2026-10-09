@@ -2,7 +2,8 @@ import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
-export type ButtonVariant = 'primary' | 'secondary' | 'tertiary'
+// `solid` is for the one action a section exists for; orange `primary` stays reserved for Donate.
+export type ButtonVariant = 'primary' | 'solid' | 'secondary' | 'tertiary'
 
 export type DestinationType = 'internal' | 'external' | 'email'
 
@@ -26,6 +27,7 @@ export const destinationTypeFor = (href: string): DestinationType => {
 
 const variantClass: Record<ButtonVariant, Record<'light' | 'dark', string>> = {
   primary: { light: 'button button-orange', dark: 'button button-orange' },
+  solid: { light: 'button button-blue', dark: 'button button-white' },
   secondary: { light: 'button button-outline', dark: 'button button-outline-light' },
   tertiary: { light: 'v1-text-link', dark: 'v1-text-link' },
 }

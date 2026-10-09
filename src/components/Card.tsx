@@ -27,7 +27,13 @@ export function Card({ icon, title, body, link, index = 0 }: Props) {
       {title && <h3>{title}</h3>}
       {body && <p>{body}</p>}
       {link?.label && link.href && (
-        <Button href={link.href} variant="tertiary" journey="awareness" action="card_link">
+        <Button
+          href={link.href}
+          variant="solid"
+          journey="awareness"
+          action="card_link"
+          className="v1-card-button"
+        >
           {link.label}
         </Button>
       )}

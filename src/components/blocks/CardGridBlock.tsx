@@ -18,10 +18,11 @@ export function CardGridBlock({ block, blockId }: BlockProps<'cardGrid'>) {
             <Button
               key={id ?? href}
               href={href}
-              variant="secondary"
+              variant="solid"
               tone={block.background === 'blue' ? 'dark' : 'light'}
               journey="awareness"
               action="section_button"
+              className="v1-section-button"
             >
               {label}
             </Button>

@@ -1505,3 +1505,12 @@
   gap: 12px;
   margin-top: 28px;
 }
+.v1-section-button {
+  min-height: 52px;
+  padding-inline: 28px;
+  font-size: var(--fs-base);
+}
+.v1-card-button {
+  justify-self: start;
+  margin-top: 6px;
+}
