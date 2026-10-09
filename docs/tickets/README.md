@@ -17,7 +17,7 @@ Release scope and dates are in SPEC §11.3. Every Release 1 ticket goes before a
 | [T003](./T003-migrations-baseline.md)     | Switch to migrations, create the baseline and migrate on deploy | T001       | ✔   | ✔     | done   |
 | [T004](./T004-roles-and-access.md)        | User roles, backfill and access helpers                         | T003       | ✔   |       | done   |
 | [T017](./T017-environments-and-deploy.md) | Test mode, health check and Coming Soon retirement              | T003       |     | ✔     | done   |
-| [T029](./T029-airtable-base-design.md)    | Airtable base design for sign-off                               | —          |     | ✔     | review |
+| [T029](./T029-airtable-base-design.md)    | Airtable base design for sign-off                               | —          |     | ✔     | done   |
 
 ## M1: Content model and design system
 
@@ -36,7 +36,7 @@ Release scope and dates are in SPEC §11.3. Every Release 1 ticket goes before a
 | [T010](./T010-donations.md)          | Donations: amount chooser, Stripe Checkout, thank-you              | T006, T009             |     | ✔     | done   |
 | [T011](./T011-pages-and-seed.md)     | Release 1 pages, content migration, partner announcements and seed | T007, T009, T017       | ✔   |       | done   |
 | [T012](./T012-form-system.md)        | Shared form system                                                 | T008, T009, T017       | ✔   |       | todo   |
-| [T013](./T013-airtable-and-email.md) | Airtable sync and email adapter                                    | T012, T029             |     | ✔     | todo   |
+| [T013](./T013-airtable-and-email.md) | Airtable sync and email adapter                                    | T012                   |     | ✔     | todo   |
 | [T014](./T014-release-1-forms.md)    | Register Interest and Call to Action consultation forms            | T011, T013             |     |       | todo   |
 | [T015](./T015-tracking.md)           | Plausible events for forms, consent clean-up                       | T010, T011, T012, T030 |     |       | todo   |
 | [T030](./T030-cookie-consent.md)     | Cookie consent banner                                              | T006, T009             |     |       | done   |

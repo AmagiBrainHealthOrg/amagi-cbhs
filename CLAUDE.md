@@ -36,6 +36,7 @@ pnpm build               # Production build
 pnpm lint                # ESLint
 pnpm typecheck           # tsc --noEmit
 pnpm test:int            # Vitest
+pnpm airtable:check      # Check the Airtable base still has every field the site writes
 pnpm generate:types      # Regenerate src/payload-types.ts
 pnpm generate:importmap  # Regenerate the admin import map
 pnpm payload migrate:create --skip-empty <name>   # Schema change → migration
@@ -105,7 +106,7 @@ Use the Payload skill at `.claude/skills/payload/` (start with `SKILL.md`). Rule
 - **No health questions** on any form (no diagnosis, health history or clinical data).
 - **Wording:** never use "sponsor", "exhibitor" or "lead generation" in UI copy, labels or seed content.
 - **Permission-gated names:** a supporter's or partner's name or logo renders only when `permissionConfirmed` is true.
-- **Copy belongs in the CMS.** Never hard-code copy an editor might change. Dropdown values come from the `dropdowns` global.
+- **Copy belongs in the CMS.** Never hard-code copy an editor might change. Form options come from the Airtable base (SPEC §5.3).
 - **Accessibility:** WCAG 2.1 AA.
 - **Secrets** live in environment variables. Never print, log or commit them.
 - **Remote databases are read-only from dev machines.** `pnpm db:pull` copies production down; nothing goes up. Never run `pnpm supabase db push`, `pnpm supabase db pull`, `pnpm supabase db reset` or `pnpm supabase migration`. Payload migrations are the only schema changes, and they reach production only by merging to `main`.

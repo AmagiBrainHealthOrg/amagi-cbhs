@@ -5,6 +5,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
+    "airtable:check": "tsx scripts/airtable-check.ts",
     "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" next build",
     "db:pull": "tsx scripts/db-pull.ts",
     "db:seed": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed.ts",

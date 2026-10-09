@@ -12,19 +12,21 @@ skills: []
 
 # T012: Shared form system
 
+> **Changed 9 October 2026:** form fields and options come from the Airtable base (SPEC §5.3, §8.1, §8.3). Field names are the `FieldName`s in `src/config/airtable.ts`; `getFormFields(key)` in `src/lib/airtable.ts` returns each form's fields with live options. Submissions save `data` keyed by those names (SPEC §8.2 step 3), ready for `syncSubmission`.
+
 ## Scope
 
 **In**
 
-- `src/components/forms/`: `Form`, field components (text, email, textarea, select, checkbox), shared fields (territory, audience type, industry, three consents, UTM hidden fields, honeypot).
+- `src/components/forms/`: `Form`, field components (text, email, textarea, select, checkbox), shared fields (SPEC §8.1: location, describes you, follow-up preferences, three consents, UTM hidden fields, honeypot `homepage`). Link and select fields render the options from `getFormFields`: pick one as a select or radios, tick any as checkboxes.
 - `src/forms/registry.ts`: form definitions keyed by SPEC §8.3 keys, each with a Zod schema, field list and whether it's an organisation form. Only the shape is needed now; T014 and T019 add definitions.
 - Inject UTM values from T009's `getUtm()` into every form as hidden fields.
-- `POST /api/forms/[key]`: validate with the registry schema, honeypot check, rate limit (SPEC §8.2) counted in a new `rate_limits` table (hashed IP, window start, count; migration), create `form-submissions` (`isTest` when not `isLive()`, SPEC §11.1), redirect to `/thank-you/[key]` with `territory` and `audience_type` per SPEC §8.2.
+- `POST /api/forms/[key]`: validate with the registry schema (link and select values must be among the live options), honeypot check, rate limit (SPEC §8.2) counted in a new `rate_limits` table (hashed IP, window start, count; migration), create `form-submissions` (`isTest` when not `isLive()`, SPEC §11.1), redirect to `/thank-you/[key]` with `territory` and `audience_type` per SPEC §8.2.
 - `/thank-you/[key]` page using copy from the `forms` global (SPEC §8.4).
 - A link to `/privacy` beside the consent checkboxes (SPEC §4.2).
 - Accessible validation (client and server), focus to first error.
 - The `form` block now renders the selected form.
-- A test-only form definition `test-form` used by this ticket's ACs, available only when `NODE_ENV !== 'production'`.
+- A test-only form definition `test-form` used by this ticket's ACs, available only when `NODE_ENV !== 'production'`. It has no Airtable table and is never synced.
 
 **Out**
 

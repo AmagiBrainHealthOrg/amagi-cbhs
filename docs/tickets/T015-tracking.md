@@ -12,7 +12,7 @@ skills: []
 
 # T015: Tracking
 
-> **Changed 8 October 2026:** analytics is Plausible, not Google Tag Manager (SPEC §10). Plausible, `donate_click`, `donation_complete` and outbound clicks are live. What's left: `form_start` and `form_submit` once the forms exist (T012, T014); remove the Consent Mode defaults, `dataLayer` and `integrations.gtmContainerId`; decide on the cookie banner (SPEC §13 D10). The criteria below predate the change and need rewriting before this ticket starts.
+> **Changed 8 October 2026:** analytics is Plausible, not Google Tag Manager (SPEC §10). Plausible, `donate_click`, `donation_complete` and outbound clicks are live, sent to the self-hosted Plausible set in `integrations.plausibleHost`. What's left: `form_start` and `form_submit` once the forms exist (T012, T014); remove the Consent Mode defaults, `dataLayer` and `integrations.gtmContainerId`; decide on the cookie banner (SPEC §13 D10). The criteria below predate the change and need rewriting before this ticket starts.
 
 ## Scope
 

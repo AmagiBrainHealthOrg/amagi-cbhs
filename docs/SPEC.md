@@ -7,7 +7,7 @@ The source of truth for **what** we build. Tickets cite sections as `SPEC §x.y`
 - **Client:** Amagi Health Ltd. Contact and single approver: Dr Ishtar Govia.
 - **Event:** Caribbean Brain Health Summit 2026, 16–22 November 2026, across several Caribbean countries and online.
 - **Domain:** amagisummit.org. DNS on Cloudflare.
-- **Analytics:** Plausible Analytics, cookieless (§10). Amagi's account; goals are set up in Plausible.
+- **Analytics:** Plausible Analytics, cookieless (§10), self-hosted at plausible.zestdev.uk. Goals are set up in Plausible.
 - **Brand designer:** Heather Kong. Supplies logo, colours, fonts and per-country logo variants.
 - **Editors:** 3–5 non-technical Amagi staff manage all copy in the CMS.
 
@@ -115,17 +115,15 @@ Drafts, autosave and live preview are on for `pages`, `news`, `partners`, `suppo
 | `footer`            | `links`, `tagline`, `legalText`. The cookie settings link label comes from `cookie-consent.settingsLabel`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `donation-settings` | `suggestedAmounts` (array of integers, minor units), `currency` (default `usd`), `allowCustomAmount`, `minimumAmount`, `thankYouKicker` (`{amount}` placeholder), `thankYouHeading`, `thankYouBody`, `thankYouLinkLabel`; `page` (the `/donate` copy: kicker, heading, lead, reasons heading and list, note, amount legend, "Other" labels and hint, submit label, secure-payment note, error text; `{minimum}` placeholder in the hint and error); `unconfirmedHeading`, `unconfirmedBody`, `unconfirmedLinkLabel` (§7 step 4); `banner` (`heading`, `body`, `label`: the copy every `donateBanner` block shows) |
 | `anchor-day`        | `date`, `venue`, `moderator`, `mc` (all optional; still being confirmed)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `dropdowns`         | `territories`, `audienceTypes`, `industries`: each an array of `{ label, value }`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `dropdowns`         | `territories`, `audienceTypes`, `industries`: each an array of `{ label, value }`. No longer read by forms, which take their options from Airtable (§5.3); removed in a later release                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | `integrations`      | `gtmContainerId`; `substackFeedUrl`, `substackUrl` (Release 2). Admin-only                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | `forms`             | `thankYou`: one entry per form key (§8.3), each `{ form, heading, body }`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | `cookie-consent`    | `heading`, `body`, `acceptLabel`, `rejectLabel`, `settingsLabel` (the footer link)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `coming-soon`       | Retired: no longer rendered, hidden in the admin by T017 (§11.4)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 
-### 5.3 Dropdown values
+### 5.3 Form options
 
-Amagi supplies the values. Sources: territories and audience types from the Measurement Decisions Guidance; industries from Appendix 2. Seed with the audience types below; leave territories and industries for Amagi to enter.
-
-Audience types (`value`): `country_lead`, `activity_host`, `partner_organisation`, `supporter`, `connector`, `lived_experience`, `researcher_clinician`, `media`, `diaspora`, `general_public`.
+Every option a form offers comes from the Airtable base (§9.1), so Amagi edits them in one place: locations, "which best describes you", industries, action areas, engagement, areas of work (each a linked table, one record per option), and enquiry type, follow-up preferences and permissions (select fields). The site reads them live, cached for five minutes.
 
 ## 6. Design system
 
@@ -184,31 +182,36 @@ One exception, `release_1_content` (8 October 2026), brings the Release 1 polish
 
 ### 8.1 Shared fields
 
-- `phone` (optional, phone or WhatsApp, with country code) on every form
-- `territory` (select, required), `audienceType` (select, required), `industry` (select, organisation forms only)
-- Hidden: `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content` (captured from the landing URL, kept in `sessionStorage` for the visit)
-- Consents (three unticked checkboxes, independent): `consentContact`, `consentPublicName`, `consentShareStory`
-- Honeypot field `website` (hidden from users and assistive tech)
+Field names below are the site's names; `src/config/airtable.ts` maps each to its Airtable field by ID (§9.1).
+
+- `name`, `email` (required) and `phone` (optional, phone or WhatsApp, with country code) on every form
+- `location` (required; "Where are you based?") on every form, and `describesYou` (required; "Which best describes you?") on every form except `contact`. Options from the base (§5.3)
+- `followUp` (optional, tick any): follow-up preferences
+- Consents: three unticked, independent checkboxes (`consentContact`, `consentPublicName`, `consentShareStory`). Saved as the `consents` group and written to the form table's `Permissions` field, one choice per consent
+- Hidden: `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content` (captured from the landing URL, kept in `sessionStorage` for the visit) and the source page. Saved on the submission only: the base has no fields for them
+- Honeypot field `homepage` (hidden from users and assistive tech)
 
 ### 8.2 Submission flow
 
-1. Client validation, then server validation (Zod).
+1. Client validation, then server validation (Zod). Link and select values must be one of the options read from the base.
 2. Rate limit: 5 submissions per IP per 10 minutes, counted in a Postgres table (the app runs serverless, so in-memory counters don't work).
-3. Create a `form-submissions` document (`airtableSyncStatus: pending`). This is the permanent record and the retry queue: a submission is never lost if Airtable is down.
+3. Create a `form-submissions` document (`airtableSyncStatus: pending`). This is the permanent record and the retry queue: a submission is never lost if Airtable is down. `data` holds the answers keyed by the §8.1 and §8.3 names; link fields hold Airtable record IDs, select fields hold choice names. `territory` and `audienceType` hold the chosen location and "describes you" labels.
 4. Send a confirmation email.
-5. Redirect to `/thank-you/[form]?territory=<value>&audience_type=<value>` (non-personal values for `form_submit`, §10.2).
-6. After the response (Next's `after()`, so Vercel doesn't cut it short), `syncSubmission(id)` writes to Airtable (§9.1) and sets `synced` (with the record ID) or `failed` with the error. A failure also emails `SYNC_ALERT_TO`.
+5. Redirect to `/thank-you/[form]?territory=<location>&audience_type=<describes you>` (non-personal values for `form_submit`, §10.2).
+6. After the response (Next's `after()`, so Vercel doesn't cut it short), `syncSubmission(payload, id)` (`src/lib/syncSubmission.ts`) creates one record in the form's table (§9.1) and sets `synced` (with the record ID) or `failed` with the error. A failure also emails `SYNC_ALERT_TO`.
 7. Admins can retry failed syncs from the admin (a "Retry sync" action calling the same `syncSubmission`).
 
 ### 8.3 Forms
 
-| Key                 | Form                        | Release | Extra fields                                                                              | Notes                                                                                              |
-| ------------------- | --------------------------- | ------- | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| `register-interest` | Register Interest           | 1       | name, email                                                                               |                                                                                                    |
-| `cta-consultation`  | Call to Action consultation | 1       | name, email, organisation (optional), role, area of interest (from the five action areas) | Must state clearly that registering is **not** an endorsement                                      |
-| `partner`           | Partner Sign-Up             | 2       | name, email, organisation, website, industry, how you'd like to be involved               | Organisation form                                                                                  |
-| `relay`             | Brain Health Relay          | 2       | name, email, organisation (optional), proposed activity, date                             | Routed by territory: territory is its own field, so each country lead has a filtered Airtable view |
-| `contact`           | Contact and media           | 2       | name, email, enquiry type (`general` \| `media`), message, outlet (media only)            |                                                                                                    |
+Each form writes to its own table. Fields beyond §8.1 (* required):
+
+| Key                 | Form                        | Airtable table                          | Release | Extra fields                                                                                                                                                                       | Notes                                                         |
+| ------------------- | --------------------------- | --------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| `register-interest` | Register Interest           | `Registered Interest`                   | 1       | `organisation`, `role`, `engagement` (tick any), `areaOfWork` (tick any) with `areaOfWorkOther`, `interest` (interest or potential contribution), `support` (financial or in-kind) |                                                               |
+| `cta-consultation`  | Call to Action consultation | `Join the consultation`                 | 1       | `organisation`, `role`_, `actionArea`_ (pick one of the five)                                                                                                                      | Must state clearly that registering is **not** an endorsement |
+| `partner`           | Partner Sign-Up             | `Partner with the Summit`               | 2       | `organisation`_, `role`, `website`_, `industry`* with `industryOther`, `involvement`* (how you'd like to be involved)                                                              | Organisation form                                             |
+| `relay`             | Brain Health Relay          | `Propose a Brain Health Relay activity` | 2       | `organisation`, `role`, `activityDate`* (16–22 November 2026), `activity`* (proposed activity; the base's `About` field)                                                           | Country leads filter their view on `Country / location`       |
+| `contact`           | Contact and media           | `Enquiries`                             | 2       | `enquiryType`* (General or Media), `outlet` (Media only), `organisation`, `role`, `message`* (the base's `Enquiry` field)                                                          | No `describesYou`                                             |
 
 All five keys are in the schema from Release 1 (Payload stores select options as a Postgres enum, and adding values later needs a migration). Release 2 forms add registry definitions only.
 
@@ -220,16 +223,15 @@ One template; heading and body per form key from the `forms` global (§5.2). The
 
 ### 9.1 Airtable
 
-Airtable is Amagi's CRM. The site writes to it directly through the Airtable REST API; there is no Google Sheets step.
+Airtable is Amagi's CRM. The site writes to it directly through the Airtable REST API; there is no Google Sheets step. **The base as built is the source of truth** (decided 9 October 2026): the site adapts to it, and `docs/AIRTABLE.md` describes it.
 
-- `src/lib/airtable.ts`, authenticated with a personal access token scoped to one base (`AIRTABLE_TOKEN`, `AIRTABLE_BASE_ID`). Two bases: a test base and the production base, which is in Amagi's name.
-- Base structure (Amagi signs it off, §13 D7):
-  - `Contacts`: one record per person, upserted by email (Airtable's `performUpsert` on `Email`). Name, phone (latest given), organisation, territory, audience type, industry, the three consents (latest values), first and latest UTM, first seen and last seen.
-  - One table per form key (§8.3), each record linked to its contact and holding that form's fields, UTM, consents as given, source page, submitted at and the Payload submission ID.
-  - `Donations` (§7 step 5).
-- Table and field names live in one place, `src/config/airtable.ts`, so the base can be renamed without code changes elsewhere. `pnpm airtable:check` reads the base schema and fails if a table or field the code needs is missing.
+- One base, `Amagi CBHS CRM` (`app1SgLnjxkPZ9v4X`), with a personal access token scoped to it (`AIRTABLE_TOKEN`, `AIRTABLE_BASE_ID`; scopes `schema.bases:read`, `data.records:read`, `data.records:write`).
+- `src/config/airtable.ts` maps each form key to its table, and each site field to an Airtable field, by ID. Renaming a table, field or choice in Airtable changes nothing on the site. `pnpm airtable:check` reads the base schema and fails, naming the problem, if an ID is gone or a field's type no longer fits.
+- `src/lib/airtable.ts` reads the schema and the linked tables' records (cached for five minutes, §5.3) and creates records with `typecast: true`. Values are shaped by each field's type in the base: a select switched between single and multiple keeps working (a single select keeps the first choice ticked).
+- One record per submission in the form's table (§8.3). There is no contacts table: someone who submits twice appears twice.
 - Airtable allows 5 requests per second per base: requests retry with backoff on 429, and a failure leaves the submission `failed` for retry.
-- In test mode (§11.1), writes go to the test base and set the `Test` checkbox.
+- In test mode (§11.1) writes go to the same base. Test submissions use obvious names ("Testy Testerson") and are deleted by hand.
+- `Donations` (§7 step 5) is not in the base yet.
 
 ### 9.2 Email
 
@@ -291,7 +293,7 @@ There is no staging environment and there are no preview deployments. Work is ve
 
 One environment variable controls behaviour, and it is unset locally:
 
-- **`SITE_LIVE=true`** switches off test mode. In test mode, submissions are saved with `isTest: true`, Airtable writes go to the test base with `Test` ticked, and email goes only to `EMAIL_SANDBOX_TO`. Set in production at launch.
+- **`SITE_LIVE=true`** switches off test mode. In test mode, submissions are saved with `isTest: true` and email goes only to `EMAIL_SANDBOX_TO`. Airtable writes go to the one base (§9.1). Set in production at launch.
 
 Stripe is outside test mode: production uses Amagi's live Stripe keys from the start, so donations are real as soon as the donate page is deployed. Local development uses Stripe test keys.
 
@@ -329,10 +331,8 @@ Copywriting and brand design; translation; analytics and dashboard configuration
 
 | #   | Decision                                                                                                                                        | Owner          | Blocks                           |
 | --- | ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------- | -------------------------------- |
-| D3  | Territory and industry values                                                                                                                   | Amagi          | T014 (seed can use placeholders) |
 | D5  | Suggested donation amounts and currency                                                                                                         | Amagi          | T010 (seed can use placeholders) |
 | D6  | Release 2 date                                                                                                                                  | Tandem + Amagi | Release 2 scheduling             |
-| D7  | Airtable base structure and field list (§9.1)                                                                                                   | Amagi          | T029, T013                       |
 | D8  | Whether donor name and email go to Airtable                                                                                                     | Amagi          | T022                             |
 | D9  | Whether merges keep deploying straight to production after launch, or production deploys from a `production` branch that a person fast-forwards | Tandem         | T018                             |
 | D10 | Whether to remove the cookie banner now that analytics is cookieless (§10.5)                                                                    | Tandem         | T015                             |

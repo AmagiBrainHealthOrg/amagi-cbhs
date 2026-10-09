@@ -18,6 +18,18 @@ const schema = z.object({
       .regex(/^(sk|rk)_(test|live)_/, 'Use a Stripe secret or restricted key.')
       .optional(),
   ),
+  // Optional so builds and CI run without Airtable; form options and syncing need both.
+  AIRTABLE_TOKEN: z.preprocess(
+    (value) => (value === '' ? undefined : value),
+    z.string().optional(),
+  ),
+  AIRTABLE_BASE_ID: z.preprocess(
+    (value) => (value === '' ? undefined : value),
+    z
+      .string()
+      .regex(/^app[A-Za-z0-9]{14}$/, 'Use the base ID from the Airtable URL (app…).')
+      .optional(),
+  ),
 })
 
 // On Vercel, fall back to the production domain Vercel sets, so the site URL needs no manual setting.

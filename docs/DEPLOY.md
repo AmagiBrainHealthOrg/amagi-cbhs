@@ -7,7 +7,7 @@ How the site reaches production and how to change it safely. Background: SPEC §
 - **Local:** the Supabase CLI stack. See `CLAUDE.md` and SPEC §11.5 for `pnpm db:pull`.
 - **Production:** the Vercel deployment of `main`, on the one Supabase project. There is no staging and there are no preview deployments (`git.deploymentEnabled` in `vercel.json` builds `main` only).
 
-Production is public and runs in **test mode** until launch: `SITE_LIVE` is unset, so submissions are saved with `isTest: true`, Airtable writes go to the test base, and email goes only to `EMAIL_SANDBOX_TO` (SPEC §11.1). Stripe is not in test mode: production uses live keys from the start, so donations are real before launch. Code checks this with `isLive()` from `src/utils/site.ts`, never with `NODE_ENV` or `VERCEL_ENV`.
+Production is public and runs in **test mode** until launch: `SITE_LIVE` is unset, so submissions are saved with `isTest: true` and email goes only to `EMAIL_SANDBOX_TO` (SPEC §11.1). Stripe is not in test mode: production uses live keys from the start, so donations are real before launch. Code checks this with `isLive()` from `src/utils/site.ts`, never with `NODE_ENV` or `VERCEL_ENV`.
 
 ## Deploy
 
@@ -52,9 +52,10 @@ Changing `PAYLOAD_SECRET` signs every editor out. Changing the database password
 
 ## Launch (T018)
 
-1. Point Airtable at the production base: set its token and base ID in Vercel Production.
+1. Delete the test records ("Testy Testerson") from the Airtable base. There is one base for testing and production (SPEC §9.1).
 2. Set `SITE_LIVE=true` in Vercel Production. Any other value, or unset, keeps test mode.
-3. Redeploy, then check `/` and `/api/health`.
+3. In the admin, set Integrations → Plausible domain to `amagisummit.org`, and add that site in Plausible.
+4. Redeploy, then check `/` and `/api/health`.
 
 ## Move the projects to Amagi (T018)
 
@@ -76,3 +77,5 @@ Until launch the Vercel project is on Tandem's Hobby team and the Supabase proje
 
 - **Vercel:** production branch is `main`; `SITE_LIVE` is unset for Production until launch.
 - **Supabase:** automatic RLS for new tables is on.
+- **Integrations (admin):** Plausible domain is `amagi-cbhs.vercel.app` until launch; Plausible host is `https://plausible.zestdev.uk`. Browsers' tracking protection blocks `plausible.io`, so the host must stay set.
+- **Plausible:** goals for `donate_click` and `donation_complete` (revenue goal, USD).
