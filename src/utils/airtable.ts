@@ -81,6 +81,37 @@ export function toAirtableFields(
   return fields
 }
 
+export type Attribution = {
+  utm?: {
+    source?: string | null
+    medium?: string | null
+    campaign?: string | null
+    term?: string | null
+    content?: string | null
+  } | null
+  sourcePage?: string | null
+}
+
+// Attribution columns are matched by name, not ID, so Amagi can add them to any form table and
+// they fill from the next submission without a deploy (docs/AIRTABLE.md). Missing columns are
+// skipped.
+export function attributionFields(table: SchemaTable, { utm, sourcePage }: Attribution) {
+  const values: Record<string, string | null | undefined> = {
+    'utm source': utm?.source,
+    'utm medium': utm?.medium,
+    'utm campaign': utm?.campaign,
+    'utm term': utm?.term,
+    'utm content': utm?.content,
+    'source page': sourcePage,
+  }
+  const fields: Record<string, string> = {}
+  for (const field of table.fields) {
+    const value = values[field.name.trim().toLowerCase()]
+    if (value) fields[field.id] = value
+  }
+  return fields
+}
+
 // `id` is the select choice's ID, for choices the site must recognise whatever their name.
 export type FieldOption = { value: string; label: string; id?: string }
 

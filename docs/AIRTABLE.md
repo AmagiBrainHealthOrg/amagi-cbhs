@@ -75,5 +75,5 @@ Each record is one option on the forms; its primary field is the label.
 
 ## Not in the base
 
-- **UTM and source page:** the site saves them on each submission in its admin, not in Airtable. Add `UTM source`, `UTM medium`, `UTM campaign`, `UTM term`, `UTM content` (single line text) and `Source page` (URL) to the form tables if Amagi wants them in Airtable, and the developers will map them.
+- **UTM and source page:** the site saves them on each submission in its admin, and writes them to any form table that has columns named `UTM source`, `UTM medium`, `UTM campaign`, `UTM term`, `UTM content` and `Source page` (single line text). These are matched by name, not ID (case doesn't matter), so a new column fills from the next submission without a deploy; renaming one stops it filling. `Source page` is a path on the site, such as `/about`.
 - **Donations** (SPEC §7 step 5, Release 2): needs a table before T022.

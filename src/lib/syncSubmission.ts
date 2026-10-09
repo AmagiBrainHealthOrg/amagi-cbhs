@@ -3,7 +3,7 @@ import 'server-only'
 import type { Payload } from 'payload'
 
 import { airtableForms } from '@/config/airtable'
-import { type SubmissionData, toAirtableFields } from '@/utils/airtable'
+import { attributionFields, type SubmissionData, toAirtableFields } from '@/utils/airtable'
 
 import { createRecord, getTable } from './airtable'
 import { sendSyncAlert } from './email'
@@ -23,7 +23,10 @@ export async function syncSubmission(payload: Payload, id: number): Promise<Sync
   try {
     const form = airtableForms[submission.form]
     const table = await getTable(form.table)
-    const fields = toAirtableFields(form, table, submission.data as SubmissionData)
+    const fields = {
+      ...toAirtableFields(form, table, submission.data as SubmissionData),
+      ...attributionFields(table, submission),
+    }
     result = { status: 'synced', recordId: await createRecord(form.table, fields) }
   } catch (error) {
     console.error(`Airtable sync failed for form submission ${id}`, error)

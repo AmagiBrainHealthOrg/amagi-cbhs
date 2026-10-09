@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { airtableForms } from '@/config/airtable'
 import {
+  attributionFields,
   findSchemaProblems,
   optionsFor,
   type SchemaField,
@@ -227,5 +228,29 @@ describe('Airtable client', () => {
     expect(fields.find((f) => f.name === 'name')).toEqual({ name: 'name', type: 'singleLineText' })
     // The schema once, then two pages of Locations, shared by every link field.
     expect(fetchMock).toHaveBeenCalledTimes(3)
+  })
+})
+
+describe('attributionFields', () => {
+  const table: SchemaTable = {
+    id: 'tblEnquiries',
+    name: 'Enquiries',
+    primaryFieldId: 'fldName',
+    fields: [
+      { id: 'fldName', name: 'Name', type: 'singleLineText' },
+      { id: 'fldSource', name: 'UTM source', type: 'singleLineText' },
+      { id: 'fldCampaign', name: ' utm Campaign ', type: 'singleLineText' },
+      { id: 'fldPage', name: 'Source page', type: 'singleLineText' },
+    ],
+  }
+
+  it('fills the columns the table has, by name, and skips the rest and blanks', () => {
+    expect(
+      attributionFields(table, {
+        utm: { source: 'partner-paho', medium: 'email', campaign: 'summit-week', term: null },
+        sourcePage: '/about',
+      }),
+    ).toEqual({ fldSource: 'partner-paho', fldCampaign: 'summit-week', fldPage: '/about' })
+    expect(attributionFields(table, { utm: null, sourcePage: null })).toEqual({})
   })
 })

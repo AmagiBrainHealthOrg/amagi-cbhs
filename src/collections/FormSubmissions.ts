@@ -74,6 +74,11 @@ export const FormSubmissions: CollectionConfig = {
       ],
     },
     {
+      name: 'sourcePage',
+      type: 'text',
+      admin: { description: 'The page the visitor came from before the form, for attribution.' },
+    },
+    {
       name: 'isTest',
       type: 'checkbox',
       defaultValue: false,

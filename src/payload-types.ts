@@ -900,6 +900,10 @@ export interface FormSubmission {
     content?: string | null;
   };
   /**
+   * The page the visitor came from before the form, for attribution.
+   */
+  sourcePage?: string | null;
+  /**
    * Submitted before launch or from a non-production environment.
    */
   isTest?: boolean | null;
@@ -1491,6 +1495,7 @@ export interface FormSubmissionsSelect<T extends boolean = true> {
         term?: T;
         content?: T;
       };
+  sourcePage?: T;
   isTest?: T;
   airtableSyncStatus?: T;
   airtableSyncError?: T;

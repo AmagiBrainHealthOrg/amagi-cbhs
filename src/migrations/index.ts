@@ -17,6 +17,7 @@ import * as migration_20261009_130000_forms_content from './20261009_130000_form
 import * as migration_20261009_130420_hero_and_card_links from './20261009_130420_hero_and_card_links'
 import * as migration_20261009_140000_summit_week_content from './20261009_140000_summit_week_content'
 import * as migration_20261009_200000_restore_home from './20261009_200000_restore_home'
+import * as migration_20261009_201942 from './20261009_201942'
 
 export const migrations = [
   {
@@ -113,5 +114,10 @@ export const migrations = [
     up: migration_20261009_200000_restore_home.up,
     down: migration_20261009_200000_restore_home.down,
     name: '20261009_200000_restore_home',
+  },
+  {
+    up: migration_20261009_201942.up,
+    down: migration_20261009_201942.down,
+    name: '20261009_201942',
   },
 ]
