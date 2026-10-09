@@ -21,6 +21,7 @@ import * as migration_20261009_201942 from './20261009_201942'
 import * as migration_20261009_204442_team from './20261009_204442_team'
 import * as migration_20261009_210000_hosting_and_cookie_copy from './20261009_210000_hosting_and_cookie_copy'
 import * as migration_20261009_220000_team_content from './20261009_220000_team_content'
+import * as migration_20261009_230000_team_position from './20261009_230000_team_position'
 
 export const migrations = [
   {
@@ -137,5 +138,10 @@ export const migrations = [
     up: migration_20261009_220000_team_content.up,
     down: migration_20261009_220000_team_content.down,
     name: '20261009_220000_team_content',
+  },
+  {
+    up: migration_20261009_230000_team_position.up,
+    down: migration_20261009_230000_team_position.down,
+    name: '20261009_230000_team_position',
   },
 ]

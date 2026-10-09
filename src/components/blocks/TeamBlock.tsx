@@ -46,7 +46,9 @@ export async function TeamBlock({ block, blockId }: BlockProps<'team'>) {
               <div>
                 <h3>{name}</h3>
                 {subtitle && <p className="v1-team-role">{subtitle}</p>}
-                {bio.length > 0 && <TeamBio name={name} paragraphs={bio} />}
+                {bio.length > 0 && (
+                  <TeamBio name={name} subtitle={subtitle || undefined} paragraphs={bio} />
+                )}
               </div>
             </li>
           )
