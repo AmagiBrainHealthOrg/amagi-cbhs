@@ -239,7 +239,10 @@ Airtable is Amagi's CRM. The site writes to it directly through the Airtable RES
 
 ### 9.2 Email
 
-Payload email adapter using Resend (`@payloadcms/email-resend`). From `EMAIL_FROM_ADDRESS` on an Amagi domain verified in Cloudflare. Plain, accessible HTML templates in `src/emails/`.
+Payload email adapter using Resend (`@payloadcms/email-resend`), on only when `RESEND_API_KEY` and `EMAIL_FROM_ADDRESS` are set (otherwise Payload logs emails). From `cbhs@noreply.amagibrainhealth.org`, on the domain verified in Resend. Plain, accessible HTML templates in `src/emails/`.
+
+- **Confirmation** after every form: the form's thank-you heading and body from the `forms` global, so editors change the page and the email together. In test mode it goes to `EMAIL_SANDBOX_TO` instead of the person.
+- **Sync alert** to `SYNC_ALERT_TO` when an Airtable sync fails, linking to the submission in the admin, where **Retry sync** (`POST /api/form-submissions/:id/retry-sync`, admin only) sends it again.
 
 ### 9.3 Substack (Release 2)
 

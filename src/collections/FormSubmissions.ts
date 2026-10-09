@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload'
+import { APIError, type CollectionConfig } from 'payload'
 
 import { isAdmin } from '@/access/isAdmin'
 import { formOptions } from '@/config/forms'
@@ -15,6 +15,22 @@ export const FormSubmissions: CollectionConfig = {
     defaultColumns: ['form', 'territory', 'audienceType', 'airtableSyncStatus', 'createdAt'],
   },
   defaultSort: '-createdAt',
+  endpoints: [
+    {
+      // SPEC §8.2 step 7. Admin-only, like the collection.
+      path: '/:id/retry-sync',
+      method: 'post',
+      handler: async (req) => {
+        if (!isAdmin({ req })) throw new APIError('Forbidden', 403)
+        const id = Number(req.routeParams?.id)
+        if (!Number.isInteger(id)) throw new APIError('Not found', 404)
+        // Loaded here: the config also runs in CLI scripts, where server-only modules throw.
+        const { syncSubmission } = await import('@/lib/syncSubmission')
+        const result = await syncSubmission(req.payload, id)
+        return Response.json(result, { status: result.status === 'synced' ? 200 : 502 })
+      },
+    },
+  ],
   fields: [
     {
       name: 'form',
@@ -37,6 +53,8 @@ export const FormSubmissions: CollectionConfig = {
     {
       name: 'consents',
       type: 'group',
+      // Unused since forms ask follow-up preferences instead (SPEC §8.1); kept until a later release drops it.
+      admin: { hidden: true },
       fields: [
         { name: 'contact', type: 'checkbox', defaultValue: false },
         { name: 'publicName', type: 'checkbox', defaultValue: false },
@@ -76,6 +94,15 @@ export const FormSubmissions: CollectionConfig = {
       required: true,
       index: true,
       admin: { position: 'sidebar' },
+    },
+    {
+      name: 'retrySync',
+      type: 'ui',
+      admin: {
+        position: 'sidebar',
+        condition: (data) => data?.airtableSyncStatus === 'failed',
+        components: { Field: '/components/admin/RetrySyncButton#RetrySyncButton' },
+      },
     },
     {
       name: 'airtableSyncError',

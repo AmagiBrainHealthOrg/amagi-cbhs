@@ -6,6 +6,7 @@ import { after } from 'next/server'
 import { getPayload } from 'payload'
 
 import { formOptions, type FormKey } from '@/config/forms'
+import { sendConfirmation } from '@/lib/email'
 import { getResolvedForm } from '@/lib/forms'
 import { allowSubmission } from '@/lib/rateLimit'
 import { syncSubmission } from '@/lib/syncSubmission'
@@ -110,6 +111,13 @@ export async function submitForm(
       airtableSyncStatus: 'pending',
     },
   })
+
+  // A failed email never loses the submission: it is saved, and Airtable still gets it.
+  try {
+    await sendConfirmation(payload, key, String(data.email), String(data.name))
+  } catch (error) {
+    console.error(`Confirmation email failed for form submission ${submission.id}`, error)
+  }
 
   after(() => syncSubmission(payload, submission.id))
 

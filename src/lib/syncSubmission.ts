@@ -6,6 +6,7 @@ import { airtableForms } from '@/config/airtable'
 import { type SubmissionData, toAirtableFields } from '@/utils/airtable'
 
 import { createRecord, getTable } from './airtable'
+import { sendSyncAlert } from './email'
 
 export type SyncResult =
   { status: 'synced'; recordId: string } | { status: 'failed'; error: string }
@@ -41,5 +42,10 @@ export async function syncSubmission(payload: Payload, id: number): Promise<Sync
           }
         : { airtableSyncStatus: 'failed', airtableSyncError: result.error },
   })
+  if (result.status === 'failed') {
+    await sendSyncAlert(payload, { id, form: submission.form }, result.error).catch((error) =>
+      console.error(`Sync alert email failed for form submission ${id}`, error),
+    )
+  }
   return result
 }
