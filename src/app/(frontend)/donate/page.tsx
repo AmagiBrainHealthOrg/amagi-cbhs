@@ -6,7 +6,7 @@ import { getGlobal } from '@/lib/globals'
 import { fill, formatAmount, STRIPE_MAX_AMOUNT, suggestedAmounts } from '@/utils/donation'
 
 import { CustomAmountInput } from './CustomAmountInput'
-import { DonateHiddenFields } from './DonateHiddenFields'
+import { VisitFields } from '@/components/forms/VisitFields'
 
 type Props = { searchParams: Promise<{ error?: string }> }
 
@@ -39,7 +39,7 @@ export default async function DonatePage({ searchParams }: Props) {
 
       <section className="donate-card" aria-label="Make a donation">
         <form action="/api/donate" method="post" className="donate-form">
-          <DonateHiddenFields />
+          <VisitFields />
           <fieldset>
             <legend>{page.amountLegend}</legend>
             {error && (

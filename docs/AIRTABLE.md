@@ -12,7 +12,7 @@ The Airtable base the website's forms write to (SPEC §9.1). **The base is the s
 - **Deleting** a field the site writes to (marked below), or changing its type to one that doesn't fit, stops that form syncing. Run `pnpm airtable:check` or ask the developers first. Submissions are never lost: they wait in the website's admin until the base is fixed and the sync is retried.
 - **Adding** fields, views, interfaces and automations is always safe. The site ignores fields it doesn't write to.
 - **Options:** the forms read their options from the base every five minutes. Add, rename or remove a record in a lookup table (below), or a choice on a select field, and the forms follow.
-- **Single or multiple select:** the site sends every ticked choice to a multiple select, and only the first ticked choice to a single select. Keep `Permissions` and `Follow-up preferences` as multiple selects so nothing is dropped.
+- **Single or multiple select:** the site sends every ticked choice to a multiple select, and only the first ticked choice to a single select. Keep `Follow-up preferences` a multiple select so nothing is dropped.
 - **Test submissions** go to this base too. They use obvious names ("Testy Testerson"); delete them by hand.
 - **No health questions** on any form or in any field the site writes (SPEC §3.4).
 
@@ -22,16 +22,15 @@ One table per website form. Each submission becomes one record. There is no cont
 
 Shared fields, written on every form table:
 
-| Field                   | Type                       | Site field | Notes                                                                |
-| ----------------------- | -------------------------- | ---------- | -------------------------------------------------------------------- |
-| `Name` / `Full Name`    | Single line text (primary) | `name`     |                                                                      |
-| `Email`                 | Email                      | `email`    | Lower-cased                                                          |
-| `Phone/Whatsapp`        | Phone number               | `phone`    | Optional                                                             |
-| `Country / location`    | Link to `Locations`        | `location` | Country leads filter their views on this                             |
-| `Follow-up preferences` | Multiple select            | `followUp` | Optional                                                             |
-| `Permissions`           | Multiple select            | consents   | One choice per consent; the site knows each choice by ID (SPEC §8.1) |
+| Field                   | Type                       | Site field | Notes                                    |
+| ----------------------- | -------------------------- | ---------- | ---------------------------------------- |
+| `Name` / `Full Name`    | Single line text (primary) | `name`     |                                          |
+| `Email`                 | Email                      | `email`    | Lower-cased                              |
+| `Phone/Whatsapp`        | Phone number               | `phone`    | Optional                                 |
+| `Country / location`    | Link to `Locations`        | `location` | Country leads filter their views on this |
+| `Follow-up preferences` | Multiple select            | `followUp` | Optional                                 |
 
-The site does not write `Location` (single select). It duplicates `Country / location`; Amagi can delete it.
+The site does not write `Permissions`: the forms ask `Follow-up preferences` instead (decided 9 October 2026). It does not write `Location` (single select) either. It duplicates `Country / location`; Amagi can delete it.
 
 ### `Registered Interest` (Register Interest form)
 

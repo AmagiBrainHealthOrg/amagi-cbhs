@@ -22,7 +22,7 @@ Every form includes:
 
 - the shared fields in SPEC §8.1, with options read live from the Airtable base (`getFormFields` in `src/lib/airtable.ts`), never the `dropdowns` global or hard-coded lists;
 - hidden UTM fields: `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`;
-- three separate, unticked consent checkboxes: `consentContact`, `consentPublicName`, `consentShareStory`;
+- no consent checkboxes: follow-up preferences cover how Amagi may follow up (SPEC §8.1);
 - a privacy policy link next to the submit button;
 - a honeypot field and a server-side rate limit;
 - accessible errors (`aria-describedby`, `aria-invalid`, focus moved to the first error).

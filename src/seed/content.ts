@@ -123,6 +123,54 @@ type SeedPage = RequiredDataFromCollectionSlug<'pages'>
 
 const meta = (title: string) => ({ title: `${title} | Caribbean Brain Health Summit` })
 
+type FormKey = Extract<Layout[number], { blockType: 'form' }>['form']
+
+// A page that holds one form (SPEC §8.3).
+const formPage = (
+  images: SeedImages,
+  page: { title: string; slug: string; kicker: string; lead: string; form: FormKey },
+): SeedPage => ({
+  title: page.title,
+  slug: page.slug,
+  meta: meta(page.title),
+  layout: [
+    photoHero(images, { kicker: page.kicker, heading: page.title, lead: page.lead }),
+    { blockType: 'form', background: 'white', form: page.form },
+    donateBanner,
+  ],
+})
+
+export const formPages = (images: SeedImages): SeedPage[] => [
+  formPage(images, {
+    title: 'Register your interest',
+    slug: 'register',
+    kicker: 'Get involved',
+    lead: "Tell us how you'd like to take part. We'll email you when the programme is published.",
+    form: 'register-interest',
+  }),
+  formPage(images, {
+    title: 'Partner with the Summit',
+    slug: 'partner',
+    kicker: 'Get involved',
+    lead: 'Tell us about your organisation and how it could take part.',
+    form: 'partner',
+  }),
+  formPage(images, {
+    title: 'Propose a Brain Health Relay activity',
+    slug: 'relay',
+    kicker: 'Get involved',
+    lead: 'Run an activity in your community during Summit week. Your country lead will be in touch.',
+    form: 'relay',
+  }),
+  formPage(images, {
+    title: 'Get in touch',
+    slug: 'contact',
+    kicker: 'Contact',
+    lead: "General and media enquiries. We'll reply as soon as we can.",
+    form: 'contact',
+  }),
+]
+
 export const seedPages = (images: SeedImages): SeedPage[] => [
   {
     title: 'Home',
@@ -138,7 +186,7 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
         showDonateButton: true,
         secondaryLink: {
           label: 'Register interest',
-          href: 'https://docs.google.com/forms/d/e/1FAIpQLSc6bRt1sDcugHVcBylaqHgDqZ9rNUSHuVYmacJZk0UbQZ7lnQ/viewform',
+          href: '/register',
         },
         // Summit week starts at midnight in Kingston (UTC-5, no daylight saving).
         countdown: {
@@ -439,14 +487,14 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
       {
         blockType: 'form',
         heading: 'Have your say',
-        intro:
-          'The consultation form will open here. Registering your interest in the consultation is not an endorsement of the Call to Action.',
+        intro: 'Help shape the Caribbean Call to Action on Brain Health.',
         background: 'white',
         form: 'cta-consultation',
       },
       donateBanner,
     ],
   },
+  ...formPages(images),
   {
     title: 'FAQs',
     slug: 'faqs',

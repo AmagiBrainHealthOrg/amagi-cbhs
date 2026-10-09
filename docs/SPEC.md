@@ -93,19 +93,19 @@ Drafts, autosave and live preview are on for `pages`, `news`, `partners`, `suppo
 
 ### 5.1 Collections
 
-| Slug               | Fields                                                                                                                                                                                                                   |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `users`            | email (auth), `role` (`admin` \| `editor`, default `editor`, saved to JWT)                                                                                                                                               |
-| `media`            | upload, `alt` (required)                                                                                                                                                                                                 |
-| `pages`            | `title`, `slug`, `layout` (blocks, §6.3), `meta` (title, description, image)                                                                                                                                             |
-| `news`             | `title`, `slug`, `publishedDate`, `summary`, `body` (rich text), `image`, `type` (`news` \| `partner-announcement`), `partner` (relationship)                                                                            |
-| `partners`         | `name`, `logo`, `description`, `website`, `order`, `permissionConfirmed`                                                                                                                                                 |
-| `supporters`       | `name`, `logo`, `level`, `permissionConfirmed`                                                                                                                                                                           |
-| `faqs`             | `question`, `answer`, `category`, `order`                                                                                                                                                                                |
-| `host-countries`   | Release 2. `name`, `slug`, `countryLead` (name, photo, bio), `weekOverview`, `activities` (array), `localPartners` (logos), `territory` (value from dropdowns)                                                           |
-| `sessions`         | Release 2. `title`, `stream`, `day` (date), `territory`, `format` (`in-person` \| `online`), `description`, `lumaUrl`                                                                                                    |
-| `substack-posts`   | Release 2. `title`, `url` (unique), `publishedDate`, `excerpt`, `approved` (default false)                                                                                                                               |
-| `form-submissions` | `form`, `data` (JSON), `territory`, `audienceType`, `consents` (group of 3), `utm` (group of 5), `isTest`, `airtableSyncStatus` (`pending` \| `synced` \| `failed`), `airtableSyncError`, `airtableRecordId`. Admin-only |
+| Slug               | Fields                                                                                                                                                                                                                                                      |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `users`            | email (auth), `role` (`admin` \| `editor`, default `editor`, saved to JWT)                                                                                                                                                                                  |
+| `media`            | upload, `alt` (required)                                                                                                                                                                                                                                    |
+| `pages`            | `title`, `slug`, `layout` (blocks, §6.3), `meta` (title, description, image)                                                                                                                                                                                |
+| `news`             | `title`, `slug`, `publishedDate`, `summary`, `body` (rich text), `image`, `type` (`news` \| `partner-announcement`), `partner` (relationship)                                                                                                               |
+| `partners`         | `name`, `logo`, `description`, `website`, `order`, `permissionConfirmed`                                                                                                                                                                                    |
+| `supporters`       | `name`, `logo`, `level`, `permissionConfirmed`                                                                                                                                                                                                              |
+| `faqs`             | `question`, `answer`, `category`, `order`                                                                                                                                                                                                                   |
+| `host-countries`   | Release 2. `name`, `slug`, `countryLead` (name, photo, bio), `weekOverview`, `activities` (array), `localPartners` (logos), `territory` (value from dropdowns)                                                                                              |
+| `sessions`         | Release 2. `title`, `stream`, `day` (date), `territory`, `format` (`in-person` \| `online`), `description`, `lumaUrl`                                                                                                                                       |
+| `substack-posts`   | Release 2. `title`, `url` (unique), `publishedDate`, `excerpt`, `approved` (default false)                                                                                                                                                                  |
+| `form-submissions` | `form`, `data` (JSON), `territory`, `audienceType`, `consents` (group of 3; unused since 9 October 2026, §8.1), `utm` (group of 5), `isTest`, `airtableSyncStatus` (`pending` \| `synced` \| `failed`), `airtableSyncError`, `airtableRecordId`. Admin-only |
 
 ### 5.2 Globals
 
@@ -187,14 +187,16 @@ Field names below are the site's names; `src/config/airtable.ts` maps each to it
 - `name`, `email` (required) and `phone` (optional, phone or WhatsApp, with country code) on every form
 - `location` (required; "Where are you based?") on every form, and `describesYou` (required; "Which best describes you?") on every form except `contact`. Options from the base (§5.3)
 - `followUp` (optional, tick any): follow-up preferences
-- Consents: three unticked, independent checkboxes (`consentContact`, `consentPublicName`, `consentShareStory`). Saved as the `consents` group and written to the form table's `Permissions` field, one choice per consent
-- Hidden: `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content` (captured from the landing URL, kept in `sessionStorage` for the visit) and the source page. Saved on the submission only: the base has no fields for them
+- No consent checkboxes: `followUp` is how people say how Amagi may follow up (decided 9 October 2026). The base's `Permissions` field is not written; the `consents` group on `form-submissions` stays empty until a later release removes it
+- Hidden: `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content` (captured from the landing URL, kept in `sessionStorage` for the visit). Saved on the submission only: the base has no fields for them
 - Honeypot field `homepage` (hidden from users and assistive tech)
 
 ### 8.2 Submission flow
 
-1. Client validation, then server validation (Zod). Link and select values must be one of the options read from the base.
-2. Rate limit: 5 submissions per IP per 10 minutes, counted in a Postgres table (the app runs serverless, so in-memory counters don't work).
+Forms post to the `submitForm` Server Action (`src/forms/actions.ts`), so they work without JavaScript. Fields per form are in `src/forms/registry.ts`; the browser and the action validate with the same code (`src/forms/validate.ts`).
+
+1. Client validation, then the same validation on the server. Link and select values must be one of the options read from the base.
+2. Rate limit: 5 submissions per IP per 10 minutes, counted in the `rate_limits` table by salted IP hash (the app runs serverless, so in-memory counters don't work). Over the limit, the form keeps its answers and says to wait 10 minutes. A filled honeypot gets the thank-you page and saves nothing.
 3. Create a `form-submissions` document (`airtableSyncStatus: pending`). This is the permanent record and the retry queue: a submission is never lost if Airtable is down. `data` holds the answers keyed by the §8.1 and §8.3 names; link fields hold Airtable record IDs, select fields hold choice names. `territory` and `audienceType` hold the chosen location and "describes you" labels.
 4. Send a confirmation email.
 5. Redirect to `/thank-you/[form]?territory=<location>&audience_type=<describes you>` (non-personal values for `form_submit`, §10.2).

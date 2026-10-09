@@ -17,12 +17,7 @@ vi.mock('@/env', () => ({
 const { AirtableError, createRecord, getFormFields, RETRY_DELAYS_MS } =
   await import('@/lib/airtable')
 
-const form = airtableForms['register-interest']
-const choices = [
-  { id: form.consentChoices.contact, name: 'Amagi may contact me about the Summit' },
-  { id: form.consentChoices.publicName, name: 'My name may be shown publicly' },
-  { id: form.consentChoices.shareStory, name: 'My story may be shared' },
-]
+const form = airtableForms['cta-consultation']
 const types: Record<string, string> = {
   text: 'singleLineText',
   longText: 'multilineText',
@@ -45,18 +40,11 @@ function schema(): SchemaTable[] {
       name,
       type: types[kind],
       options:
-        name === 'permissions'
-          ? {
-              choices: Object.values(f.consentChoices).map((cid, i) => ({
-                id: cid,
-                name: choices[i].name,
-              })),
-            }
-          : kind === 'link'
-            ? { linkedTableId: 'tblLocations' }
-            : kind === 'select'
-              ? { choices: [{ id: 'selA', name: 'Email me' }] }
-              : undefined,
+        kind === 'link'
+          ? { linkedTableId: 'tblLocations' }
+          : kind === 'select'
+            ? { choices: [{ id: 'selA', name: 'Email me' }] }
+            : undefined,
     })),
   }))
   return [
@@ -78,17 +66,15 @@ describe('findSchemaProblems', () => {
     expect(findSchemaProblems(schema())).toEqual([])
   })
 
-  it('names a missing field, a wrong type and a missing consent choice', () => {
+  it('names a missing field and a wrong type', () => {
     const tables = schema()
     const table = tables.find((t) => t.id === form.table)!
     table.fields = table.fields.filter((f) => f.id !== form.fields.role!.id)
     table.fields.find((f) => f.id === form.fields.email!.id)!.type = 'singleLineText'
-    table.fields.find((f) => f.id === form.fields.permissions!.id)!.options!.choices!.pop()
 
     expect(findSchemaProblems(tables)).toEqual([
-      'register-interest: field email ("email") is singleLineText, expected email',
-      `register-interest: field role (${form.fields.role!.id}) is missing from "${form.table}"`,
-      `register-interest: Permissions choice for shareStory (${form.consentChoices.shareStory}) is missing`,
+      'cta-consultation: field email ("email") is singleLineText, expected email',
+      `cta-consultation: field role (${form.fields.role!.id}) is missing from "${form.table}"`,
     ])
   })
 
@@ -103,42 +89,29 @@ describe('findSchemaProblems', () => {
 describe('toAirtableFields', () => {
   const table = () => schema().find((t) => t.id === form.table)!
 
-  it('writes by field ID, lower-cases email, skips blanks and maps consents to choices', () => {
-    const fields = toAirtableFields(
-      form,
-      table(),
-      {
-        name: ' Testy Testerson ',
-        email: 'Testy@Example.COM',
-        phone: '',
-        location: 'recJamaica',
-        engagement: ['recAttend', 'recConnect'],
-      },
-      { contact: true, publicName: false, shareStory: true },
-    )
+  it('writes by field ID, lower-cases email and skips blanks', () => {
+    const fields = toAirtableFields(form, table(), {
+      name: ' Testy Testerson ',
+      email: 'Testy@Example.COM',
+      phone: '',
+      location: 'recJamaica',
+      actionArea: 'recWorkforce',
+    })
     expect(fields).toEqual({
       [form.fields.name!.id]: 'Testy Testerson',
       [form.fields.email!.id]: 'testy@example.com',
       [form.fields.location!.id]: ['recJamaica'],
-      [form.fields.engagement!.id]: ['recAttend', 'recConnect'],
-      [form.fields.permissions!.id]: [
-        'Amagi may contact me about the Summit',
-        'My story may be shared',
-      ],
+      [form.fields.actionArea!.id]: ['recWorkforce'],
     })
   })
 
-  it('sends one choice to a single select', () => {
+  it('sends every choice to a multiple select and the first to a single select', () => {
     const t = table()
-    t.fields.find((f) => f.id === form.fields.permissions!.id)!.type = 'singleSelect'
-    const fields = toAirtableFields(form, t, {}, { publicName: true, shareStory: true })
-    expect(fields).toEqual({ [form.fields.permissions!.id]: 'My name may be shown publicly' })
-  })
-
-  it('leaves Permissions out when nothing is ticked', () => {
-    expect(toAirtableFields(form, table(), { name: 'A' }, {})).toEqual({
-      [form.fields.name!.id]: 'A',
-    })
+    const followUp = form.fields.followUp!.id
+    const data = { followUp: ['Email me', 'Beyond 2026'] }
+    expect(toAirtableFields(form, t, data)).toEqual({ [followUp]: ['Email me', 'Beyond 2026'] })
+    t.fields.find((f) => f.id === followUp)!.type = 'singleSelect'
+    expect(toAirtableFields(form, t, data)).toEqual({ [followUp]: 'Email me' })
   })
 })
 
@@ -166,7 +139,7 @@ describe('optionsFor', () => {
         },
         linked,
       ),
-    ).toEqual([{ value: 'Media', label: 'Media' }])
+    ).toEqual([{ value: 'Media', label: 'Media', id: 's' }])
   })
 })
 

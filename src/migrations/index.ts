@@ -12,6 +12,8 @@ import * as migration_20261008_170000_release_1_content from './20261008_170000_
 import * as migration_20261008_174216_plausible_domain from './20261008_174216_plausible_domain'
 import * as migration_20261008_175856_plausible_host from './20261008_175856_plausible_host'
 import * as migration_20261008_180000_plausible_legal_copy from './20261008_180000_plausible_legal_copy'
+import * as migration_20261009_120000_rate_limits from './20261009_120000_rate_limits'
+import * as migration_20261009_130000_forms_content from './20261009_130000_forms_content'
 
 export const migrations = [
   {
@@ -83,5 +85,15 @@ export const migrations = [
     up: migration_20261008_180000_plausible_legal_copy.up,
     down: migration_20261008_180000_plausible_legal_copy.down,
     name: '20261008_180000_plausible_legal_copy',
+  },
+  {
+    up: migration_20261009_120000_rate_limits.up,
+    down: migration_20261009_120000_rate_limits.down,
+    name: '20261009_120000_rate_limits',
+  },
+  {
+    up: migration_20261009_130000_forms_content.up,
+    down: migration_20261009_130000_forms_content.down,
+    name: '20261009_130000_forms_content',
   },
 ]

@@ -35,9 +35,9 @@ Release scope and dates are in SPEC §11.3. Every Release 1 ticket goes before a
 | ------------------------------------ | ------------------------------------------------------------------ | ---------------------- | --- | ----- | ------ |
 | [T010](./T010-donations.md)          | Donations: amount chooser, Stripe Checkout, thank-you              | T006, T009             |     | ✔     | done   |
 | [T011](./T011-pages-and-seed.md)     | Release 1 pages, content migration, partner announcements and seed | T007, T009, T017       | ✔   |       | done   |
-| [T012](./T012-form-system.md)        | Shared form system                                                 | T008, T009, T017       | ✔   |       | todo   |
+| [T012](./T012-form-system.md)        | Shared form system                                                 | T008, T009, T017       | ✔   |       | done   |
 | [T013](./T013-airtable-and-email.md) | Airtable sync and email adapter                                    | T012                   |     | ✔     | todo   |
-| [T014](./T014-release-1-forms.md)    | Register Interest and Call to Action consultation forms            | T011, T013             |     |       | todo   |
+| [T014](./T014-release-1-forms.md)    | Register Interest and Call to Action consultation forms            | T011, T013             |     |       | done   |
 | [T015](./T015-tracking.md)           | Plausible events for forms, consent clean-up                       | T010, T011, T012, T030 |     |       | todo   |
 | [T030](./T030-cookie-consent.md)     | Cookie consent banner                                              | T006, T009             |     |       | done   |
 
@@ -53,7 +53,7 @@ Release scope and dates are in SPEC §11.3. Every Release 1 ticket goes before a
 
 | ID                                 | Title                                        | Depends on       | Mig | Human | Status |
 | ---------------------------------- | -------------------------------------------- | ---------------- | --- | ----- | ------ |
-| [T019](./T019-release-2-forms.md)  | Partner, Relay and Contact/media forms       | T014             |     |       | todo   |
+| [T019](./T019-release-2-forms.md)  | Partner, Relay and Contact/media forms       | T014             |     |       | done   |
 | [T020](./T020-host-countries.md)   | Host Countries index and profiles            | T009, T011, T019 | ✔   |       | todo   |
 | [T021](./T021-programme.md)        | Programme page with filters                  | T009, T020       | ✔   |       | todo   |
 | [T022](./T022-donation-webhook.md) | Stripe webhook records donations in Airtable | T010, T013       |     | ✔     | todo   |

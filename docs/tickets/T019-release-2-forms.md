@@ -10,6 +10,8 @@ spec: ['SPEC §8.3']
 skills: []
 ---
 
+> **Built 9 October 2026** on `feat/forms`, with T012, T014 and T019 together. All five forms are on pages (`/register`, `/call-to-action`, `/partner`, `/relay`, `/contact`) and sync to Airtable. Deviations: forms post to a Server Action, not `POST /api/forms/[key]`, so the rate limit shows a message instead of a 429; there is no `test-form` or kitchen-sink form, because the real forms were tested end to end; the Release 2 pages are `/partner`, `/relay` and `/contact` (the page route has one level); confirmation emails stay in T013.
+
 # T019: Release 2 forms
 
 ## Scope
