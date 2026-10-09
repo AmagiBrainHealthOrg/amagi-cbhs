@@ -17,5 +17,12 @@ export const Media: CollectionConfig = {
       required: true,
     },
   ],
-  upload: true,
+  upload: {
+    // Without this every image request runs Payload and fetches from Supabase; with it Netlify's
+    // CDN and image CDN keep a copy. A replaced file shows within a day.
+    modifyResponseHeaders: ({ headers }) => {
+      headers.set('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800')
+      return headers
+    },
+  },
 }
