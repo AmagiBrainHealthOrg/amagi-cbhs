@@ -57,9 +57,7 @@ Open questions for Amagi Health about the CBHS 2026 website and its Airtable bas
 
 ## Airtable
 
-7. **Sign-off of the base design.** `docs/AIRTABLE.md` describes the Airtable base the website writes to. Please review it and confirm or send changes, especially:
-   - the table names
-   - the meaning given for each of the three consent boxes
+7. ~~**Sign-off of the base design.**~~ Answered 9 October 2026: the base Amagi built is the source of truth, and `docs/AIRTABLE.md` describes it.
 
 8. **Donor names and emails.** Should donors' names and emails from Stripe go into Airtable? Until you decide, they don't.
 

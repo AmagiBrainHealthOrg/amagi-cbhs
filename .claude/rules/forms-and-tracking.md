@@ -20,7 +20,7 @@ Every form uses the shared form system in `src/components/forms/`. Never build a
 
 Every form includes:
 
-- territory and audience-type selects (and industry on organisation forms), with values from the `dropdowns` global;
+- the shared fields in SPEC §8.1, with options read live from the Airtable base (`getFormFields` in `src/lib/airtable.ts`), never the `dropdowns` global or hard-coded lists;
 - hidden UTM fields: `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`;
 - three separate, unticked consent checkboxes: `consentContact`, `consentPublicName`, `consentShareStory`;
 - a privacy policy link next to the submit button;
@@ -48,5 +48,5 @@ Submission order is fixed (SPEC §8.2): validate server-side → rate limit → 
 
 ## Environments
 
-- Test mode is `!isLive()` (`src/utils/site.ts`, SPEC §11.1), never `NODE_ENV` or `VERCEL_ENV`. In test mode, form submissions are marked `isTest: true`, emails go only to `EMAIL_SANDBOX_TO`, and Airtable writes go to the test base with `Test` ticked. Stripe is outside test mode: production uses live keys from the start.
+- Test mode is `!isLive()` (`src/utils/site.ts`, SPEC §11.1), never `NODE_ENV` or `VERCEL_ENV`. In test mode, form submissions are marked `isTest: true` and emails go only to `EMAIL_SANDBOX_TO`. Airtable has one base for both (SPEC §9.1): test with obvious names ("Testy Testerson") and delete the records. Stripe is outside test mode: production uses live keys from the start.
 - Production runs in test mode until launch.

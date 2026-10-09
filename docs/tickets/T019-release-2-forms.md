@@ -18,7 +18,7 @@ skills: []
 
 - Registry definitions for `partner`, `relay`, `contact` per SPEC §8.3 (their keys are already in the schema, so no migration), with routes `/get-involved/partner`, `/get-involved/relay`, `/contact` as `pages` with a `form` block (via seed).
 - `partner` is an organisation form (industry shown).
-- `relay` writes `territory` as its own field, so each country lead can have a filtered Airtable view.
+- Fields per SPEC §8.3. `relay`'s activity date is limited to 16–22 November 2026.
 - `contact` shows `outlet` only when enquiry type is `media`.
 - Confirmation email templates.
 
@@ -28,7 +28,7 @@ skills: []
   - _Verify (browser + db):_ each submission creates a synced `form-submissions` row and shows its thank-you page.
 - [ ] **AC2**: Conditional field works.
   - _Verify (browser):_ `outlet` is hidden for `general` and visible and required for `media`; server rejects `media` without `outlet`.
-- [ ] **AC3**: Relay records carry territory.
-  - _Verify (cli):_ reading the latest `relay` record through `src/lib/airtable.ts` shows the submitted territory value.
+- [ ] **AC3**: Relay records carry the location.
+  - _Verify (cli):_ the latest record in `Propose a Brain Health Relay activity` links the submitted `Country / location`.
 - [ ] **AC4**: Gates pass.
   - _Verify (cli):_ `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build` exits 0.

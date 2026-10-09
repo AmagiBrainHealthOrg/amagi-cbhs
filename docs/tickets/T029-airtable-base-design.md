@@ -12,6 +12,8 @@ skills: []
 
 # T029: Airtable base design for sign-off
 
+> **Closed 9 October 2026:** Amagi built the base, and the base as built is the source of truth (SPEC §9.1). `docs/AIRTABLE.md` now describes it, and `pnpm airtable:check` passes against it. The design-for-sign-off below no longer applies.
+
 ## Context
 
 T013 can't finish until Amagi signs off the base structure (D7), and T013 is on the Release 1 critical path. Writing the design now gives Amagi time to review it while the rest of the build continues.
