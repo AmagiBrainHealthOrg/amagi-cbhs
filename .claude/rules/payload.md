@@ -43,4 +43,4 @@ Spec: `docs/SPEC.md` §5. Skill: `.claude/skills/payload/SKILL.md`.
 
 - Slugs are unique, indexed and generated from the title unless set.
 - Uploads relate to `media`. Every image needs `alt`.
-- Selects that hold Amagi-defined values (territories, audience types, industries) read from the `dropdowns` global at runtime; they are not hard-coded `options`.
+- Form options come from the Airtable base at runtime (SPEC §5.3); they are not hard-coded `options`.

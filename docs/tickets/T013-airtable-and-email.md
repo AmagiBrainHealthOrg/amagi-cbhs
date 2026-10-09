@@ -30,7 +30,7 @@ Human steps: create a Resend API key with a verified sending domain (or sandbox)
 
 **In**
 
-- The form route schedules `syncSubmission` with Next's `after()` (SPEC §8.2 step 6). There is no `afterChange` hook, so the status update can't trigger another sync.
+- ~~The form route schedules `syncSubmission` with Next's `after()`~~ Done with the forms (T012): `submitForm` schedules it.
 - On a failed sync, email `SYNC_ALERT_TO`.
 - Admin "Retry sync" action on failed submissions (custom endpoint plus a button component), calling `syncSubmission`.
 - Email adapter: `@payloadcms/email-resend`; `src/lib/email.ts` `sendConfirmation(formKey, to, data)`; templates in `src/emails/`. When not `isLive()`, send only to `EMAIL_SANDBOX_TO`.
