@@ -38,8 +38,6 @@ const schema = z.object({
   EMAIL_FROM_ADDRESS: optional(
     z.email('Use a full address, e.g. cbhs@noreply.amagibrainhealth.org.'),
   ),
-  // Before launch every email goes here instead (SPEC §11.1).
-  EMAIL_SANDBOX_TO: optional(z.email()),
   // Hears about Airtable sync failures (SPEC §8.2).
   SYNC_ALERT_TO: optional(z.email()),
 })

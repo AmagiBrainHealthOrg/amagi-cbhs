@@ -241,7 +241,7 @@ Airtable is Amagi's CRM. The site writes to it directly through the Airtable RES
 
 Payload email adapter using Resend (`@payloadcms/email-resend`), on only when `RESEND_API_KEY` and `EMAIL_FROM_ADDRESS` are set (otherwise Payload logs emails). From `cbhs@noreply.amagibrainhealth.org`, on the domain verified in Resend. Plain, accessible HTML templates in `src/emails/`.
 
-- **Confirmation** after every form: the form's thank-you heading and body from the `forms` global, so editors change the page and the email together. In test mode it goes to `EMAIL_SANDBOX_TO` instead of the person.
+- **Confirmation** after every form: the form's thank-you heading and body from the `forms` global, so editors change the page and the email together. It always goes to the person who sent the form, in test mode too (decided 9 October 2026).
 - **Sync alert** to `SYNC_ALERT_TO` when an Airtable sync fails, linking to the submission in the admin, where **Retry sync** (`POST /api/form-submissions/:id/retry-sync`, admin only) sends it again.
 
 ### 9.3 Substack (Release 2)
@@ -300,7 +300,7 @@ There is no staging environment and there are no preview deployments. Work is ve
 
 One environment variable controls behaviour, and it is unset locally:
 
-- **`SITE_LIVE=true`** switches off test mode. In test mode, submissions are saved with `isTest: true` and email goes only to `EMAIL_SANDBOX_TO`. Airtable writes go to the one base (§9.1). Set in production at launch.
+- **`SITE_LIVE=true`** switches off test mode. In test mode, submissions are saved with `isTest: true`. Confirmation emails go to the person either way (§9.2). Airtable writes go to the one base (§9.1). Set in production at launch.
 
 Stripe is outside test mode: production uses Amagi's live Stripe keys from the start, so donations are real as soon as the donate page is deployed. Local development uses Stripe test keys.
 
