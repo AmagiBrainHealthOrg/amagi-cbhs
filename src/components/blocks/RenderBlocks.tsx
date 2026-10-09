@@ -18,7 +18,14 @@ import { SummitWeekBlock } from './SummitWeekBlock'
 import { SupporterLevelsBlock } from './SupporterLevelsBlock'
 import type { LayoutBlock } from './types'
 
-function RenderBlock({ block, blockId }: { block: LayoutBlock; blockId: string }) {
+type RenderProps = {
+  block: LayoutBlock
+  blockId: string
+  /** Titles from the page's action areas block, so the consultation form lists them in the same order. */
+  actionAreas: string[]
+}
+
+function RenderBlock({ block, blockId, actionAreas }: RenderProps) {
   switch (block.blockType) {
     case 'hero':
       return <HeroBlock block={block} blockId={blockId} />
@@ -49,7 +56,7 @@ function RenderBlock({ block, blockId }: { block: LayoutBlock; blockId: string }
     case 'donateBanner':
       return <DonateBannerBlock block={block} blockId={blockId} />
     case 'form':
-      return <FormBlock block={block} blockId={blockId} />
+      return <FormBlock block={block} blockId={blockId} actionAreas={actionAreas} />
     case 'anchorDay':
       return <AnchorDayBlock block={block} blockId={blockId} />
     default: {
@@ -60,11 +67,16 @@ function RenderBlock({ block, blockId }: { block: LayoutBlock; blockId: string }
 }
 
 export function RenderBlocks({ blocks }: { blocks?: LayoutBlock[] | null }) {
+  const actionAreas = (blocks ?? []).flatMap((block) =>
+    block.blockType === 'actionAreas' ? (block.areas ?? []).map(({ title }) => title) : [],
+  )
   return (
     <>
       {(blocks ?? []).map((block, index) => {
         const blockId = `block-${block.id ?? index}`
-        return <RenderBlock key={blockId} block={block} blockId={blockId} />
+        return (
+          <RenderBlock key={blockId} block={block} blockId={blockId} actionAreas={actionAreas} />
+        )
       })}
     </>
   )

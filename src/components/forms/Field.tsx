@@ -41,7 +41,12 @@ export function Field({ field, id, error, defaultValue }: Props) {
 
   if (control === 'radios' || control === 'checkboxes') {
     return (
-      <fieldset className={`${className} form-choices`} aria-describedby={describedBy}>
+      <fieldset
+        className={[className, 'form-choices', field.numbered && 'form-choices-numbered']
+          .filter(Boolean)
+          .join(' ')}
+        aria-describedby={describedBy}
+      >
         <legend>
           {label}
           {optional}
@@ -57,6 +62,11 @@ export function Field({ field, id, error, defaultValue }: Props) {
               aria-invalid={index === 0 ? invalid : undefined}
               required={control === 'radios' ? required : undefined}
             />
+            {field.numbered && (
+              <span className="form-choice-number" aria-hidden="true">
+                {index + 1}
+              </span>
+            )}
             <span>{option.label}</span>
           </label>
         ))}

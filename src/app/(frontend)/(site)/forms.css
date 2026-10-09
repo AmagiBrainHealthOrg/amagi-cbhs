@@ -1,10 +1,13 @@
 /* Shared form system (SPEC §8). Tokens only; no raw hex values. */
 
-.form { display: grid; gap: 20px; max-width: 760px; }
+.form { --form-accent: var(--primary-blue); display: grid; gap: 20px; max-width: 760px; padding: clamp(22px, 3vw, 32px); border: 1px solid var(--line); border-top: 5px solid var(--form-accent); border-radius: 8px; background: var(--white); }
+.form[data-form='cta-consultation'] { --form-accent: var(--orange); }
+.form[data-form='partner'] { --form-accent: var(--yellow); }
+.form[data-form='relay'] { --form-accent: var(--red); }
 .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .form-field { display: grid; gap: 6px; align-content: start; min-width: 0; margin: 0; padding: 0; border: 0; }
 .form-field-wide { grid-column: 1 / -1; }
-.form-field > label, .form-choices > legend { padding: 0; color: var(--ink-deep); font-family: var(--app-font-ui); font-size: var(--fs-xs); font-weight: 700; }
+.form-field > label:not(.form-choice), .form-choices > legend { padding: 0; color: var(--ink-deep); font-family: var(--app-font-ui); font-size: var(--fs-xs); font-weight: 700; }
 .form-choices > legend { margin-bottom: 8px; }
 .form-optional { color: var(--muted-text); font-weight: 400; }
 .form-hint { margin: 0; color: var(--muted-text); font-family: var(--app-font-ui); font-size: var(--fs-2xs); }
@@ -18,7 +21,7 @@
 .form-choices { display: grid; gap: 8px; margin: 0; padding: 0; border: 0; }
 .form-choice { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--white); font-size: var(--fs-sm); line-height: 1.4; cursor: pointer; }
 .form-choice:hover { border-color: var(--primary-blue); }
-.form-choice span { font-family: var(--app-font-ui); font-weight: 400; color: var(--ink-deep); }
+.form-choice > span:last-child { font-family: var(--app-font-ui); font-weight: 400; color: var(--ink-deep); }
 .form-choice input { flex: none; width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--primary-blue); }
 .form-field-invalid .form-choice { border-color: var(--red); }
 
@@ -40,3 +43,9 @@
   .form-grid { grid-template-columns: 1fr; }
   .form-submit { width: 100%; }
 }
+
+.form-choices-numbered .form-choice { align-items: center; }
+.form-choice-number { display: grid; flex: none; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--primary-blue); color: var(--white); font-family: var(--app-font-ui); font-size: var(--fs-2xs); font-weight: 700; }
+.form-choice:nth-of-type(5n + 2) .form-choice-number { background: var(--orange); color: var(--ink-deep); }
+.form-choice:nth-of-type(5n + 3) .form-choice-number { background: var(--yellow); color: var(--ink-deep); }
+.form-choice:nth-of-type(5n + 4) .form-choice-number { background: var(--red); color: var(--white); }
