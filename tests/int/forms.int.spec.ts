@@ -1,14 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { formRegistry } from '@/forms/registry'
-import {
-  isVisible,
-  normaliseUrl,
-  readConsents,
-  readValues,
-  type ResolvedField,
-  validate,
-} from '@/forms/validate'
+import { isVisible, normaliseUrl, readValues, type ResolvedField, validate } from '@/forms/validate'
 
 const media = { value: 'Media', label: 'Media', id: 'selD6NwSkMSsug7al' }
 const fields: ResolvedField[] = formRegistry.contact.fields.map((field) =>
@@ -94,7 +87,7 @@ describe('form validation', () => {
     expect(normaliseUrl('http://example.org')).toBe('http://example.org')
   })
 
-  it('reads checkboxes as lists and consents as independent booleans', () => {
+  it('reads checkboxes as lists', () => {
     const followUp = formRegistry.contact.fields.find((f) => f.name === 'followUp')!
     const data = form([
       ['followUp', 'A'],
@@ -102,7 +95,6 @@ describe('form validation', () => {
       ['consentShareStory', 'on'],
     ])
     expect(readValues([followUp], data)).toEqual({ followUp: ['A', 'B'] })
-    expect(readConsents(data)).toEqual({ contact: false, publicName: false, shareStory: true })
   })
 
   it('asks no health questions', () => {

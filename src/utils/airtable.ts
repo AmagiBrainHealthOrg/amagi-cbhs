@@ -2,7 +2,6 @@ import {
   type AirtableForm,
   airtableForms,
   compatibleTypes,
-  type Consent,
   type FieldName,
 } from '@/config/airtable'
 
@@ -23,7 +22,6 @@ export type SchemaTable = {
 
 export type SubmissionValue = string | string[]
 export type SubmissionData = Partial<Record<FieldName, SubmissionValue>>
-export type Consents = Partial<Record<Consent, boolean | null>>
 
 // Every table, field and choice the config names that the base no longer has, or has with an
 // incompatible type. Empty when the base matches.
@@ -44,12 +42,6 @@ export function findSchemaProblems(tables: SchemaTable[]): string[] {
         )
       }
     }
-    const permissions = table.fields.find((f) => f.id === form.fields.permissions?.id)
-    for (const [consent, choiceId] of Object.entries(form.consentChoices)) {
-      if (!permissions?.options?.choices?.some(({ id }) => id === choiceId)) {
-        problems.push(`${key}: Permissions choice for ${consent} (${choiceId}) is missing`)
-      }
-    }
   }
   return problems
 }
@@ -63,23 +55,12 @@ export function toAirtableFields(
   form: AirtableForm,
   table: SchemaTable,
   data: SubmissionData,
-  consents: Consents,
 ): Record<string, unknown> {
   const fields: Record<string, unknown> = {}
   const typeOf = (id: string) => table.fields.find((f) => f.id === id)?.type
 
-  const permissionsField = table.fields.find((f) => f.id === form.fields.permissions?.id)
-  const ticked = (Object.keys(form.consentChoices) as Consent[])
-    .filter((consent) => consents[consent])
-    .map((consent) => {
-      const choiceId = form.consentChoices[consent]
-      return permissionsField?.options?.choices?.find(({ id }) => id === choiceId)?.name
-    })
-    .filter((name): name is string => Boolean(name))
-  const values: SubmissionData = { ...data, permissions: ticked }
-
   for (const [name, field] of Object.entries(form.fields) as [FieldName, { id: string }][]) {
-    const value = list(values[name])
+    const value = list(data[name])
     if (value.length === 0) continue
     switch (typeOf(field.id)) {
       case 'multipleRecordLinks':

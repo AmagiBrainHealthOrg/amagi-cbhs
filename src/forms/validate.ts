@@ -1,4 +1,4 @@
-import type { Consent, FieldName } from '@/config/airtable'
+import type { FieldName } from '@/config/airtable'
 import type { FieldOption } from '@/utils/airtable'
 
 import type { FieldDef } from './registry'
@@ -9,11 +9,6 @@ export type ResolvedField = FieldDef & { options?: FieldOption[] }
 export type Values = Partial<Record<FieldName, string | string[]>>
 export type FieldErrors = Partial<Record<FieldName, string>>
 
-export const CONSENT_INPUTS: Record<Consent, string> = {
-  contact: 'consentContact',
-  publicName: 'consentPublicName',
-  shareStory: 'consentShareStory',
-}
 export const HONEYPOT = 'homepage'
 
 const MAX_TEXT = 200
@@ -31,12 +26,6 @@ export function readValues(fields: ResolvedField[], form: FormData): Values {
     values[name] = many(control) ? raw.map((v) => v.trim()).filter(Boolean) : (raw[0] ?? '').trim()
   }
   return values
-}
-
-export function readConsents(form: FormData): Record<Consent, boolean> {
-  return Object.fromEntries(
-    Object.entries(CONSENT_INPUTS).map(([consent, input]) => [consent, form.get(input) === 'on']),
-  ) as Record<Consent, boolean>
 }
 
 export function isVisible(field: FieldDef, values: Values, fields: ResolvedField[]): boolean {

@@ -22,12 +22,7 @@ export async function syncSubmission(payload: Payload, id: number): Promise<Sync
   try {
     const form = airtableForms[submission.form]
     const table = await getTable(form.table)
-    const fields = toAirtableFields(
-      form,
-      table,
-      submission.data as SubmissionData,
-      submission.consents ?? {},
-    )
+    const fields = toAirtableFields(form, table, submission.data as SubmissionData)
     result = { status: 'synced', recordId: await createRecord(form.table, fields) }
   } catch (error) {
     console.error(`Airtable sync failed for form submission ${id}`, error)

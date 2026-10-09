@@ -5,7 +5,6 @@ import { redirect } from 'next/navigation'
 import { after } from 'next/server'
 import { getPayload } from 'payload'
 
-import type { Consent } from '@/config/airtable'
 import { formOptions, type FormKey } from '@/config/forms'
 import { getResolvedForm } from '@/lib/forms'
 import { allowSubmission } from '@/lib/rateLimit'
@@ -19,7 +18,6 @@ import {
   HONEYPOT,
   isVisible,
   normaliseUrl,
-  readConsents,
   readValues,
   validate,
   type Values,
@@ -30,7 +28,6 @@ export type FormState = {
   formError?: string
   /** What was sent, so a rejected form keeps its answers. */
   values?: Values
-  consents?: Record<Consent, boolean>
 }
 
 const isFormKey = (key: string): key is FormKey => formOptions.some(({ value }) => value === key)
@@ -60,36 +57,33 @@ export async function submitForm(
 
   const payload = await getPayload({ config })
 
-  let resolved
+  let fields
   try {
-    resolved = await getResolvedForm(key)
+    fields = await getResolvedForm(key)
   } catch (error) {
     console.error(`Form ${key} could not load its fields`, error)
     return { formError: 'The form is unavailable right now. Please try again later.' }
   }
 
-  const values = readValues(resolved.fields, form)
-  const consents = readConsents(form)
-  const errors = validate(resolved.fields, values)
-  if (Object.keys(errors).length > 0) return { errors, values, consents }
+  const values = readValues(fields, form)
+  const errors = validate(fields, values)
+  if (Object.keys(errors).length > 0) return { errors, values }
 
   if (!(await allowSubmission(payload, await clientIp()))) {
     return {
       formError: "You've sent several forms in a short time. Please wait 10 minutes and try again.",
       values,
-      consents,
     }
   }
 
   const data: Values = {}
-  for (const field of resolved.fields) {
+  for (const field of fields) {
     const value = values[field.name]
-    if (!isVisible(field, values, resolved.fields) || !value || value.length === 0) continue
+    if (!isVisible(field, values, fields) || !value || value.length === 0) continue
     data[field.name] = field.control === 'url' ? normaliseUrl(value as string) : value
   }
   const labelOf = (name: 'location' | 'describesYou') =>
-    resolved.fields.find((f) => f.name === name)?.options?.find((o) => o.value === data[name])
-      ?.label
+    fields.find((f) => f.name === name)?.options?.find((o) => o.value === data[name])?.label
 
   const utm = (key: (typeof UTM_KEYS)[number]) => {
     const value = form.get(key)
@@ -105,7 +99,6 @@ export async function submitForm(
       data: data as Record<string, string | string[]>,
       territory,
       audienceType,
-      consents,
       utm: {
         source: utm('utm_source'),
         medium: utm('utm_medium'),

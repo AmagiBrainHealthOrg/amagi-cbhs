@@ -9,7 +9,8 @@
   --app-font-body: var(--font-baloo-2), system-ui, sans-serif;
   --app-font-heading: var(--font-montserrat), system-ui, sans-serif;
   --app-font-ui: var(--font-roboto), system-ui, sans-serif;
-  --app-font-key-statement: 'all-round-gothic', 'Arial Rounded MT Bold', 'Montserrat', system-ui, sans-serif;
+  --app-font-key-statement:
+    'all-round-gothic', 'Arial Rounded MT Bold', 'Montserrat', system-ui, sans-serif;
   --app-font-sans: var(--app-font-body);
   --app-font-display: var(--app-font-heading);
   --app-font-mono: var(--app-font-ui);
@@ -47,14 +48,14 @@
      Nothing sits below --fs-2xs (13px). Form controls are locked to
      --fs-base (16px) so iOS Safari does not auto-zoom on focus.
      The two clamps replace the previous per-breakpoint heading overrides. */
-  --fs-2xs: 0.8125rem;                        /* 13px  eyebrows, utility bar, legal */
-  --fs-xs: 0.875rem;                          /* 14px  metadata, form labels */
-  --fs-sm: 0.9375rem;                         /* 15px  buttons */
-  --fs-base: 1rem;                            /* 16px  default body, form controls */
-  --fs-md: 1.125rem;                          /* 18px  sustained reading blocks */
-  --fs-lg: 1.25rem;                           /* 20px  card headings (h3) */
-  --fs-xl: clamp(1.625rem, 3vw, 2rem);        /* 26-32px  section headings (h2) */
-  --fs-display: clamp(2.25rem, 6vw, 3.5rem);  /* 36-56px  hero and declaration */
+  --fs-2xs: 0.8125rem; /* 13px  eyebrows, utility bar, legal */
+  --fs-xs: 0.875rem; /* 14px  metadata, form labels */
+  --fs-sm: 0.9375rem; /* 15px  buttons */
+  --fs-base: 1rem; /* 16px  default body, form controls */
+  --fs-md: 1.125rem; /* 18px  sustained reading blocks */
+  --fs-lg: 1.25rem; /* 20px  card headings (h3) */
+  --fs-xl: clamp(1.625rem, 3vw, 2rem); /* 26-32px  section headings (h2) */
+  --fs-display: clamp(2.25rem, 6vw, 3.5rem); /* 36-56px  hero and declaration */
 
   /* --- Line heights ------------------------------------------ */
   --lh-display: 0.95;

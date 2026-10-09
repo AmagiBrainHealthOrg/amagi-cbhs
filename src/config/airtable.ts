@@ -2,7 +2,8 @@ import type { FormKey } from './forms'
 
 // The Airtable base is the source of truth (docs/AIRTABLE.md). Tables, fields and choices are
 // referenced by ID, so renaming them in Airtable never breaks the site. `pnpm airtable:check`
-// confirms every ID below still exists with a compatible type.
+// confirms every ID below still exists with a compatible type. Forms ask Follow-up preferences,
+// not the base's Permissions field (decided 9 October 2026).
 
 export type FieldKind = 'text' | 'longText' | 'email' | 'phone' | 'url' | 'date' | 'link' | 'select'
 
@@ -30,17 +31,12 @@ export type FieldName =
   | 'outlet'
   | 'message'
   | 'followUp'
-  | 'permissions'
-
-export type Consent = 'contact' | 'publicName' | 'shareStory'
 
 export type AirtableField = { id: string; kind: FieldKind }
 
 export type AirtableForm = {
   table: string
   fields: Partial<Record<FieldName, AirtableField>>
-  // Choice IDs on the form's `Permissions` field, one per consent (SPEC §8.1).
-  consentChoices: Record<Consent, string>
 }
 
 const text = (id: string): AirtableField => ({ id, kind: 'text' })
@@ -67,12 +63,6 @@ export const airtableForms: Record<FormKey, AirtableForm> = {
       interest: longText('fld2ELUV14ptAMA1M'),
       support: longText('fldTHdC2t3VjwTHaM'),
       followUp: select('fldl68DnhNOsCweUC'),
-      permissions: select('fldqrRftfGaQhJrpl'),
-    },
-    consentChoices: {
-      contact: 'selu13INia3RznwTw',
-      publicName: 'selhn3bz3k95e5dBp',
-      shareStory: 'selafm6smQEcFjhq1',
     },
   },
   'cta-consultation': {
@@ -87,12 +77,6 @@ export const airtableForms: Record<FormKey, AirtableForm> = {
       describesYou: link('fldv5pbQjIOJ9x1TC'),
       actionArea: link('fldIIvbYMAoxl7pK9'),
       followUp: select('fldWOj0Rb2ZtsXBfo'),
-      permissions: select('fldoxq03YOta8yikJ'),
-    },
-    consentChoices: {
-      contact: 'selhHkFKWmkaWFnoD',
-      publicName: 'selwQth7IYkchp8BQ',
-      shareStory: 'selyH3aw7KvGLDUnI',
     },
   },
   partner: {
@@ -110,12 +94,6 @@ export const airtableForms: Record<FormKey, AirtableForm> = {
       industryOther: text('fldEPc59OSvnI1Ive'),
       involvement: longText('fldoyPZcrL90M9bXk'),
       followUp: select('fldigh032nZVP5zJx'),
-      permissions: select('fldN8k4Z00DsqUjVs'),
-    },
-    consentChoices: {
-      contact: 'selnA1swl9scJVn67',
-      publicName: 'selLzchDEkgnZjO13',
-      shareStory: 'selabiBUPOaA6kC5y',
     },
   },
   relay: {
@@ -131,12 +109,6 @@ export const airtableForms: Record<FormKey, AirtableForm> = {
       activityDate: { id: 'fldPB1I9UU5reAHGo', kind: 'date' },
       activity: longText('fldPfzfsQCFvU9RnR'), // "About" in the base
       followUp: select('fldJX1gjrevqX5f94'),
-      permissions: select('fldM4YzM8OtFqzyxT'),
-    },
-    consentChoices: {
-      contact: 'selXDBCWoM9U0h8yj',
-      publicName: 'sel9SpxXrgCAJHEEJ',
-      shareStory: 'selSU8Q0DHKMLbA3R',
     },
   },
   contact: {
@@ -152,12 +124,6 @@ export const airtableForms: Record<FormKey, AirtableForm> = {
       outlet: text('fld5VA36NVFxm7LOp'),
       message: longText('fldK626l63vHmFGeO'), // "Enquiry" in the base
       followUp: select('fldU6CMtXg6aiArBO'),
-      permissions: select('fld9bw4Z2rdYrVPdO'),
-    },
-    consentChoices: {
-      contact: 'selDMLay48yFGvWXA',
-      publicName: 'selN4STw09m54VSEf',
-      shareStory: 'selvatJyNRyP9gwGe',
     },
   },
 }

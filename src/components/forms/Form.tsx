@@ -6,7 +6,6 @@ import React, { startTransition, useActionState, useEffect, useRef, useState } f
 import type { FormKey } from '@/config/forms'
 import { type FormState, submitForm } from '@/forms/actions'
 import {
-  CONSENT_INPUTS,
   type FieldErrors,
   HONEYPOT,
   isVisible,
@@ -15,7 +14,6 @@ import {
   validate,
   type Values,
 } from '@/forms/validate'
-import type { ConsentOption } from '@/lib/forms'
 
 import { Field } from './Field'
 import { VisitFields } from './VisitFields'
@@ -23,7 +21,6 @@ import { VisitFields } from './VisitFields'
 type Props = {
   formKey: FormKey
   fields: ResolvedField[]
-  consents: ConsentOption[]
   submitLabel: string
   notice?: string
   /** Unique on the page, so two forms never share input ids. */
@@ -32,7 +29,7 @@ type Props = {
 
 // SPEC §8: one shared form. Checks run in the browser first, then again in the server action;
 // either way the first invalid field gets focus. Without JavaScript the action still runs.
-export function Form({ formKey, fields, consents, submitLabel, notice, idPrefix }: Props) {
+export function Form({ formKey, fields, submitLabel, notice, idPrefix }: Props) {
   const [state, formAction, pending] = useActionState<FormState, FormData>(
     submitForm.bind(null, formKey),
     {},
@@ -96,22 +93,6 @@ export function Form({ formKey, fields, consents, submitLabel, notice, idPrefix 
             />
           ))}
       </div>
-
-      <fieldset className="form-choices form-consents">
-        <legend>
-          Permissions <span className="form-optional">(optional)</span>
-        </legend>
-        {consents.map(({ consent, label }) => (
-          <label key={consent} className="form-choice">
-            <input
-              type="checkbox"
-              name={CONSENT_INPUTS[consent]}
-              defaultChecked={state.consents?.[consent] ?? false}
-            />
-            <span>{label}</span>
-          </label>
-        ))}
-      </fieldset>
 
       <div className="form-honeypot" aria-hidden="true">
         <label>
