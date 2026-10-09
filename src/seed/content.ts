@@ -453,6 +453,7 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
           'Brain health touches every family in the Caribbean, through dementia, stroke, mental health and healthy ageing. The Summit brings communities, practitioners, researchers and policymakers together to share what works and agree what comes next.',
         ),
       },
+      teamSection,
       {
         blockType: 'flow',
         kicker: 'How it works',
@@ -480,7 +481,6 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
         numbered: false,
       },
       aboutContact,
-      teamSection,
       donateBanner,
     ],
   },
