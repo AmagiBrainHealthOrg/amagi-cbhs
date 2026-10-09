@@ -5,42 +5,45 @@ milestone: M2
 release: 1
 depends_on: [T010, T011, T012, T030]
 migrations: false
-requires_human: false
+requires_human: true
 spec: ['SPEC §10']
 skills: []
 ---
 
 # T015: Tracking
 
-> **Changed 8 October 2026:** analytics is Plausible, not Google Tag Manager (SPEC §10). Plausible, `donate_click`, `donation_complete` and outbound clicks are live, sent to the self-hosted Plausible set in `integrations.plausibleHost`. What's left: `form_start` and `form_submit` once the forms exist (T012, T014); remove the Consent Mode defaults, `dataLayer` and `integrations.gtmContainerId`; decide on the cookie banner (SPEC §13 D10). The criteria below predate the change and need rewriting before this ticket starts.
+Plausible, `donate_click`, `donation_complete` and outbound clicks went live on 8 October 2026 (SPEC §10). This ticket adds the form events and removes what was left of Google Tag Manager and the cookie banner (decided 9 October 2026: the site sets no cookies for visitors, so there is nothing to consent to).
 
 ## Scope
 
 **In**
 
-- `src/lib/tracking/`: typed event helpers for every event in SPEC §10.2; a type that rejects personal-data keys (`email`, `name`, `phone`, `message`).
-- Root layout: initialise `dataLayer` and push page context **before** the Google Tag Manager snippet; load the snippet only if `integrations.gtmContainerId` is set and `hasAnalyticsConsent()` (T030) is true, or as soon as the visitor accepts.
-- Route-level page context (`page_type`, `audience_segment`, `journey`, `territory`) with the defaults in SPEC §10.1.
-- Wire events: `form_start` (once per form per load), `form_submit` (thank-you page, once, via the `sessionStorage` marker in SPEC §10.2), `donate_click`, `donation_complete` (replace the T010 stub; once per session ID), `outbound_click` (delegated listener on external links).
-- Every Button and outbound link has the three data attributes.
+- `src/lib/tracking/`: `trackFormStart`, `trackFormSubmit`, and the `sessionStorage` pending marker (SPEC §10.2).
+- `Form`: `form_start` on the first focus, once per form per load; a valid submit sets the marker, a rejected one clears it.
+- `/thank-you/[form]`: `form_submit` with `form`, `territory` and `audience_type` from the query, only when the marker is present.
+- Remove the Consent Mode defaults, `dataLayer`, the cookie banner and the footer "Cookie settings" link. Hide `integrations.gtmContainerId` and the `cookie-consent` global in the admin; their columns are dropped in a later release (migrations stay backward compatible).
+- `/cookies` seed copy no longer lists `cbhs_consent`.
 
 **Out**
 
-- Analytics configuration (Beyond Growth).
+- Goals and custom properties in Plausible (human, see below).
+- Dropping the unused columns.
 
 ## Acceptance criteria
 
-- [ ] **AC1**: Page context is pushed before the tag manager loads.
-  - _Verify (browser):_ on `/about`, with a test container ID set and analytics accepted, `window.dataLayer[0]` contains the four context keys, and its push happens before the GTM script element is inserted (check element order and `dataLayer` index).
-- [ ] **AC2**: Events fire correctly.
-  - _Verify (browser):_ focusing a form field twice yields one `form_start`; clicking Donate yields `donate_click`; completing a test donation yields `donation_complete` with `value` and `currency` only; clicking an external partner link yields `outbound_click`.
-- [ ] **AC3**: Thank-you events fire once.
-  - _Verify (browser):_ reloading a form thank-you page or the donation thank-you page doesn't push `form_submit` or `donation_complete` again; opening `/thank-you/<key>` directly pushes no `form_submit`.
-- [ ] **AC4**: No personal data in the data layer.
-  - _Verify (browser):_ after submitting a form with name and email, `JSON.stringify(window.dataLayer)` contains neither value.
-- [ ] **AC5**: Every CTA carries the attributes.
-  - _Verify (browser):_ on every Release 1 page, all `a.button, button.button` and external links have `data-journey`, `data-action` and `data-destination-type`.
-- [ ] **AC6**: No tag manager without an ID or consent.
-  - _Verify (browser):_ with `gtmContainerId` empty, or with an ID set but analytics not accepted (T030), no `googletagmanager.com` request is made; accepting loads it without a reload.
-- [ ] **AC7**: Gates pass.
+- [ ] **AC1**: `form_start` fires once per form per load.
+  - _Verify (browser):_ on `/register`, focusing two fields sends one `form_start` with `{ form: "register-interest" }` to `…/api/event`.
+- [ ] **AC2**: `form_submit` fires once, only after a submit.
+  - _Verify (browser):_ submitting a valid form sends one `form_submit` with `form`, `territory` and `audience_type`; reloading the thank-you page or opening `/thank-you/<key>` directly sends none.
+  - _Verify (cli):_ `tests/int/tracking.int.spec.ts` passes.
+- [ ] **AC3**: No personal data in events.
+  - _Verify (browser):_ the `form_submit` request body contains no name, email, phone or free text.
+- [ ] **AC4**: No consent or tag manager code remains.
+  - _Verify (browser):_ no cookie banner, no "Cookie settings" footer link, `window.dataLayer` is undefined and no `cbhs_consent` cookie is set.
+- [ ] **AC5**: Gates pass.
   - _Verify (cli):_ `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build` exits 0.
+
+## Human steps
+
+- In Plausible: goals `form_start`, `form_submit`, `donate_click`, `donation_complete` (revenue, USD); custom properties `form`, `territory`, `audience_type`, `location`.
+- In the admin, edit the production `/cookies` page: remove the `cbhs_consent` entry.

@@ -4,10 +4,14 @@ import { revalidateGlobalAfterChange } from '@/hooks/revalidate'
 
 import { contentGlobal } from './shared'
 
+const content = contentGlobal('/?preview=true')
+
 export const CookieConsent: GlobalConfig = {
   slug: 'cookie-consent',
   hooks: { afterChange: [revalidateGlobalAfterChange] },
-  ...contentGlobal('/?preview=true'),
+  ...content,
+  // The banner was retired in T015 (SPEC §10.5). The global stays until a later release drops it.
+  admin: { ...content.admin, hidden: true },
   fields: [
     { name: 'heading', type: 'text' },
     { name: 'body', type: 'textarea' },

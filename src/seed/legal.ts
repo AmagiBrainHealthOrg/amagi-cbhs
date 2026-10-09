@@ -205,14 +205,8 @@ export const cookiesContent = richText(
     'Cookies are small files a website stores in your browser. Session storage is similar, but is cleared when you close the tab. This site only uses the ones it needs to work. Our analytics uses neither.',
   ),
 
-  heading('Strictly necessary'),
-  paragraph('These are always on, because the site needs them.'),
-  bullets(
-    cookie(
-      'cbhs_consent',
-      "(cookie, set by us). Remembers your answer to the cookie banner, so we don't ask on every page. Lasts 6 months.",
-    ),
-  ),
+  heading('Cookies'),
+  paragraph('We set no cookies when you visit the site.'),
 
   heading('Analytics'),
   paragraph(
