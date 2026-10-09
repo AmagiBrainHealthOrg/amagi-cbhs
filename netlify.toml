@@ -6,6 +6,8 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  # Next 16.3's Turbopack build cache holds env values; it is never deployed.
+  SECRETS_SCAN_OMIT_PATHS = ".netlify/.next/cache"
 
 [context.deploy-preview]
   command = "echo 'Deploy previews are off (SPEC §11.2)' && exit 1"
