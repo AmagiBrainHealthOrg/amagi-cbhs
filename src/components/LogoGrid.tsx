@@ -29,7 +29,7 @@ function LogoEntry({ name, logo, website, hidden }: Logo & { hidden?: boolean })
       alt={name}
       width={image.width ?? 300}
       height={image.height ?? 200}
-      sizes="200px"
+      sizes="360px"
     />
   ) : (
     <span>{name}</span>
