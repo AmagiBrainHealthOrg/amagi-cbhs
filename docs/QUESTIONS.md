@@ -75,3 +75,13 @@ Open questions for Amagi Health about the CBHS 2026 website and its Airtable bas
     - News from Substack
     - the Partner, Relay and Contact forms
     - the donations record in Airtable
+
+## Summit Week page
+
+12. **Anchor Day date.** Your Summit Week copy keeps the Anchor Day date off the site until it's confirmed, so the Summit Week page doesn't show one. The Home page's week strip still marks Thursday 19 November as Anchor Day. Is that date confirmed, or should it come off Home too?
+
+13. **Livestreaming.** The Summit Week page leaves out "Key sessions will be streamed" until livestreaming is confirmed. Is it?
+
+14. **Changing Minds.** What is the Substack address for "Subscribe to Changing Minds"? The button is left out until we have it.
+
+15. **"Propose an activity" form.** Your copy has a separate "Host an Activity" form. The site has one form for both, "Propose a Brain Health Relay activity" at `/relay`. Is one form enough?

@@ -66,6 +66,8 @@ All production accounts (hosting, database, storage, Stripe, email, fonts, Googl
 | `/about`                         | About                          | Summit purpose and Amagi's role. Mentions PLADRR, a follow-on event in Kingston on 3–5 February 2027                                                                                                                                                  |
 | `/support`                       | Support Caribbean Brain Health | Why support matters, what it enables, supporter levels, safeguards, support FAQs, Donate. Supporter list shows permission-confirmed entries only                                                                                                      |
 | `/call-to-action`                | Call to Action                 | Explains the _Caribbean Call to Action on Brain Health_ and its five action areas. Hosts the consultation form (§8.3). No download, signing or endorser list                                                                                          |
+| `/summit-week`                   | Summit Week                    | How the week works, the four streams, the shape of the week and how to host something, from Amagi's copy of 4 October 2026, as graphics first. The programme (§4.3) joins in Release 2                                                                |
+| `/register`                      | Register Interest              | The Register Interest form (§8.3). Linked from the Home hero, Summit Week and FAQs                                                                                                                                                                    |
 | `/faqs`                          | FAQs                           | A `pages` document with a `faqList` block: expandable questions grouped by category                                                                                                                                                                   |
 | `/donate`                        | Donate                         | Amount chooser (§7)                                                                                                                                                                                                                                   |
 | `/news`                          | News                           | A `pages` document whose `newsTeaser` block lists every `news` item, newest first. Approved `substack-posts` join in Release 2 (§9.3)                                                                                                                 |
@@ -76,12 +78,12 @@ All production accounts (hosting, database, storage, Stripe, email, fonts, Googl
 
 ### 4.3 Pages (Release 2)
 
-| Route                                                      | Page                   |
-| ---------------------------------------------------------- | ---------------------- |
-| `/host-countries`                                          | Host Countries index   |
-| `/host-countries/[slug]`                                   | Country profile        |
-| `/programme`                                               | Programme with filters |
-| `/get-involved/partner`, `/get-involved/relay`, `/contact` | Release 2 forms (§8.3) |
+| Route                            | Page                                                                                                                                                                                   |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/host-countries`                | Host Countries index                                                                                                                                                                   |
+| `/host-countries/[slug]`         | Country profile                                                                                                                                                                        |
+| `/programme`                     | Programme with filters                                                                                                                                                                 |
+| `/partner`, `/relay`, `/contact` | Partner, Relay and Contact forms (§8.3). Built early, on 9 October 2026. Partner is linked from the Home and Support heroes; Relay from Summit Week; Contact from About and the footer |
 
 ### 4.4 Partner announcements
 

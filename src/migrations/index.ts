@@ -14,6 +14,8 @@ import * as migration_20261008_175856_plausible_host from './20261008_175856_pla
 import * as migration_20261008_180000_plausible_legal_copy from './20261008_180000_plausible_legal_copy'
 import * as migration_20261009_120000_rate_limits from './20261009_120000_rate_limits'
 import * as migration_20261009_130000_forms_content from './20261009_130000_forms_content'
+import * as migration_20261009_130420_hero_and_card_links from './20261009_130420_hero_and_card_links'
+import * as migration_20261009_140000_summit_week_content from './20261009_140000_summit_week_content'
 
 export const migrations = [
   {
@@ -95,5 +97,15 @@ export const migrations = [
     up: migration_20261009_130000_forms_content.up,
     down: migration_20261009_130000_forms_content.down,
     name: '20261009_130000_forms_content',
+  },
+  {
+    up: migration_20261009_130420_hero_and_card_links.up,
+    down: migration_20261009_130420_hero_and_card_links.down,
+    name: '20261009_130420_hero_and_card_links',
+  },
+  {
+    up: migration_20261009_140000_summit_week_content.up,
+    down: migration_20261009_140000_summit_week_content.down,
+    name: '20261009_140000_summit_week_content',
   },
 ]
