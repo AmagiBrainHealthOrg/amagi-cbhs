@@ -5,8 +5,8 @@ import React, { useEffect, useRef } from 'react'
 import { pageBefore } from '@/utils/pageTrail'
 import { getUtm, UTM_KEYS } from '@/utils/utm'
 
-// UTM values and the source page travel with the form to POST /api/donate (SPEC §7.3).
-export function DonateHiddenFields() {
+// UTM values and the source page travel with a form: donations (SPEC §7.3) and forms (§8.1).
+export function VisitFields() {
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

@@ -166,7 +166,7 @@ describe('optionsFor', () => {
         },
         linked,
       ),
-    ).toEqual([{ value: 'Media', label: 'Media' }])
+    ).toEqual([{ value: 'Media', label: 'Media', id: 's' }])
   })
 })
 

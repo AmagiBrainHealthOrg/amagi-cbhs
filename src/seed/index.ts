@@ -29,7 +29,7 @@ const idOf = (value: unknown): number | undefined => {
 }
 
 // The header logo and hero photos already live on the Coming Soon global (SPEC §11.4).
-async function findImages({ payload, req }: Args): Promise<SeedImages> {
+export async function findImages({ payload, req }: Args): Promise<SeedImages> {
   const comingSoon = await payload.findGlobal({ slug: 'coming-soon', depth: 0, req })
   return {
     logo: idOf(comingSoon.logo),

@@ -100,7 +100,8 @@ export function toAirtableFields(
   return fields
 }
 
-export type FieldOption = { value: string; label: string }
+// `id` is the select choice's ID, for choices the site must recognise whatever their name.
+export type FieldOption = { value: string; label: string; id?: string }
 
 // Options for a link or select field: the linked table's records, or the select's choices.
 export function optionsFor(
@@ -110,5 +111,5 @@ export function optionsFor(
   if (field.type === 'multipleRecordLinks') {
     return linkedRecords[field.options?.linkedTableId ?? ''] ?? []
   }
-  return (field.options?.choices ?? []).map(({ name }) => ({ value: name, label: name }))
+  return (field.options?.choices ?? []).map(({ id, name }) => ({ value: name, label: name, id }))
 }

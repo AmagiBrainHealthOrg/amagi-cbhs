@@ -1,0 +1,44 @@
+/* Shared form system (SPEC §8). Tokens only; no raw hex values. */
+
+.form { display: grid; gap: 20px; max-width: 760px; }
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.form-field { display: grid; gap: 6px; align-content: start; min-width: 0; margin: 0; padding: 0; border: 0; }
+.form-field-wide { grid-column: 1 / -1; }
+.form-field > label, .form-choices > legend { padding: 0; color: var(--ink-deep); font-family: var(--app-font-ui); font-size: var(--fs-xs); font-weight: 700; }
+.form-choices > legend { margin-bottom: 8px; }
+.form-optional { color: var(--muted-text); font-weight: 400; }
+.form-hint { margin: 0; color: var(--muted-text); font-family: var(--app-font-ui); font-size: var(--fs-2xs); }
+.form-error { margin: 0; color: var(--red); font-family: var(--app-font-ui); font-size: var(--fs-xs); font-weight: 700; }
+
+.form input:not([type='checkbox'], [type='radio']), .form select, .form textarea { width: 100%; min-height: 44px; padding: 0 12px; border: 1px solid var(--muted-text); border-radius: 4px; background: var(--white); color: var(--ink-deep); font-size: var(--fs-base); }
+.form textarea { min-height: 112px; padding: 10px 12px; line-height: var(--lh-body); resize: vertical; }
+.form-field-invalid input:not([type='checkbox'], [type='radio']), .form-field-invalid select, .form-field-invalid textarea { border: 2px solid var(--red); }
+.form :focus-visible { outline: 2px solid var(--primary-blue); outline-offset: 2px; }
+
+.form-choices { display: grid; gap: 8px; margin: 0; padding: 0; border: 0; }
+.form-choice { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--white); font-size: var(--fs-sm); line-height: 1.4; cursor: pointer; }
+.form-choice:hover { border-color: var(--primary-blue); }
+.form-choice span { font-family: var(--app-font-ui); font-weight: 400; color: var(--ink-deep); }
+.form-choice input { flex: none; width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--primary-blue); }
+.form-field-invalid .form-choice { border-color: var(--red); }
+.form-consents { padding-top: 16px; border-top: 1px solid var(--border-muted); }
+.form-consents .form-choice { padding: 0; border: 0; background: none; }
+
+.form-alert { padding: 12px 14px; border-left: 4px solid var(--red); background: var(--pale-blue); color: var(--ink-deep); font-family: var(--app-font-ui); font-size: var(--fs-xs); font-weight: 700; }
+.form-notice { margin: 0; padding: 10px 12px; border-radius: 4px; background: var(--pale-blue); color: var(--ink-deep); font-family: var(--app-font-ui); font-size: var(--fs-xs); line-height: 1.45; }
+.form-actions { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; }
+.form-submit { min-height: 50px; padding-inline: 24px; background: var(--primary-blue); color: var(--white); }
+.form-submit:hover { background: var(--ink-deep); }
+.form-submit:disabled { opacity: .7; cursor: progress; transform: none; }
+.form-privacy { margin: 0; color: var(--muted-text); font-family: var(--app-font-ui); font-size: var(--fs-2xs); }
+.form-privacy a { color: var(--primary-blue); text-decoration: underline; }
+.form-honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+.form-thank-you { display: grid; gap: 16px; justify-items: start; max-width: 720px; }
+.form-thank-you h1 { color: var(--primary-blue); font-family: var(--app-font-key-statement); font-size: var(--fs-display); font-weight: 600; letter-spacing: -.04em; line-height: var(--lh-display); }
+.form-thank-you p { font-size: var(--fs-md); line-height: var(--lh-reading); }
+
+@media (max-width: 720px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .form-submit { width: 100%; }
+}
