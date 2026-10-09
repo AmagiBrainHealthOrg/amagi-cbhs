@@ -1,8 +1,7 @@
 /* Content page rules.
    No raw hex values; use tokens from tokens.css. */
 
-.site-page { min-height: 100dvh; display: grid; grid-template-rows: auto auto 1fr auto; background: var(--white); color: var(--ink-deep); }
-.preview-banner { padding: 8px 16px; background: var(--yellow); color: var(--ink-deep); font-family: var(--app-font-ui); font-size: var(--fs-2xs); font-weight: 700; text-align: center; }
+.site-page { min-height: 100dvh; display: grid; grid-template-rows: auto 1fr auto; background: var(--white); color: var(--ink-deep); }
 
 .page-hero { padding: clamp(48px, 8vw, 96px) 16px clamp(36px, 6vw, 64px); background: var(--primary-blue); color: var(--white); }
 .page-hero-inner { width: min(var(--max), 100%); margin: 0 auto; }
