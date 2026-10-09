@@ -71,6 +71,7 @@ export interface Config {
     news: News;
     partners: Partner;
     supporters: Supporter;
+    team: Team;
     faqs: Faq;
     'form-submissions': FormSubmission;
     media: Media;
@@ -86,6 +87,7 @@ export interface Config {
     news: NewsSelect<false> | NewsSelect<true>;
     partners: PartnersSelect<false> | PartnersSelect<true>;
     supporters: SupportersSelect<false> | SupportersSelect<true>;
+    team: TeamSelect<false> | TeamSelect<true>;
     faqs: FaqsSelect<false> | FaqsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -175,6 +177,7 @@ export interface Page {
         | ActionAreasBlock
         | SupporterLevelsBlock
         | LogoGridBlock
+        | TeamBlock
         | FaqListBlock
         | NewsTeaserBlock
         | DonateBannerBlock
@@ -659,6 +662,26 @@ export interface LogoGridBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamBlock".
+ */
+export interface TeamBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'team';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "FaqListBlock".
  */
 export interface FaqListBlock {
@@ -847,6 +870,39 @@ export interface Supporter {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * People shown in team sections, such as on the About page, once published.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team".
+ */
+export interface Team {
+  id: number;
+  name: string;
+  /**
+   * For example "Convenor" or "Country lead". Optional.
+   */
+  role?: string | null;
+  /**
+   * Optional.
+   */
+  country?: string | null;
+  /**
+   * A square headshot, at least 640 pixels wide.
+   */
+  photo?: (number | null) | Media;
+  /**
+   * Separate paragraphs with a blank line. The first paragraph shows on the card; the rest opens with "Read more".
+   */
+  bio?: string | null;
+  /**
+   * Lower numbers come first. People without a number follow, A to Z.
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "faqs".
  */
@@ -981,6 +1037,10 @@ export interface PayloadLockedDocument {
         value: number | Supporter;
       } | null)
     | ({
+        relationTo: 'team';
+        value: number | Team;
+      } | null)
+    | ({
         relationTo: 'faqs';
         value: number | Faq;
       } | null)
@@ -1059,6 +1119,7 @@ export interface PagesSelect<T extends boolean = true> {
         actionAreas?: T | ActionAreasBlockSelect<T>;
         supporterLevels?: T | SupporterLevelsBlockSelect<T>;
         logoGrid?: T | LogoGridBlockSelect<T>;
+        team?: T | TeamBlockSelect<T>;
         faqList?: T | FaqListBlockSelect<T>;
         newsTeaser?: T | NewsTeaserBlockSelect<T>;
         donateBanner?: T | DonateBannerBlockSelect<T>;
@@ -1348,6 +1409,19 @@ export interface LogoGridBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamBlock_select".
+ */
+export interface TeamBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "FaqListBlock_select".
  */
 export interface FaqListBlockSelect<T extends boolean = true> {
@@ -1453,6 +1527,21 @@ export interface SupportersSelect<T extends boolean = true> {
   logo?: T;
   level?: T;
   permissionConfirmed?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team_select".
+ */
+export interface TeamSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  country?: T;
+  photo?: T;
+  bio?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

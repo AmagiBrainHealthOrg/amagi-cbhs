@@ -16,6 +16,7 @@ import { RichText } from './RichText'
 import { Statement } from './Statement'
 import { SummitWeek } from './SummitWeek'
 import { SupporterLevels } from './SupporterLevels'
+import { Team } from './Team'
 
 // SPEC §6.3. `video` (T016) and `hostCountriesTeaser` (T020) join in Release 2.
 export const pageBlocks: Block[] = [
@@ -30,6 +31,7 @@ export const pageBlocks: Block[] = [
   ActionAreas,
   SupporterLevels,
   LogoGrid,
+  Team,
   FaqList,
   NewsTeaser,
   DonateBanner,

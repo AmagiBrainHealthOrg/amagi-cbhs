@@ -90,6 +90,15 @@ const actionAreas = {
 
 const donateBanner = { blockType: 'donateBanner' } as const
 
+export const teamSection = {
+  blockType: 'team',
+  kicker: 'Our team',
+  heading: 'The people behind the Summit',
+  intro:
+    'The Summit is convened by Amagi Health, with country leads and liaisons in each host country.',
+  background: 'white',
+} as const
+
 // Home, directly below the hero.
 export const partnerBanner = {
   blockType: 'logoGrid',
@@ -471,6 +480,7 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
         numbered: false,
       },
       aboutContact,
+      teamSection,
       donateBanner,
     ],
   },
@@ -930,3 +940,96 @@ export const seedGlobals = (images: SeedImages): Globals => ({
     ],
   },
 })
+
+// From Amagi's team folder (9 October 2026). Headshots are in src/seed/media/team, cropped square;
+// like partner logos, the seed leaves them out and the team_content migration uploads them.
+// TODO: confirm each person's role (country lead or liaison) with Amagi.
+export const teamMembers: (RequiredDataFromCollectionSlug<'team'> & { photoFile: string })[] = [
+  {
+    name: 'Dr Ishtar Govia',
+    role: 'Convenor',
+    order: 1,
+    photoFile: 'ishtar-govia.webp',
+    bio: 'Dr Ishtar Govia convenes the Caribbean Brain Health Summit 2026 and is Founder and CEO of Amagi Health Ltd. A former Senior Advisor at the World Health Organization, she serves as a Nominated Member of the World Dementia Council, Board Member of the Caribbean Policy Research Institute, a Clinical Committee Member of the Bellevue Hospital in Jamaica, and Vice President of the Caribbean Alliance of National Psychological Associations. Her work focuses on building regional infrastructure for brain health, dementia and healthy ageing — connecting Caribbean families, clinicians, researchers, employers, policy and the diaspora in a shared agenda for 2027 and beyond.',
+  },
+  {
+    name: 'Kimberley Benjamin',
+    country: 'Barbados',
+    order: 10,
+    photoFile: 'kimberley-benjamin.webp',
+    bio: [
+      'Kimberley Benjamin is an Atlantic Fellow, a lifelong community of experts across many disciplines united by the shared aim of advancing fairer, healthier and more equitable societies. She completed the Atlantic Fellowship for Equity in Brain Health at the Global Brain Health Institute, Trinity College Dublin, obtaining a Postgraduate certificate in Equity in Brain Health in the process and leading a project on Ageing, Brain Health and Cognitive Impairment in Irish Prisons.',
+      'As a lawyer specialising in health and human rights law, Kimberley’s work focuses on the intersection of health and human rights for people experiencing vulnerability, with a particular emphasis on older adults, persons living with dementia and their care partners, to advance rights-based approaches to care. She is currently the Principal Investigator of the ‘Because We Care: Advancing Care Rights and Supports’ project – Barbados’ first rights based, digitally accessible mapping of dementia supports, services and institutions. Kimberley is a member of the Barbados Alzheimer’s Association, supporting national advocacy efforts, including the coordination of conferences about dementia.',
+      'She has also worked on various human rights and or health law-related projects with the Inter-American Commission on Human Rights, the Pan American Health Organization, Healthy Caribbean Coalition and the Caribbean Court of Justice Academy for Law. She also served as an intern at the United Nations Development Program Subregional Office for Barbados and the Organization of Eastern Caribbean States.',
+      'Kimberley earned a Masters in National and Global Health Law with certification in International Human Rights Law from Georgetown University in Washington D.C. and a Masters in Legislative Drafting from the University of the West Indies. She is a 2021-2023 Healthy Food Law and Policy Scholar and Fellow with the Global Center for Legal Innovation on Food Environments, O’Neill Institute for National and Global Health Law and a Fulbright Scholar with a passion for fostering local, regional and international collaborations.',
+    ].join('\n\n'),
+  },
+  {
+    name: 'Dr Melanie Taylor-John',
+    country: 'Barbados',
+    order: 11,
+    photoFile: 'melanie-taylor-john.webp',
+    bio: 'Dr. Melanie Taylor-John is a Barbadian physician and clinical and translational researcher with more than five years of experience in medicine and research. Her work focuses on non-communicable diseases and dementia, with an emphasis on improving the representation of historically underserved populations, particularly Afro-Caribbean communities and older adults, in clinical research. Through translational research, she bridges scientific discovery and clinical practice to advance more proactive and equitable approaches to understanding, preventing, and managing non-communicable diseases regionally.',
+  },
+  {
+    name: 'Dr Noviann McLean-Gregory',
+    country: 'Cayman Islands',
+    order: 20,
+    photoFile: 'noviann-mclean-gregory.webp',
+    bio: 'Dr. Noviann McLean-Gregory is a PhD-trained research scientist whose work spans ageing biology, metabolic health, neuroscience, and public health. She completed her PhD at the University of Kent through the South Coast Biosciences Doctoral Training Partnership, with part of her project published in PLOS Genetics in August 2026. Her research used Caenorhabditis elegans to study appetite regulation, longevity, and disease pathways. In the Cayman Islands, she supports molecular biology, dementia education, and health policy, including work on perinatal health, obesity, and lifestyle-related diseases. She is also active in netball and several professional scientific societies.',
+  },
+  {
+    name: 'Abigail Evans',
+    country: 'Jamaica',
+    order: 30,
+    photoFile: 'abigail-evans.webp',
+    bio: [
+      'Abigail Evans is a Human Resources professional, counsellor, research officer and mental health advocate with a background in psychology, management and administration.',
+      'At R Hotel Kingston, Abigail blends the heart of a counsellor with the discipline of an HR leader. As Human Resources Manager, she leads recruitment, performance management, employee relations, training, policy development and staff wellness initiatives, building a culture where people feel supported and excellence is expected. She also lends her expertise to the hotel’s operations and general management.',
+      'Abigail’s commitment to mental health runs alongside her HR career. She is a counsellor at SafeSpot Ja, Jamaica’s first child helpline, operated by the Office of the Children’s Advocate. After serving as Administrator and Research Officer at the Jamaica Mental Health Advocacy Network (JAMHAN), she joined Amagi Health Ltd as Research Officer and Administrator. There she supports programme research, evaluation and delivery across its Caribbean Programmes. She also provides administrative consultancy services.',
+      'Abigail holds a Bachelor of Science in Psychology and Management Studies from the University of the West Indies, Mona, and certificates in Human Resource Management and Hotel Operations Management from Northern Caribbean University. She is currently pursuing the Commonwealth Executive MBA (CEMBA) at the University of the Commonwealth Caribbean. Her professional training includes workplace investigations, interviewing, performance management and workplace law. Her counselling training includes child safeguarding, child-centred communication and trauma, attachment and relational approaches.',
+      'She is an affiliate member of the Jamaican Psychological Association and a member of the Human Resource Management Association of Jamaica (HRMAJ). She previously served as a Director of Think Mental Health Jamaica and as a volunteer counsellor with U-Matter.',
+      'An avid reader, Abigail is committed to helping young people develop a love of reading and to championing the wellbeing and inclusion of marginalised groups. She is passionate about building healthy, people-centred workplaces and advancing mental health care in Jamaica through education, advocacy and leadership.',
+    ].join('\n\n'),
+  },
+  {
+    name: 'Dr Khrystal Binns-Lee',
+    country: 'Jamaica',
+    order: 31,
+    photoFile: 'khrystal-binns-lee.webp',
+    bio: 'Dr. Khrystal Binns-Lee is a Jamaican medical doctor with postgraduate training in gerontology and a special interest in brain health, dementia prevention and healthy ageing. She holds an MBBS (Bachelor of Medicine, Bachelor of Surgery Degree) and a Master of Public Health in Gerontology, and is currently pursuing a Postgraduate Diploma in Geriatric Medicine at the University of the West Indies, Mona. As the lead physician of the Claremont Centre of Excellence Geriatric Clinic (the first and only geriatric clinic in the island) and the founder of the Claremont Senior Citizens Wellness Club, she champions community-based care, early recognition of cognitive decline and support for older adults and their families. Her work brings together clinical care, health education and social engagement to promote cognitive wellbeing and quality of life.',
+  },
+  {
+    name: 'Dr Lauren-Paige Reid',
+    country: 'Jamaica',
+    order: 32,
+    photoFile: 'lauren-paige-reid.webp',
+    bio: [
+      'Dr. Lauren-Paige Reid is a Jamaican medical doctor with a focus on Brain Health and Mental Health and a strong commitment to advocacy, leadership, and community empowerment. She currently serves as a District Medical Officer in Psychiatry with the Kingston and St. Andrew Health Department’s Community Mental Health Services and provides primary care services at MobiCare Medical Center, reflecting her commitment to delivering comprehensive care across the spectrum of health.',
+      'As a Certified Brain Health Navigator and active member of the Jamaica Psychiatric Association, Dr. Reid also serves as the Amagi Jamaica Programme Lead, where she has contributed to the implementation of the Brain Train Programme and Dementia Moments Experience Jamaica, initiatives focused on dementia prevention, brain health promotion and caregiver education.',
+      'She is also the Jamaica Mental Health Lead for the CASSM Foundation, coordinating mental health outreach initiatives across rural and urban communities in Jamaica. Her work extends beyond the office walls to community mental health advocacy, and public education.',
+      'A proud graduate of The University of the West Indies, where she earned her Bachelor of Medical Sciences and MBBS degrees, Dr. Reid continues to champion an approach to healthcare that recognizes the correlation of the mind, body, and soul. Through her clinical, advocacy and community work, she remains committed to promoting brain and mental health awareness, supporting wholistic wellness, and building healthier, more resilient communities.',
+    ].join('\n\n'),
+  },
+  {
+    name: 'Dr Naila Edwards',
+    country: 'Tobago',
+    order: 40,
+    photoFile: 'naila-edwards.webp',
+    bio: "Dr. Naila Edwards is a board-certified internist and geriatrician who completed specialist training through the Harvard Medical School Multi-Campus Geriatric Medicine Fellowship. She currently serves as a Specialist Medical Officer in Internal Medicine at Roxborough Hospital, Tobago Regional Health Authority, where she leads the implementation of the Caribbean's first Age-Friendly Health Systems outpatient initiative outside of U.S. territory.",
+  },
+  {
+    name: 'Michèle Saunders Clavery',
+    country: 'Trinidad',
+    order: 41,
+    photoFile: 'michele-saunders-clavery.webp',
+    bio: [
+      'A lifelong educator with forty-three (43) years in the field of education, spanning both secondary and tertiary levels, Ms. Saunders Clavery holds a Master’s Degree in Education (UWI); a postgraduate professional teaching diploma in education (Dip. Ed, UWI); LCCI Diploma in Marketing, Advertising, and Public Relations; and a B. A. in English and Political Science (Concordia University, Montreal). Michèle recently retired as Head of the Continuing Studies department at the Cipriani College of Labour and Co-operative Studies, CCLCS where she also headed both the Developmental Education and General Education departments. She was also Senior Lecturer at CCLCS and served for three terms as Head of the Writing and Editing Committee Self Study for accreditation. Ms. Saunders Clavery is an adjunct lecturer at UWI-ROYTEC, and a columnist for the Anglican Outlook newspaper.',
+      'Outside of her professional commitments, Ms. Saunders Clavery has been volunteering with the Alzheimer’s Association of Trinidad and Tobago, (AzATT) for the past twenty (20) years, serving as Vice President, then President. She is trained in the Dementia Capable Care programme and delivers workshops and talks followed by Q&A sessions. Recently, Ms. Saunders Clavery represented AzATT at the 37th Alzheimer’s Disease International Global Conference in France, April 2026 where she delivered a paper titled, “Bridging the Gap Through Education and Training for Informal Carers of Individuals Living with Dementia: A Social Justice Imperative.”',
+    ].join('\n\n'),
+  },
+]
+
+export const seedTeam: RequiredDataFromCollectionSlug<'team'>[] = teamMembers.map(
+  ({ photoFile: _photoFile, ...member }) => ({ ...member, _status: 'published' }),
+)
