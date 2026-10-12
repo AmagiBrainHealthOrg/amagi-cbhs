@@ -1,10 +1,13 @@
+import { getImageProps } from 'next/image'
 import React from 'react'
+
+import heroIllustration from '@/assets/hero-illustration.jpg'
+import heroIllustrationMedium from '@/assets/hero-illustration-medium.jpg'
+import heroIllustrationMobile from '@/assets/hero-illustration-mobile.jpg'
 
 import type { Media } from '@/payload-types'
 import { crossfadeKeyframes } from '@/utils/crossfadeKeyframes'
 import { withBreaks } from '@/utils/withBreaks'
-
-import { caribbeanMap } from './graphics/caribbeanMap'
 
 const SECONDS_PER_IMAGE = 8
 
@@ -67,20 +70,42 @@ export function PhotoHero({
   )
 }
 
-export function MapHero(props: Props) {
-  const { width, height, d } = caribbeanMap
+export function IllustrationHero({
+  kicker,
+  heading,
+  lead,
+  children,
+  logo,
+  brandTitle,
+  aside,
+}: Props & { logo?: Media; brandTitle?: string | null; aside?: React.ReactNode }) {
+  const common = { alt: '', fill: true, sizes: '100vw', fetchPriority: 'high' } as const
+  const { props: desktop } = getImageProps({ ...common, src: heroIllustration })
+  const { props: medium } = getImageProps({ ...common, src: heroIllustrationMedium })
+  const { props: mobile } = getImageProps({ ...common, src: heroIllustrationMobile })
   return (
-    <section className="v1-hero v1-hero-map">
-      <svg
-        className="v1-hero-map-bg"
-        viewBox={`0 0 ${width} ${height}`}
-        preserveAspectRatio="xMidYMid slice"
-        aria-hidden="true"
-      >
-        <path d={d} />
-      </svg>
+    <section className="v1-hero v1-hero-illustration">
+      <picture>
+        <source media="(min-width: 1440px)" srcSet={desktop.srcSet} sizes={desktop.sizes} />
+        <source media="(min-width: 961px)" srcSet={medium.srcSet} sizes={medium.sizes} />
+        <img {...mobile} className="v1-hero-illustration-bg" alt="" />
+      </picture>
       <Wave />
-      <Inner {...props} />
+      <div className="v1-hero-inner">
+        <div className="v1-hero-card">
+          {logo && (
+            <div className="v1-hero-brand">
+              <img src={logo.url!} alt={brandTitle ? '' : (logo.alt ?? '')} />
+              {brandTitle && <p>{withBreaks(brandTitle)}</p>}
+            </div>
+          )}
+          {kicker && !logo && <p className="v1-kicker">{kicker}</p>}
+          <h1>{withBreaks(heading)}</h1>
+          {lead && <p className="v1-hero-lead">{lead}</p>}
+          {children}
+        </div>
+        {aside && <div className="v1-hero-aside">{aside}</div>}
+      </div>
     </section>
   )
 }

@@ -4,11 +4,13 @@ import { Button } from '@/components/Button'
 import { DonateButton } from '@/components/DonateButton'
 import { Countdown } from '@/components/graphics/Countdown'
 import { StatsBand } from '@/components/graphics/graphics'
-import { MapHero, PhotoHero, PlainHero, usableImages } from '@/components/Hero'
+import { IllustrationHero, PhotoHero, PlainHero, usableImages } from '@/components/Hero'
+
+import { getGlobal } from '@/lib/globals'
 
 import type { BlockProps } from './types'
 
-export function HeroBlock({ block }: BlockProps<'hero'>) {
+export async function HeroBlock({ block }: BlockProps<'hero'>) {
   const {
     style,
     kicker,
@@ -26,40 +28,53 @@ export function HeroBlock({ block }: BlockProps<'hero'>) {
     { link: extraLink, action: 'hero_extra' },
   ].filter(({ link }) => link?.label && link.href)
 
-  const children = (
-    <>
-      {(showDonateButton || links.length > 0) && (
-        <div className="v1-hero-actions">
-          {showDonateButton && <DonateButton className="v1-donate-button" />}
-          {links.map(({ link, action }) => (
-            <Button
-              key={action}
-              href={link!.href!}
-              variant="secondary"
-              tone="dark"
-              journey="awareness"
-              action={action}
-            >
-              {link!.label}
-            </Button>
-          ))}
-        </div>
-      )}
-      {countdown?.target && countdown.label && (
-        <Countdown target={countdown.target} label={countdown.label} units={countdown.units} />
-      )}
-    </>
-  )
-  const statsBand = stats && stats.length > 0 && <StatsBand stats={stats} />
-  const props = { kicker, heading, lead, children }
-
-  if (style === 'map') {
-    return (
-      <div className="v1-fold">
-        <MapHero {...props} />
-        {statsBand}
+  const actions = (tone: 'light' | 'dark') =>
+    (showDonateButton || links.length > 0) && (
+      <div className="v1-hero-actions">
+        {showDonateButton && <DonateButton className="v1-donate-button" />}
+        {links.map(({ link, action }) => (
+          <Button
+            key={action}
+            href={link!.href!}
+            variant="secondary"
+            tone={tone}
+            journey="awareness"
+            action={action}
+          >
+            {link!.label}
+          </Button>
+        ))}
       </div>
     )
+  const countdownPanel = countdown?.target && countdown.label && (
+    <Countdown target={countdown.target} label={countdown.label} units={countdown.units} />
+  )
+  const statsBand = stats && stats.length > 0 && <StatsBand stats={stats} />
+  const text = { kicker, heading, lead }
+
+  if (style === 'map') {
+    const { logo, brandTitle } = await getGlobal('header')
+    return (
+      <div className="v1-fold">
+        <IllustrationHero
+          {...text}
+          logo={typeof logo === 'object' && logo?.url ? logo : undefined}
+          brandTitle={brandTitle}
+          aside={countdownPanel}
+        >
+          {actions('light')}
+        </IllustrationHero>
+      </div>
+    )
+  }
+  const props = {
+    ...text,
+    children: (
+      <>
+        {actions('dark')}
+        {countdownPanel}
+      </>
+    ),
   }
   return (
     <>

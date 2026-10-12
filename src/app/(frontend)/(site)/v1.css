@@ -135,32 +135,72 @@
   padding: clamp(64px, 10vw, 120px) var(--v1-gutter) clamp(96px, 12vw, 150px);
   color: var(--white);
 }
-.v1-hero-map {
-  background: linear-gradient(
-    150deg,
-    var(--ink-deep) 0%,
-    color-mix(in srgb, var(--primary-blue) 80%, var(--ink-deep)) 100%
-  );
+.v1-hero-illustration {
+  align-items: start;
+  background: #f2541b;
   min-height: min(88dvh, 860px);
+  padding-top: clamp(32px, 4vw, 56px);
+  padding-bottom: clamp(72px, 9vw, 120px);
 }
 .v1-fold {
   display: flex;
   flex-direction: column;
   min-height: calc(100svh - var(--v1-header-h, 82px));
 }
-.v1-fold .v1-hero-map {
+.v1-fold .v1-hero-illustration {
   flex: 1;
   min-height: 0;
 }
-.v1-hero-map-bg {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  pointer-events: none;
-  width: 100%;
+.v1-hero-illustration-bg {
+  z-index: -2;
+  object-fit: cover;
+  object-position: 72% 40%;
+}
+.v1-hero-illustration .v1-hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 540px) minmax(0, 1fr);
+  gap: 32px;
   height: 100%;
-  fill: var(--white);
-  opacity: 0.07;
+}
+.v1-hero-card {
+  padding: clamp(28px, 4vw, 48px);
+  border-radius: 24px;
+  background: var(--white);
+  box-shadow: var(--v1-shadow);
+  color: var(--ink-deep);
+}
+.v1-hero .v1-hero-card .v1-kicker {
+  color: var(--primary-blue);
+}
+.v1-hero-brand {
+  margin-bottom: clamp(20px, 3vw, 32px);
+}
+.v1-hero-brand img {
+  display: block;
+  width: min(100%, 280px);
+  height: auto;
+}
+.v1-hero-brand p {
+  display: none;
+}
+.v1-hero .v1-hero-card h1 {
+  margin-bottom: 16px;
+  font-size: clamp(1.1rem, 4.6vw, 1.6rem);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.v1-hero-card .v1-hero-lead {
+  color: var(--ink-deep);
+  font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+}
+.v1-hero-aside {
+  align-self: end;
+  justify-self: end;
+}
+.v1-hero-aside .v1-countdown {
+  margin-top: 0;
+  background: color-mix(in srgb, var(--ink-deep) 88%, transparent);
 }
 .v1-hero-inner {
   width: min(var(--max), 100%);
@@ -1528,6 +1568,71 @@
 }
 
 @media (max-width: 960px) {
+  .v1-hero-illustration {
+    padding-top: 62vw;
+    background: #014687;
+  }
+  .v1-hero-illustration-bg {
+    bottom: auto !important;
+    height: auto !important;
+    aspect-ratio: 1678 / 3338;
+    object-position: top;
+  }
+  .v1-hero-card {
+    padding: 0;
+    background: none;
+    box-shadow: none;
+    color: var(--white);
+  }
+  .v1-hero-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: fit-content;
+    max-width: 100%;
+    margin-bottom: 28px;
+    padding: 14px 20px;
+    border-radius: 18px;
+    background: var(--white);
+    box-shadow: var(--v1-shadow);
+  }
+  /* Crops the summit name printed under the logo, which the title beside it repeats. */
+  .v1-hero-brand img {
+    width: min(42vw, 180px);
+    aspect-ratio: 480 / 345;
+    object-fit: cover;
+    object-position: top;
+  }
+  .v1-hero-brand p {
+    display: block;
+    padding-left: 14px;
+    border-left: 1px solid var(--divider);
+    color: var(--primary-blue);
+    font-family: var(--app-font-heading);
+    font-size: clamp(0.95rem, 4vw, 1.2rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.12;
+  }
+  .v1-hero .v1-hero-card h1 {
+    color: var(--white);
+  }
+  .v1-hero-card .v1-hero-lead {
+    color: var(--pale-text);
+  }
+  .v1-hero-card .button-outline {
+    border-color: rgba(255, 255, 255, 0.85);
+    color: var(--white);
+  }
+  .v1-hero-card .button-outline:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .v1-hero-illustration .v1-hero-inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .v1-hero-aside {
+    justify-self: start;
+  }
   .v1-split,
   .v1-wheel {
     grid-template-columns: minmax(0, 1fr);

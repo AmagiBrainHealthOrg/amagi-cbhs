@@ -12,7 +12,7 @@ export const Hero: Block = {
       required: true,
       defaultValue: 'photo',
       options: [
-        { label: 'Map', value: 'map' },
+        { label: 'Illustration', value: 'map' },
         { label: 'Photo', value: 'photo' },
         { label: 'Plain', value: 'plain' },
       ],
