@@ -136,8 +136,10 @@
   color: var(--white);
 }
 .v1-hero-illustration {
+  align-items: start;
   background: #f2541b;
   min-height: min(88dvh, 860px);
+  padding-top: clamp(32px, 4vw, 56px);
   padding-bottom: clamp(72px, 9vw, 120px);
 }
 .v1-fold {
@@ -158,7 +160,7 @@
   display: grid;
   grid-template-columns: minmax(0, 540px) minmax(0, 1fr);
   gap: 32px;
-  align-items: end;
+  height: 100%;
 }
 .v1-hero-card {
   padding: clamp(28px, 4vw, 48px);
@@ -193,6 +195,7 @@
   font-size: clamp(0.95rem, 1.4vw, 1.05rem);
 }
 .v1-hero-aside {
+  align-self: end;
   justify-self: end;
 }
 .v1-hero-aside .v1-countdown {
