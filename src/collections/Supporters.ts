@@ -23,6 +23,15 @@ export const Supporters: CollectionConfig = {
     { name: 'name', type: 'text', required: true },
     { name: 'logo', type: 'upload', relationTo: 'media' },
     {
+      name: 'website',
+      type: 'text',
+      admin: { description: 'Optional. The full address, starting https://' },
+      validate: (value: string | null | undefined) =>
+        !value ||
+        (URL.canParse(value) && /^https?:\/\//.test(value)) ||
+        'Enter a full web address, starting https://',
+    },
+    {
       name: 'level',
       type: 'select',
       options: [
