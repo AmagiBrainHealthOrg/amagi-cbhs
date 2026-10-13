@@ -101,6 +101,24 @@ export const sampleBlocks: LayoutBlock[] = [
     ],
   },
   {
+    blockType: 'events',
+    id: 'events',
+    ...section,
+    show: true,
+    heading: 'Events',
+    background: 'white',
+    groups: [
+      {
+        name: 'Sample country',
+        events: [
+          { title: 'Sample event', body: 'A short line about the event.' },
+          { title: 'Another event' },
+        ],
+      },
+      { name: 'Online', online: true, events: [{ title: 'Sample online event' }] },
+    ],
+  },
+  {
     blockType: 'roadmap',
     id: 'roadmap',
     ...section,

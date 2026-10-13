@@ -171,6 +171,7 @@ export interface Page {
         | StatementBlock
         | HostMapBlock
         | SummitWeekBlock
+        | EventsBlock
         | RoadmapBlock
         | FlowBlock
         | CardGridBlock
@@ -411,6 +412,47 @@ export interface SummitWeekBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'summitWeek';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EventsBlock".
+ */
+export interface EventsBlock {
+  /**
+   * Untick to hide this section without losing its events.
+   */
+  show?: boolean | null;
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  /**
+   * One per host country, plus one for online events. Empty groups are hidden.
+   */
+  groups?:
+    | {
+        name: string;
+        online?: boolean | null;
+        events?:
+          | {
+              title: string;
+              body?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'events';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1117,6 +1159,7 @@ export interface PagesSelect<T extends boolean = true> {
         statement?: T | StatementBlockSelect<T>;
         hostMap?: T | HostMapBlockSelect<T>;
         summitWeek?: T | SummitWeekBlockSelect<T>;
+        events?: T | EventsBlockSelect<T>;
         roadmap?: T | RoadmapBlockSelect<T>;
         flow?: T | FlowBlockSelect<T>;
         cardGrid?: T | CardGridBlockSelect<T>;
@@ -1257,6 +1300,34 @@ export interface SummitWeekBlockSelect<T extends boolean = true> {
         label?: T;
         body?: T;
         anchor?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EventsBlock_select".
+ */
+export interface EventsBlockSelect<T extends boolean = true> {
+  show?: T;
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  groups?:
+    | T
+    | {
+        name?: T;
+        online?: T;
+        events?:
+          | T
+          | {
+              title?: T;
+              body?: T;
+              id?: T;
+            };
         id?: T;
       };
   id?: T;
