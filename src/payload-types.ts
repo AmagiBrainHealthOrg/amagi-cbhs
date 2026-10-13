@@ -860,6 +860,10 @@ export interface Supporter {
   id: number;
   name: string;
   logo?: (number | null) | Media;
+  /**
+   * Optional. The full address, starting https://
+   */
+  website?: string | null;
   level?: ('founding-regional' | 'regional' | 'access-participation' | 'community') | null;
   /**
    * The name and logo appear on the site only once the supporter has given permission.
@@ -1525,6 +1529,7 @@ export interface PartnersSelect<T extends boolean = true> {
 export interface SupportersSelect<T extends boolean = true> {
   name?: T;
   logo?: T;
+  website?: T;
   level?: T;
   permissionConfirmed?: T;
   updatedAt?: T;
