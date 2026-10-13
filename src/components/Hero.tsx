@@ -50,19 +50,32 @@ export function PhotoHero({
     <section className={`v1-hero v1-hero-${size}`}>
       <div className="hero-background" aria-hidden="true">
         {images.length > 1 && <style>{crossfadeKeyframes(images.length)}</style>}
-        {images.map((image, index) => (
-          <img
-            key={image.id}
-            className={`hero-image${images.length === 1 ? ' hero-image-static' : ''}`}
-            src={image.url!}
-            alt=""
-            style={{
-              objectPosition: `${image.focalX ?? 50}% ${image.focalY ?? 50}%`,
-              animationDuration: `${images.length * SECONDS_PER_IMAGE}s`,
-              animationDelay: `${index * SECONDS_PER_IMAGE}s`,
-            }}
-          />
-        ))}
+        {images.map((image, index) => {
+          // Only the first image is on screen at load; the rest fade in later, so they wait.
+          const { props } = getImageProps({
+            src: image.url!,
+            alt: '',
+            fill: true,
+            sizes: '100vw',
+            ...(index === 0
+              ? { loading: 'eager', fetchPriority: 'high' }
+              : { loading: 'lazy', fetchPriority: 'low' }),
+          })
+          return (
+            <img
+              {...props}
+              key={image.id}
+              className={`hero-image${images.length === 1 ? ' hero-image-static' : ''}`}
+              alt=""
+              style={{
+                ...props.style,
+                objectPosition: `${image.focalX ?? 50}% ${image.focalY ?? 50}%`,
+                animationDuration: `${images.length * SECONDS_PER_IMAGE}s`,
+                animationDelay: `${index * SECONDS_PER_IMAGE}s`,
+              }}
+            />
+          )
+        })}
       </div>
       <Wave />
       <Inner {...props} />
@@ -79,7 +92,13 @@ export function IllustrationHero({
   brandTitle,
   aside,
 }: Props & { logo?: Media; brandTitle?: string | null; aside?: React.ReactNode }) {
-  const common = { alt: '', fill: true, sizes: '100vw', fetchPriority: 'high' } as const
+  const common = {
+    alt: '',
+    fill: true,
+    sizes: '100vw',
+    loading: 'eager',
+    fetchPriority: 'high',
+  } as const
   const { props: desktop } = getImageProps({ ...common, src: heroIllustration })
   const { props: medium } = getImageProps({ ...common, src: heroIllustrationMedium })
   const { props: mobile } = getImageProps({ ...common, src: heroIllustrationMobile })
@@ -95,7 +114,12 @@ export function IllustrationHero({
         <div className="v1-hero-card">
           {logo && (
             <div className="v1-hero-brand">
-              <img src={logo.url!} alt={brandTitle ? '' : (logo.alt ?? '')} />
+              <img
+                src={logo.url!}
+                width={logo.width ?? undefined}
+                height={logo.height ?? undefined}
+                alt={brandTitle ? '' : (logo.alt ?? '')}
+              />
               {brandTitle && <p>{withBreaks(brandTitle)}</p>}
             </div>
           )}
