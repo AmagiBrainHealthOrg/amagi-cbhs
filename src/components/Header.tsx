@@ -22,7 +22,14 @@ export async function Header() {
       {(logo || brandTitle) && (
         <Link className="site-brand" href="/">
           {/* With a brand title the logo is decorative; without one, its alt names the link. */}
-          {logo && <img src={logo.url!} alt={brandTitle ? '' : logo.alt} />}
+          {logo && (
+            <img
+              src={logo.url!}
+              width={logo.width ?? undefined}
+              height={logo.height ?? undefined}
+              alt={brandTitle ? '' : logo.alt}
+            />
+          )}
           {logo && brandTitle && <span aria-hidden="true" />}
           {brandTitle && <strong>{withBreaks(brandTitle)}</strong>}
         </Link>
