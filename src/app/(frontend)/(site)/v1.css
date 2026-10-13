@@ -538,6 +538,69 @@
   color: var(--ink-deep);
 }
 
+/* Events, grouped by country */
+.v1-events {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.v1-events > li {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 24px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--v1-radius);
+  background: var(--white);
+}
+.v1-events h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  color: var(--primary-blue);
+  font-family: var(--app-font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 800;
+}
+.v1-events h3 svg {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  color: var(--orange);
+}
+.v1-events > li > ul {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.v1-events > li > ul > li {
+  display: grid;
+  gap: 4px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+.v1-events > li > ul > li:last-child {
+  padding-bottom: 0;
+}
+.v1-events h4 {
+  margin: 0;
+  color: var(--ink-deep);
+  font-family: var(--app-font-heading);
+  font-size: var(--fs-base);
+  font-weight: 700;
+  line-height: 1.3;
+}
+.v1-events p {
+  color: var(--muted-ink);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+}
+
 /* Roadmap */
 .v1-roadmap {
   position: relative;

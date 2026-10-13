@@ -202,6 +202,24 @@ export const aboutContact = {
   links: [{ label: 'Get in touch', href: '/contact' }],
 } as const satisfies Layout[number]
 
+// Summit Week, below the hero. Groups with no events are hidden, so the section stays off the
+// page until editors add events.
+export const eventsSection: Extract<Layout[number], { blockType: 'events' }> = {
+  blockType: 'events',
+  show: true,
+  kicker: 'Events',
+  heading: 'What’s on',
+  background: 'white',
+  groups: [
+    { name: 'Jamaica', events: [] },
+    { name: 'The Bahamas', events: [] },
+    { name: 'Barbados', events: [] },
+    { name: 'Trinidad and Tobago', events: [] },
+    { name: 'Cayman Islands', events: [] },
+    { name: 'Online', online: true, events: [] },
+  ],
+}
+
 // From Amagi's Summit Week copy (4 October 2026), cut down to a line per item: each section
 // is a graphic first. The programme (T021) joins in Release 2; the Anchor Day date stays off
 // the page until it is confirmed.
@@ -216,6 +234,7 @@ export const summitWeekPage = (images: SeedImages): SeedPage => ({
       lead: 'Locally led activities across the Caribbean and the diaspora, connected online and brought together at an Anchor Day in Jamaica. Free to attend.',
       secondaryLink: { label: 'Register your interest', href: '/register' },
     }),
+    eventsSection,
     {
       blockType: 'flow',
       kicker: 'How the week works',

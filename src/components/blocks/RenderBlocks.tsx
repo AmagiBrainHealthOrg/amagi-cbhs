@@ -4,6 +4,7 @@ import { ActionAreasBlock } from './ActionAreasBlock'
 import { AnchorDayBlock } from './AnchorDayBlock'
 import { CardGridBlock } from './CardGridBlock'
 import { DonateBannerBlock } from './DonateBannerBlock'
+import { EventsBlock } from './EventsBlock'
 import { FaqListBlock } from './FaqListBlock'
 import { FlowBlock } from './FlowBlock'
 import { FormBlock } from './FormBlock'
@@ -38,6 +39,8 @@ function RenderBlock({ block, blockId, actionAreas }: RenderProps) {
       return <HostMapBlock block={block} blockId={blockId} />
     case 'summitWeek':
       return <SummitWeekBlock block={block} blockId={blockId} />
+    case 'events':
+      return <EventsBlock block={block} blockId={blockId} />
     case 'roadmap':
       return <RoadmapBlock block={block} blockId={blockId} />
     case 'flow':

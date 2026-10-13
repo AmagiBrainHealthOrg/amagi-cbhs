@@ -4,6 +4,7 @@ import { ActionAreas } from './ActionAreas'
 import { AnchorDay } from './AnchorDay'
 import { CardGrid } from './CardGrid'
 import { DonateBanner } from './DonateBanner'
+import { Events } from './Events'
 import { FaqList } from './FaqList'
 import { Flow } from './Flow'
 import { Form } from './Form'
@@ -25,6 +26,7 @@ export const pageBlocks: Block[] = [
   Statement,
   HostMap,
   SummitWeek,
+  Events,
   Roadmap,
   Flow,
   CardGrid,

@@ -23,6 +23,8 @@ import * as migration_20261009_210000_hosting_and_cookie_copy from './20261009_2
 import * as migration_20261009_220000_team_content from './20261009_220000_team_content'
 import * as migration_20261009_230000_team_position from './20261009_230000_team_position'
 import * as migration_20261013_024300 from './20261013_024300'
+import * as migration_20261013_191636_events_block from './20261013_191636_events_block'
+import * as migration_20261013_200000_events_content from './20261013_200000_events_content'
 
 export const migrations = [
   {
@@ -149,5 +151,15 @@ export const migrations = [
     up: migration_20261013_024300.up,
     down: migration_20261013_024300.down,
     name: '20261013_024300',
+  },
+  {
+    up: migration_20261013_191636_events_block.up,
+    down: migration_20261013_191636_events_block.down,
+    name: '20261013_191636_events_block',
+  },
+  {
+    up: migration_20261013_200000_events_content.up,
+    down: migration_20261013_200000_events_content.down,
+    name: '20261013_200000_events_content',
   },
 ]
