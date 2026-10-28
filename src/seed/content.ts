@@ -3,7 +3,7 @@ import type { DataFromGlobalSlug, RequiredDataFromCollectionSlug } from 'payload
 import type { Page } from '@/payload-types'
 
 import { cookiesContent, privacyContent, termsContent } from './legal'
-import { paragraph, paragraphs, richText } from './lexical'
+import { bullets, heading, paragraph, paragraphs, richText } from './lexical'
 
 // The site copy as it stood on `main` before T011 (SPEC §6.4). The content migration and
 // `pnpm db:seed` apply it, creating only what is missing.
@@ -98,6 +98,84 @@ export const teamSection = {
     'The Summit is convened by Amagi Health, with country leads and liaisons in each host country.',
   background: 'white',
 } as const
+
+// From Amagi's About page updates (27 October 2026), above the team on About.
+export const approachSections: Layout = [
+  {
+    blockType: 'cardGrid',
+    kicker: 'Our approach',
+    heading: 'From local priorities to shared Caribbean action',
+    intro:
+      'The Summit combines public engagement with practical learning, country-led priority setting and collaboration beyond November. Our aim is to strengthen brain health as a shared health, social, economic and development priority. Each country shapes its contributions around local needs, existing strengths and what its partners can realistically take forward.',
+    background: 'white',
+    style: 'tiles',
+    items: [
+      {
+        icon: 'megaphone',
+        title: 'Identify what needs to change',
+        body: 'Country teams bring together relevant perspectives to identify a specific bottleneck affecting prevention, assessment, care, support or workforce capability.',
+      },
+      {
+        icon: 'users',
+        title: 'Build on what already exists',
+        body: 'They identify local assets—people, organisations, services, knowledge and initiatives—that could help move that priority forward.',
+      },
+      {
+        icon: 'badge-check',
+        title: 'Agree a practical next step',
+        body: 'They propose a feasible action, identify who could help lead it, and explain what regional cooperation or support would be useful.',
+      },
+    ],
+    outro:
+      'These contributions help connect local experience with a shared Caribbean agenda for evidence, collaboration and follow-through.',
+    links: [{ label: 'Explore country participation', href: '/summit-week' }],
+  },
+  {
+    blockType: 'accordion',
+    background: 'white',
+    items: [
+      {
+        title: 'What is a Country Brain Health Signal?',
+        content: richText(
+          paragraph(
+            'A Country Brain Health Signal is a short, locally informed contribution to the Summit’s shared agenda. It identifies:',
+          ),
+          bullets(
+            'One bottleneck that is preventing progress.',
+            'One existing asset or strength to build on.',
+            'One proposed next action.',
+            'One request for regional cooperation or support.',
+            'One coordinating contact for follow-up.',
+          ),
+          paragraph(
+            'Teams should draw on relevant evidence and a range of perspectives, including people with lived experience and care partners. The signal should make clear whose views informed it and what still needs checking.',
+          ),
+          paragraph(
+            'A Country Signal is not a comprehensive national assessment or an official government position unless explicitly authorised. Public summaries will be agreed with the contributors before release.',
+          ),
+        ),
+      },
+      {
+        title: 'What happens after Summit week?',
+        content: richText(
+          heading('November is a milestone, not the finish line', 'h3'),
+          paragraph(
+            'During Summit week, country activities and regional discussions will help identify priorities, strengthen practical knowledge and connect people who can contribute to change.',
+          ),
+          paragraph(
+            'After the week, we aim to consolidate agreed learning, record next steps and support willing partners to develop collaboration around care, workforce capability, evidence and economic planning.',
+          ),
+          paragraph(
+            'Over time, our ambition is to help country-led priorities inform national planning and relevant regional policy discussions, including through CARICOM’s Council for Human and Social Development (COHSOD), where appropriate. Formal consideration, endorsement or adoption would depend on the relevant governments and institutional processes.',
+          ),
+          paragraph(
+            'This is an evolving programme. Future activities will be shaped with participating partners and depend on agreed roles, capacity and resources.',
+          ),
+        ),
+      },
+    ],
+  },
+]
 
 // Home, directly below the hero.
 export const partnerBanner = {
@@ -472,6 +550,7 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
           'Brain health touches every family in the Caribbean, through dementia, stroke, mental health and healthy ageing. The Summit brings communities, practitioners, researchers and policymakers together to share what works and agree what comes next.',
         ),
       },
+      ...approachSections,
       teamSection,
       {
         blockType: 'flow',

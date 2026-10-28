@@ -25,6 +25,8 @@ import * as migration_20261009_230000_team_position from './20261009_230000_team
 import * as migration_20261013_024300 from './20261013_024300'
 import * as migration_20261013_191636_events_block from './20261013_191636_events_block'
 import * as migration_20261013_200000_events_content from './20261013_200000_events_content'
+import * as migration_20261028_190000_approach_content from './20261028_190000_approach_content'
+import * as migration_20261028_181735 from './20261028_181735'
 
 export const migrations = [
   {
@@ -161,5 +163,15 @@ export const migrations = [
     up: migration_20261013_200000_events_content.up,
     down: migration_20261013_200000_events_content.down,
     name: '20261013_200000_events_content',
+  },
+  {
+    up: migration_20261028_181735.up,
+    down: migration_20261028_181735.down,
+    name: '20261028_181735',
+  },
+  {
+    up: migration_20261028_190000_approach_content.up,
+    down: migration_20261028_190000_approach_content.down,
+    name: '20261028_190000_approach_content',
   },
 ]

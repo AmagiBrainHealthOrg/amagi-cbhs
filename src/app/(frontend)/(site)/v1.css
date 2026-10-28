@@ -1786,6 +1786,28 @@
   }
 }
 
+/* Closing line under a section's cards */
+.v1-section-outro {
+  max-width: 720px;
+  margin-top: 32px;
+  color: var(--primary-blue);
+  font-family: var(--app-font-heading);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  line-height: var(--lh-reading);
+}
+.v1-section-outro + .v1-section-actions {
+  margin-top: 20px;
+}
+
+/* Expandable items follow the section above closely, as part of it */
+.v1-section:has(+ .v1-accordion) {
+  padding-bottom: clamp(32px, 5vw, 48px);
+}
+.v1-accordion {
+  padding-bottom: clamp(40px, 6vw, 64px);
+}
+
 /* Buttons under a section's content */
 .v1-section-actions {
   display: flex;

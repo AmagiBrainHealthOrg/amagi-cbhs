@@ -5,16 +5,21 @@ import { type FaqGroup, FaqList } from '@/components/FaqList'
 import { Section } from '@/components/Section'
 import config from '@/payload.config'
 
+import { previewUser } from '../../app/(frontend)/(site)/_page'
+
 import type { BlockProps } from './types'
 
 export async function FaqListBlock({ block, blockId }: BlockProps<'faqList'>) {
   const payload = await getPayload({ config })
+  const user = await previewUser()
   const { docs } = await payload.find({
     collection: 'faqs',
     where: block.category ? { category: { equals: block.category } } : undefined,
     sort: ['order', 'createdAt'],
     pagination: false,
+    draft: Boolean(user),
     overrideAccess: false,
+    user,
   })
 
   // Categories appear in the order of their first FAQ.

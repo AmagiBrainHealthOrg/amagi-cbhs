@@ -1,5 +1,6 @@
 import type { Block } from 'payload'
 
+import { Accordion } from './Accordion'
 import { ActionAreas } from './ActionAreas'
 import { AnchorDay } from './AnchorDay'
 import { CardGrid } from './CardGrid'
@@ -30,6 +31,7 @@ export const pageBlocks: Block[] = [
   Roadmap,
   Flow,
   CardGrid,
+  Accordion,
   ActionAreas,
   SupporterLevels,
   LogoGrid,

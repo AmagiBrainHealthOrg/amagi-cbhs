@@ -175,6 +175,7 @@ export interface Page {
         | RoadmapBlock
         | FlowBlock
         | CardGridBlock
+        | AccordionBlock
         | ActionAreasBlock
         | SupporterLevelsBlock
         | LogoGridBlock
@@ -573,6 +574,10 @@ export interface CardGridBlock {
       }[]
     | null;
   /**
+   * Optional closing line under the cards, above the buttons.
+   */
+  outro?: string | null;
+  /**
    * Optional buttons under the cards.
    */
   links?:
@@ -588,6 +593,50 @@ export interface CardGridBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'cardGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AccordionBlock".
+ */
+export interface AccordionBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  /**
+   * Each item opens and closes on its own.
+   */
+  items?:
+    | {
+        title: string;
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'accordion';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1163,6 +1212,7 @@ export interface PagesSelect<T extends boolean = true> {
         roadmap?: T | RoadmapBlockSelect<T>;
         flow?: T | FlowBlockSelect<T>;
         cardGrid?: T | CardGridBlockSelect<T>;
+        accordion?: T | AccordionBlockSelect<T>;
         actionAreas?: T | ActionAreasBlockSelect<T>;
         supporterLevels?: T | SupporterLevelsBlockSelect<T>;
         logoGrid?: T | LogoGridBlockSelect<T>;
@@ -1408,11 +1458,32 @@ export interface CardGridBlockSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  outro?: T;
   links?:
     | T
     | {
         label?: T;
         href?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AccordionBlock_select".
+ */
+export interface AccordionBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  items?:
+    | T
+    | {
+        title?: T;
+        content?: T;
         id?: T;
       };
   id?: T;
