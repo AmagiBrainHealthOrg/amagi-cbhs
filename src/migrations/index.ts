@@ -169,4 +169,9 @@ export const migrations = [
     down: migration_20261028_181735.down,
     name: '20261028_181735',
   },
+  {
+    up: migration_20261028_190000_approach_content.up,
+    down: migration_20261028_190000_approach_content.down,
+    name: '20261028_190000_approach_content',
+  },
 ]
