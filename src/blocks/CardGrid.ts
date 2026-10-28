@@ -41,6 +41,11 @@ export const CardGrid: Block = {
       ],
     },
     {
+      name: 'outro',
+      type: 'textarea',
+      admin: { description: 'Optional closing line under the cards, above the buttons.' },
+    },
+    {
       name: 'links',
       type: 'array',
       maxRows: 2,

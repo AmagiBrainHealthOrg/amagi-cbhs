@@ -51,6 +51,11 @@
 .faq-item summary svg { flex: 0 0 auto; width: 20px; height: 20px; transition: transform .2s ease; }
 .faq-item[open] summary svg { transform: rotate(180deg); }
 .faq-item p { padding: 0 22px 20px; color: var(--muted-ink); }
+.faq-list-items { gap: 12px; max-width: none; }
+.faq-body { padding: 0 22px 20px; color: var(--muted-ink); }
+.faq-body > * + * { margin-top: 12px; }
+.faq-body h3 { color: var(--primary-blue); font-size: var(--fs-base); }
+.faq-body ul { padding-left: 20px; list-style: disc; }
 
 .news-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin: 0; padding: 0; list-style: none; }
 .news-card { position: relative; display: grid; align-content: start; gap: 10px; }

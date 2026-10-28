@@ -12,6 +12,7 @@ export function CardGridBlock({ block, blockId }: BlockProps<'cardGrid'>) {
     <Section {...block} blockId={blockId} className="v1-reveal">
       {items.length > 0 &&
         (block.style === 'badges' ? <Badges items={items} /> : <IconTiles items={items} />)}
+      {block.outro && <p className="v1-section-outro">{block.outro}</p>}
       {block.links && block.links.length > 0 && (
         <div className="v1-section-actions">
           {block.links.map(({ id, label, href }) => (

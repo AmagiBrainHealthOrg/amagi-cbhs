@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { AccordionBlock } from './AccordionBlock'
 import { ActionAreasBlock } from './ActionAreasBlock'
 import { AnchorDayBlock } from './AnchorDayBlock'
 import { CardGridBlock } from './CardGridBlock'
@@ -47,6 +48,8 @@ function RenderBlock({ block, blockId, actionAreas }: RenderProps) {
       return <FlowBlock block={block} blockId={blockId} />
     case 'cardGrid':
       return <CardGridBlock block={block} blockId={blockId} />
+    case 'accordion':
+      return <AccordionBlock block={block} blockId={blockId} />
     case 'actionAreas':
       return <ActionAreasBlock block={block} blockId={blockId} />
     case 'supporterLevels':
