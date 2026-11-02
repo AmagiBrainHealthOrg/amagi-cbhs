@@ -28,6 +28,7 @@ import * as migration_20261013_200000_events_content from './20261013_200000_eve
 import * as migration_20261028_181735 from './20261028_181735'
 import * as migration_20261028_190000_approach_content from './20261028_190000_approach_content'
 import * as migration_20261102_130803_programme from './20261102_130803_programme'
+import * as migration_20261102_140000_programme_content from './20261102_140000_programme_content'
 
 export const migrations = [
   {
@@ -179,5 +180,10 @@ export const migrations = [
     up: migration_20261102_130803_programme.up,
     down: migration_20261102_130803_programme.down,
     name: '20261102_130803_programme',
+  },
+  {
+    up: migration_20261102_140000_programme_content.up,
+    down: migration_20261102_140000_programme_content.down,
+    name: '20261102_140000_programme_content',
   },
 ]

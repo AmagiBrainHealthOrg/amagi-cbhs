@@ -280,8 +280,42 @@ export const aboutContact = {
   links: [{ label: 'Get in touch', href: '/contact' }],
 } as const satisfies Layout[number]
 
-// Summit Week, below the hero. Groups with no events are hidden, so the section stays off the
-// page until editors add events.
+// Summit Week, below the hero. Hidden until a session is published. Replaces the events section.
+export const scheduleSection: Extract<Layout[number], { blockType: 'schedule' }> = {
+  blockType: 'schedule',
+  kicker: '16–22 November 2026',
+  heading: 'Programme',
+  background: 'white',
+  anchorId: 'programme',
+  dayNotes: [
+    { day: '2026-11-16', note: 'Opening', highlight: false },
+    { day: '2026-11-22', note: 'Close', highlight: false },
+  ],
+}
+
+// The schedule's tabs, from the host countries on the Summit Week page. Amagi confirms the list.
+export const seedSessionLocations: RequiredDataFromCollectionSlug<'session-locations'>[] = [
+  { name: 'Online', city: 'Open to everyone', online: true, timeZone: 'America/Jamaica', order: 0 },
+  { name: 'Jamaica', city: 'Kingston', timeZone: 'America/Jamaica', order: 1 },
+  { name: 'The Bahamas', city: 'Nassau', timeZone: 'America/Nassau', order: 2 },
+  { name: 'Barbados', city: 'Bridgetown', timeZone: 'America/Barbados', order: 3 },
+  {
+    name: 'Trinidad and Tobago',
+    city: 'Port of Spain',
+    timeZone: 'America/Port_of_Spain',
+    order: 4,
+  },
+  { name: 'Cayman Islands', city: 'George Town', timeZone: 'America/Cayman', order: 5 },
+]
+
+export const sessionThankYou = {
+  form: 'session-registration',
+  heading: 'You’re registered',
+  body: 'We’ll email you nearer the time with anything you need to know before the session.',
+} as const
+
+// Retired: the events_content migration still adds it to older databases, and the
+// programme_content migration swaps it for the schedule.
 export const eventsSection: Extract<Layout[number], { blockType: 'events' }> = {
   blockType: 'events',
   show: true,
@@ -312,7 +346,7 @@ export const summitWeekPage = (images: SeedImages): SeedPage => ({
       lead: 'Locally led activities across the Caribbean and the diaspora, connected online and brought together at an Anchor Day in Jamaica. Free to attend.',
       secondaryLink: { label: 'Register your interest', href: '/register' },
     }),
-    eventsSection,
+    scheduleSection,
     {
       blockType: 'flow',
       kicker: 'How the week works',
@@ -1035,6 +1069,7 @@ export const seedGlobals = (images: SeedImages): Globals => ({
         heading: 'Thank you for getting in touch',
         body: "We've received your message and will reply as soon as we can.",
       },
+      sessionThankYou,
     ],
   },
 })

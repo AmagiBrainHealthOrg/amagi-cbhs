@@ -7,6 +7,7 @@ import {
   seedNews,
   seedPages,
   seedPartners,
+  seedSessionLocations,
   seedTeam,
 } from './content'
 
@@ -46,7 +47,9 @@ export async function seedContent({ payload, req }: Args): Promise<SeedResult> {
   const context = { disableRevalidate: true }
   const images = await findImages({ payload, req })
 
-  const createMissing = async <S extends 'pages' | 'news' | 'faqs' | 'partners' | 'team'>(
+  const createMissing = async <
+    S extends 'pages' | 'news' | 'faqs' | 'partners' | 'team' | 'session-locations',
+  >(
     collection: S,
     docs: RequiredDataFromCollectionSlug<S>[],
     keyOf: (doc: RequiredDataFromCollectionSlug<S>) => { field: string; value: string },
@@ -73,6 +76,10 @@ export async function seedContent({ payload, req }: Args): Promise<SeedResult> {
   await createMissing('faqs', seedFaqs, (doc) => ({ field: 'question', value: doc.question }))
   await createMissing('partners', seedPartners, (doc) => ({ field: 'name', value: doc.name }))
   await createMissing('team', seedTeam, (doc) => ({ field: 'name', value: doc.name }))
+  await createMissing('session-locations', seedSessionLocations, (doc) => ({
+    field: 'name',
+    value: doc.name,
+  }))
 
   const globals = seedGlobals(images)
   for (const slug of Object.keys(globals) as (keyof typeof globals)[]) {
