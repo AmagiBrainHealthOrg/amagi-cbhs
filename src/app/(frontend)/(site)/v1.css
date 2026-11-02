@@ -1245,9 +1245,6 @@
   place-items: center;
   aspect-ratio: 3 / 2;
   padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: var(--v1-radius);
-  background: var(--white);
   color: var(--primary-blue);
   font-family: var(--app-font-heading);
   font-weight: 700;
@@ -1258,7 +1255,6 @@
 }
 .v1-logos li:has(a) {
   padding: 0;
-  border: 0;
 }
 .v1-logos a {
   width: 100%;
@@ -1279,13 +1275,9 @@
   place-items: center;
   aspect-ratio: 3 / 2;
   padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: var(--v1-radius);
-  background: var(--white);
 }
 .v1-logo-entry > div:has(a) {
   padding: 0;
-  border: 0;
 }
 .v1-logos a.v1-logo-news {
   display: block;
