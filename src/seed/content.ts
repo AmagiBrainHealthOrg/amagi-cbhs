@@ -297,7 +297,7 @@ export const scheduleSection: Extract<Layout[number], { blockType: 'schedule' }>
 export const seedSessionLocations: RequiredDataFromCollectionSlug<'session-locations'>[] = [
   { name: 'Online', city: 'Open to everyone', online: true, timeZone: 'America/Jamaica', order: 0 },
   { name: 'Jamaica', city: 'Kingston', timeZone: 'America/Jamaica', order: 1 },
-  { name: 'The Bahamas', city: 'Nassau', timeZone: 'America/Nassau', order: 2 },
+  { name: 'Suriname', city: 'Paramaribo', timeZone: 'America/Paramaribo', order: 2 },
   { name: 'Barbados', city: 'Bridgetown', timeZone: 'America/Barbados', order: 3 },
   {
     name: 'Trinidad and Tobago',
@@ -324,7 +324,7 @@ export const eventsSection: Extract<Layout[number], { blockType: 'events' }> = {
   background: 'white',
   groups: [
     { name: 'Jamaica', events: [] },
-    { name: 'The Bahamas', events: [] },
+    { name: 'Suriname', events: [] },
     { name: 'Barbados', events: [] },
     { name: 'Trinidad and Tobago', events: [] },
     { name: 'Cayman Islands', events: [] },
@@ -384,7 +384,7 @@ export const summitWeekPage = (images: SeedImages): SeedPage => ({
         {
           icon: 'users',
           title: 'Country Weeks',
-          body: 'Activities led by Jamaica, Barbados, Trinidad and Tobago, the Cayman Islands and The Bahamas.',
+          body: 'Activities led by Jamaica, Barbados, Trinidad and Tobago, the Cayman Islands and Suriname.',
         },
         {
           icon: 'hand-heart',
