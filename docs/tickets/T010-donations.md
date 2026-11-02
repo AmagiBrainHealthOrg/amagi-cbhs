@@ -14,7 +14,7 @@ skills: []
 
 ## Context
 
-Human steps: production uses live Stripe keys from the start (SPEC §11.1), so complete Stripe's business verification for live mode and put the live key in Vercel. On Vercel the site URL falls back to `VERCEL_PROJECT_PRODUCTION_URL`, so it needs no setting. Use test keys locally where you can. The user checks the live flow with a small real donation and refunds it.
+Human steps: production uses live Stripe keys from the start (SPEC §11.1), so complete Stripe's business verification for live mode and put the live key in Netlify. On Netlify the site URL falls back to the `URL` Netlify sets, so it needs no setting. Use test keys locally where you can. The user checks the live flow with a small real donation and refunds it.
 
 ## Scope
 

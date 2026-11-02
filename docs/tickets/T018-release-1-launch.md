@@ -16,14 +16,14 @@ skills: []
 
 Production has been public and in test mode since T011 and T017, and editors have entered real content there, so launch is a switch, not a migration of content.
 
-Human steps: Amagi confirms that copy is entered, reviews the draft privacy, cookies and terms copy (in place since 8 October 2026), the data processing agreement is signed, and the Google Tag Manager container ID is set. Tandem decides D9. Then, following `docs/DEPLOY.md`: create an Amagi-owned Vercel Pro team and transfer the project; transfer the Supabase project to Amagi's organisation (moving it to a paid plan for backups); make sure the Airtable token in Vercel Production can write to the base (SPEC §9.1) and delete test records from it; verify the Resend sending domain in Cloudflare; set `SITE_LIVE=true`; point amagisummit.org at Vercel in Cloudflare (DNS only).
+Human steps: Amagi confirms that copy is entered, reviews the draft privacy, cookies and terms copy (in place since 8 October 2026), and the data processing agreement is signed. Tandem decides D9. Then, following `docs/DEPLOY.md` (Launch, Move the projects to Amagi): transfer the Supabase project to Amagi's organisation (moving it to a paid plan for backups); make sure the Airtable token in Netlify Production can write to the base (SPEC §9.1) and delete test records from it; verify the Resend sending domain; set Integrations → Plausible domain to `amagisummit.org` and add that site in Plausible; set `SITE_LIVE=true`; point amagisummit.org at Netlify.
 
 ## Scope
 
 **In**
 
 - Update `docs/DEPLOY.md` with anything the move taught us, and with the D9 release process.
-- If D9 is "production branch": Vercel's production branch becomes `production`, and `docs/DEPLOY.md` explains how to release by fast-forwarding it.
+- If D9 is "production branch": Netlify's production branch becomes `production`, and `docs/DEPLOY.md` explains how to release by fast-forwarding it.
 - Smoke test script `scripts/smoke.ts` hitting every Release 1 route, checking 200s and failing if any page contains `[PLACEHOLDER]`.
 
 **Out**
@@ -33,7 +33,7 @@ Human steps: Amagi confirms that copy is entered, reviews the draft privacy, coo
 ## Acceptance criteria
 
 - [ ] **AC1**: Production runs on Amagi's accounts at amagisummit.org.
-  - _Verify (deploy):_ `curl -I https://amagisummit.org` and `/api/health` return 200 over TLS; the user confirms the Vercel project shows under the Amagi team and the Supabase project under Amagi's organisation.
+  - _Verify (deploy):_ `curl -I https://amagisummit.org` and `/api/health` return 200 over TLS; the user confirms the Netlify project is on Amagi's team and the Supabase project is in Amagi's organisation.
 - [ ] **AC2**: Home is served at `/` to the public.
   - _Verify (deploy):_ `curl -s https://amagisummit.org | grep -c 'data-action="donate"'` ≥ 1.
 - [ ] **AC3**: Smoke test passes against production.

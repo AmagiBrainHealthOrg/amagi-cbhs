@@ -28,7 +28,7 @@ Human steps, in the main checkout:
 
 - Delete the remaining plugin-template leftovers: `dev/` and the `"dev"` entry in `tsconfig.json`'s `exclude`. (`src/index.ts`, `src/exports/`, `src/endpoints/`, `BeforeDashboard*` and `src/app/my-route/` went in PR #3.)
 - Remove duplicate configs: keep `eslint.config.mjs`, `playwright.config.ts`, `vitest.config.mts`; delete the `.js` versions.
-- Delete `package-lock.json`, `.yarnrc`, `Dockerfile` and `docker-compose.yml`: pnpm only, Vercel builds the app, and the Supabase CLI replaces the compose file.
+- Delete `package-lock.json`, `.yarnrc`, `Dockerfile` and `docker-compose.yml`: pnpm only, Netlify builds the app, and the Supabase CLI replaces the compose file.
 - Move `pnpm.onlyBuiltDependencies` from `package.json` into `allowBuilds` in `pnpm-workspace.yaml`, so pnpm 11 stops ignoring it.
 - Remove unused dependencies left by the template (check with `pnpm why`). Keep `qrcode` and `lucide-react` (used by Coming Soon).
 - `package.json` scripts: `typecheck` (`tsc --noEmit`), `test:int`, `test:e2e`, `preflight` (`tsx scripts/preflight.ts`). Keep existing Payload scripts.

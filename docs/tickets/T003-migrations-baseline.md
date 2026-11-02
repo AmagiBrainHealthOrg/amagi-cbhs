@@ -26,7 +26,7 @@ Human step: the user runs the two marker statements below against the production
 - `pnpm payload migrate:create --skip-empty baseline` against a fresh local database, capturing `users`, `media` and `coming-soon` as they are now.
 - A second migration, `enable_rls`, enabling row-level security on every table in `public` (idempotent; loops over `pg_tables`), per SPEC §11.2. It runs on production because only the baseline is marked as applied there.
 - Mark the baseline as applied on production, which was created by push: `delete from payload_migrations where batch = -1` (the dev-push marker, which otherwise makes `migrate` stop and ask) and insert the baseline row. Document both statements in `README.md`.
-- `vercel.json` `buildCommand`: `pnpm payload migrate && pnpm build`. Keep the existing `ignoreCommand`. Local `pnpm build` never migrates.
+- `netlify.toml` `[build] command`: `pnpm payload migrate && pnpm build`. Keep the existing `ignore`. Local `pnpm build` never migrates.
 - `pnpm db:pull` ends with `pnpm payload migrate`.
 
 **Out**
@@ -46,6 +46,6 @@ Human step: the user runs the two marker statements below against the production
 - [ ] **AC5**: A pulled database migrates without prompting.
   - _Verify (cli):_ `pnpm db:pull` completes, including its `pnpm payload migrate` step, with no prompt; `select batch from payload_migrations where batch = -1` locally returns no rows.
 - [ ] **AC6**: Production migrates on deploy.
-  - _Verify (deploy, after merge):_ the Vercel build log shows `payload migrate` applying `enable_rls` before `next build`; `curl -s "https://<ref>.supabase.co/rest/v1/users?select=*" -H "apikey: <anon key>"` returns no rows.
+  - _Verify (deploy, after merge):_ the Netlify build log shows `payload migrate` applying `enable_rls` before `next build`; `curl -s "https://<ref>.supabase.co/rest/v1/users?select=*" -H "apikey: <anon key>"` returns no rows.
 - [ ] **AC7**: Gates pass.
   - _Verify (cli):_ `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build` exits 0.
