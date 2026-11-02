@@ -56,6 +56,21 @@ Also written: `Enquiry type` (General or Media), `Outlet` (Media only), `Organis
 
 Not written (Amagi's own): `About`, `Engagement`, `Area of work`, `Interest / potential contribution`, `financial or in-kind support`, `Organisation`, `Function`, `Opt-in Status`, `Consent Notes`, `Primary Themes of Interest`, `Notes`, `Last Contact Date`, `Next Planned Contact`, `Interactions`.
 
+### `Session registrations` (in-person session registration form)
+
+**Not in the base yet.** Needed before the form opens (until then the session page says the form is unavailable). Fields:
+
+| Field                        | Type                       | Site field     |
+| ---------------------------- | -------------------------- | -------------- |
+| `Name`                       | Single line text (primary) | `name`         |
+| `Email`                      | Email                      | `email`        |
+| `Phone/Whatsapp`             | Phone number               | `phone`        |
+| `Country / location`         | Link to `Locations`        | `location`     |
+| `Organisation / affiliation` | Single line text           | `organisation` |
+| `Session`                    | Single line text           | `session`      |
+
+`Session` holds the session's title, day and time, venue and country, such as "Anchor Day plenary · Thursday 19 November, 09:00–10:30 · Main hall, Jamaica". Add the attribution columns too if wanted.
+
 ## Lookup tables
 
 Each record is one option on the forms; its primary field is the label.

@@ -93,3 +93,13 @@ Open questions for Amagi Health about the CBHS 2026 website and its Airtable bas
 17. **Michèle Saunders Clavery's photo.** The headshot has a grey-and-white checkerboard printed into its background (a transparency pattern saved into the image). Could she send a photo with a plain background?
 
 18. **Trinidad and Tobago.** Michèle is listed under Trinidad and Dr Naila Edwards under Tobago, as in your folder. Should both say "Trinidad and Tobago"?
+
+## Programme and session registration
+
+19. **Themes.** The programme can be filtered by theme. Which themes should it use, for example Financing, Caregiver advice, Prevention, Policy? Or should it use the four streams (Anchor Day, Country Weeks, Brain Health Relay, Online and Diaspora)?
+
+20. **Locations.** The programme has a tab for Online and for Jamaica, Suriname, Barbados, Trinidad and Tobago and the Cayman Islands. Is that the right list, and is each city right (Kingston, Paramaribo, Bridgetown, Port of Spain, George Town)?
+
+21. **Registration confirmation.** After registering for an in-person session, people see and are emailed "You're registered. We'll email you nearer the time with anything you need to know before the session." Is that right? You can change it in the CMS under Forms.
+
+22. **Full sessions.** Should sessions have a place limit? For now an editor unticks "Registration open" when a session is full, and the Register button disappears.
