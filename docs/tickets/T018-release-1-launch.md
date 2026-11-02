@@ -12,6 +12,8 @@ skills: []
 
 # T018: Release 1 launch
 
+> **Launched.** Release 1 is live at amagisummit.org. The smoke test script (`scripts/smoke.ts`) was not built here; it moved to T027.
+
 ## Context
 
 Production has been public and in test mode since T011 and T017, and editors have entered real content there, so launch is a switch, not a migration of content.

@@ -45,7 +45,7 @@ Release scope and dates are in SPEC §11.3. Every Release 1 ticket goes before a
 
 | ID                                 | Title            | Depends on                   | Mig | Human | Status |
 | ---------------------------------- | ---------------- | ---------------------------- | --- | ----- | ------ |
-| [T018](./T018-release-1-launch.md) | Release 1 launch | T010, T011, T014, T015, T017 |     | ✔     | todo   |
+| [T018](./T018-release-1-launch.md) | Release 1 launch | T010, T011, T014, T015, T017 |     | ✔     | done   |
 
 # Release 2: date to be confirmed
 

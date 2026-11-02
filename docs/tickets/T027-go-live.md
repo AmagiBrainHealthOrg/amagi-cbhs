@@ -21,7 +21,7 @@ Human steps: Amagi confirms copy, host country content and programme sessions ar
 **In**
 
 - Deploy Release 2 to production.
-- Run the smoke test extended with Release 2 routes.
+- Smoke test script `scripts/smoke.ts` (moved from T018): hits every Release 1 and Release 2 route, checks for 200s and fails if any page contains `[PLACEHOLDER]`.
 - Remove the `coming-soon` global from the config and drop its tables in a migration (SPEC §11.4). First make the T011 content migration and `src/seed/` stop reading it, so a fresh database still migrates.
 
 ## Acceptance criteria
