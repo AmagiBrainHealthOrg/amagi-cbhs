@@ -5,8 +5,15 @@ export const confirmationEmail = ({
   name,
   heading,
   body,
+  detail,
 }: {
   name?: string
   heading: string
   body?: string | null
-}) => layout(heading, [name ? `Dear ${name},` : 'Hello,', ...(body ? [body] : [])])
+  detail?: string
+}) =>
+  layout(heading, [
+    name ? `Dear ${name},` : 'Hello,',
+    ...(detail ? [detail] : []),
+    ...(body ? [body] : []),
+  ])

@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
+import { blockFormOptions } from '@/config/forms'
+import { formRegistry } from '@/forms/registry'
 import type { Session, SessionLocation, SessionTheme } from '@/payload-types'
 import { buildSchedule } from '@/utils/schedule'
 import { sessionSummary, zonedToUtc, zoneLabel } from '@/utils/sessions'
@@ -113,5 +115,22 @@ describe('schedule data', () => {
     expect(days).toHaveLength(7)
     expect(days[0]).toMatchObject({ dow: 'Mon', date: '16', highlight: false })
     expect(days[3]).toMatchObject({ dow: 'Thu', date: '19', note: 'Anchor Day', highlight: true })
+  })
+})
+
+describe('session registration form', () => {
+  it('asks name, country, organisation and email, with phone optional', () => {
+    const fields = formRegistry['session-registration'].fields
+    expect(fields.map((f) => [f.name, Boolean(f.required)])).toEqual([
+      ['name', true],
+      ['location', true],
+      ['organisation', true],
+      ['email', true],
+      ['phone', false],
+    ])
+  })
+
+  it('is not offered to the form block, which has no session', () => {
+    expect(blockFormOptions.map(({ value }) => value)).not.toContain('session-registration')
   })
 })
