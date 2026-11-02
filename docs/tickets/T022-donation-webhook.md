@@ -14,7 +14,7 @@ skills: []
 
 ## Context
 
-Human steps: register the production webhook endpoint in Stripe, in test mode until launch and in live mode after it, and set `STRIPE_WEBHOOK_SECRET` in Vercel. Locally, `stripe listen` provides the secret.
+Human steps: register the production webhook endpoint in Stripe, in live mode (production uses live Stripe keys, SPEC §11.1), and set `STRIPE_WEBHOOK_SECRET` in Netlify's Production environment. Locally, `stripe listen` provides the secret.
 
 ## Scope
 
