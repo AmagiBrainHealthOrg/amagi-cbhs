@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { publishedOrAuthenticated } from '@/access/publishedOrAuthenticated'
-import { pageBlocks } from '@/blocks'
+import { allowedBlocks, pageBlocks } from '@/blocks'
 import { slugField } from '@/fields/slug'
 import {
   everyPage,
@@ -43,7 +43,14 @@ export const Pages: CollectionConfig = {
       tabs: [
         {
           label: 'Content',
-          fields: [{ name: 'layout', type: 'blocks', blocks: pageBlocks }],
+          fields: [
+            {
+              name: 'layout',
+              type: 'blocks',
+              blocks: pageBlocks,
+              filterOptions: () => allowedBlocks,
+            },
+          ],
         },
         {
           label: 'SEO',

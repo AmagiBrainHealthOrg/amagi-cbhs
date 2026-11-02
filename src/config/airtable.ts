@@ -31,6 +31,7 @@ export type FieldName =
   | 'outlet'
   | 'message'
   | 'followUp'
+  | 'session'
 
 export type AirtableField = { id: string; kind: FieldKind }
 
@@ -124,6 +125,18 @@ export const airtableForms: Record<FormKey, AirtableForm> = {
       outlet: text('fld5VA36NVFxm7LOp'),
       message: longText('fldK626l63vHmFGeO'), // "Enquiry" in the base
       followUp: select('fldU6CMtXg6aiArBO'),
+    },
+  },
+  // TODO: the Session registrations table's IDs, once Amagi adds it to the base.
+  'session-registration': {
+    table: 'tblSESSIONREGISTER',
+    fields: {
+      name: text('fldSESSIONNAME0000'),
+      email: email('fldSESSIONEMAIL000'),
+      phone: phone('fldSESSIONPHONE000'),
+      organisation: text('fldSESSIONORG00000'),
+      location: link('fldSESSIONLOCATION'),
+      session: text('fldSESSIONSESSION0'), // "Title · day, time · location", set by the server
     },
   },
 }

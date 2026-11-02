@@ -8,6 +8,7 @@ import { getGlobal } from '@/lib/globals'
 import './site.css'
 import './v1.css'
 import './forms.css'
+import './schedule.css'
 
 // Pages set their own title from `meta`; others fall back to the brand title.
 export async function generateMetadata(): Promise<Metadata> {

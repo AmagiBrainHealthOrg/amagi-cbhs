@@ -15,6 +15,7 @@ import { LogoGridBlock } from './LogoGridBlock'
 import { NewsTeaserBlock } from './NewsTeaserBlock'
 import { RichTextBlock } from './RichTextBlock'
 import { RoadmapBlock } from './RoadmapBlock'
+import { ScheduleBlock } from './ScheduleBlock'
 import { StatementBlock } from './StatementBlock'
 import { SummitWeekBlock } from './SummitWeekBlock'
 import { SupporterLevelsBlock } from './SupporterLevelsBlock'
@@ -42,6 +43,8 @@ function RenderBlock({ block, blockId, actionAreas }: RenderProps) {
       return <SummitWeekBlock block={block} blockId={blockId} />
     case 'events':
       return <EventsBlock block={block} blockId={blockId} />
+    case 'schedule':
+      return <ScheduleBlock block={block} blockId={blockId} />
     case 'roadmap':
       return <RoadmapBlock block={block} blockId={blockId} />
     case 'flow':

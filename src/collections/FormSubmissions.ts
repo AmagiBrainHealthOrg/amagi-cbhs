@@ -48,6 +48,16 @@ export const FormSubmissions: CollectionConfig = {
           "The person's answers: name, email, phone and the form's own fields (SPEC §8.1, §8.3).",
       },
     },
+    {
+      name: 'session',
+      type: 'relationship',
+      relationTo: 'sessions',
+      index: true,
+      admin: {
+        condition: (data) => data?.form === 'session-registration',
+        description: 'The session this registration is for.',
+      },
+    },
     { name: 'territory', type: 'text', index: true },
     { name: 'audienceType', type: 'text' },
     {

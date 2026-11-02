@@ -5,6 +5,11 @@ export const formOptions = [
   { label: 'Partner Sign-Up', value: 'partner' },
   { label: 'Brain Health Relay', value: 'relay' },
   { label: 'Contact and media', value: 'contact' },
+  { label: 'Session registration', value: 'session-registration' },
 ] as const
 
 export type FormKey = (typeof formOptions)[number]['value']
+
+// Forms an editor can place with a `form` block. Session registration renders on /sessions/[slug],
+// which knows the session.
+export const blockFormOptions = formOptions.filter(({ value }) => value !== 'session-registration')

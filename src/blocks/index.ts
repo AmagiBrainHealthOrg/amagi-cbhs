@@ -15,6 +15,7 @@ import { LogoGrid } from './LogoGrid'
 import { NewsTeaser } from './NewsTeaser'
 import { Roadmap } from './Roadmap'
 import { RichText } from './RichText'
+import { Schedule } from './Schedule'
 import { Statement } from './Statement'
 import { SummitWeek } from './SummitWeek'
 import { SupporterLevels } from './SupporterLevels'
@@ -28,6 +29,7 @@ export const pageBlocks: Block[] = [
   HostMap,
   SummitWeek,
   Events,
+  Schedule,
   Roadmap,
   Flow,
   CardGrid,
@@ -42,3 +44,11 @@ export const pageBlocks: Block[] = [
   Form,
   AnchorDay,
 ]
+
+// Replaced by `schedule`. Kept in the config so the previous deployment still reads its tables
+// (SPEC §11.2), but editors can no longer add it. A later release removes it and drops them.
+export const retiredBlocks = ['events']
+
+export const allowedBlocks = pageBlocks
+  .map(({ slug }) => slug)
+  .filter((slug) => !retiredBlocks.includes(slug))
