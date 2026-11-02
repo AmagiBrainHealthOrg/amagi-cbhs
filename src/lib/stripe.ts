@@ -3,6 +3,7 @@ import 'server-only'
 import Stripe from 'stripe'
 
 import { env } from '@/env'
+import type { DonationRecord } from '@/utils/airtable'
 import type { Utm } from '@/utils/utm'
 
 let client: Stripe | undefined
@@ -82,5 +83,46 @@ export async function getPaidDonation(sessionId: string | undefined): Promise<Pa
     }
     console.error('Could not retrieve the Checkout Session', error)
     return null
+  }
+}
+
+// Verifies the Stripe-Signature header against the raw body. Throws if the secret isn't set;
+// returns null for a bad or missing signature.
+export function verifyWebhookEvent(body: string, signature: string | null): Stripe.Event | null {
+  if (!env.STRIPE_WEBHOOK_SECRET) throw new Error('STRIPE_WEBHOOK_SECRET is not set')
+  if (!signature) return null
+  try {
+    return Stripe.webhooks.constructEvent(body, signature, env.STRIPE_WEBHOOK_SECRET)
+  } catch (error) {
+    if (error instanceof Stripe.errors.StripeSignatureVerificationError) return null
+    throw error
+  }
+}
+
+const metadataText = (value: string | undefined) => value?.trim() || null
+
+// The donation a Checkout Session records, or null until Stripe reports it paid. Delayed payment
+// methods complete unpaid and send checkout.session.async_payment_succeeded once paid.
+export function donationFromSession(
+  session: Stripe.Checkout.Session,
+  paidAt: Date,
+): DonationRecord | null {
+  if (session.payment_status !== 'paid' || session.amount_total === null || !session.currency) {
+    return null
+  }
+  const metadata = session.metadata ?? {}
+  return {
+    sessionId: session.id,
+    amount: session.amount_total,
+    currency: session.currency,
+    paidAt,
+    sourcePage: metadataText(metadata.source_page),
+    utm: {
+      source: metadataText(metadata.utm_source),
+      medium: metadataText(metadata.utm_medium),
+      campaign: metadataText(metadata.utm_campaign),
+      term: metadataText(metadata.utm_term),
+      content: metadataText(metadata.utm_content),
+    },
   }
 }

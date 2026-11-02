@@ -1,6 +1,8 @@
 import {
+  airtableDonations,
   type AirtableForm,
   airtableForms,
+  type AirtableTable,
   compatibleTypes,
   type FieldName,
 } from '@/config/airtable'
@@ -27,7 +29,11 @@ export type SubmissionData = Partial<Record<FieldName, SubmissionValue>>
 // incompatible type. Empty when the base matches.
 export function findSchemaProblems(tables: SchemaTable[]): string[] {
   const problems: string[] = []
-  for (const [key, form] of Object.entries(airtableForms)) {
+  const configured: [string, AirtableTable<FieldName | keyof typeof airtableDonations.fields>][] = [
+    ...Object.entries(airtableForms),
+    ['donations', airtableDonations],
+  ]
+  for (const [key, form] of configured) {
     const table = tables.find(({ id }) => id === form.table)
     if (!table) {
       problems.push(`${key}: table ${form.table} is missing`)
@@ -124,4 +130,30 @@ export function optionsFor(
     return linkedRecords[field.options?.linkedTableId ?? ''] ?? []
   }
   return (field.options?.choices ?? []).map(({ id, name }) => ({ value: name, label: name, id }))
+}
+
+export type DonationRecord = {
+  sessionId: string
+  // Minor units, as Stripe reports it.
+  amount: number
+  currency: string
+  paidAt: Date
+} & Attribution
+
+const fractionDigits = (currency: string) =>
+  new Intl.NumberFormat('en', { style: 'currency', currency }).resolvedOptions()
+    .maximumFractionDigits ?? 2
+
+// The Donation record a paid Checkout Session becomes, keyed by field ID (SPEC §7.5). No donor
+// name or email until SPEC §13 D8 is decided.
+export function toDonationFields(table: SchemaTable, donation: DonationRecord) {
+  const { fields } = airtableDonations
+  const currency = donation.currency.toUpperCase()
+  return {
+    ...attributionFields(table, donation),
+    [fields.amount.id]: donation.amount / 10 ** fractionDigits(currency),
+    [fields.currency.id]: currency,
+    [fields.date.id]: donation.paidAt.toISOString(),
+    [fields.session.id]: donation.sessionId,
+  }
 }

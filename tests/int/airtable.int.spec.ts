@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { airtableForms } from '@/config/airtable'
+import { airtableDonations, airtableForms } from '@/config/airtable'
 import {
   attributionFields,
   findSchemaProblems,
@@ -26,16 +26,18 @@ const types: Record<string, string> = {
   phone: 'phoneNumber',
   url: 'url',
   date: 'date',
+  dateTime: 'dateTime',
+  currency: 'currency',
   link: 'multipleRecordLinks',
   select: 'multipleSelects',
 }
 
 // A base that matches the config, with one linked Locations table.
 function schema(): SchemaTable[] {
-  const formTables = Object.values(airtableForms).map((f) => ({
+  const formTables = [...Object.values(airtableForms), airtableDonations].map((f) => ({
     id: f.table,
     name: f.table,
-    primaryFieldId: f.fields.name!.id,
+    primaryFieldId: Object.values(f.fields)[0].id,
     fields: Object.entries(f.fields).map(([name, { id, kind }]): SchemaField => ({
       id,
       name,
