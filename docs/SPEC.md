@@ -182,7 +182,7 @@ One exception, `release_1_content` (8 October 2026), brings the Release 1 polish
    - `success_url`: `/donate/thank-you?session_id={CHECKOUT_SESSION_ID}`
    - `cancel_url`: the source page
 4. `/donate/thank-you` retrieves the session server-side. If `payment_status === 'paid'`, it renders thank-you copy and pushes `donation_complete` (amount, currency). Otherwise it renders a neutral "we couldn't confirm your donation" state.
-5. **Release 2:** `POST /api/stripe/webhook` handles `checkout.session.completed`, verifies the signature, is idempotent on event ID, and creates a record in the Airtable `Donations` table (amount, currency, date, UTM, source page, session ID). Whether the donor's name and email from Stripe also go to Airtable is open (§13 D8); until decided, they are **not** written.
+5. **Release 2:** `POST /api/stripe/webhook` verifies the signature and handles `checkout.session.completed` when the session is paid, and `checkout.session.async_payment_succeeded` for delayed payment methods. It upserts one record per Checkout Session in the Airtable `Donation` table (amount, currency, date, UTM, source page, session ID), so a resent or repeated event never adds a second row. If Airtable fails it returns 500 and Stripe retries. Whether the donor's name and email from Stripe also go to Airtable is open (§13 D8); until decided, they are **not** written.
 
 ## 8. Forms
 
