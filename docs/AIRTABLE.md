@@ -69,6 +69,19 @@ Each record is one option on the forms; its primary field is the label.
 | `Industries`    | `Name`        | Partner                                     |
 | `Action areas`  | `Name`        | Consultation: the five Call to Action areas |
 
+## Donation
+
+One record per paid donation, written by the Stripe webhook (SPEC §7 step 5). No donor name or email until SPEC §13 D8 is decided.
+
+| Field            | Type             | Notes                                                                         |
+| ---------------- | ---------------- | ----------------------------------------------------------------------------- |
+| `Record`         | Autonumber       | Primary; not written                                                          |
+| `Amount`         | Currency         | In the donation's currency, e.g. `25.00`                                      |
+| `Currency`       | Single line text | e.g. `USD`                                                                    |
+| `Date`           | Date and time    | When Stripe completed the payment                                             |
+| `Stripe Session` | Single line text | The Checkout Session ID. The site matches retries on it: don't edit or delete |
+| UTM, Source page | Single line text | Attribution columns, matched by name (below)                                  |
+
 ## Not written by the site
 
 `People`, `Contacts OLD -`, `Organisations`, `Supporter Levels`, `Themes / Access Areas`, `Engagement & Impact Snapshots`, `Events / Series`, `Interactions`.
@@ -76,4 +89,3 @@ Each record is one option on the forms; its primary field is the label.
 ## Not in the base
 
 - **UTM and source page:** the site saves them on each submission in its admin, and writes them to any form table that has columns named `UTM source`, `UTM medium`, `UTM campaign`, `UTM term`, `UTM content` and `Source page` (single line text). These are matched by name, not ID (case doesn't matter), so a new column fills from the next submission without a deploy; renaming one stops it filling. `Source page` is a path on the site, such as `/about`.
-- **Donations** (SPEC §7 step 5, Release 2): needs a table before T022.
