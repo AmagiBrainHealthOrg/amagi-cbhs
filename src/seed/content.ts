@@ -488,16 +488,6 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
         intro:
           'Each host country runs its own programme of free, local activity. Online sessions let anyone in the region or the diaspora join in.',
         background: 'blue',
-        onlineLabel: 'Plus online sessions, open to everyone',
-        anchorLabel: 'Anchor Day',
-        // x and y are positions on the map's own grid (see caribbeanMap.ts).
-        countries: [
-          { name: 'Jamaica', city: 'Kingston', x: 365, y: 285, anchor: true, labelSide: 'left' },
-          { name: 'The Bahamas', city: 'Nassau', x: 349, y: 73, labelSide: 'right' },
-          { name: 'Barbados', city: 'Bridgetown', x: 858, y: 432, labelSide: 'left' },
-          { name: 'Trinidad and Tobago', city: 'Port of Spain', x: 803, y: 506, labelSide: 'left' },
-          { name: 'Cayman Islands', city: 'George Town', x: 233, y: 246, labelSide: 'left' },
-        ],
       },
       {
         blockType: 'summitWeek',
