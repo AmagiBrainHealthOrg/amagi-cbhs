@@ -105,6 +105,28 @@ describe('toDonationFields', () => {
     })
     expect(record[fields.amount.id]).toBe(5000)
   })
+
+  it('follows Stripe, not ISO 4217, for currencies Stripe counts in hundredths', () => {
+    for (const currency of ['huf', 'isk', 'ugx']) {
+      const record = toDonationFields(table, {
+        sessionId: 'cs_test_3',
+        amount: 500000,
+        currency,
+        paidAt: new Date(),
+      })
+      expect(record[fields.amount.id]).toBe(5000)
+    }
+  })
+
+  it('divides three-decimal currencies by 1000', () => {
+    const record = toDonationFields(table, {
+      sessionId: 'cs_test_4',
+      amount: 25500,
+      currency: 'bhd',
+      paidAt: new Date(),
+    })
+    expect(record[fields.amount.id]).toBe(25.5)
+  })
 })
 
 describe('POST /api/stripe/webhook', () => {

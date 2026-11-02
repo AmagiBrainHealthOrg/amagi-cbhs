@@ -140,9 +140,14 @@ export type DonationRecord = {
   paidAt: Date
 } & Attribution
 
+// Stripe's minor units, which differ from ISO 4217 for some currencies (HUF, ISK, UGX are two-decimal
+// on Stripe): https://docs.stripe.com/currencies#minor-units
+const ZERO_DECIMAL = new Set(
+  'BIF CLP DJF GNF JPY KMF KRW MGA PYG RWF VND VUV XAF XOF XPF'.split(' '),
+)
+const THREE_DECIMAL = new Set('BHD JOD KWD OMR TND'.split(' '))
 const fractionDigits = (currency: string) =>
-  new Intl.NumberFormat('en', { style: 'currency', currency }).resolvedOptions()
-    .maximumFractionDigits ?? 2
+  ZERO_DECIMAL.has(currency) ? 0 : THREE_DECIMAL.has(currency) ? 3 : 2
 
 // The Donation record a paid Checkout Session becomes, keyed by field ID (SPEC §7.5). No donor
 // name or email until SPEC §13 D8 is decided.
