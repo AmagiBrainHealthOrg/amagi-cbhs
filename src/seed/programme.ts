@@ -110,7 +110,6 @@ export const seedSessions: SeedSession[] = [
     startTime: '16:30',
     endTime: '18:00',
     venue: 'Scarborough Library, Tobago',
-    registrationOpen: false,
     description:
       "A gathering for Brain Health Ambassadors and community participants to reconnect, refresh their learning and share their contributions to brain health in Tobago. Organised by the Tobago Alzheimer's Support Group of the Alzheimer's Association of Trinidad and Tobago with Resilient Health Communities, and led in part by the Ambassadors themselves.",
   },
@@ -253,7 +252,6 @@ export const seedSessions: SeedSession[] = [
     day: '2026-11-18',
     startTime: '18:00',
     venue: 'Solidarity House, Harmony Hall, St Michael, Barbados',
-    registrationOpen: false,
     description:
       "A proposed in-person panel connecting Barbados's financing and development discussions with practical questions about prevention, care, workforce capability and family support. Proposed contributors include Ryan Straughn, Dr Jeremy Stephens and Christine Franklyn, with Kaila Branch as moderator; participation to be confirmed.",
   },
@@ -370,7 +368,6 @@ export const seedSessions: SeedSession[] = [
     startTime: '16:30',
     endTime: '17:30',
     venue: 'Tambrin Square, Scarborough, Tobago (proposed start)',
-    registrationOpen: false,
     description:
       "A community walk organised by the Tobago Alzheimer's Support Group of the Alzheimer's Association of Trinidad and Tobago, bringing attention to brain health and showing support for people living with dementia and their families. The proposed route starts at Tambrin Square and ends near Scarborough Library. Subject to police permission and confirmation of the final route.",
   },
@@ -402,7 +399,6 @@ export const seedSessions: SeedSession[] = [
     startTime: '14:00',
     endTime: '18:00',
     venue: 'TBC, Trinidad',
-    registrationOpen: false,
     description:
       'An afternoon of discussion, steelpan music and accessible activities exploring healthy ageing and social connection in Trinidad. Hosted by Dingole Ltd with the Association of Psychiatrists in Trinidad & Tobago, the event includes an optional introduction to the early-stage PanJam initiative and will gather local priorities for the Caribbean Call to Action on Brain Health consultation.',
   },
@@ -432,7 +428,6 @@ export const seedSessions: SeedSession[] = [
     theme: 'Community',
     day: '2026-11-20',
     venue: 'Across participating workplaces, organisations and communities in the Cayman Islands',
-    registrationOpen: false,
     description:
       'An invitation to individuals, workplaces and community groups across Cayman to wear purple and start a conversation about brain health and dementia, showing support for people living with dementia and their families and connecting others with opportunities to learn more.',
   },
@@ -462,7 +457,6 @@ export const seedSessions: SeedSession[] = [
     day: '2026-11-21',
     startTime: '10:00',
     endTime: '13:30',
-    registrationOpen: false,
     description:
       "A welcoming community gathering hosted by the Alzheimer's and Dementia Association of the Cayman Islands, offering people living with dementia, families, carers and community members a chance to spend time together in a supportive setting. Venue and attendance arrangements to be confirmed.",
   },
