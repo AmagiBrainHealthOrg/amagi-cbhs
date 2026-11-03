@@ -67,7 +67,7 @@ export const seedSessions: SeedSession[] = [
     theme: 'Community',
     day: '2026-11-16',
     registrationOpen: false,
-    description: 'Barbados Brain Health Relay contribution. Description TBC.',
+    description: 'Barbados Brain Health Relay contribution.',
   },
   {
     title: 'From Data to Action: Strengthening Caribbean Brain Health Systems',
@@ -140,7 +140,7 @@ export const seedSessions: SeedSession[] = [
     theme: 'Community',
     day: '2026-11-17',
     registrationOpen: false,
-    description: 'Barbados Brain Health Relay contribution; participation TBC. Description TBC.',
+    description: 'Barbados Brain Health Relay contribution.',
   },
   {
     title: 'Cayman Brain Health Relay — Day 1',
@@ -160,7 +160,7 @@ export const seedSessions: SeedSession[] = [
     startTime: '10:00',
     registrationOpen: false,
     description:
-      'Cayman Brain Health Relay contribution. Lead: Mr Daval Gregory, Software Developer. Description TBC.',
+      'Cayman Brain Health Relay contribution. Lead: Mr Daval Gregory, Software Developer.',
   },
   {
     title:
@@ -181,8 +181,7 @@ export const seedSessions: SeedSession[] = [
     day: '2026-11-18',
     startTime: '11:00',
     registrationOpen: false,
-    description:
-      'Cayman Brain Health Relay contribution. Lead: Professor Jusene Brown. Description TBC.',
+    description: 'Cayman Brain Health Relay contribution. Lead: Professor Jusene Brown.',
   },
   {
     title: 'Cayman Brain Health Relay — Wellness Team, Portfolio of the Civil Service',
@@ -192,7 +191,7 @@ export const seedSessions: SeedSession[] = [
     startTime: '12:00',
     registrationOpen: false,
     description:
-      'Cayman Brain Health Relay contribution. Lead: Mrs Charmane Dalhouse-Morgan, Corporate Wellness Officer. Description TBC.',
+      'Cayman Brain Health Relay contribution. Lead: Mrs Charmane Dalhouse-Morgan, Corporate Wellness Officer.',
   },
   {
     title: 'Cognitive-Screening Training — Kingston',
@@ -223,7 +222,7 @@ export const seedSessions: SeedSession[] = [
     startTime: '13:00',
     registrationOpen: false,
     description:
-      'Cayman Brain Health Relay contribution. Lead: Ms Rebekah Brooks, Head of Marketing and Sales. Description TBC.',
+      'Cayman Brain Health Relay contribution. Lead: Ms Rebekah Brooks, Head of Marketing and Sales.',
   },
   {
     title: 'Cayman Brain Health Relay — AllStars Netball Club',
@@ -233,7 +232,7 @@ export const seedSessions: SeedSession[] = [
     startTime: '14:00',
     registrationOpen: false,
     description:
-      'Cayman Brain Health Relay contribution. Lead: Ms Lyneth Montieth, President; Ms Georgie Muir, Fundraising Coordinator (pre-recorded). Description TBC.',
+      'Cayman Brain Health Relay contribution. Lead: Ms Lyneth Montieth, President; Ms Georgie Muir, Fundraising Coordinator (pre-recorded).',
   },
   {
     title: 'Cayman Brain Health Relay — Health Services Authority',
@@ -242,8 +241,7 @@ export const seedSessions: SeedSession[] = [
     day: '2026-11-18',
     startTime: '15:00',
     registrationOpen: false,
-    description:
-      'Cayman Brain Health Relay contribution. Lead: Dr Sunku Guptha; Dr Dwaine Cooke. Description TBC.',
+    description: 'Cayman Brain Health Relay contribution. Lead: Dr Sunku Guptha; Dr Dwaine Cooke.',
   },
   {
     title: 'Financing Brain Health and Healthy Ageing in Barbados',
@@ -293,8 +291,7 @@ export const seedSessions: SeedSession[] = [
     day: '2026-11-19',
     startTime: '09:00',
     registrationOpen: false,
-    description:
-      'Cayman Brain Health Relay contribution. Lead: Dr Jennifer Tullet (pre-recorded). Description TBC.',
+    description: 'Cayman Brain Health Relay contribution. Lead: Dr Jennifer Tullet (pre-recorded).',
   },
   {
     title: 'Cayman Brain Health Relay — The Ezcurra Laboratory',
@@ -303,8 +300,7 @@ export const seedSessions: SeedSession[] = [
     day: '2026-11-19',
     startTime: '10:00',
     registrationOpen: false,
-    description:
-      'Cayman Brain Health Relay contribution. Lead: Dr Marina Ezcurra (pre-recorded). Description TBC.',
+    description: 'Cayman Brain Health Relay contribution. Lead: Dr Marina Ezcurra (pre-recorded).',
   },
   {
     title:
@@ -327,7 +323,7 @@ export const seedSessions: SeedSession[] = [
     endTime: '12:00',
     registrationOpen: false,
     description:
-      'Cayman Longevity Program morning Relay session, led by Ms Christina Rowlandson, Co-founder. Title, scope and speaker list TBC.',
+      'Cayman Longevity Program morning Relay session, led by Ms Christina Rowlandson, Co-founder.',
   },
   {
     title: "Cayman Brain Health Relay — St Matthew's University School of Medicine",
@@ -337,7 +333,7 @@ export const seedSessions: SeedSession[] = [
     startTime: '13:00',
     registrationOpen: false,
     description:
-      'Cayman Brain Health Relay contribution. Lead: Dr Maribel Aurelio; Dr Gimena Marzan (pre-recorded). Description TBC.',
+      'Cayman Brain Health Relay contribution. Lead: Dr Maribel Aurelio; Dr Gimena Marzan (pre-recorded).',
   },
   {
     title: 'Cayman Brain Health Relay — Netball Cayman',
@@ -347,7 +343,7 @@ export const seedSessions: SeedSession[] = [
     startTime: '14:00',
     registrationOpen: false,
     description:
-      'Cayman Brain Health Relay contribution. Lead: Ms Teneisha Wilson, President (pre-recorded). Description TBC.',
+      'Cayman Brain Health Relay contribution. Lead: Ms Teneisha Wilson, President (pre-recorded).',
   },
   {
     title: 'Cayman Longevity Program — Afternoon Relay Session',
@@ -358,7 +354,7 @@ export const seedSessions: SeedSession[] = [
     endTime: '16:00',
     registrationOpen: false,
     description:
-      'Cayman Longevity Program afternoon Relay session, led by Ms Christina Rowlandson, Co-founder. Title, scope and speaker list TBC.',
+      'Cayman Longevity Program afternoon Relay session, led by Ms Christina Rowlandson, Co-founder.',
   },
   {
     title: 'Brain Health Awareness Walk — Tobago',
@@ -437,7 +433,7 @@ export const seedSessions: SeedSession[] = [
     theme: 'Community',
     day: '2026-11-20',
     registrationOpen: false,
-    description: 'Barbados Brain Health Relay contribution; participation TBC. Description TBC.',
+    description: 'Barbados Brain Health Relay contribution.',
   },
   {
     title: 'Menopause and Brain Health: Understanding Changes, Finding Support',
@@ -561,7 +557,6 @@ export const seedSessions: SeedSession[] = [
     location: 'Online',
     theme: 'Community',
     registrationOpen: false,
-    description:
-      'Barbados Brain Health Relay online contribution; participation TBC. Description TBC.',
+    description: 'Barbados Brain Health Relay online contribution.',
   },
 ]
