@@ -512,7 +512,13 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
         anchorId: 'week',
         monthLabel: 'Nov',
         days: [
-          { day: 'Mon', date: '16', label: 'Opening', body: 'Launch events in every host country' },
+          {
+            day: 'Mon',
+            date: '16',
+            label: 'Anchor Day',
+            body: 'The Anchor Day takes place in Jamaica',
+            anchor: true,
+          },
           {
             day: 'Tue',
             date: '17',
@@ -520,13 +526,7 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
             body: 'Community sessions and screenings',
           },
           { day: 'Wed', date: '18', label: 'Local activity', body: 'Workshops for practitioners' },
-          {
-            day: 'Thu',
-            date: '19',
-            label: 'Anchor Day',
-            body: 'The Anchor Day takes place in Jamaica',
-            anchor: true,
-          },
+          { day: 'Thu', date: '19', label: 'Local activity', body: 'Workshops and sessions' },
           { day: 'Fri', date: '20', label: 'Local activity', body: 'Youth and family sessions' },
           { day: 'Sat', date: '21', label: 'Online day', body: 'Sessions for the diaspora' },
           { day: 'Sun', date: '22', label: 'Close', body: 'Reflections and next steps' },

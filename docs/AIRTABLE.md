@@ -60,7 +60,7 @@ Not written (Amagi's own): `About`, `Engagement`, `Area of work`, `Interest / po
 
 Table `tblmdrD7SJ18AXXvx`. Written: `Name`, `Email` (primary, single line text), `Phone/Whatsapp`, `Location` (link to `Locations`), `Organisation / affiliation`, `Session`, and the attribution columns.
 
-`Session` holds the session's title, day and time, venue and country, such as "Anchor Day plenary · Thursday 19 November, 09:00–10:30 · Main hall, Jamaica".
+`Session` holds the session's title, day and time, venue and country, such as "Anchor Day plenary · Monday 16 November, 09:00–10:30 · Main hall, Jamaica".
 
 ## Lookup tables
 
