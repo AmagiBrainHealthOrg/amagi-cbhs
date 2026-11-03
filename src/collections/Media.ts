@@ -13,8 +13,13 @@ export const Media: CollectionConfig = {
   fields: [
     {
       name: 'alt',
+      label: 'Alt text',
       type: 'text',
       required: true,
+      admin: {
+        description:
+          'Required. Describe the image for people who can’t see it, such as “Dingolé logo” or “Dr Ishtar Govia speaking at a lectern”.',
+      },
     },
   ],
   upload: {
