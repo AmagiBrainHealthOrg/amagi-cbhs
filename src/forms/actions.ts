@@ -8,6 +8,7 @@ import { getPayload } from 'payload'
 import { formOptions, type FormKey } from '@/config/forms'
 import { sendConfirmation } from '@/lib/email'
 import { getResolvedForm } from '@/lib/forms'
+import { findRegistrableSession, type RegistrableSession } from '@/lib/sessions'
 import { allowSubmission } from '@/lib/rateLimit'
 import { syncSubmission } from '@/lib/syncSubmission'
 import config from '@/payload.config'
@@ -71,6 +72,13 @@ export async function submitForm(
   const errors = validate(fields, values)
   if (Object.keys(errors).length > 0) return { errors, values }
 
+  // Session registrations name their session in a hidden field, checked against the CMS.
+  let session: RegistrableSession | undefined
+  if (key === 'session-registration') {
+    session = await findRegistrableSession(payload, form.get('session'))
+    if (!session) return { formError: 'Registration for this session has closed.', values }
+  }
+
   if (!(await allowSubmission(payload, await clientIp()))) {
     return {
       formError: "You've sent several forms in a short time. Please wait 10 minutes and try again.",
@@ -84,6 +92,7 @@ export async function submitForm(
     if (!isVisible(field, values, fields) || !value || value.length === 0) continue
     data[field.name] = field.control === 'url' ? normaliseUrl(value as string) : value
   }
+  if (session) data.session = session.summary
   const labelOf = (name: 'location' | 'describesYou') =>
     fields.find((f) => f.name === name)?.options?.find((o) => o.value === data[name])?.label
 
@@ -98,6 +107,7 @@ export async function submitForm(
     collection: 'form-submissions',
     data: {
       form: key,
+      session: session?.id,
       data: data as Record<string, string | string[]>,
       territory,
       audienceType,
@@ -116,7 +126,7 @@ export async function submitForm(
 
   // A failed email never loses the submission: it is saved, and Airtable still gets it.
   try {
-    await sendConfirmation(payload, key, String(data.email), String(data.name))
+    await sendConfirmation(payload, key, String(data.email), String(data.name), session?.summary)
   } catch (error) {
     console.error(`Confirmation email failed for form submission ${submission.id}`, error)
   }

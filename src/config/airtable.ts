@@ -41,6 +41,7 @@ export type FieldName =
   | 'outlet'
   | 'message'
   | 'followUp'
+  | 'session'
 
 export type AirtableField = { id: string; kind: FieldKind }
 
@@ -136,6 +137,18 @@ export const airtableForms: Record<FormKey, AirtableForm> = {
       outlet: text('fld5VA36NVFxm7LOp'),
       message: longText('fldK626l63vHmFGeO'), // "Enquiry" in the base
       followUp: select('fldU6CMtXg6aiArBO'),
+    },
+  },
+  // Email is the primary field, a single line text.
+  'session-registration': {
+    table: 'tblmdrD7SJ18AXXvx',
+    fields: {
+      name: text('fld0xct9dSmjAiATW'),
+      email: text('fldVy2PoYtWjQQBoM'),
+      phone: phone('fldulYZRtN24xN7Oh'),
+      organisation: text('fldbKpxNjKISSAUGp'),
+      location: link('fldMSKCQgRetcezgq'),
+      session: text('fldyq26tWQ3ERvYZX'), // "Title · day, time · location", set by the server
     },
   },
 }

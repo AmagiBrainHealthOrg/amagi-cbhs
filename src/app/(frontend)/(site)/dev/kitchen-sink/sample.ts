@@ -28,12 +28,6 @@ const lexical = (...children: ReturnType<typeof node>[]): RichTextBlock['content
 
 const section = { kicker: 'Sample kicker', intro: 'An optional introduction under the heading.' }
 
-const countries = [
-  { name: 'Jamaica', city: 'Kingston', x: 365, y: 285, anchor: true, labelSide: 'left' as const },
-  { name: 'The Bahamas', city: 'Nassau', x: 349, y: 73, labelSide: 'right' as const },
-  { name: 'Barbados', city: 'Bridgetown', x: 858, y: 432, labelSide: 'left' as const },
-]
-
 export const sampleBlocks: LayoutBlock[] = [
   {
     blockType: 'hero',
@@ -84,8 +78,6 @@ export const sampleBlocks: LayoutBlock[] = [
     ...section,
     heading: 'Host map',
     background: 'blue',
-    onlineLabel: 'Plus sample online sessions',
-    countries,
   },
   {
     blockType: 'summitWeek',

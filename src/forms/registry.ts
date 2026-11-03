@@ -233,4 +233,9 @@ export const formRegistry: Record<FormKey, FormDefinition> = {
       followUp,
     ],
   },
+  // The session comes from the page, not a question: src/forms/actions.ts adds it.
+  'session-registration': {
+    submitLabel: 'Register',
+    fields: [name, location('Country'), organisation(true), email, phone],
+  },
 }

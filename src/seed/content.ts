@@ -280,8 +280,48 @@ export const aboutContact = {
   links: [{ label: 'Get in touch', href: '/contact' }],
 } as const satisfies Layout[number]
 
-// Summit Week, below the hero. Groups with no events are hidden, so the section stays off the
-// page until editors add events.
+// Summit Week, below the hero. Hidden until a session is published. Replaces the events section.
+export const scheduleSection: Extract<Layout[number], { blockType: 'schedule' }> = {
+  blockType: 'schedule',
+  kicker: '16–22 November 2026',
+  heading: 'Programme',
+  background: 'white',
+  anchorId: 'programme',
+  dayNotes: [
+    { day: '2026-11-16', note: 'Opening', highlight: false },
+    { day: '2026-11-22', note: 'Close', highlight: false },
+  ],
+}
+
+// The schedule's tabs, from the host countries on the Summit Week page. Amagi confirms the list.
+export const seedSessionLocations: RequiredDataFromCollectionSlug<'session-locations'>[] = [
+  { name: 'Online', city: 'Open to everyone', online: true, timeZone: 'America/Jamaica', order: 0 },
+  { name: 'Jamaica', city: 'Kingston', timeZone: 'America/Jamaica', order: 1 },
+  { name: 'Suriname', city: 'Paramaribo', timeZone: 'America/Paramaribo', order: 2 },
+  { name: 'Barbados', city: 'Bridgetown', timeZone: 'America/Barbados', order: 3 },
+  {
+    name: 'Trinidad and Tobago',
+    city: 'Port of Spain',
+    timeZone: 'America/Port_of_Spain',
+    order: 4,
+  },
+  { name: 'Cayman Islands', city: 'George Town', timeZone: 'America/Cayman', order: 5 },
+]
+
+// Added with the programme (3 November 2026), after the 2 November migration seeded the list
+// above. Kept apart so that migration never writes a time zone its schema doesn't have yet.
+export const seedProgrammeLocations: RequiredDataFromCollectionSlug<'session-locations'>[] = [
+  { name: 'United States', city: 'Silver Spring, MD', timeZone: 'America/New_York', order: 6 },
+]
+
+export const sessionThankYou = {
+  form: 'session-registration',
+  heading: 'You’re registered',
+  body: 'We’ll email you nearer the time with anything you need to know before the session.',
+} as const
+
+// Retired: the events_content migration still adds it to older databases, and the
+// programme_content migration swaps it for the schedule.
 export const eventsSection: Extract<Layout[number], { blockType: 'events' }> = {
   blockType: 'events',
   show: true,
@@ -290,7 +330,7 @@ export const eventsSection: Extract<Layout[number], { blockType: 'events' }> = {
   background: 'white',
   groups: [
     { name: 'Jamaica', events: [] },
-    { name: 'The Bahamas', events: [] },
+    { name: 'Suriname', events: [] },
     { name: 'Barbados', events: [] },
     { name: 'Trinidad and Tobago', events: [] },
     { name: 'Cayman Islands', events: [] },
@@ -312,7 +352,7 @@ export const summitWeekPage = (images: SeedImages): SeedPage => ({
       lead: 'Locally led activities across the Caribbean and the diaspora, connected online and brought together at an Anchor Day in Jamaica. Free to attend.',
       secondaryLink: { label: 'Register your interest', href: '/register' },
     }),
-    eventsSection,
+    scheduleSection,
     {
       blockType: 'flow',
       kicker: 'How the week works',
@@ -350,7 +390,7 @@ export const summitWeekPage = (images: SeedImages): SeedPage => ({
         {
           icon: 'users',
           title: 'Country Weeks',
-          body: 'Activities led by Jamaica, Barbados, Trinidad and Tobago, the Cayman Islands and The Bahamas.',
+          body: 'Activities led by Jamaica, Barbados, Trinidad and Tobago, the Cayman Islands and Suriname.',
         },
         {
           icon: 'hand-heart',
@@ -454,16 +494,6 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
         intro:
           'Each host country runs its own programme of free, local activity. Online sessions let anyone in the region or the diaspora join in.',
         background: 'blue',
-        onlineLabel: 'Plus online sessions, open to everyone',
-        anchorLabel: 'Anchor Day',
-        // x and y are positions on the map's own grid (see caribbeanMap.ts).
-        countries: [
-          { name: 'Jamaica', city: 'Kingston', x: 365, y: 285, anchor: true, labelSide: 'left' },
-          { name: 'The Bahamas', city: 'Nassau', x: 349, y: 73, labelSide: 'right' },
-          { name: 'Barbados', city: 'Bridgetown', x: 858, y: 432, labelSide: 'left' },
-          { name: 'Trinidad and Tobago', city: 'Port of Spain', x: 803, y: 506, labelSide: 'left' },
-          { name: 'Cayman Islands', city: 'George Town', x: 233, y: 246, labelSide: 'left' },
-        ],
       },
       {
         blockType: 'summitWeek',
@@ -1035,6 +1065,7 @@ export const seedGlobals = (images: SeedImages): Globals => ({
         heading: 'Thank you for getting in touch',
         body: "We've received your message and will reply as soon as we can.",
       },
+      sessionThankYou,
     ],
   },
 })

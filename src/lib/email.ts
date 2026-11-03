@@ -17,6 +17,8 @@ export async function sendConfirmation(
   form: FormKey,
   to: string,
   name?: string,
+  /** A line naming what they signed up for, such as the session. */
+  detail?: string,
 ): Promise<void> {
   const recipient = recipientFor(to)
   if (!recipient) {
@@ -29,6 +31,7 @@ export async function sendConfirmation(
     name,
     heading: copy?.heading ?? 'Thank you',
     body: copy?.body,
+    detail,
   })
   await payload.sendEmail({ to: recipient, ...email })
 }

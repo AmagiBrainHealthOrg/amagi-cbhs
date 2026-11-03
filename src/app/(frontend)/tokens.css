@@ -38,6 +38,36 @@
   --border-muted: #e3e7ed;
   --divider: #a9b5c3;
   --pale-blue: #f4f8fc;
+  --pale-orange: #fffaf3;
+
+  /* --- Programme themes: dot, chip background, chip text (≥ 4.5:1) */
+  --theme-blue: var(--primary-blue);
+  --theme-blue-bg: #e3eefa;
+  --theme-blue-fg: #00427c;
+  --theme-red: var(--red);
+  --theme-red-bg: #fde7e6;
+  --theme-red-fg: #a3201c;
+  --theme-orange: var(--orange);
+  --theme-orange-bg: #fdeedf;
+  --theme-orange-fg: #8a4410;
+  --theme-yellow: var(--yellow);
+  --theme-yellow-bg: #fff5cc;
+  --theme-yellow-fg: #6b5200;
+  --theme-teal: #1f8a8a;
+  --theme-teal-bg: #ddf1f0;
+  --theme-teal-fg: #135858;
+  --theme-purple: #6b4fa3;
+  --theme-purple-bg: #ece6f6;
+  --theme-purple-fg: #46316e;
+  --theme-green: #3c8a3f;
+  --theme-green-bg: #e3f1e3;
+  --theme-green-fg: #255927;
+  --theme-pink: #c2417f;
+  --theme-pink-bg: #fae4ee;
+  --theme-pink-fg: #7d1f4c;
+  --theme-amber: #c98a12;
+  --theme-amber-bg: #fbf0d6;
+  --theme-amber-fg: #694405;
 
   /* --- Layout ------------------------------------------------ */
   --max: 1160px;

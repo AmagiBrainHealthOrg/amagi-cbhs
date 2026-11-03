@@ -18,6 +18,9 @@ import { Partners } from './collections/Partners'
 import { Team } from './collections/Team'
 import { Supporters } from './collections/Supporters'
 import { FormSubmissions } from './collections/FormSubmissions'
+import { SessionLocations } from './collections/SessionLocations'
+import { Sessions } from './collections/Sessions'
+import { SessionThemes } from './collections/SessionThemes'
 import { AnchorDay } from './globals/AnchorDay'
 import { ComingSoon } from './globals/ComingSoon'
 import { CookieConsent } from './globals/CookieConsent'
@@ -38,7 +41,20 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Pages, News, Partners, Supporters, Team, Faqs, FormSubmissions, Media, Users],
+  collections: [
+    Pages,
+    News,
+    Partners,
+    Supporters,
+    Team,
+    Faqs,
+    Sessions,
+    SessionLocations,
+    SessionThemes,
+    FormSubmissions,
+    Media,
+    Users,
+  ],
   globals: [
     Header,
     Footer,

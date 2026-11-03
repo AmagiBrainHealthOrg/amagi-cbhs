@@ -73,6 +73,9 @@ export interface Config {
     supporters: Supporter;
     team: Team;
     faqs: Faq;
+    sessions: Session;
+    'session-locations': SessionLocation;
+    'session-themes': SessionTheme;
     'form-submissions': FormSubmission;
     media: Media;
     users: User;
@@ -89,6 +92,9 @@ export interface Config {
     supporters: SupportersSelect<false> | SupportersSelect<true>;
     team: TeamSelect<false> | TeamSelect<true>;
     faqs: FaqsSelect<false> | FaqsSelect<true>;
+    sessions: SessionsSelect<false> | SessionsSelect<true>;
+    'session-locations': SessionLocationsSelect<false> | SessionLocationsSelect<true>;
+    'session-themes': SessionThemesSelect<false> | SessionThemesSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -172,6 +178,7 @@ export interface Page {
         | HostMapBlock
         | SummitWeekBlock
         | EventsBlock
+        | ScheduleBlock
         | RoadmapBlock
         | FlowBlock
         | CardGridBlock
@@ -345,13 +352,7 @@ export interface HostMapBlock {
    * Lets links jump to this section, e.g. "week" for /#week.
    */
   anchorId?: string | null;
-  /**
-   * The extra line for online sessions.
-   */
   onlineLabel?: string | null;
-  /**
-   * Shown beside the country that hosts the Anchor Day.
-   */
   anchorLabel?: string | null;
   countries?:
     | {
@@ -454,6 +455,40 @@ export interface EventsBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'events';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ScheduleBlock".
+ */
+export interface ScheduleBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  /**
+   * A short label under a date, such as "Opening" or "Anchor Day".
+   */
+  dayNotes?:
+    | {
+        day: '2026-11-16' | '2026-11-17' | '2026-11-18' | '2026-11-19' | '2026-11-20' | '2026-11-21' | '2026-11-22';
+        note: string;
+        /**
+         * Marks the day in orange, as for Anchor Day.
+         */
+        highlight?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'schedule';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1019,11 +1054,109 @@ export interface Faq {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sessions".
+ */
+export interface Session {
+  id: number;
+  title: string;
+  /**
+   * Generated from the title when left empty.
+   */
+  slug: string;
+  location: number | SessionLocation;
+  theme?: (number | null) | SessionTheme;
+  /**
+   * Leave empty while the date is TBC.
+   */
+  day?: ('2026-11-16' | '2026-11-17' | '2026-11-18' | '2026-11-19' | '2026-11-20' | '2026-11-21' | '2026-11-22') | null;
+  /**
+   * Local time at the location, 24-hour. Leave empty while TBC.
+   */
+  startTime?: string | null;
+  /**
+   * Optional.
+   */
+  endTime?: string | null;
+  /**
+   * In-person sessions: where it happens, such as a building and street.
+   */
+  venue?: string | null;
+  description?: string | null;
+  /**
+   * Online sessions: the Register button opens this link.
+   */
+  zoomUrl?: string | null;
+  /**
+   * Untick when the session is full. The Register button is then hidden.
+   */
+  registrationOpen?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "session-locations".
+ */
+export interface SessionLocation {
+  id: number;
+  name: string;
+  /**
+   * Shown under the name, such as "Kingston" or "Open to everyone".
+   */
+  city?: string | null;
+  /**
+   * Online sessions show in each visitor’s own time zone and register through Zoom. In-person sessions register on this site.
+   */
+  online?: boolean | null;
+  /**
+   * The time zone session times are entered in.
+   */
+  timeZone:
+    | 'America/Jamaica'
+    | 'America/Cayman'
+    | 'America/Nassau'
+    | 'America/Barbados'
+    | 'America/Port_of_Spain'
+    | 'America/Puerto_Rico'
+    | 'America/Guyana'
+    | 'America/Paramaribo'
+    | 'America/Belize'
+    | 'America/New_York';
+  /**
+   * Lower numbers come first.
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "session-themes".
+ */
+export interface SessionTheme {
+  id: number;
+  name: string;
+  /**
+   * Give each theme its own colour.
+   */
+  colour: 'blue' | 'red' | 'orange' | 'yellow' | 'teal' | 'purple' | 'green' | 'pink' | 'amber';
+  /**
+   * Lower numbers come first.
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
   id: number;
-  form: 'register-interest' | 'cta-consultation' | 'partner' | 'relay' | 'contact';
+  form: 'register-interest' | 'cta-consultation' | 'partner' | 'relay' | 'contact' | 'session-registration';
   /**
    * The person's answers: name, email, phone and the form's own fields (SPEC §8.1, §8.3).
    */
@@ -1036,6 +1169,10 @@ export interface FormSubmission {
     | number
     | boolean
     | null;
+  /**
+   * The session this registration is for.
+   */
+  session?: (number | null) | Session;
   territory?: string | null;
   audienceType?: string | null;
   consents?: {
@@ -1140,6 +1277,18 @@ export interface PayloadLockedDocument {
         value: number | Faq;
       } | null)
     | ({
+        relationTo: 'sessions';
+        value: number | Session;
+      } | null)
+    | ({
+        relationTo: 'session-locations';
+        value: number | SessionLocation;
+      } | null)
+    | ({
+        relationTo: 'session-themes';
+        value: number | SessionTheme;
+      } | null)
+    | ({
         relationTo: 'form-submissions';
         value: number | FormSubmission;
       } | null)
@@ -1209,6 +1358,7 @@ export interface PagesSelect<T extends boolean = true> {
         hostMap?: T | HostMapBlockSelect<T>;
         summitWeek?: T | SummitWeekBlockSelect<T>;
         events?: T | EventsBlockSelect<T>;
+        schedule?: T | ScheduleBlockSelect<T>;
         roadmap?: T | RoadmapBlockSelect<T>;
         flow?: T | FlowBlockSelect<T>;
         cardGrid?: T | CardGridBlockSelect<T>;
@@ -1378,6 +1528,27 @@ export interface EventsBlockSelect<T extends boolean = true> {
               body?: T;
               id?: T;
             };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ScheduleBlock_select".
+ */
+export interface ScheduleBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  dayNotes?:
+    | T
+    | {
+        day?: T;
+        note?: T;
+        highlight?: T;
         id?: T;
       };
   id?: T;
@@ -1708,11 +1879,58 @@ export interface FaqsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sessions_select".
+ */
+export interface SessionsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  location?: T;
+  theme?: T;
+  day?: T;
+  startTime?: T;
+  endTime?: T;
+  venue?: T;
+  description?: T;
+  zoomUrl?: T;
+  registrationOpen?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "session-locations_select".
+ */
+export interface SessionLocationsSelect<T extends boolean = true> {
+  name?: T;
+  city?: T;
+  online?: T;
+  timeZone?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "session-themes_select".
+ */
+export interface SessionThemesSelect<T extends boolean = true> {
+  name?: T;
+  colour?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions_select".
  */
 export interface FormSubmissionsSelect<T extends boolean = true> {
   form?: T;
   data?: T;
+  session?: T;
   territory?: T;
   audienceType?: T;
   consents?:
@@ -2059,7 +2277,7 @@ export interface Form {
    */
   thankYou?:
     | {
-        form: 'register-interest' | 'cta-consultation' | 'partner' | 'relay' | 'contact';
+        form: 'register-interest' | 'cta-consultation' | 'partner' | 'relay' | 'contact' | 'session-registration';
         heading: string;
         body?: string | null;
         id?: string | null;

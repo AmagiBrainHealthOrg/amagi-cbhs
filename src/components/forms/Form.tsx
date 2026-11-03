@@ -26,11 +26,13 @@ type Props = {
   notice?: string
   /** Unique on the page, so two forms never share input ids. */
   idPrefix: string
+  /** Sent with the answers, such as the session a registration is for. */
+  hidden?: Record<string, string>
 }
 
 // SPEC §8: one shared form. Checks run in the browser first, then again in the server action;
 // either way the first invalid field gets focus. Without JavaScript the action still runs.
-export function Form({ formKey, fields, submitLabel, notice, idPrefix }: Props) {
+export function Form({ formKey, fields, submitLabel, notice, idPrefix, hidden }: Props) {
   const [state, formAction, pending] = useActionState<FormState, FormData>(
     submitForm.bind(null, formKey),
     {},
@@ -117,6 +119,9 @@ export function Form({ formKey, fields, submitLabel, notice, idPrefix }: Props) 
         </label>
       </div>
       <VisitFields />
+      {Object.entries(hidden ?? {}).map(([name, value]) => (
+        <input key={name} type="hidden" name={name} value={value} />
+      ))}
 
       {notice && <p className="form-notice">{notice}</p>}
       <div className="form-actions">
