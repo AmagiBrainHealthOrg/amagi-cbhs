@@ -87,7 +87,6 @@ export const seedSessions: SeedSession[] = [
     day: '2026-11-17',
     startTime: '12:00',
     venue: 'Medical Association of Jamaica Conference Room',
-    registrationOpen: false,
     description:
       "An immersive educational experience encouraging reflection on communication, environments and support for people living with dementia, and how participants' own practice, organisation or service could become more understanding and responsive. This is an educational experience, not a diagnostic assessment or a complete representation of any individual's experience of dementia.",
   },
@@ -204,7 +203,6 @@ export const seedSessions: SeedSession[] = [
     startTime: '13:00',
     endTime: '16:00',
     venue: 'TBC, Kingston',
-    registrationOpen: false,
     description:
       'A practical training session for general practitioners, medical officers and primary-care staff on recognising cognitive concerns and connecting screening with appropriate assessment, referral and follow-up. The emphasis is on what happens around and after screening, not simply completing a test. Participation does not confer a specialist qualification.',
   },
@@ -505,7 +503,6 @@ export const seedSessions: SeedSession[] = [
     startTime: '15:00',
     endTime: '17:30',
     venue: 'Bellevue Conference Room',
-    registrationOpen: false,
     description:
       'A reflective workshop inviting family caregivers of people living with dementia to pause and consider their own support needs. Facilitated by Shawna-Kaye G. Lester, M.S., M.P.H., the session uses guided journaling and optional group discussion across eight areas of life to create a personal 2026 Snapshot. Please bring a journal or notebook; personal disclosure is not required.',
   },
