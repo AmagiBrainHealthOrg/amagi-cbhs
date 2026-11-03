@@ -109,6 +109,11 @@ export function Schedule({ data }: { data: ScheduleData }) {
     const sessionTheme = themeOf(session)
     return (
       <li key={session.id} className="schedule-card">
+        {sessionTheme && (
+          <span className={`schedule-theme schedule-theme-${sessionTheme.colour}`}>
+            {sessionTheme.name}
+          </span>
+        )}
         <span className="schedule-time">
           {!session.startTime
             ? 'Time TBC'
@@ -119,11 +124,6 @@ export function Schedule({ data }: { data: ScheduleData }) {
         <h4>{session.title}</h4>
         {!online.has(session.locationId) && (
           <p className="schedule-venue">{session.venue ?? 'Venue TBC'}</p>
-        )}
-        {sessionTheme && (
-          <span className={`schedule-theme schedule-theme-${sessionTheme.colour}`}>
-            {sessionTheme.name}
-          </span>
         )}
         {session.register &&
           (session.register.external ? (
