@@ -8,14 +8,17 @@ export const SummitWeek: Block = {
   admin: { group: 'Graphics' },
   fields: [
     ...sectionFields,
+    // Unread since 3 November 2026: the days come from the Summit Week Days global. Hidden, and
+    // dropped in a later release.
     {
       name: 'monthLabel',
       type: 'text',
-      admin: { description: 'Shown under each date, e.g. Nov.' },
+      admin: { hidden: true },
     },
     {
       name: 'days',
       type: 'array',
+      admin: { hidden: true },
       labels: { singular: 'Day', plural: 'Days' },
       fields: [
         {

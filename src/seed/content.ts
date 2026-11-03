@@ -953,13 +953,34 @@ export const seedFaqs: RequiredDataFromCollectionSlug<'faqs'>[] = faqGroups.flat
 )
 
 type Globals = {
-  [S in 'header' | 'footer' | 'donation-settings' | 'cookie-consent' | 'dropdowns' | 'forms']: Omit<
-    Partial<DataFromGlobalSlug<S>>,
-    'id' | 'updatedAt' | 'createdAt' | '_status'
-  >
+  [
+    S in
+      | 'header'
+      | 'footer'
+      | 'donation-settings'
+      | 'cookie-consent'
+      | 'dropdowns'
+      | 'forms'
+      | 'summit-week'
+      | 'anchor-day'
+  ]: Omit<Partial<DataFromGlobalSlug<S>>, 'id' | 'updatedAt' | 'createdAt' | '_status'>
 }
 
 export const seedGlobals = (images: SeedImages): Globals => ({
+  'summit-week': {
+    days: [
+      { day: '2026-11-16', label: 'Anchor Day', body: 'The Summit opens and the Relay begins' },
+      ...(['2026-11-17', '2026-11-18', '2026-11-19', '2026-11-20', '2026-11-21'] as const).map(
+        (day) => ({
+          day,
+          label: 'Across the region',
+          body: 'Country Weeks, Relay and online sessions',
+        }),
+      ),
+      { day: '2026-11-22', label: 'Close', body: 'What was agreed, and what comes next' },
+    ],
+  },
+  'anchor-day': { date: '2026-11-16T12:00:00.000Z' },
   header: {
     logo: images.logo,
     brandTitle: 'Caribbean Brain\nHealth Summit',

@@ -112,6 +112,7 @@ export interface Config {
     footer: Footer;
     'donation-settings': DonationSetting;
     'anchor-day': AnchorDay;
+    'summit-week': SummitWeek;
     dropdowns: Dropdown;
     integrations: Integration;
     forms: Form;
@@ -123,6 +124,7 @@ export interface Config {
     footer: FooterSelect<false> | FooterSelect<true>;
     'donation-settings': DonationSettingsSelect<false> | DonationSettingsSelect<true>;
     'anchor-day': AnchorDaySelect<false> | AnchorDaySelect<true>;
+    'summit-week': SummitWeekSelect<false> | SummitWeekSelect<true>;
     dropdowns: DropdownsSelect<false> | DropdownsSelect<true>;
     integrations: IntegrationsSelect<false> | IntegrationsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -394,9 +396,6 @@ export interface SummitWeekBlock {
    * Lets links jump to this section, e.g. "week" for /#week.
    */
   anchorId?: string | null;
-  /**
-   * Shown under each date, e.g. Nov.
-   */
   monthLabel?: string | null;
   days?:
     | {
@@ -2209,6 +2208,26 @@ export interface AnchorDay {
   createdAt?: string | null;
 }
 /**
+ * The seven days shown on Home and Summit Week. The Anchor Day is highlighted from the date on the Anchor Day global.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "summit-week".
+ */
+export interface SummitWeek {
+  id: number;
+  days?:
+    | {
+        day: '2026-11-16' | '2026-11-17' | '2026-11-18' | '2026-11-19' | '2026-11-20' | '2026-11-21' | '2026-11-22';
+        label: string;
+        body?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "dropdowns".
  */
@@ -2468,6 +2487,24 @@ export interface AnchorDaySelect<T extends boolean = true> {
   venue?: T;
   moderator?: T;
   mc?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "summit-week_select".
+ */
+export interface SummitWeekSelect<T extends boolean = true> {
+  days?:
+    | T
+    | {
+        day?: T;
+        label?: T;
+        body?: T;
+        id?: T;
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
