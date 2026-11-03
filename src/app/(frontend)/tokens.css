@@ -62,6 +62,12 @@
   --theme-green: #3c8a3f;
   --theme-green-bg: #e3f1e3;
   --theme-green-fg: #255927;
+  --theme-pink: #c2417f;
+  --theme-pink-bg: #fae4ee;
+  --theme-pink-fg: #7d1f4c;
+  --theme-amber: #c98a12;
+  --theme-amber-bg: #fbf0d6;
+  --theme-amber-fg: #694405;
 
   /* --- Layout ------------------------------------------------ */
   --max: 1160px;

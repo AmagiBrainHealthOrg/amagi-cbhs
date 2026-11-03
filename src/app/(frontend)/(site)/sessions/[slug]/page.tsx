@@ -12,7 +12,7 @@ import type { ResolvedField } from '@/forms/validate'
 import { getResolvedForm } from '@/lib/forms'
 import { canRegister } from '@/lib/sessions'
 import config from '@/payload.config'
-import { dayLabel, timeRange, zoneLabel } from '@/utils/sessions'
+import { whenLabel, zoneLabel } from '@/utils/sessions'
 
 import { RefreshRouteOnSave } from '../../../RefreshRouteOnSave'
 import { previewUser, type RouteProps } from '../../_page'
@@ -46,7 +46,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   if (!session) return {}
   return {
     title: `${session.title} | Caribbean Brain Health Summit`,
-    description: session.description || `${dayLabel(session.day)}, ${session.startTime}`,
+    description: session.description || whenLabel(session),
   }
 }
 
@@ -79,8 +79,8 @@ export default async function SessionPage(props: Props) {
           <div>
             <dt>When</dt>
             <dd>
-              {dayLabel(session.day)}, {timeRange(session.startTime, session.endTime)},{' '}
-              {zoneLabel(location.name, location.timeZone)}
+              {whenLabel(session)}
+              {session.startTime && `, ${zoneLabel(location.name, location.timeZone)}`}
             </dd>
           </div>
           <div>

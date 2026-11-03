@@ -9,6 +9,8 @@ export type ScheduleDay = {
   date: string
   note?: string
   highlight: boolean
+  /** The "Date TBC" column, for sessions with no day yet. Always last. */
+  tbc?: boolean
 }
 export type ScheduleLocation = {
   id: number
@@ -26,10 +28,10 @@ export type ScheduleSession = {
   themeId?: number
   /** Index into the days, in the location's zone. */
   day: number
-  startTime: string
+  startTime?: string
   endTime?: string
-  /** UTC instants, so online sessions can be shown in the visitor's zone. */
-  start: string
+  /** UTC instants, so online sessions can be shown in the visitor's zone. Unset while TBC. */
+  start?: string
   end?: string
   venue?: string
   register?: { href: string; external: boolean }
@@ -52,6 +54,14 @@ const registerLink = (session: Session, location: SessionLocation) => {
   return { href: `/sessions/${session.slug}`, external: false }
 }
 
+export const TBC_DAY: ScheduleDay = { value: 'tbc', dow: 'Date', date: 'TBC', highlight: false, tbc: true }
+
+// Same day, then timed sessions by start, then untimed ones, then title.
+export const bySchedule = (a: ScheduleSession, b: ScheduleSession) =>
+  a.day - b.day ||
+  (a.start && b.start ? a.start.localeCompare(b.start) : a.start ? -1 : b.start ? 1 : 0) ||
+  a.title.localeCompare(b.title)
+
 // Plain data for the client schedule: sessions whose location is published, sorted by time.
 export function buildSchedule(
   block: Pick<ScheduleBlock, 'dayNotes'>,
@@ -73,11 +83,19 @@ export function buildSchedule(
   const byId = new Map(locations.map((location) => [location.id, location]))
   const themeIds = new Set(themes.map(({ id }) => id))
 
+  if (sessions.some((session) => !session.day)) days.push(TBC_DAY)
+
   const list = sessions.flatMap((session): ScheduleSession[] => {
     const location = byId.get(idOf(session.location) ?? -1)
-    const day = days.findIndex(({ value }) => value === session.day)
+    const day = session.day
+      ? days.findIndex(({ value }) => value === session.day)
+      : days.indexOf(TBC_DAY)
     if (!location || day === -1) return []
     const themeId = idOf(session.theme)
+    const zoned = (time?: string | null) =>
+      session.day && session.startTime && time
+        ? zonedToUtc(session.day, time, location.timeZone)
+        : undefined
     return [
       {
         id: session.id,
@@ -85,18 +103,16 @@ export function buildSchedule(
         locationId: location.id,
         themeId: themeId !== undefined && themeIds.has(themeId) ? themeId : undefined,
         day,
-        startTime: session.startTime,
-        endTime: session.endTime || undefined,
-        start: zonedToUtc(session.day, session.startTime, location.timeZone),
-        end: session.endTime
-          ? zonedToUtc(session.day, session.endTime, location.timeZone)
-          : undefined,
+        startTime: session.startTime || undefined,
+        endTime: (session.startTime && session.endTime) || undefined,
+        start: zoned(session.startTime),
+        end: zoned(session.endTime),
         venue: location.online ? undefined : session.venue || undefined,
         register: registerLink(session, location),
       },
     ]
   })
-  list.sort((a, b) => a.start.localeCompare(b.start) || a.title.localeCompare(b.title))
+  list.sort(bySchedule)
 
   return {
     days,

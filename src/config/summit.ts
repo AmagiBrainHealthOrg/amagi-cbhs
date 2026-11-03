@@ -22,9 +22,10 @@ export const timeZoneOptions = [
   { label: 'Guyana (UTC−4)', value: 'America/Guyana' },
   { label: 'Suriname (UTC−3)', value: 'America/Paramaribo' },
   { label: 'Belize (UTC−6)', value: 'America/Belize' },
+  { label: 'United States, Eastern (UTC−5)', value: 'America/New_York' },
 ] as const
 
-// Theme colours, from the brand palette plus three supporting hues for contrast between chips.
+// Theme colours, from the brand palette plus five supporting hues for contrast between chips.
 export const themeColours = [
   { label: 'Blue', value: 'blue' },
   { label: 'Red', value: 'red' },
@@ -33,6 +34,8 @@ export const themeColours = [
   { label: 'Teal', value: 'teal' },
   { label: 'Purple', value: 'purple' },
   { label: 'Green', value: 'green' },
+  { label: 'Pink', value: 'pink' },
+  { label: 'Amber', value: 'amber' },
 ] as const
 
 export type ThemeColour = (typeof themeColours)[number]['value']

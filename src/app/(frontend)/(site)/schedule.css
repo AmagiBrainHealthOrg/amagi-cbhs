@@ -2,6 +2,7 @@
    picks one day and the grid collapses to that day's sessions. */
 
 .schedule {
+  scroll-margin-top: 16px;
   display: grid;
   gap: 20px;
   font-family: var(--app-font-ui);
@@ -42,6 +43,16 @@
   --dot: var(--theme-green);
   --bg: var(--theme-green-bg);
   --fg: var(--theme-green-fg);
+}
+.schedule-theme-pink {
+  --dot: var(--theme-pink);
+  --bg: var(--theme-pink-bg);
+  --fg: var(--theme-pink-fg);
+}
+.schedule-theme-amber {
+  --dot: var(--theme-amber);
+  --bg: var(--theme-amber-bg);
+  --fg: var(--theme-amber-fg);
 }
 .schedule-theme-none {
   --dot: var(--divider);
@@ -123,7 +134,7 @@
 /* Day strip (narrow screens only) */
 .schedule-days {
   display: none;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--days, 7), minmax(0, 1fr));
   gap: 4px;
 }
 .schedule-days button {
@@ -213,9 +224,16 @@
   border-left: 0;
   background: var(--white);
 }
-/* On the cell, not the button: "+n more" can make the row taller than the button. */
-.schedule-grid tbody th:hover {
+/* The whole row opens its location. */
+.schedule-row {
+  cursor: pointer;
+}
+.schedule-row:hover > th,
+.schedule-row:hover > td {
   background: var(--pale-blue);
+}
+.schedule-row:hover .schedule-place {
+  text-decoration: underline;
 }
 .schedule-grid .schedule-column-highlight {
   background: var(--pale-orange);
@@ -264,17 +282,12 @@
   background: var(--bg);
   color: var(--fg);
   font: 400 0.75rem/1.3 var(--app-font-ui);
-  text-align: left;
-  cursor: pointer;
 }
 .schedule-more {
+  display: block;
   padding: 2px 0;
-  border: 0;
-  background: none;
   color: var(--primary-blue);
   font: 700 0.75rem var(--app-font-ui);
-  text-decoration: underline;
-  cursor: pointer;
 }
 
 /* Location tab */
@@ -305,7 +318,7 @@
 }
 .schedule-week {
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--days, 7), minmax(0, 1fr));
   gap: 10px;
   margin-top: 16px;
 }

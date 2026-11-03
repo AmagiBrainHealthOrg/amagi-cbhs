@@ -3,7 +3,12 @@
 import Link from 'next/link'
 import React, { useMemo, useRef, useState, useSyncExternalStore } from 'react'
 
-import type { ScheduleData, ScheduleLocation, ScheduleSession } from '@/utils/schedule'
+import {
+  bySchedule,
+  type ScheduleData,
+  type ScheduleLocation,
+  type ScheduleSession,
+} from '@/utils/schedule'
 
 type Tab = 'overview' | number
 
@@ -23,19 +28,23 @@ function useVisitorZone() {
   )
 }
 
+const columns = (count: number) => ({ '--days': count }) as React.CSSProperties
+
 function localise(session: ScheduleSession, zone: string, days: ScheduleData['days']) {
+  if (!session.start) return session
+  const week = days.filter(({ tbc }) => !tbc)
   const time = (iso: string) =>
     new Intl.DateTimeFormat('en-GB', { timeZone: zone, hour: '2-digit', minute: '2-digit' }).format(
       new Date(iso),
     )
   const date = new Intl.DateTimeFormat('en-CA', { timeZone: zone }).format(new Date(session.start))
-  const index = days.findIndex(({ value }) => value === date)
+  const index = week.findIndex(({ value }) => value === date)
   return {
     ...session,
     startTime: time(session.start),
     endTime: session.end ? time(session.end) : undefined,
     // A session that falls just outside the week in the visitor's zone stays on its nearest day.
-    day: index === -1 ? (date < days[0].value ? 0 : days.length - 1) : index,
+    day: index === -1 ? (date < week[0].value ? 0 : week.length - 1) : index,
   }
 }
 
@@ -50,29 +59,37 @@ export function Schedule({ data }: { data: ScheduleData }) {
     ),
   )
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
+  const top = useRef<HTMLDivElement>(null)
   const visitorZone = useVisitorZone()
 
+  const online = useMemo(
+    () => new Set(locations.filter((l) => l.online).map((l) => l.id)),
+    [locations],
+  )
   const sessions = useMemo(() => {
-    const online = new Set(locations.filter((l) => l.online).map((l) => l.id))
     return data.sessions
       .filter((s) => theme === null || s.themeId === theme)
       .map((s) => (visitorZone && online.has(s.locationId) ? localise(s, visitorZone, days) : s))
-  }, [data.sessions, locations, days, theme, visitorZone])
+  }, [data.sessions, online, days, theme, visitorZone])
 
   const themeOf = (session: ScheduleSession) => themes.find(({ id }) => id === session.themeId)
   const at = (locationId: number, index: number) =>
-    sessions
-      .filter((s) => s.locationId === locationId && s.day === index)
-      .sort((a, b) => a.start.localeCompare(b.start))
+    sessions.filter((s) => s.locationId === locationId && s.day === index).sort(bySchedule)
+  // A location's "Date TBC" column shows only when it has sessions there, or is picked on mobile.
+  const shows = (locationId: number, index: number) =>
+    !days[index].tbc || index === day || at(locationId, index).length > 0
   const location = locations.find(({ id }) => id === tab)
 
   const tabs: { id: Tab; label: string }[] = [
     { id: 'overview', label: 'Overview' },
     ...locations.map(({ id, name }) => ({ id, label: name })),
   ]
-  const open = (id: Tab, index?: number) => {
+  // From the overview: show the location's tab and bring the top of the schedule into view.
+  const open = (id: number) => {
     setTab(id)
-    if (index !== undefined) setDay(index)
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    tabRefs.current[tabs.findIndex((t) => t.id === id)]?.focus({ preventScroll: true })
+    top.current?.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' })
   }
   const onTabKey = (event: React.KeyboardEvent, index: number) => {
     const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key]
@@ -93,10 +110,16 @@ export function Schedule({ data }: { data: ScheduleData }) {
     return (
       <li key={session.id} className="schedule-card">
         <span className="schedule-time">
-          {session.endTime ? `${session.startTime}–${session.endTime}` : session.startTime}
+          {!session.startTime
+            ? 'Time TBC'
+            : session.endTime
+              ? `${session.startTime}–${session.endTime}`
+              : session.startTime}
         </span>
         <h4>{session.title}</h4>
-        {session.venue && <p className="schedule-venue">{session.venue}</p>}
+        {!online.has(session.locationId) && (
+          <p className="schedule-venue">{session.venue ?? 'Venue TBC'}</p>
+        )}
         {sessionTheme && (
           <span className={`schedule-theme schedule-theme-${sessionTheme.colour}`}>
             {sessionTheme.name}
@@ -139,7 +162,7 @@ export function Schedule({ data }: { data: ScheduleData }) {
   )
 
   return (
-    <div className="schedule">
+    <div ref={top} className="schedule" style={columns(days.length)}>
       <div className="schedule-tabs" role="tablist" aria-label="Locations">
         {tabs.map(({ id, label }, index) => (
           <button
@@ -205,9 +228,13 @@ export function Schedule({ data }: { data: ScheduleData }) {
               {location.city && <span>{location.city}</span>}
               <p>{zoneNote(location)}</p>
             </header>
-            <div className="schedule-week">
+            <div
+              className="schedule-week"
+              style={columns(days.filter((d, index) => shows(location.id, index)).length)}
+            >
               {days.map((d, index) => {
                 const list = at(location.id, index)
+                if (!shows(location.id, index)) return null
                 return (
                   <section
                     key={d.value}
@@ -257,9 +284,10 @@ export function Schedule({ data }: { data: ScheduleData }) {
               {locations.map((place) => {
                 const total = sessions.filter((s) => s.locationId === place.id).length
                 return (
-                  <tr key={place.id}>
+                  // The row is a mouse target; its first cell's button is the keyboard one.
+                  <tr key={place.id} className="schedule-row" onClick={() => open(place.id)}>
                     <th scope="row">
-                      <button type="button" onClick={() => open(place.id)}>
+                      <button type="button">
                         <span className="schedule-place">{place.name}</span>
                         {place.city && <span className="schedule-city">{place.city}</span>}
                         <span className="schedule-count">{plural(total)}</span>
@@ -281,24 +309,16 @@ export function Schedule({ data }: { data: ScheduleData }) {
                           {list.slice(0, OVERVIEW_PREVIEW).map((session) => {
                             const sessionTheme = themeOf(session)
                             return (
-                              <button
+                              <span
                                 key={session.id}
-                                type="button"
                                 className={`schedule-chip schedule-theme-${sessionTheme?.colour ?? 'none'}`}
-                                onClick={() => open(place.id, index)}
                               >
                                 {session.title}
-                              </button>
+                              </span>
                             )
                           })}
                           {hidden > 0 && (
-                            <button
-                              type="button"
-                              className="schedule-more"
-                              onClick={() => open(place.id, index)}
-                            >
-                              +{hidden} more
-                            </button>
+                            <span className="schedule-more">+{hidden} more</span>
                           )}
                         </td>
                       )

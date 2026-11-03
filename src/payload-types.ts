@@ -1065,11 +1065,14 @@ export interface Session {
   slug: string;
   location: number | SessionLocation;
   theme?: (number | null) | SessionTheme;
-  day: '2026-11-16' | '2026-11-17' | '2026-11-18' | '2026-11-19' | '2026-11-20' | '2026-11-21' | '2026-11-22';
   /**
-   * Local time at the location, 24-hour.
+   * Leave empty while the date is TBC.
    */
-  startTime: string;
+  day?: ('2026-11-16' | '2026-11-17' | '2026-11-18' | '2026-11-19' | '2026-11-20' | '2026-11-21' | '2026-11-22') | null;
+  /**
+   * Local time at the location, 24-hour. Leave empty while TBC.
+   */
+  startTime?: string | null;
   /**
    * Optional.
    */
@@ -1118,7 +1121,8 @@ export interface SessionLocation {
     | 'America/Puerto_Rico'
     | 'America/Guyana'
     | 'America/Paramaribo'
-    | 'America/Belize';
+    | 'America/Belize'
+    | 'America/New_York';
   /**
    * Lower numbers come first.
    */
@@ -1137,7 +1141,7 @@ export interface SessionTheme {
   /**
    * Give each theme its own colour.
    */
-  colour: 'blue' | 'red' | 'orange' | 'yellow' | 'teal' | 'purple' | 'green';
+  colour: 'blue' | 'red' | 'orange' | 'yellow' | 'teal' | 'purple' | 'green' | 'pink' | 'amber';
   /**
    * Lower numbers come first.
    */

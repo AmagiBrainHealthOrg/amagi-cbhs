@@ -12,8 +12,8 @@ const TIME = /^([01]\d|2[0-3]):[0-5]\d$/
 const time = (value: string | null | undefined) =>
   !value || TIME.test(value) || 'Use the 24-hour clock, such as 09:30 or 18:00'
 
-// SPEC §5.1. The schedule block lists every published session. In-person sessions register on
-// /sessions/[slug]; online sessions link to their Zoom registration.
+// SPEC §5.1. The schedule block lists every published session; one with no day goes under
+// "Date TBC". In-person sessions register on /sessions/[slug]; online sessions link to Zoom.
 export const Sessions: CollectionConfig = {
   slug: 'sessions',
   access: { read: publishedOrAuthenticated, ...editorialAccess },
@@ -48,13 +48,21 @@ export const Sessions: CollectionConfig = {
     {
       type: 'row',
       fields: [
-        { name: 'day', type: 'select', required: true, index: true, options: [...summitDays] },
+        {
+          name: 'day',
+          type: 'select',
+          index: true,
+          options: [...summitDays],
+          admin: { description: 'Leave empty while the date is TBC.' },
+        },
         {
           name: 'startTime',
           type: 'text',
-          required: true,
           validate: time,
-          admin: { placeholder: '09:30', description: 'Local time at the location, 24-hour.' },
+          admin: {
+            placeholder: '09:30',
+            description: 'Local time at the location, 24-hour. Leave empty while TBC.',
+          },
         },
         {
           name: 'endTime',

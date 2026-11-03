@@ -4,7 +4,7 @@ import { blockFormOptions } from '@/config/forms'
 import { formRegistry } from '@/forms/registry'
 import type { Session, SessionLocation, SessionTheme } from '@/payload-types'
 import { buildSchedule } from '@/utils/schedule'
-import { sessionSummary, zonedToUtc, zoneLabel } from '@/utils/sessions'
+import { sessionSummary, whenLabel, zonedToUtc, zoneLabel } from '@/utils/sessions'
 
 const stamp = '2026-11-01T00:00:00.000Z'
 const location = (id: number, name: string, extra: Partial<SessionLocation> = {}) =>
@@ -59,6 +59,12 @@ describe('session times', () => {
         locationName: 'Jamaica',
       }),
     ).toBe('Anchor Day plenary · Thursday 19 November, 09:00–10:30 · Main hall, Jamaica')
+  })
+
+  it('says what is still to be confirmed', () => {
+    expect(whenLabel({ day: '2026-11-19' })).toBe('Thursday 19 November, time to be confirmed')
+    expect(whenLabel({ startTime: '16:00' })).toBe('Date to be confirmed, 16:00')
+    expect(whenLabel({})).toBe('Date and time to be confirmed')
   })
 })
 
@@ -115,6 +121,35 @@ describe('schedule data', () => {
     expect(days).toHaveLength(7)
     expect(days[0]).toMatchObject({ dow: 'Mon', date: '16', highlight: false })
     expect(days[3]).toMatchObject({ dow: 'Thu', date: '19', note: 'Anchor Day', highlight: true })
+  })
+
+  it('puts sessions with no day in a Date TBC column after Sunday', () => {
+    const { days, sessions } = buildSchedule(
+      {},
+      locations,
+      [],
+      [session(1, { day: null, startTime: null }), session(2, {})],
+    )
+    expect(days).toHaveLength(8)
+    expect(days[7]).toMatchObject({ dow: 'Date', date: 'TBC', tbc: true })
+    expect(sessions.map((s) => [s.id, s.day])).toEqual([
+      [2, 0],
+      [1, 7],
+    ])
+  })
+
+  it('lists sessions with no time after the timed ones that day', () => {
+    const { sessions } = buildSchedule(
+      {},
+      locations,
+      [],
+      [
+        session(1, { startTime: null, endTime: '12:00', title: 'A' }),
+        session(2, { startTime: '15:00' }),
+      ],
+    )
+    expect(sessions.map((s) => s.id)).toEqual([2, 1])
+    expect(sessions[1]).toMatchObject({ start: undefined, startTime: undefined, endTime: undefined })
   })
 })
 

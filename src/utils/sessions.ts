@@ -45,17 +45,23 @@ export function zoneLabel(name: string, timeZone: string): string {
   return `${name} time (UTC${sign}${Number.isInteger(hours) ? hours : hours.toFixed(1)})`
 }
 
+type When = { day?: string | null; startTime?: string | null; endTime?: string | null }
+
+// "Monday 16 November, 09:00–11:30", with "to be confirmed" for a missing day or time.
+export function whenLabel({ day, startTime, endTime }: When): string {
+  if (!day && !startTime) return 'Date and time to be confirmed'
+  return [
+    day ? dayLabel(day) : 'Date to be confirmed',
+    startTime ? timeRange(startTime, endTime) : 'time to be confirmed',
+  ].join(', ')
+}
+
 // How a registration names its session in Airtable and the confirmation email.
-export const sessionSummary = (session: {
-  title: string
-  day: string
-  startTime: string
-  endTime?: string | null
-  venue?: string | null
-  locationName: string
-}) =>
+export const sessionSummary = (
+  session: When & { title: string; venue?: string | null; locationName: string },
+) =>
   [
     session.title,
-    `${dayLabel(session.day)}, ${timeRange(session.startTime, session.endTime)}`,
+    whenLabel(session),
     session.venue ? `${session.venue}, ${session.locationName}` : session.locationName,
   ].join(' · ')
