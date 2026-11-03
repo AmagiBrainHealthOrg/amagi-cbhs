@@ -34,6 +34,7 @@ import * as migration_20261103_144732 from './20261103_144732'
 import * as migration_20261103_150000_programme_sessions from './20261103_150000_programme_sessions'
 import * as migration_20261103_170000_programme_descriptions from './20261103_170000_programme_descriptions'
 import * as migration_20261103_180000_about_partner_link from './20261103_180000_about_partner_link'
+import * as migration_20261103_190000_anchor_day_monday from './20261103_190000_anchor_day_monday'
 
 export const migrations = [
   {
@@ -215,5 +216,10 @@ export const migrations = [
     up: migration_20261103_180000_about_partner_link.up,
     down: migration_20261103_180000_about_partner_link.down,
     name: '20261103_180000_about_partner_link',
+  },
+  {
+    up: migration_20261103_190000_anchor_day_monday.up,
+    down: migration_20261103_190000_anchor_day_monday.down,
+    name: '20261103_190000_anchor_day_monday',
   },
 ]
