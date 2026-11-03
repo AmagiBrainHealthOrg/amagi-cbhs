@@ -51,14 +51,14 @@ Release scope and dates are in SPEC §11.3. Every Release 1 ticket goes before a
 
 ## M4: Release 2 features
 
-| ID                                 | Title                                        | Depends on       | Mig | Human | Status      |
-| ---------------------------------- | -------------------------------------------- | ---------------- | --- | ----- | ----------- |
-| [T019](./T019-release-2-forms.md)  | Partner, Relay and Contact/media forms       | T014             |     |       | done        |
-| [T020](./T020-host-countries.md)   | Host Countries index and profiles            | T009, T011, T019 | ✔   |       | todo        |
-| [T021](./T021-programme.md)        | Programme page with filters                  | T009, T020       | ✔   |       | in-progress |
-| [T022](./T022-donation-webhook.md) | Stripe webhook records donations in Airtable | T010, T013       |     | ✔     | review      |
-| [T016](./T016-video-block.md)      | Video block                                  | T009             | ✔   |       | todo        |
-| [T028](./T028-substack.md)         | Substack posts on News                       | T011             | ✔   |       | todo        |
+| ID                                 | Title                                        | Depends on       | Mig | Human | Status |
+| ---------------------------------- | -------------------------------------------- | ---------------- | --- | ----- | ------ |
+| [T019](./T019-release-2-forms.md)  | Partner, Relay and Contact/media forms       | T014             |     |       | done   |
+| [T020](./T020-host-countries.md)   | Host Countries index and profiles            | T009, T011, T019 | ✔   |       | todo   |
+| [T021](./T021-programme.md)        | Programme schedule and session registration  | T009, T020       | ✔   |       | review |
+| [T022](./T022-donation-webhook.md) | Stripe webhook records donations in Airtable | T010, T013       |     | ✔     | review |
+| [T016](./T016-video-block.md)      | Video block                                  | T009             | ✔   |       | todo   |
+| [T028](./T028-substack.md)         | Substack posts on News                       | T011             | ✔   |       | todo   |
 
 ## M5: Quality and go-live
 

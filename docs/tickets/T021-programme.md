@@ -1,6 +1,6 @@
 ---
 id: T021
-title: Programme page with filters
+title: Programme schedule and session registration
 milestone: M4
 release: 2
 depends_on: [T009, T020]
@@ -14,27 +14,32 @@ skills: []
 
 ## Context
 
-In progress on `feat/summit-schedule` (not merged). That branch takes a different shape from the scope below: a `schedule` block on Summit Week, session pages with in-person registration, and its own SPEC changes. When it merges, rewrite this ticket to match or close it.
+Built on `feat/summit-schedule`. Replaces the original `/programme` page with filters and Luma links (dropped 2 November 2026, SPEC §9.5): the programme is a `schedule` block on Summit Week, and in-person sessions register on the site.
 
 ## Scope
 
 **In**
 
-- `sessions` collection per SPEC §5.1, with drafts; `territory` validates against `dropdowns.territories` (reuse T020's validator).
-- Migration.
-- `/programme`: sessions grouped by day; filters for stream, day, territory and format, driven by URL search params (shareable, works without JavaScript via a form GET).
-- Each session links to `lumaUrl`, counted by Plausible's automatic outbound link tracking.
-- Empty state when filters match nothing.
+- `sessions`, `session-locations` and `session-themes` collections with drafts (SPEC §5.1), and their migration.
+- `schedule` block (SPEC §6.3): Overview grid of locations × days, a tab per location, theme filter chips, a day strip below 900px. Online times show in the visitor's zone.
+- Sessions with no day, start time or venue are published and shown as TBC.
+- `/sessions/[slug]` with the `session-registration` form for in-person sessions; online sessions link to Zoom.
+- The CBHS 2026 programme from Amagi (51 sessions, 7 themes) as seed data and a data migration.
+
+**Out**
+
+- Place limits on sessions (editors untick Registration open).
+- Luma or Zoom API integration.
 
 ## Acceptance criteria
 
-- [ ] **AC1**: Filters work with and without JavaScript.
-  - _Verify (browser):_ selecting territory `jamaica` and format `online` shows only matching sessions and updates the URL; loading that URL directly with JavaScript disabled shows the same results.
-- [ ] **AC2**: Luma links are tracked outbound links.
-  - _Verify (browser):_ each session link opens the Luma URL, and clicking it sends Plausible's `Outbound Link: Click` event.
-- [ ] **AC3**: Empty state renders.
-  - _Verify (browser):_ a filter combination with no sessions shows the empty state.
-- [ ] **AC4**: Migration applies from empty.
-  - _Verify (db):_ fresh database migrates; `sessions` exists.
-- [ ] **AC5**: Gates pass.
-  - _Verify (cli):_ `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build` exits 0.
+- [x] **AC1**: The schedule lists every published session by location and day.
+  - _Verify (browser):_ Summit Week shows the Overview grid with a row per location, a Date TBC column, and theme chips; clicking a row opens that location's tab.
+- [x] **AC2**: TBC sessions render.
+  - _Verify (unit):_ undated sessions go in the Date TBC column; untimed sessions sort after that day's timed ones.
+- [x] **AC3**: In-person sessions register on the site; online ones link to Zoom.
+  - _Verify (unit):_ `registerLink` gives `/sessions/[slug]` for in-person and the Zoom URL for online; closed sessions have no link.
+- [x] **AC4**: Migrations apply to production's data and from empty.
+  - _Verify (db):_ a copy of production migrates and gets 51 published sessions; an empty database migrates, then `pnpm db:seed` twice creates the programme once.
+- [x] **AC5**: Gates pass.
+  - _Verify (cli):_ `pnpm typecheck && pnpm lint && pnpm test:int && pnpm build` exits 0, and `pnpm airtable:check` passes.
