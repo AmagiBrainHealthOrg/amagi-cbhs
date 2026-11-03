@@ -139,16 +139,16 @@ export const airtableForms: Record<FormKey, AirtableForm> = {
       followUp: select('fldU6CMtXg6aiArBO'),
     },
   },
-  // TODO: the Session registrations table's IDs, once Amagi adds it to the base.
+  // The base has no Name column yet, so the name is kept on the submission only. Email is the
+  // primary field, a single line text.
   'session-registration': {
-    table: 'tblSESSIONREGISTER',
+    table: 'tblmdrD7SJ18AXXvx',
     fields: {
-      name: text('fldSESSIONNAME0000'),
-      email: email('fldSESSIONEMAIL000'),
-      phone: phone('fldSESSIONPHONE000'),
-      organisation: text('fldSESSIONORG00000'),
-      location: link('fldSESSIONLOCATION'),
-      session: text('fldSESSIONSESSION0'), // "Title · day, time · location", set by the server
+      email: text('fldVy2PoYtWjQQBoM'),
+      phone: phone('fldulYZRtN24xN7Oh'),
+      organisation: text('fldbKpxNjKISSAUGp'),
+      location: link('fldMSKCQgRetcezgq'),
+      session: text('fldyq26tWQ3ERvYZX'), // "Title · day, time · location", set by the server
     },
   },
 }

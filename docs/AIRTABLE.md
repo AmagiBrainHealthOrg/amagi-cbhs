@@ -58,18 +58,11 @@ Not written (Amagi's own): `About`, `Engagement`, `Area of work`, `Interest / po
 
 ### `Session registrations` (in-person session registration form)
 
-**Not in the base yet.** Needed before the form opens (until then the session page says the form is unavailable). Fields:
+Table `tblmdrD7SJ18AXXvx`. Written: `Email` (primary, single line text), `Phone/Whatsapp`, `Location` (link to `Locations`), `Organisation / affiliation`, `Session`, and the attribution columns.
 
-| Field                        | Type                       | Site field     |
-| ---------------------------- | -------------------------- | -------------- |
-| `Name`                       | Single line text (primary) | `name`         |
-| `Email`                      | Email                      | `email`        |
-| `Phone/Whatsapp`             | Phone number               | `phone`        |
-| `Country / location`         | Link to `Locations`        | `location`     |
-| `Organisation / affiliation` | Single line text           | `organisation` |
-| `Session`                    | Single line text           | `session`      |
+`Session` holds the session's title, day and time, venue and country, such as "Anchor Day plenary · Thursday 19 November, 09:00–10:30 · Main hall, Jamaica".
 
-`Session` holds the session's title, day and time, venue and country, such as "Anchor Day plenary · Thursday 19 November, 09:00–10:30 · Main hall, Jamaica". Add the attribution columns too if wanted.
+**Missing:** a `Name` column (single line text). Until it exists, the registrant's name is kept on the site's submission only.
 
 ## Lookup tables
 
