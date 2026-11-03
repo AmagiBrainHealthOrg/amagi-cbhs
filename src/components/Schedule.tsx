@@ -206,7 +206,11 @@ export function Schedule({ data }: { data: ScheduleData }) {
             key={d.value}
             type="button"
             aria-pressed={day === index}
-            className={d.highlight ? 'schedule-day-highlight' : undefined}
+            className={
+              [d.highlight && 'schedule-day-highlight', d.tbc && 'schedule-day-tbc']
+                .filter(Boolean)
+                .join(' ') || undefined
+            }
             onClick={() => setDay(index)}
           >
             <span className="schedule-dow">{d.dow}</span>
