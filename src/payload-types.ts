@@ -275,6 +275,9 @@ export interface HeroBlock {
  */
 export interface Media {
   id: number;
+  /**
+   * Required. Describe the image for people who can’t see it, such as “Dingolé logo” or “Dr Ishtar Govia speaking at a lectern”.
+   */
   alt: string;
   _objectKey?: string | null;
   updatedAt: string;

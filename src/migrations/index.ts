@@ -33,6 +33,7 @@ import * as migration_20261102_150000_suriname_host_country from './20261102_150
 import * as migration_20261103_144732 from './20261103_144732'
 import * as migration_20261103_150000_programme_sessions from './20261103_150000_programme_sessions'
 import * as migration_20261103_170000_programme_descriptions from './20261103_170000_programme_descriptions'
+import * as migration_20261103_180000_about_partner_link from './20261103_180000_about_partner_link'
 
 export const migrations = [
   {
@@ -209,5 +210,10 @@ export const migrations = [
     up: migration_20261103_170000_programme_descriptions.up,
     down: migration_20261103_170000_programme_descriptions.down,
     name: '20261103_170000_programme_descriptions',
+  },
+  {
+    up: migration_20261103_180000_about_partner_link.up,
+    down: migration_20261103_180000_about_partner_link.down,
+    name: '20261103_180000_about_partner_link',
   },
 ]

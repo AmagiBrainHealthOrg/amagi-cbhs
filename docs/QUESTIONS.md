@@ -78,7 +78,7 @@ Open questions for Amagi Health about the CBHS 2026 website and its Airtable bas
 
 ## Summit Week page
 
-12. **Anchor Day date.** Your Summit Week copy keeps the Anchor Day date off the site until it's confirmed, so the Summit Week page doesn't show one. The Home page's week strip still marks Thursday 19 November as Anchor Day. Is that date confirmed, or should it come off Home too?
+12. **Anchor Day date.** Answered 3 November 2026: the Anchor Day is Monday 16 November. Nothing on the site gives a date yet; every mention says it takes place in Jamaica.
 
 13. **Livestreaming.** The Summit Week page leaves out "Key sessions will be streamed" until livestreaming is confirmed. Is it?
 

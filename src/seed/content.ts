@@ -128,7 +128,7 @@ export const approachSections: Layout = [
     ],
     outro:
       'These contributions help connect local experience with a shared Caribbean agenda for evidence, collaboration and follow-through.',
-    links: [{ label: 'Explore country participation', href: '/summit-week' }],
+    links: [{ label: 'Explore country participation', href: '/partner#partner-form' }],
   },
   {
     blockType: 'accordion',
@@ -221,14 +221,21 @@ type FormKey = Extract<Layout[number], { blockType: 'form' }>['form']
 // A page that holds one form (SPEC §8.3).
 const formPage = (
   images: SeedImages,
-  page: { title: string; slug: string; kicker: string; lead: string; form: FormKey },
+  page: {
+    title: string
+    slug: string
+    kicker: string
+    lead: string
+    form: FormKey
+    anchorId?: string
+  },
 ): SeedPage => ({
   title: page.title,
   slug: page.slug,
   meta: meta(page.title),
   layout: [
     photoHero(images, { kicker: page.kicker, heading: page.title, lead: page.lead }),
-    { blockType: 'form', background: 'white', form: page.form },
+    { blockType: 'form', background: 'white', form: page.form, anchorId: page.anchorId },
     donateBanner,
   ],
 })
@@ -247,6 +254,7 @@ export const formPages = (images: SeedImages): SeedPage[] => [
     kicker: 'Get involved',
     lead: 'Tell us about your organisation and how it could take part.',
     form: 'partner',
+    anchorId: 'partner-form',
   }),
   formPage(images, {
     title: 'Propose a Brain Health Relay activity',
@@ -504,7 +512,13 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
         anchorId: 'week',
         monthLabel: 'Nov',
         days: [
-          { day: 'Mon', date: '16', label: 'Opening', body: 'Launch events in every host country' },
+          {
+            day: 'Mon',
+            date: '16',
+            label: 'Anchor Day',
+            body: 'The Anchor Day takes place in Jamaica',
+            anchor: true,
+          },
           {
             day: 'Tue',
             date: '17',
@@ -512,13 +526,7 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
             body: 'Community sessions and screenings',
           },
           { day: 'Wed', date: '18', label: 'Local activity', body: 'Workshops for practitioners' },
-          {
-            day: 'Thu',
-            date: '19',
-            label: 'Anchor Day',
-            body: 'The Anchor Day takes place in Jamaica',
-            anchor: true,
-          },
+          { day: 'Thu', date: '19', label: 'Local activity', body: 'Workshops and sessions' },
           { day: 'Fri', date: '20', label: 'Local activity', body: 'Youth and family sessions' },
           { day: 'Sat', date: '21', label: 'Online day', body: 'Sessions for the diaspora' },
           { day: 'Sun', date: '22', label: 'Close', body: 'Reflections and next steps' },
