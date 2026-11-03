@@ -144,14 +144,18 @@
   min-height: 56px;
   padding: 6px 0;
   border: 1px solid var(--line);
-  border-bottom: 3px solid transparent;
   border-radius: 6px;
   background: var(--white);
   color: var(--primary-blue);
   cursor: pointer;
 }
+/* "TBC" is wider than a date, so it sits at the day label's size. */
+.schedule-days .schedule-day-tbc .schedule-date {
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+}
 .schedule-days .schedule-day-highlight {
-  border-bottom-color: var(--orange);
+  box-shadow: inset 0 -3px 0 var(--orange);
 }
 .schedule-days button[aria-pressed='true'] {
   border-color: var(--primary-blue);
