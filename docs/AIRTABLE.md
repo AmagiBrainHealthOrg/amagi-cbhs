@@ -58,11 +58,9 @@ Not written (Amagi's own): `About`, `Engagement`, `Area of work`, `Interest / po
 
 ### `Session registrations` (in-person session registration form)
 
-Table `tblmdrD7SJ18AXXvx`. Written: `Email` (primary, single line text), `Phone/Whatsapp`, `Location` (link to `Locations`), `Organisation / affiliation`, `Session`, and the attribution columns.
+Table `tblmdrD7SJ18AXXvx`. Written: `Name`, `Email` (primary, single line text), `Phone/Whatsapp`, `Location` (link to `Locations`), `Organisation / affiliation`, `Session`, and the attribution columns.
 
 `Session` holds the session's title, day and time, venue and country, such as "Anchor Day plenary · Thursday 19 November, 09:00–10:30 · Main hall, Jamaica".
-
-**Missing:** a `Name` column (single line text). Until it exists, the registrant's name is kept on the site's submission only.
 
 ## Lookup tables
 

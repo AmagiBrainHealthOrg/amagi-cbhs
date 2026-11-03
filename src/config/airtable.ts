@@ -139,11 +139,11 @@ export const airtableForms: Record<FormKey, AirtableForm> = {
       followUp: select('fldU6CMtXg6aiArBO'),
     },
   },
-  // The base has no Name column yet, so the name is kept on the submission only. Email is the
-  // primary field, a single line text.
+  // Email is the primary field, a single line text.
   'session-registration': {
     table: 'tblmdrD7SJ18AXXvx',
     fields: {
+      name: text('fld0xct9dSmjAiATW'),
       email: text('fldVy2PoYtWjQQBoM'),
       phone: phone('fldulYZRtN24xN7Oh'),
       organisation: text('fldbKpxNjKISSAUGp'),
