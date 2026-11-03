@@ -128,7 +128,7 @@ export const approachSections: Layout = [
     ],
     outro:
       'These contributions help connect local experience with a shared Caribbean agenda for evidence, collaboration and follow-through.',
-    links: [{ label: 'Explore country participation', href: '/summit-week' }],
+    links: [{ label: 'Explore country participation', href: '/partner#partner-form' }],
   },
   {
     blockType: 'accordion',
@@ -221,14 +221,21 @@ type FormKey = Extract<Layout[number], { blockType: 'form' }>['form']
 // A page that holds one form (SPEC §8.3).
 const formPage = (
   images: SeedImages,
-  page: { title: string; slug: string; kicker: string; lead: string; form: FormKey },
+  page: {
+    title: string
+    slug: string
+    kicker: string
+    lead: string
+    form: FormKey
+    anchorId?: string
+  },
 ): SeedPage => ({
   title: page.title,
   slug: page.slug,
   meta: meta(page.title),
   layout: [
     photoHero(images, { kicker: page.kicker, heading: page.title, lead: page.lead }),
-    { blockType: 'form', background: 'white', form: page.form },
+    { blockType: 'form', background: 'white', form: page.form, anchorId: page.anchorId },
     donateBanner,
   ],
 })
@@ -247,6 +254,7 @@ export const formPages = (images: SeedImages): SeedPage[] => [
     kicker: 'Get involved',
     lead: 'Tell us about your organisation and how it could take part.',
     form: 'partner',
+    anchorId: 'partner-form',
   }),
   formPage(images, {
     title: 'Propose a Brain Health Relay activity',
