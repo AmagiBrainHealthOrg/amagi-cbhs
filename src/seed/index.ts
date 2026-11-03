@@ -7,9 +7,11 @@ import {
   seedNews,
   seedPages,
   seedPartners,
+  seedProgrammeLocations,
   seedSessionLocations,
   seedTeam,
 } from './content'
+import { seedProgramme } from './seedProgramme'
 
 type Args = { payload: Payload; req?: PayloadRequest }
 
@@ -76,10 +78,12 @@ export async function seedContent({ payload, req }: Args): Promise<SeedResult> {
   await createMissing('faqs', seedFaqs, (doc) => ({ field: 'question', value: doc.question }))
   await createMissing('partners', seedPartners, (doc) => ({ field: 'name', value: doc.name }))
   await createMissing('team', seedTeam, (doc) => ({ field: 'name', value: doc.name }))
-  await createMissing('session-locations', seedSessionLocations, (doc) => ({
-    field: 'name',
-    value: doc.name,
-  }))
+  await createMissing(
+    'session-locations',
+    [...seedSessionLocations, ...seedProgrammeLocations],
+    (doc) => ({ field: 'name', value: doc.name }),
+  )
+  result.created.push(...(await seedProgramme({ payload, req })))
 
   const globals = seedGlobals(images)
   for (const slug of Object.keys(globals) as (keyof typeof globals)[]) {

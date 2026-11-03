@@ -30,6 +30,8 @@ import * as migration_20261028_190000_approach_content from './20261028_190000_a
 import * as migration_20261102_130803_programme from './20261102_130803_programme'
 import * as migration_20261102_140000_programme_content from './20261102_140000_programme_content'
 import * as migration_20261102_150000_suriname_host_country from './20261102_150000_suriname_host_country'
+import * as migration_20261103_144732 from './20261103_144732'
+import * as migration_20261103_150000_programme_sessions from './20261103_150000_programme_sessions'
 
 export const migrations = [
   {
@@ -191,5 +193,15 @@ export const migrations = [
     up: migration_20261102_150000_suriname_host_country.up,
     down: migration_20261102_150000_suriname_host_country.down,
     name: '20261102_150000_suriname_host_country',
+  },
+  {
+    up: migration_20261103_144732.up,
+    down: migration_20261103_144732.down,
+    name: '20261103_144732',
+  },
+  {
+    up: migration_20261103_150000_programme_sessions.up,
+    down: migration_20261103_150000_programme_sessions.down,
+    name: '20261103_150000_programme_sessions',
   },
 ]

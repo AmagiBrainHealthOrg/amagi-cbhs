@@ -308,6 +308,12 @@ export const seedSessionLocations: RequiredDataFromCollectionSlug<'session-locat
   { name: 'Cayman Islands', city: 'George Town', timeZone: 'America/Cayman', order: 5 },
 ]
 
+// Added with the programme (3 November 2026), after the 2 November migration seeded the list
+// above. Kept apart so that migration never writes a time zone its schema doesn't have yet.
+export const seedProgrammeLocations: RequiredDataFromCollectionSlug<'session-locations'>[] = [
+  { name: 'United States', city: 'Silver Spring, MD', timeZone: 'America/New_York', order: 6 },
+]
+
 export const sessionThankYou = {
   form: 'session-registration',
   heading: 'You’re registered',
