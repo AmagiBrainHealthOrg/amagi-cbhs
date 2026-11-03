@@ -52,13 +52,13 @@ describe('session times', () => {
     expect(
       sessionSummary({
         title: 'Anchor Day plenary',
-        day: '2026-11-16',
+        day: '2026-11-19',
         startTime: '09:00',
         endTime: '10:30',
         venue: 'Main hall',
         locationName: 'Jamaica',
       }),
-    ).toBe('Anchor Day plenary · Monday 16 November, 09:00–10:30 · Main hall, Jamaica')
+    ).toBe('Anchor Day plenary · Thursday 19 November, 09:00–10:30 · Main hall, Jamaica')
   })
 
   it('says what is still to be confirmed', () => {
@@ -113,14 +113,14 @@ describe('schedule data', () => {
 
   it('shows the seven days with their notes', () => {
     const { days } = buildSchedule(
-      { dayNotes: [{ day: '2026-11-16', note: 'Anchor Day', highlight: true }] },
+      { dayNotes: [{ day: '2026-11-19', note: 'Anchor Day', highlight: true }] },
       locations,
       [],
       [],
     )
     expect(days).toHaveLength(7)
-    expect(days[0]).toMatchObject({ dow: 'Mon', date: '16', note: 'Anchor Day', highlight: true })
-    expect(days[3]).toMatchObject({ dow: 'Thu', date: '19', highlight: false })
+    expect(days[0]).toMatchObject({ dow: 'Mon', date: '16', highlight: false })
+    expect(days[3]).toMatchObject({ dow: 'Thu', date: '19', note: 'Anchor Day', highlight: true })
   })
 
   it('puts sessions with no day in a Date TBC column after Sunday', () => {
@@ -149,11 +149,7 @@ describe('schedule data', () => {
       ],
     )
     expect(sessions.map((s) => s.id)).toEqual([2, 1])
-    expect(sessions[1]).toMatchObject({
-      start: undefined,
-      startTime: undefined,
-      endTime: undefined,
-    })
+    expect(sessions[1]).toMatchObject({ start: undefined, startTime: undefined, endTime: undefined })
   })
 })
 
