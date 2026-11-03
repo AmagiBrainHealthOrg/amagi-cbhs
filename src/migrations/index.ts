@@ -32,6 +32,8 @@ import * as migration_20261102_140000_programme_content from './20261102_140000_
 import * as migration_20261102_150000_suriname_host_country from './20261102_150000_suriname_host_country'
 import * as migration_20261103_144732 from './20261103_144732'
 import * as migration_20261103_150000_programme_sessions from './20261103_150000_programme_sessions'
+import * as migration_20261103_163302 from './20261103_163302'
+import * as migration_20261103_163400_summit_week_content from './20261103_163400_summit_week_content'
 import * as migration_20261103_170000_programme_descriptions from './20261103_170000_programme_descriptions'
 import * as migration_20261103_180000_about_partner_link from './20261103_180000_about_partner_link'
 import * as migration_20261103_190000_anchor_day_monday from './20261103_190000_anchor_day_monday'
@@ -206,6 +208,11 @@ export const migrations = [
     up: migration_20261103_150000_programme_sessions.up,
     down: migration_20261103_150000_programme_sessions.down,
     name: '20261103_150000_programme_sessions',
+  },
+  {
+    up: migration_20261103_163302.up,
+    down: migration_20261103_163302.down,
+    name: '20261103_163302',
   },
   {
     up: migration_20261103_170000_programme_descriptions.up,

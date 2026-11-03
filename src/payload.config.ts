@@ -22,6 +22,7 @@ import { SessionLocations } from './collections/SessionLocations'
 import { Sessions } from './collections/Sessions'
 import { SessionThemes } from './collections/SessionThemes'
 import { AnchorDay } from './globals/AnchorDay'
+import { SummitWeek } from './globals/SummitWeek'
 import { ComingSoon } from './globals/ComingSoon'
 import { CookieConsent } from './globals/CookieConsent'
 import { DonationSettings } from './globals/DonationSettings'
@@ -60,6 +61,7 @@ export default buildConfig({
     Footer,
     DonationSettings,
     AnchorDay,
+    SummitWeek,
     Dropdowns,
     Integrations,
     Forms,
