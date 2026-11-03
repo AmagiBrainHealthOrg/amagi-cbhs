@@ -44,7 +44,7 @@ Submission order is fixed (SPEC §8.2): validate server-side → rate limit → 
 
 - Payments happen on Stripe's hosted Checkout only. Never render card inputs or Stripe Elements on our pages.
 - Confirm payment server-side (retrieve the session) before showing success or pushing `donation_complete`.
-- Webhooks verify the signature with `STRIPE_WEBHOOK_SECRET` and are idempotent on the Stripe event ID.
+- Webhooks verify the signature with `STRIPE_WEBHOOK_SECRET` and are idempotent: the donation webhook upserts on the Checkout Session ID.
 
 ## Environments
 

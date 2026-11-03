@@ -16,16 +16,16 @@ skills: [payload]
 
 There is no staging (SPEC §11.1): every merge to `main` deploys to production. Production is public from the start and serves the site as built so far (SPEC §11.1), so every integration must run in test mode until launch. This ticket lands early so later tickets can merge safely.
 
-Human steps: in the Vercel project, confirm the production branch is `main`, and leave `SITE_LIVE` unset for Production. In the Supabase project, turn on automatic RLS for new tables. Never put these values in the repo.
+Human steps: in the Netlify project, confirm the production branch is `main`, and leave `SITE_LIVE` unset for Production. In the Supabase project, turn on automatic RLS for new tables. Never put these values in the repo.
 
 ## Scope
 
 **In**
 
-- `src/env.ts`: optional `SITE_LIVE`; helper `isLive()` in `src/utils/site.ts`. Later tickets use `isLive()` wherever they need test mode (SPEC §11.1) and never read `NODE_ENV` or `VERCEL_ENV` for it.
+- `src/env.ts`: optional `SITE_LIVE`; helper `isLive()` in `src/utils/site.ts`. Later tickets use `isLive()` wherever they need test mode (SPEC §11.1) and never read `NODE_ENV` or Netlify's `CONTEXT` for it.
 - Retire Coming Soon (SPEC §11.4): hide the `coming-soon` global in the admin (`admin.hidden: true`) and delete its unused frontend code (`src/components/Hero.tsx`, `src/components/Header.tsx`, `src/utils/crossfadeKeyframes.ts`, the Coming Soon rules in `styles.css`, and `qrcode` if nothing else uses them). Keep the global in the config so no migration drops its tables and the T011 content migration still reads its images on a fresh database.
 - `/api/health`: 200 when the database answers, 503 otherwise.
-- `docs/DEPLOY.md`: deploy (merge to `main`), roll back (Vercel Instant Rollback, only to a deployment whose code works with the current schema), migrations, rotating secrets, launch (set `SITE_LIVE`, swap to live keys and the production Airtable base), and moving the Vercel and Supabase projects to Amagi (used by T018).
+- `docs/DEPLOY.md`: deploy (merge to `main`), roll back (Netlify's Publish deploy, only to a deployment whose code works with the current schema), migrations, rotating secrets, launch (set `SITE_LIVE`, swap to live keys and the production Airtable base), and moving the Supabase project to Amagi (used by T018).
 
 **Out**
 

@@ -21,6 +21,8 @@ const schema = z.object({
       .regex(/^(sk|rk)_(test|live)_/, 'Use a Stripe secret or restricted key.')
       .optional(),
   ),
+  // Optional so builds and CI run without it; the Stripe webhook needs it (SPEC §7.5).
+  STRIPE_WEBHOOK_SECRET: optional(z.string().startsWith('whsec_', 'Use a Stripe webhook secret.')),
   // Optional so builds and CI run without Airtable; form options and syncing need both.
   AIRTABLE_TOKEN: z.preprocess(
     (value) => (value === '' ? undefined : value),

@@ -43,7 +43,7 @@ After rolling back, fix forward on `main`. The next merge deploys normally and t
 
 Secrets live only in Netlify environment variables (Production context) and each developer's local `.env`. Never commit them.
 
-1. Create the new value at the provider (Supabase database password or S3 key, Stripe key, Resend key, Airtable token, or a new random `PAYLOAD_SECRET`).
+1. Create the new value at the provider (Supabase database password or S3 key, Stripe key or webhook signing secret, Resend key, Airtable token, or a new random `PAYLOAD_SECRET`).
 2. Update it in Netlify → Project configuration → Environment variables (Production context), then trigger a deploy.
 3. Redeploy: Deployments → latest production deployment → Redeploy. Environment changes apply only to new deployments.
 4. Check `/api/health` and the affected feature, then revoke the old value at the provider.
@@ -71,6 +71,7 @@ Until launch the Supabase project may sit in Tandem's organisation (SPEC §3.5).
 
 - **Netlify:** production branch is `main`; Git-based builds (not folder uploads); site protection (password or Netlify login) is off; deploy previews and branch deploys are off; `SITE_LIVE` is unset for Production until launch.
 - **Supabase:** automatic RLS for new tables is on.
+- **Stripe webhook:** in Stripe's dashboard (live mode), an endpoint for `https://amagisummit.org/api/stripe/webhook` sending `checkout.session.completed` and `checkout.session.async_payment_succeeded`. Its signing secret is `STRIPE_WEBHOOK_SECRET` in Netlify's Production env; without it the webhook returns 500 and no donations reach Airtable.
 - **Netlify Production env:** `AIRTABLE_TOKEN` and `AIRTABLE_BASE_ID` (forms read and write the base; without them forms show "unavailable"); `RESEND_API_KEY`, `EMAIL_FROM_ADDRESS` (`cbhs@noreply.amagibrainhealth.org`), `EMAIL_SANDBOX_TO` and `SYNC_ALERT_TO` (without the key, no emails are sent).
 - **Integrations (admin):** Plausible domain is the Netlify site's domain until launch; Plausible host is `https://plausible.zestdev.uk`. Browsers' tracking protection blocks `plausible.io`, so the host must stay set.
 - **Plausible:** goals for `donate_click` and `donation_complete` (revenue goal, USD).

@@ -5,7 +5,17 @@ import type { FormKey } from './forms'
 // confirms every ID below still exists with a compatible type. Forms ask Follow-up preferences,
 // not the base's Permissions field (decided 9 October 2026).
 
-export type FieldKind = 'text' | 'longText' | 'email' | 'phone' | 'url' | 'date' | 'link' | 'select'
+export type FieldKind =
+  | 'text'
+  | 'longText'
+  | 'email'
+  | 'phone'
+  | 'url'
+  | 'date'
+  | 'dateTime'
+  | 'currency'
+  | 'link'
+  | 'select'
 
 export type FieldName =
   | 'name'
@@ -35,10 +45,12 @@ export type FieldName =
 
 export type AirtableField = { id: string; kind: FieldKind }
 
-export type AirtableForm = {
+export type AirtableTable<Name extends string = string> = {
   table: string
-  fields: Partial<Record<FieldName, AirtableField>>
+  fields: Partial<Record<Name, AirtableField>>
 }
+
+export type AirtableForm = AirtableTable<FieldName>
 
 const text = (id: string): AirtableField => ({ id, kind: 'text' })
 const longText = (id: string): AirtableField => ({ id, kind: 'longText' })
@@ -141,6 +153,18 @@ export const airtableForms: Record<FormKey, AirtableForm> = {
   },
 }
 
+// SPEC §7.5. UTM and Source page are attribution columns, matched by name (docs/AIRTABLE.md).
+// `session` is the upsert key, so a resent Stripe event updates its row instead of adding one.
+export const airtableDonations = {
+  table: 'tblw6QuZgBkgrHCA7', // Donation
+  fields: {
+    amount: { id: 'fldvVOPq2FGcxaalq', kind: 'currency' },
+    currency: text('fldIq2g1Oe1wQyvle'),
+    date: { id: 'fldmjgLgqpYeP2I5W', kind: 'dateTime' },
+    session: text('fldiuo5lRe9SodMKh'), // "Stripe Session"
+  },
+} as const satisfies { table: string; fields: Record<string, AirtableField> }
+
 // Airtable field types each kind accepts. Selects may be single or multiple: the base decides.
 export const compatibleTypes: Record<FieldKind, readonly string[]> = {
   text: ['singleLineText'],
@@ -149,6 +173,8 @@ export const compatibleTypes: Record<FieldKind, readonly string[]> = {
   phone: ['phoneNumber', 'singleLineText'],
   url: ['url'],
   date: ['date'],
+  dateTime: ['dateTime'],
+  currency: ['currency', 'number'],
   link: ['multipleRecordLinks'],
   select: ['singleSelect', 'multipleSelects'],
 }

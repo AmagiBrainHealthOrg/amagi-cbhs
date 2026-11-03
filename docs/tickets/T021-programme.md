@@ -12,6 +12,10 @@ skills: []
 
 # T021: Programme
 
+## Context
+
+In progress on `feat/summit-schedule` (not merged). That branch takes a different shape from the scope below: a `schedule` block on Summit Week, session pages with in-person registration, and its own SPEC changes. When it merges, rewrite this ticket to match or close it.
+
 ## Scope
 
 **In**
@@ -19,7 +23,7 @@ skills: []
 - `sessions` collection per SPEC §5.1, with drafts; `territory` validates against `dropdowns.territories` (reuse T020's validator).
 - Migration.
 - `/programme`: sessions grouped by day; filters for stream, day, territory and format, driven by URL search params (shareable, works without JavaScript via a form GET).
-- Each session links to `lumaUrl` as an outbound, tracked link.
+- Each session links to `lumaUrl`, counted by Plausible's automatic outbound link tracking.
 - Empty state when filters match nothing.
 
 ## Acceptance criteria
@@ -27,7 +31,7 @@ skills: []
 - [ ] **AC1**: Filters work with and without JavaScript.
   - _Verify (browser):_ selecting territory `jamaica` and format `online` shows only matching sessions and updates the URL; loading that URL directly with JavaScript disabled shows the same results.
 - [ ] **AC2**: Luma links are tracked outbound links.
-  - _Verify (browser):_ each session link has `data-destination-type="luma"` and opens the Luma URL.
+  - _Verify (browser):_ each session link opens the Luma URL, and clicking it sends Plausible's `Outbound Link: Click` event.
 - [ ] **AC3**: Empty state renders.
   - _Verify (browser):_ a filter combination with no sessions shows the empty state.
 - [ ] **AC4**: Migration applies from empty.

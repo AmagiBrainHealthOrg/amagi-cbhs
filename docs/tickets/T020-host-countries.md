@@ -21,7 +21,6 @@ skills: []
 - Migration.
 - `/host-countries`: grid of published host countries.
 - `/host-countries/[slug]`: profile template (country lead with photo and bio, week overview, activities, local partner logos, Relay form block pre-filled with the country's territory, Donate banner).
-- Page context sets `territory` to the country's value.
 - `hostCountriesTeaser` block on Home links here.
 - Seed five placeholder countries.
 
@@ -32,7 +31,7 @@ skills: []
 - [ ] **AC2**: Scales to ten.
   - _Verify (browser):_ with 10 published countries, the index shows all 10 without layout breakage at 390px.
 - [ ] **AC3**: Territory context is correct.
-  - _Verify (browser):_ on a profile, `window.dataLayer[0].territory` equals the country's territory value, and the Relay form's territory is pre-selected.
+  - _Verify (browser):_ on a profile, the Relay form's territory is pre-selected with the country's value, and submitting it sends `form_submit` with that `territory`.
 - [ ] **AC4**: Territory validation works.
   - _Verify (api):_ with `dropdowns.territories` set to `[{label:"Jamaica",value:"jamaica"}]`, creating a host country with `territory: "mars"` returns 400 and with `"jamaica"` returns 201.
 - [ ] **AC5**: Migration applies from empty.

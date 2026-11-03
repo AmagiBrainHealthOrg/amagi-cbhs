@@ -152,3 +152,26 @@ export async function createRecord(
   })
   return id
 }
+
+// Creates the record, or updates the one whose `mergeOn` fields match, so retries never duplicate.
+export async function upsertRecord(
+  tableId: string,
+  fields: Record<string, unknown>,
+  mergeOn: string[],
+): Promise<{ id: string; created: boolean }> {
+  const { baseId } = credentials()
+  const { records, createdRecords } = await request<{
+    records: { id: string }[]
+    createdRecords: string[]
+  }>(`/${baseId}/${tableId}`, {
+    method: 'PATCH',
+    body: JSON.stringify({
+      performUpsert: { fieldsToMergeOn: mergeOn },
+      records: [{ fields }],
+      typecast: true,
+    }),
+    cache: 'no-store',
+  })
+  const { id } = records[0]
+  return { id, created: createdRecords.includes(id) }
+}
