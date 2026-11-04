@@ -3,18 +3,17 @@ import 'server-only'
 import type { Payload } from 'payload'
 
 import type { Session, SessionLocation } from '@/payload-types'
-import { sessionSummary } from '@/utils/sessions'
+import { registrationRoutes, sessionSummary } from '@/utils/sessions'
 
 export type RegistrableSession = { id: number; summary: string }
 
 const locationOf = (session: Session): SessionLocation | undefined =>
   typeof session.location === 'object' ? session.location : undefined
 
-// Registration on this site is for published in-person sessions that are still open; online
-// sessions register through Zoom.
+// Whether this site's form takes registrations for a session that is still open.
 export const canRegister = (session: Session) => {
   const location = locationOf(session)
-  return Boolean(location && !location.online && session.registrationOpen !== false)
+  return Boolean(location && registrationRoutes(session, location).some((r) => !r.external))
 }
 
 export async function findRegistrableSession(

@@ -11,9 +11,14 @@ import { previewUrl } from '@/utils/preview'
 const TIME = /^([01]\d|2[0-3]):[0-5]\d$/
 const time = (value: string | null | undefined) =>
   !value || TIME.test(value) || 'Use the 24-hour clock, such as 09:30 or 18:00'
+const httpsUrl = (value: string | null | undefined) =>
+  !value ||
+  (URL.canParse(value) && /^https:\/\//.test(value)) ||
+  'Enter a full web address, starting https://'
 
 // SPEC §5.1. The schedule block lists every published session; one with no day goes under
 // "Date TBC". In-person sessions register on /sessions/[slug]; online sessions link to Zoom.
+// `registrationOptions` replaces that default when a session offers several ways to register.
 export const Sessions: CollectionConfig = {
   slug: 'sessions',
   access: { read: publishedOrAuthenticated, ...editorialAccess },
@@ -85,10 +90,53 @@ export const Sessions: CollectionConfig = {
       label: 'Zoom registration link',
       type: 'text',
       admin: { description: 'Online sessions: the Register button opens this link.' },
-      validate: (value: string | null | undefined) =>
-        !value ||
-        (URL.canParse(value) && /^https:\/\//.test(value)) ||
-        'Enter a full web address, starting https://',
+      validate: httpsUrl,
+    },
+    {
+      name: 'registrationOptions',
+      label: 'Ways to register',
+      type: 'array',
+      labels: { singular: 'Way to register', plural: 'Ways to register' },
+      admin: {
+        description:
+          'Optional, for sessions offering more than one way to register, such as "Attend in person" and "Join online". Leave empty for a single Register button.',
+      },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'label',
+              type: 'text',
+              required: true,
+              admin: { placeholder: 'Attend in person' },
+            },
+            {
+              name: 'method',
+              type: 'select',
+              required: true,
+              defaultValue: 'form',
+              options: [
+                { label: 'Registration form on this site', value: 'form' },
+                { label: 'Link, such as Zoom', value: 'link' },
+              ],
+            },
+          ],
+        },
+        {
+          name: 'url',
+          label: 'Link',
+          type: 'text',
+          admin: { condition: (_, siblingData) => siblingData?.method === 'link' },
+          validate: (
+            value: string | null | undefined,
+            { siblingData }: { siblingData: unknown },
+          ) =>
+            (siblingData as { method?: string }).method === 'link' && !value
+              ? 'Enter the link'
+              : httpsUrl(value),
+        },
+      ],
     },
     {
       name: 'registrationOpen',

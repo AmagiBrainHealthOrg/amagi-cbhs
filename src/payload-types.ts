@@ -1089,6 +1089,17 @@ export interface Session {
    */
   zoomUrl?: string | null;
   /**
+   * Optional, for sessions offering more than one way to register, such as "Attend in person" and "Join online". Leave empty for a single Register button.
+   */
+  registrationOptions?:
+    | {
+        label: string;
+        method: 'form' | 'link';
+        url?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
    * Untick when the session is full. The Register button is then hidden.
    */
   registrationOpen?: boolean | null;
@@ -1894,6 +1905,14 @@ export interface SessionsSelect<T extends boolean = true> {
   venue?: T;
   description?: T;
   zoomUrl?: T;
+  registrationOptions?:
+    | T
+    | {
+        label?: T;
+        method?: T;
+        url?: T;
+        id?: T;
+      };
   registrationOpen?: T;
   updatedAt?: T;
   createdAt?: T;

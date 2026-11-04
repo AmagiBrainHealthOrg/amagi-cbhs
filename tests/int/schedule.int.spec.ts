@@ -4,7 +4,7 @@ import { blockFormOptions } from '@/config/forms'
 import { formRegistry } from '@/forms/registry'
 import type { Session, SessionLocation, SessionTheme } from '@/payload-types'
 import { buildSchedule } from '@/utils/schedule'
-import { sessionSummary, whenLabel, zonedToUtc, zoneLabel } from '@/utils/sessions'
+import { registrationRoutes, sessionSummary, whenLabel, zonedToUtc, zoneLabel } from '@/utils/sessions'
 
 const stamp = '2026-11-01T00:00:00.000Z'
 const location = (id: number, name: string, extra: Partial<SessionLocation> = {}) =>
@@ -88,13 +88,42 @@ describe('schedule data', () => {
       ],
     )
     const byId = Object.fromEntries(sessions.map((s) => [s.id, s]))
-    expect(byId[1].register).toEqual({ href: '/sessions/session-1', external: false })
+    expect(byId[1].registration).toEqual([{ href: '/sessions/session-1', external: false }])
     expect(byId[1].themeId).toBe(1)
     expect(byId[1].venue).toBe('Main hall')
-    expect(byId[2].register).toEqual({ href: 'https://zoom.us/meeting/register/x', external: true })
+    expect(byId[2].registration).toEqual([
+      { href: 'https://zoom.us/meeting/register/x', external: true },
+    ])
     expect(byId[2].venue).toBeUndefined()
-    expect(byId[3].register).toBeUndefined()
-    expect(byId[4].register).toBeUndefined()
+    expect(byId[3].registration).toEqual([])
+    expect(byId[4].registration).toEqual([])
+  })
+
+  it('passes each session description to the card', () => {
+    const { sessions } = buildSchedule(
+      {},
+      locations,
+      [],
+      [session(1, { description: 'Attendance is by invitation.' }), session(2, {})],
+    )
+    expect(sessions.map((s) => s.description)).toEqual(['Attendance is by invitation.', undefined])
+  })
+
+  it('offers every way to register on a hybrid session', () => {
+    const hybrid = session(1, {
+      zoomUrl: 'https://zoom.us/ignored',
+      registrationOptions: [
+        { label: 'Attend in person', method: 'form' },
+        { label: 'Join online', method: 'link', url: 'https://zoom.us/meeting/register/x' },
+      ],
+    })
+    const routes = [
+      { label: 'Attend in person', href: '/sessions/session-1', external: false },
+      { label: 'Join online', href: 'https://zoom.us/meeting/register/x', external: true },
+    ]
+    expect(registrationRoutes(hybrid, { online: false })).toEqual(routes)
+    expect(registrationRoutes(hybrid, { online: true })).toEqual(routes)
+    expect(registrationRoutes({ ...hybrid, registrationOpen: false }, { online: false })).toEqual([])
   })
 
   it('drops sessions whose location is not published and sorts by time', () => {
