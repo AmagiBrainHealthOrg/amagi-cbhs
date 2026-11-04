@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import React, { useMemo, useRef, useState, useSyncExternalStore } from 'react'
 
+import { SessionInfo } from '@/components/SessionInfo'
 import {
   bySchedule,
   type ScheduleData,
@@ -114,18 +115,26 @@ export function Schedule({ data }: { data: ScheduleData }) {
             {sessionTheme.name}
           </span>
         )}
-        <span className="schedule-time">
-          {!session.startTime
-            ? 'Time TBC'
-            : session.endTime
-              ? `${session.startTime}–${session.endTime}`
-              : session.startTime}
-        </span>
+        <div className="schedule-card-head">
+          <span className="schedule-time">
+            {!session.startTime
+              ? 'Time TBC'
+              : session.endTime
+                ? `${session.startTime}–${session.endTime}`
+                : session.startTime}
+          </span>
+          {session.description && (
+            <SessionInfo
+              id={`session-info-${session.id}`}
+              title={session.title}
+              text={session.description}
+            />
+          )}
+        </div>
         <h4>{session.title}</h4>
         {!online.has(session.locationId) && (
           <p className="schedule-venue">{session.venue ?? 'Venue TBC'}</p>
         )}
-        {session.description && <p className="schedule-description">{session.description}</p>}
         {session.registration.length > 0 && (
           <div className="schedule-registers">
             {session.registration.map(({ label = 'Register', href, external }) =>
