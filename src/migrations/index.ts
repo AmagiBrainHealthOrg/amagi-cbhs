@@ -40,6 +40,7 @@ import * as migration_20261103_190000_anchor_day_monday from './20261103_190000_
 import * as migration_20261104_135427 from './20261104_135427';
 
 import * as migration_20261104_180000_suriname_hybrid from './20261104_180000_suriname_hybrid';
+import * as migration_20261104_190000_cayman_usa_sessions from './20261104_190000_cayman_usa_sessions';
 
 export const migrations = [
   {
@@ -246,5 +247,10 @@ export const migrations = [
     up: migration_20261104_180000_suriname_hybrid.up,
     down: migration_20261104_180000_suriname_hybrid.down,
     name: '20261104_180000_suriname_hybrid',
+  },
+  {
+    up: migration_20261104_190000_cayman_usa_sessions.up,
+    down: migration_20261104_190000_cayman_usa_sessions.down,
+    name: '20261104_190000_cayman_usa_sessions',
   },
 ];
