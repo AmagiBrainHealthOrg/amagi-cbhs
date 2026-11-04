@@ -199,14 +199,14 @@ describe('schedule data', () => {
 })
 
 describe('session registration form', () => {
-  it('asks name, country, organisation and email, with phone optional', () => {
+  it('requires name, country, organisation, email and phone', () => {
     const fields = formRegistry['session-registration'].fields
     expect(fields.map((f) => [f.name, Boolean(f.required)])).toEqual([
       ['name', true],
       ['location', true],
       ['organisation', true],
       ['email', true],
-      ['phone', false],
+      ['phone', true],
     ])
   })
 
