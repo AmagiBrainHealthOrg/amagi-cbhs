@@ -220,15 +220,19 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   }
   let updated = 0
   for (const { slug, fromTitle, fromDescription, location, theme, ...data } of changes) {
-    const { docs } = await payload.update({
+    const { docs } = await payload.find({
       collection: 'sessions',
-      where: {
-        and: [
-          { slug: { equals: slug } },
-          { title: { equals: fromTitle } },
-          { description: { equals: fromDescription } },
-        ],
-      },
+      where: { slug: { equals: slug } },
+      limit: 1,
+      depth: 0,
+      req,
+    })
+    const session = docs[0]
+    if (session?.title !== fromTitle || session.description !== fromDescription) continue
+    // By ID: an update by `where` collects errors instead of throwing, which hides the cause.
+    await payload.update({
+      collection: 'sessions',
+      id: session.id,
       data: {
         ...data,
         slug,
@@ -238,7 +242,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
       context: { disableRevalidate: true },
       req,
     })
-    updated += docs.length
+    updated += 1
   }
   payload.logger.info(`cayman_usa_sessions: ${updated} of ${changes.length} sessions updated`)
 }
