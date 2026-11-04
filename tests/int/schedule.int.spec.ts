@@ -1,4 +1,8 @@
+import React from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
+
+import { SessionDescription } from '@/components/SessionDescription'
 
 import { blockFormOptions } from '@/config/forms'
 import { formRegistry } from '@/forms/registry'
@@ -97,6 +101,18 @@ describe('schedule data', () => {
     expect(byId[2].venue).toBeUndefined()
     expect(byId[3].registration).toEqual([])
     expect(byId[4].registration).toEqual([])
+  })
+
+  it('links the email address and partner form in a description', () => {
+    const html = renderToStaticMarkup(
+      React.createElement(SessionDescription, {
+        text: 'Contact info@amagibrainhealth.org or complete the partner form.',
+      }),
+    )
+    expect(html).toContain('<a href="mailto:info@amagibrainhealth.org">info@amagibrainhealth.org</a>')
+    expect(html).toContain('<a href="/partner#partner-form">partner form</a>')
+    expect(html).toMatch(/^Contact <a/)
+    expect(html).toMatch(/form<\/a>\.$/)
   })
 
   it('passes each session description to the card', () => {

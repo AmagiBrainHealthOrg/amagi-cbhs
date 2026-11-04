@@ -7,6 +7,7 @@ import React, { cache } from 'react'
 
 import { DonateBanner } from '@/components/DonateBanner'
 import { Form } from '@/components/forms/Form'
+import { SessionDescription } from '@/components/SessionDescription'
 import { formRegistry } from '@/forms/registry'
 import type { ResolvedField } from '@/forms/validate'
 import { getResolvedForm } from '@/lib/forms'
@@ -94,7 +95,11 @@ export default async function SessionPage(props: Props) {
             </dd>
           </div>
         </dl>
-        {session.description && <p>{session.description}</p>}
+        {session.description && (
+          <p>
+            <SessionDescription text={session.description} />
+          </p>
+        )}
 
         <section className="session-register" aria-labelledby="register-heading">
           <h2 id="register-heading">Register</h2>
