@@ -9,8 +9,8 @@ type Args = { payload: Payload; req?: PayloadRequest }
 // Two sessions can share a title, so later ones get "-2", "-3" in list order.
 const slugs = () => {
   const seen = new Map<string, number>()
-  return seedSessions.map(({ title }) => {
-    const base = slugify(title)
+  return seedSessions.map(({ title, slug }) => {
+    const base = slug ?? slugify(title)
     const count = (seen.get(base) ?? 0) + 1
     seen.set(base, count)
     return count === 1 ? base : `${base}-${count}`

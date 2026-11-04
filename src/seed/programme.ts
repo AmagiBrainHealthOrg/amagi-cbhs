@@ -32,6 +32,8 @@ type Time =
 
 export type SeedSession = {
   title: string
+  /** Set when the title has changed since the session went live, so its web address stays. */
+  slug?: string
   location: LocationName
   theme?: ThemeName
   day?: SummitDay
@@ -96,6 +98,7 @@ export const seedSessions: SeedSession[] = [
   },
   {
     title: 'Brain Health Empowerment Day: A Passport to a Stronger Brain',
+    slug: 'brain-health-empowerment-day-a-passport-to-a-stronger-brain',
     location: 'United States',
     theme: 'Community',
     day: '2026-11-17',
@@ -104,7 +107,7 @@ export const seedSessions: SeedSession[] = [
     venue: 'East County Community Center, 3310 Gateshead Manor Way, Silver Spring, MD 20904',
     registrationOpen: false,
     description:
-      'An interactive afternoon of brain-health learning, practical activities and community connection hosted by Resilient Health Communities. Using a Brain Boost Passport, participants visit four activity stops (reading aloud, simple maths, handwriting a reflection and exploring a practical next step), followed by a light lunch. A community education activity, not a diagnostic assessment.',
+      'An interactive afternoon of brain-health learning, practical activities and community connection hosted by Resilient Health Communities. Using a Brain Boost Passport, participants visit four activity stops (reading aloud, simple maths, handwriting a reflection and exploring a practical next step), followed by a light lunch. A community education activity, not a diagnostic assessment. No advance registration or fee is required. Attendance is open, with seating on a first-come, first-seated basis, subject to venue capacity. For practical questions, contact Rhonda Baird on 301-655-9660.',
   },
   {
     title: 'Brain Boost Boot Camp — Tobago Edition: Recall. Reconnect. Refresh.',
@@ -157,14 +160,16 @@ export const seedSessions: SeedSession[] = [
       'Cayman organisations and community groups take turns holding the baton in the Brain Health Relay, with contributions from business, nursing education, civil-service wellness, healthcare and sport. Please check the individual contribution details before attending or joining, as a listed time does not necessarily mean an activity is open for in-person attendance.',
   },
   {
-    title: 'Cayman Brain Health Relay — Global Captive Management',
+    title: 'Walking for Brain Health: Staff Wellness Walk',
+    slug: 'cayman-brain-health-relay-global-captive-management',
     location: 'Cayman Islands',
     theme: 'Community',
     day: '2026-11-18',
     startTime: '10:00',
+    endTime: '11:00',
     registrationOpen: false,
     description:
-      'Cayman Brain Health Relay contribution. Lead: Mr Daval Gregory, Software Developer.',
+      'Global Captive Management staff will take part in a wellness walk highlighting the relationship between physical activity, wellbeing and brain health, encouraging movement during the working day and reflection on healthy everyday habits. Lead: Mr Daval Gregory, Software Developer. Internal event for staff only.',
   },
   {
     title:
@@ -180,22 +185,27 @@ export const seedSessions: SeedSession[] = [
   },
   {
     title: 'Cayman Brain Health Relay — Ruth Eleanor McLaughlin School of Nursing, UCCI',
+    slug: 'cayman-brain-health-relay-ruth-eleanor-mclaughlin-school-of-nursing-ucci',
     location: 'Cayman Islands',
     theme: 'Community',
     day: '2026-11-18',
     startTime: '11:00',
+    endTime: '12:00',
     registrationOpen: false,
-    description: 'Cayman Brain Health Relay contribution. Lead: Professor Jusene Brown.',
+    description:
+      'Ruth Eleanor McLaughlin School of Nursing (UCCI) contribution to the Cayman Brain Health Relay. Coordination contact: Professor Jusene Brown, School of Nursing.',
   },
   {
-    title: 'Cayman Brain Health Relay — Wellness Team, Portfolio of the Civil Service',
+    title: 'Brain Health Hour: Individual Brain-Boosting Activities',
+    slug: 'cayman-brain-health-relay-wellness-team-portfolio-of-the-civil-service',
     location: 'Cayman Islands',
     theme: 'Community',
     day: '2026-11-18',
     startTime: '12:00',
+    endTime: '13:00',
     registrationOpen: false,
     description:
-      'Cayman Brain Health Relay contribution. Lead: Mrs Charmane Dalhouse-Morgan, Corporate Wellness Officer.',
+      'Civil Service employees take a break from their work routine to complete independent desk-based activities supporting memory, focus, creativity and relaxation: a memory challenge, brain games, mindful breathing, creative thinking and personal reflection. Lead: Dr Charmane Dalhouse-Morgan, Corporate Wellness Officer, Wellness Unit – Portfolio of the Civil Service. Internal event for participating employees.',
   },
   {
     title: 'Cognitive-Screening Training — Kingston',
@@ -220,32 +230,40 @@ export const seedSessions: SeedSession[] = [
   },
   {
     title: 'Cayman Brain Health Relay — Health City Cayman Islands',
+    slug: 'cayman-brain-health-relay-health-city-cayman-islands',
     location: 'Cayman Islands',
     theme: 'Community',
     day: '2026-11-18',
     startTime: '13:00',
+    endTime: '14:00',
     registrationOpen: false,
     description:
-      'Cayman Brain Health Relay contribution. Lead: Ms Rebekah Brooks, Head of Marketing and Sales.',
+      'Internal staff contribution from Health City Cayman Islands; activity details have not yet been provided. Contact: Ms Rebekah Brooks, Head of Marketing and Sales. Internal event.',
   },
   {
-    title: 'Cayman Brain Health Relay — AllStars Netball Club',
-    location: 'Cayman Islands',
+    title: 'Netball for Brain Health: Movement, Connection and Teamwork',
+    slug: 'cayman-brain-health-relay-allstars-netball-club',
+    location: 'Online',
     theme: 'Community',
     day: '2026-11-18',
     startTime: '14:00',
+    endTime: '15:00',
     registrationOpen: false,
     description:
-      'Cayman Brain Health Relay contribution. Lead: Ms Lyneth Montieth, President; Ms Georgie Muir, Fundraising Coordinator (pre-recorded).',
+      'A pre-recorded video (about 30 minutes) from AllStars Netball Club showcasing how netball brings together physical activity, social connection, coordination, decision-making and teamwork. Players reflect on wellbeing, managing stress and supporting people and families affected by dementia. Leads: Ms Lyneth Montieth, President, and Ms Georgie Muir, Fundraising Coordinator.',
   },
   {
-    title: 'Cayman Brain Health Relay — Health Services Authority',
+    title: 'Move, Play & Create for Brain Health',
+    slug: 'cayman-brain-health-relay-health-services-authority',
     location: 'Cayman Islands',
     theme: 'Community',
     day: '2026-11-18',
     startTime: '15:00',
+    endTime: '16:00',
+    venue: 'Hibiscus Rooms, HSA',
     registrationOpen: false,
-    description: 'Cayman Brain Health Relay contribution. Lead: Dr Sunku Guptha; Dr Dwaine Cooke.',
+    description:
+      'Health Services Authority staff will take part in gait-speed tests, musical bingo and an art and colouring space, exploring mobility, cognition, creativity, social engagement and wellbeing. Leads: Dr Sunku Guptha, Internal Medicine Physician/Geriatrician, and Dr Dwaine Cooke, Neurosurgeon. Internal event for HSA staff only.',
   },
   {
     title: 'Financing Brain Health and Healthy Ageing in Barbados',
@@ -289,22 +307,28 @@ export const seedSessions: SeedSession[] = [
       'What enables locally relevant Caribbean research, and allows the people doing it to develop beyond a single project or grant? This roundtable brings together researchers across Caribbean and diaspora settings to explore feasible studies, appropriate methods, mentorship, paid roles and partnerships that strengthen Caribbean leadership. Contributors: Dr Shonimá Gangaram-Panday, Ms Janelle Robinson, Dr Melanie Taylor-John, Dr Azizi Seixas, Dr Nekehia Quashie and Dr Neil Mehta. Moderated by Dr Ishtar Govia.',
   },
   {
-    title: 'Cayman Brain Health Relay — The Tullet Laboratory',
-    location: 'Cayman Islands',
-    theme: 'Community',
+    title: 'How the Brain Controls Health: Lessons from C. elegans',
+    slug: 'cayman-brain-health-relay-the-tullet-laboratory',
+    location: 'Online',
+    theme: 'Research & Data',
     day: '2026-11-19',
     startTime: '09:00',
+    endTime: '10:00',
     registrationOpen: false,
-    description: 'Cayman Brain Health Relay contribution. Lead: Dr Jennifer Tullet (pre-recorded).',
+    description:
+      'A pre-recorded research video (about 9 minutes) from the Tullet Laboratory on using the model organism C. elegans to investigate how a gene and neuronal signalling influence appetite, behaviour and metabolism. Lead: Dr Jennifer Tullet, Reader in Biogerontology.',
   },
   {
-    title: 'Cayman Brain Health Relay — The Ezcurra Laboratory',
-    location: 'Cayman Islands',
-    theme: 'Community',
+    title: 'How the microbiome affects health',
+    slug: 'cayman-brain-health-relay-the-ezcurra-laboratory',
+    location: 'Online',
+    theme: 'Research & Data',
     day: '2026-11-19',
     startTime: '10:00',
+    endTime: '11:00',
     registrationOpen: false,
-    description: 'Cayman Brain Health Relay contribution. Lead: Dr Marina Ezcurra (pre-recorded).',
+    description:
+      'A pre-recorded research talk (about 40 minutes) from the Ezcurra Laboratory exploring connections between the gut microbiome, health and neurodegeneration through studies using C. elegans. Lead: Dr Marina Ezcurra, Senior Lecturer in the Biology of Ageing.',
   },
   {
     title:
@@ -326,46 +350,52 @@ export const seedSessions: SeedSession[] = [
       'A Suriname-led online conversation bringing together perspectives on clinical care, cognition and mental wellbeing, ageing, human rights and public policy. It will explore what people and families need, the expertise already available, and a feasible next step for Suriname where regional cooperation could help. Held in English; 1:00–2:00 pm Suriname time.',
   },
   {
-    title: 'Cayman Longevity Program — Morning Relay Session',
+    title: 'MedTech, Neuroimaging and the Patient Care Journey',
+    slug: 'cayman-longevity-program-morning-relay-session',
     location: 'Online',
-    theme: 'Community',
+    theme: 'Technology & Innovation',
     day: '2026-11-19',
     startTime: '11:00',
     endTime: '12:00',
     registrationOpen: false,
     description:
-      'Cayman Longevity Program morning Relay session, led by Ms Christina Rowlandson, Co-founder.',
+      'A Cayman Longevity Program webinar on the role of medical technology and neuroimaging in patient evaluation and the care journey. Lead: Ms Christina Rowlandson, Co-founder; additional speakers TBC.',
   },
   {
-    title: "Cayman Brain Health Relay — St Matthew's University School of Medicine",
-    location: 'Cayman Islands',
+    title: 'The PAVING Wheel: Practical Approaches to Health and Wellbeing',
+    slug: 'cayman-brain-health-relay-st-matthew-s-university-school-of-medicine',
+    location: 'Online',
     theme: 'Community',
     day: '2026-11-19',
     startTime: '13:00',
+    endTime: '14:00',
     registrationOpen: false,
     description:
-      'Cayman Brain Health Relay contribution. Lead: Dr Maribel Aurelio; Dr Gimena Marzan (pre-recorded).',
+      "A pre-recorded classroom session (up to 40 minutes) from St Matthew's University School of Medicine introducing the PAVING Wheel and practical lifestyle behaviours that support health and wellbeing. Leads: Dr Maribel Aurelio, Associate Dean of Basic Sciences, and Dr Gimena Marzan, Assistant Dean of Student Affairs.",
   },
   {
-    title: 'Cayman Brain Health Relay — Netball Cayman',
-    location: 'Cayman Islands',
+    title: 'Netball, Music and Brain Health',
+    slug: 'cayman-brain-health-relay-netball-cayman',
+    location: 'Online',
     theme: 'Community',
     day: '2026-11-19',
     startTime: '14:00',
+    endTime: '15:00',
     registrationOpen: false,
     description:
-      'Cayman Brain Health Relay contribution. Lead: Ms Teneisha Wilson, President (pre-recorded).',
+      'A pre-recorded video from Netball Cayman incorporating music to celebrate netball, movement and community engagement. Lead: Ms Teneisha Wilson, President.',
   },
   {
-    title: 'Cayman Longevity Program — Afternoon Relay Session',
+    title: 'Everyday Habits, Cognitive Health and the Gut–Hormone–Brain Axis',
+    slug: 'cayman-longevity-program-afternoon-relay-session',
     location: 'Online',
-    theme: 'Community',
+    theme: 'Life-course',
     day: '2026-11-19',
     startTime: '15:00',
     endTime: '16:00',
     registrationOpen: false,
     description:
-      'Cayman Longevity Program afternoon Relay session, led by Ms Christina Rowlandson, Co-founder.',
+      "A Cayman Longevity Program webinar on preventing cognitive decline, mild cognitive impairment and early dementia through everyday habits and a precision/functional neurology approach, including the gut–hormone–brain axis and women's health. Lead: Ms Christina Rowlandson, Co-founder; additional speakers TBC.",
   },
   {
     title: 'Brain Health Awareness Walk — Tobago',
@@ -412,12 +442,12 @@ export const seedSessions: SeedSession[] = [
   {
     title:
       'Invited Talk: Dr Ishtar Govia — Ministry of Health & Wellness National Health Research Conference',
-    location: 'Online',
+    location: 'Jamaica',
     theme: 'Research & Data',
     day: '2026-11-20',
     registrationOpen: false,
     description:
-      'Dr Ishtar Govia, Founder & CEO of Amagi Health and Convenor of CBHS 2026, will deliver an invited online talk at the Ministry of Health & Wellness National Health Research Conference, in a 30-minute slot between 12 noon and 3:00 pm Jamaica time. Presentation title and exact time to be confirmed. Access is arranged by the conference organisers; please use their official registration or joining information.',
+      'Dr Ishtar Govia, Founder & CEO of Amagi Health and Convenor of CBHS 2026, will deliver an invited talk, in person and online, at the Ministry of Health & Wellness National Health Research Conference, in a 30-minute slot between 12 noon and 3:00 pm Jamaica time. Presentation title and exact time to be confirmed. Access is arranged by the conference organisers; please use their official registration or joining information.',
   },
   {
     title: 'Project Bright Minds: Early Brain Health & Wellness Outreach',
