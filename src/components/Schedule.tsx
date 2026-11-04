@@ -125,30 +125,40 @@ export function Schedule({ data }: { data: ScheduleData }) {
         {!online.has(session.locationId) && (
           <p className="schedule-venue">{session.venue ?? 'Venue TBC'}</p>
         )}
-        {session.register &&
-          (session.register.external ? (
-            <a
-              className="button button-outline schedule-register"
-              href={session.register.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-journey="session_registration"
-              data-action="register_online"
-              data-destination-type="external"
-            >
-              Register<span className="v1-sr-only">: {session.title} (opens Zoom)</span>
-            </a>
-          ) : (
-            <Link
-              className="button button-outline schedule-register"
-              href={session.register.href}
-              data-journey="session_registration"
-              data-action="register_in_person"
-              data-destination-type="internal"
-            >
-              Register<span className="v1-sr-only">: {session.title}</span>
-            </Link>
-          ))}
+        {session.description && <p className="schedule-description">{session.description}</p>}
+        {session.registration.length > 0 && (
+          <div className="schedule-registers">
+            {session.registration.map(({ label = 'Register', href, external }) =>
+              external ? (
+                <a
+                  key={href}
+                  className="button button-outline schedule-register"
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-journey="session_registration"
+                  data-action="register_online"
+                  data-destination-type="external"
+                >
+                  {label}
+                  <span className="v1-sr-only">: {session.title} (opens in a new tab)</span>
+                </a>
+              ) : (
+                <Link
+                  key={href}
+                  className="button button-outline schedule-register"
+                  href={href}
+                  data-journey="session_registration"
+                  data-action="register_in_person"
+                  data-destination-type="internal"
+                >
+                  {label}
+                  <span className="v1-sr-only">: {session.title}</span>
+                </Link>
+              ),
+            )}
+          </div>
+        )}
       </li>
     )
   }

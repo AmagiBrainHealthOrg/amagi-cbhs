@@ -1,4 +1,5 @@
 import { summitDays } from '@/config/summit'
+import type { Session } from '@/payload-types'
 
 const offsetMinutes = (instant: Date, timeZone: string) => {
   const parts = Object.fromEntries(
@@ -65,3 +66,25 @@ export const sessionSummary = (
     whenLabel(session),
     session.venue ? `${session.venue}, ${session.locationName}` : session.locationName,
   ].join(' · ')
+
+export type RegistrationRoute = { label?: string; href: string; external: boolean }
+
+// The ways to register: the session's own options, or else the default for its location (the
+// form on its page in person, Zoom online). A route with no label takes the caller's default.
+export function registrationRoutes(
+  session: Pick<Session, 'slug' | 'zoomUrl' | 'registrationOpen' | 'registrationOptions'>,
+  location: { online?: boolean | null },
+): RegistrationRoute[] {
+  if (session.registrationOpen === false) return []
+  const form = `/sessions/${session.slug}`
+  if (session.registrationOptions?.length) {
+    return session.registrationOptions.flatMap(({ label, method, url }): RegistrationRoute[] => {
+      if (method === 'form') return [{ label, href: form, external: false }]
+      return url ? [{ label, href: url, external: true }] : []
+    })
+  }
+  if (location.online) {
+    return session.zoomUrl ? [{ href: session.zoomUrl, external: true }] : []
+  }
+  return [{ href: form, external: false }]
+}

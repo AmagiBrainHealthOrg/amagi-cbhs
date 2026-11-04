@@ -390,17 +390,29 @@
   color: var(--muted-ink);
   font-size: 0.75rem;
 }
-/* Register: a band across the bottom of the card, edge to edge. */
+.schedule-description {
+  margin: 0;
+  color: var(--muted-ink);
+  font-size: 0.75rem;
+  overflow-wrap: anywhere;
+}
+/* Register: bands across the bottom of the card, edge to edge. */
+.schedule-registers {
+  display: grid;
+  margin: 0 -12px -12px;
+}
 .schedule-card .schedule-register {
   justify-self: stretch;
   min-height: 36px;
-  margin: 0 -12px -12px;
   padding: 0 12px;
   border: 0;
   border-top: 1px solid var(--line);
-  border-radius: 0 0 5px 5px;
+  border-radius: 0;
   background: var(--pale-blue);
   font-size: 0.75rem;
+}
+.schedule-card .schedule-register:last-child {
+  border-radius: 0 0 5px 5px;
 }
 .schedule-card .schedule-register:hover {
   background: var(--theme-blue-bg);
@@ -532,6 +544,12 @@
   color: var(--primary-blue);
   font-family: var(--app-font-heading);
   font-size: var(--fs-xl);
+}
+.session-register h3 {
+  margin: 0;
+  color: var(--primary-blue);
+  font-family: var(--app-font-heading);
+  font-size: var(--fs-lg);
 }
 .session-register > .button {
   justify-self: start;

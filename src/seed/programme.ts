@@ -41,6 +41,10 @@ export type SeedSession = {
   venue?: string
   /** Online sessions only. */
   zoomUrl?: `https://${string}`
+  /** Replaces the location's default when a session offers several ways to register. */
+  registrationOptions?: (
+    { label: string; method: 'form' } | { label: string; method: 'link'; url: `https://${string}` }
+  )[]
   /** Defaults to true. */
   registrationOpen?: boolean
   description?: string
@@ -305,12 +309,19 @@ export const seedSessions: SeedSession[] = [
   {
     title:
       'Our Brain, Our Future: Different Perspectives on Brain Health in Suriname and the Caribbean',
-    location: 'Online',
+    location: 'Suriname',
     theme: 'Policy & Investment',
     day: '2026-11-19',
-    startTime: '11:00',
-    endTime: '12:00',
-    zoomUrl: 'https://us02web.zoom.us/webinar/register/WN_cnUOb_lLQ8yZZJrubWTWHg',
+    startTime: '13:00',
+    endTime: '14:00',
+    registrationOptions: [
+      { label: 'Attend in person', method: 'form' },
+      {
+        label: 'Join online',
+        method: 'link',
+        url: 'https://us02web.zoom.us/webinar/register/WN_cnUOb_lLQ8yZZJrubWTWHg',
+      },
+    ],
     description:
       'A Suriname-led online conversation bringing together perspectives on clinical care, cognition and mental wellbeing, ageing, human rights and public policy. It will explore what people and families need, the expertise already available, and a feasible next step for Suriname where regional cooperation could help. Held in English; 1:00–2:00 pm Suriname time.',
   },

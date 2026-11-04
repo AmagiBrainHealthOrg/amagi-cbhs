@@ -1,7 +1,7 @@
 import { summitDays, type ThemeColour } from '@/config/summit'
 import type { ScheduleBlock, Session, SessionLocation, SessionTheme } from '@/payload-types'
 
-import { zonedToUtc, zoneLabel } from './sessions'
+import { registrationRoutes, type RegistrationRoute, zonedToUtc, zoneLabel } from './sessions'
 
 export type ScheduleDay = {
   value: string
@@ -34,7 +34,8 @@ export type ScheduleSession = {
   start?: string
   end?: string
   venue?: string
-  register?: { href: string; external: boolean }
+  description?: string
+  registration: RegistrationRoute[]
 }
 export type ScheduleData = {
   days: ScheduleDay[]
@@ -45,14 +46,6 @@ export type ScheduleData = {
 
 const idOf = (value: number | { id: number } | null | undefined) =>
   value == null ? undefined : typeof value === 'number' ? value : value.id
-
-const registerLink = (session: Session, location: SessionLocation) => {
-  if (session.registrationOpen === false) return undefined
-  if (location.online) {
-    return session.zoomUrl ? { href: session.zoomUrl, external: true } : undefined
-  }
-  return { href: `/sessions/${session.slug}`, external: false }
-}
 
 export const TBC_DAY: ScheduleDay = { value: 'tbc', dow: 'Date', date: 'TBC', highlight: false, tbc: true }
 
@@ -108,7 +101,8 @@ export function buildSchedule(
         start: zoned(session.startTime),
         end: zoned(session.endTime),
         venue: location.online ? undefined : session.venue || undefined,
-        register: registerLink(session, location),
+        description: session.description || undefined,
+        registration: registrationRoutes(session, location),
       },
     ]
   })

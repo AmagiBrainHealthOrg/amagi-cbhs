@@ -12,7 +12,7 @@ import type { ResolvedField } from '@/forms/validate'
 import { getResolvedForm } from '@/lib/forms'
 import { canRegister } from '@/lib/sessions'
 import config from '@/payload.config'
-import { whenLabel, zoneLabel } from '@/utils/sessions'
+import { registrationRoutes, whenLabel, zoneLabel } from '@/utils/sessions'
 
 import { RefreshRouteOnSave } from '../../../RefreshRouteOnSave'
 import { previewUser, type RouteProps } from '../../_page'
@@ -56,6 +56,8 @@ export default async function SessionPage(props: Props) {
   if (!session || !location) notFound()
   const theme = typeof session.theme === 'object' ? session.theme : undefined
   const open = canRegister(session)
+  const routes = registrationRoutes(session, location)
+  const formLabel = routes.find(({ external }) => !external)?.label
 
   let fields: ResolvedField[] | undefined
   if (open) {
@@ -96,33 +98,38 @@ export default async function SessionPage(props: Props) {
 
         <section className="session-register" aria-labelledby="register-heading">
           <h2 id="register-heading">Register</h2>
-          {location.online && session.zoomUrl && session.registrationOpen !== false ? (
-            <a
-              className="button button-blue"
-              href={session.zoomUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-journey="session_registration"
-              data-action="register_online"
-              data-destination-type="external"
-            >
-              Register on Zoom
-            </a>
-          ) : !open ? (
-            <p>Registration for this session has closed.</p>
-          ) : fields ? (
-            <Form
-              formKey={FORM}
-              fields={fields}
-              submitLabel={formRegistry[FORM].submitLabel}
-              idPrefix="session"
-              hidden={{ session: String(session.id) }}
-            />
-          ) : (
-            <p className="form-alert" role="alert">
-              This form is unavailable right now. Please try again later.
-            </p>
-          )}
+          {routes.length === 0 && <p>Registration for this session has closed.</p>}
+          {routes
+            .filter(({ external }) => external)
+            .map(({ label = 'Register on Zoom', href }) => (
+              <a
+                key={href}
+                className="button button-blue"
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-journey="session_registration"
+                data-action="register_online"
+                data-destination-type="external"
+              >
+                {label}
+              </a>
+            ))}
+          {open && formLabel && <h3>{formLabel}</h3>}
+          {open &&
+            (fields ? (
+              <Form
+                formKey={FORM}
+                fields={fields}
+                submitLabel={formRegistry[FORM].submitLabel}
+                idPrefix="session"
+                hidden={{ session: String(session.id) }}
+              />
+            ) : (
+              <p className="form-alert" role="alert">
+                This form is unavailable right now. Please try again later.
+              </p>
+            ))}
         </section>
       </article>
       <DonateBanner />
