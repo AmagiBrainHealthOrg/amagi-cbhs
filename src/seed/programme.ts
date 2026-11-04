@@ -442,12 +442,12 @@ export const seedSessions: SeedSession[] = [
   {
     title:
       'Invited Talk: Dr Ishtar Govia — Ministry of Health & Wellness National Health Research Conference',
-    location: 'Online',
+    location: 'Jamaica',
     theme: 'Research & Data',
     day: '2026-11-20',
     registrationOpen: false,
     description:
-      'Dr Ishtar Govia, Founder & CEO of Amagi Health and Convenor of CBHS 2026, will deliver an invited online talk at the Ministry of Health & Wellness National Health Research Conference, in a 30-minute slot between 12 noon and 3:00 pm Jamaica time. Presentation title and exact time to be confirmed. Access is arranged by the conference organisers; please use their official registration or joining information.',
+      'Dr Ishtar Govia, Founder & CEO of Amagi Health and Convenor of CBHS 2026, will deliver an invited talk, in person and online, at the Ministry of Health & Wellness National Health Research Conference, in a 30-minute slot between 12 noon and 3:00 pm Jamaica time. Presentation title and exact time to be confirmed. Access is arranged by the conference organisers; please use their official registration or joining information.',
   },
   {
     title: 'Project Bright Minds: Early Brain Health & Wellness Outreach',
