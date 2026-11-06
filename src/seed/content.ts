@@ -4,6 +4,7 @@ import type { Page } from '@/payload-types'
 
 import { cookiesContent, privacyContent, termsContent } from './legal'
 import { bullets, heading, paragraph, paragraphs, richText } from './lexical'
+import { anchorDayCopy, relayCopy } from './relayAnchorCopy'
 
 // The site copy as it stood on `main` before T011 (SPEC §6.4). The content migration and
 // `pnpm db:seed` apply it, creating only what is missing.
@@ -256,13 +257,18 @@ export const formPages = (images: SeedImages): SeedPage[] => [
     form: 'partner',
     anchorId: 'partner-form',
   }),
-  formPage(images, {
-    title: 'Propose a Brain Health Relay activity',
+  {
+    title: relayCopy.title,
     slug: 'relay',
-    kicker: 'Get involved',
-    lead: 'Run an activity in your community during Summit week. Your country lead will be in touch.',
-    form: 'relay',
-  }),
+    meta: meta(relayCopy.title),
+    layout: [
+      photoHero(images, { kicker: 'Get involved', heading: relayCopy.title, lead: relayCopy.lead }),
+      { blockType: 'richText', background: 'white', layout: 'prose', content: relayCopy.intro },
+      { blockType: 'form', background: 'white', form: 'relay' },
+      { blockType: 'richText', background: 'white', layout: 'prose', content: relayCopy.after },
+      donateBanner,
+    ],
+  },
   formPage(images, {
     title: 'Get in touch',
     slug: 'contact',
@@ -275,7 +281,7 @@ export const formPages = (images: SeedImages): SeedPage[] => [
 // Buttons that lead to the forms, from the pages Amagi's copy names (SPEC §8.3).
 export const partnerLink = { label: 'Partner with the Summit', href: '/partner' }
 export const registerLink = { label: 'Register interest', href: '/register' }
-export const relayLink = { label: 'Host a Relay hour', href: '/relay' }
+export const relayLink = { label: 'Propose a Relay activity', href: '/relay' }
 export const summitWeekNav = { label: 'Summit Week', href: '/summit-week' }
 
 export const aboutContact = {
@@ -347,8 +353,8 @@ export const eventsSection: Extract<Layout[number], { blockType: 'events' }> = {
 }
 
 // From Amagi's Summit Week copy (4 October 2026), cut down to a line per item: each section
-// is a graphic first. The programme (T021) joins in Release 2; the Anchor Day date stays off
-// the page until it is confirmed.
+// is a graphic first. The programme (T021) joins in Release 2. Anchor Day is by invitation, so
+// no date or venue appears (Dr Govia, 5 November 2026).
 export const summitWeekPage = (images: SeedImages): SeedPage => ({
   title: 'Summit Week',
   slug: 'summit-week',
@@ -357,7 +363,7 @@ export const summitWeekPage = (images: SeedImages): SeedPage => ({
     photoHero(images, {
       kicker: 'Summit Week · 16–22 November 2026',
       heading: 'One week. Many places. One shared agenda.',
-      lead: 'Locally led activities across the Caribbean and the diaspora, connected online and brought together at an Anchor Day in Jamaica. Free to attend.',
+      lead: 'Locally led activities and online conversations take place throughout the week. A separate, invitation-only leadership conversation in Jamaica forms the inaugural Anchor Day.',
       secondaryLink: { label: 'Register your interest', href: '/register' },
     }),
     scheduleSection,
@@ -378,7 +384,7 @@ export const summitWeekPage = (images: SeedImages): SeedPage => ({
         { title: 'Online sessions', body: 'Connect people across islands and time zones.' },
         {
           title: 'Anchor Day',
-          body: 'Turns what the region said into next steps for 2027 and beyond.',
+          body: 'Brings invited leaders together in Jamaica to explore local priorities and practical next steps within the wider Caribbean agenda.',
         },
       ],
     },
@@ -393,7 +399,7 @@ export const summitWeekPage = (images: SeedImages): SeedPage => ({
         {
           icon: 'landmark',
           title: 'Anchor Day',
-          body: 'Families, carers, clinicians, employers and policymakers in one conversation in Jamaica. Date and venue to be announced.',
+          body: 'Convened in Jamaica, a focused leadership conversation on local brain-health priorities, care capacity and practical next steps within the wider Caribbean agenda. Participation by invitation; arrangements shared directly with participants.',
         },
         {
           icon: 'users',
@@ -414,20 +420,37 @@ export const summitWeekPage = (images: SeedImages): SeedPage => ({
       ],
     },
     {
+      blockType: 'richText',
+      heading: anchorDayCopy.heading,
+      background: 'white',
+      layout: 'split',
+      content: anchorDayCopy.content,
+    },
+    {
       blockType: 'summitWeek',
       kicker: 'The shape of the week',
       heading: 'Seven days, one region',
       background: 'pale',
       monthLabel: 'Nov',
       days: [
-        { day: 'Mon', date: '16', label: 'Opening', body: 'The Summit opens and the Relay begins' },
+        {
+          day: 'Mon',
+          date: '16',
+          label: 'Summit week begins',
+          body: 'Locally led activities and online conversations begin. Check individual listings for dates and access arrangements.',
+        },
         ...(['Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as const).map((day, index) => ({
           day,
           date: String(17 + index),
           label: 'Across the region',
           body: 'Country Weeks, Relay and online sessions',
         })),
-        { day: 'Sun', date: '22', label: 'Close', body: 'What was agreed, and what comes next' },
+        {
+          day: 'Sun',
+          date: '22',
+          label: 'Close',
+          body: 'Reflections from the week and opportunities to continue the work.',
+        },
       ],
     },
     {
@@ -471,7 +494,7 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
         style: 'map',
         kicker: 'Caribbean Brain Health Summit · 16–22 November 2026',
         heading: 'One Caribbean.\nOne brain health future.',
-        lead: 'A week of free sessions across the region and online, and a shared plan for what comes next. Your gift makes it happen.',
+        lead: 'A week of free sessions across the region and online, connecting local priorities with practical next steps beyond the week. Your gift makes it happen.',
         showDonateButton: true,
         secondaryLink: registerLink,
         extraLink: partnerLink,
@@ -507,7 +530,8 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
         blockType: 'summitWeek',
         kicker: 'Summit week',
         heading: 'Seven days, one region',
-        intro: 'Local activity runs all week. The Anchor Day takes place in Jamaica.',
+        intro:
+          'Locally led activities and online conversations take place throughout the week. A separate, invitation-only leadership conversation in Jamaica forms the inaugural Anchor Day.',
         background: 'white',
         anchorId: 'week',
         monthLabel: 'Nov',
@@ -515,9 +539,8 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
           {
             day: 'Mon',
             date: '16',
-            label: 'Anchor Day',
-            body: 'The Anchor Day takes place in Jamaica',
-            anchor: true,
+            label: 'Summit week begins',
+            body: 'Locally led activities and online conversations begin. Check individual listings for dates and access arrangements.',
           },
           {
             day: 'Tue',
@@ -907,8 +930,14 @@ const faqGroups = [
         answer: 'No. Summit sessions are free for the public, in person and online.',
       },
       {
-        question: 'Where is the Anchor Day?',
-        answer: "In Jamaica. We'll publish the venue and timings here once they're confirmed.",
+        question: 'What is the Anchor Day? And where is it?',
+        answer:
+          'For the inaugural Caribbean Brain Health Summit, the Anchor Day takes the form of a focused, Jamaica-based leadership conversation convened by Dr Ishtar Govia. It brings together invited participants to examine locally relevant brain-health, care and workforce priorities, the evidence and partnerships needed to address them, and feasible next steps beyond Summit week.\n\nThe discussion connects Jamaica’s circumstances with the wider Caribbean agenda. It complements—not replaces—the public sessions, country-led activities and community participation taking place across the week. Any subsequent projects or commitments will require separate agreement.',
+      },
+      {
+        question: 'Can I register to attend Anchor Day?',
+        answer:
+          'Anchor Day is an invitation-only leadership conversation in Jamaica. Participation and practical arrangements are coordinated directly with invited participants.\n\nYou can take part in the wider Summit through the [online sessions](/summit-week#programme), appropriate [local activities](/summit-week#programme), the [Brain Health Relay](/relay) and the [Caribbean Call to Action on Brain Health consultation](/call-to-action). Please check individual activity listings for registration and access arrangements.',
       },
     ],
   },
@@ -969,7 +998,11 @@ type Globals = {
 export const seedGlobals = (images: SeedImages): Globals => ({
   'summit-week': {
     days: [
-      { day: '2026-11-16', label: 'Anchor Day', body: 'The Summit opens and the Relay begins' },
+      {
+        day: '2026-11-16',
+        label: 'Summit week begins',
+        body: 'Locally led activities and online conversations begin. Check individual listings for dates and access arrangements.',
+      },
       ...(['2026-11-17', '2026-11-18', '2026-11-19', '2026-11-20', '2026-11-21'] as const).map(
         (day) => ({
           day,
@@ -977,10 +1010,14 @@ export const seedGlobals = (images: SeedImages): Globals => ({
           body: 'Country Weeks, Relay and online sessions',
         }),
       ),
-      { day: '2026-11-22', label: 'Close', body: 'What was agreed, and what comes next' },
+      {
+        day: '2026-11-22',
+        label: 'Close',
+        body: 'Reflections from the week and opportunities to continue the work.',
+      },
     ],
   },
-  'anchor-day': { date: '2026-11-16T12:00:00.000Z' },
+  'anchor-day': {},
   header: {
     logo: images.logo,
     brandTitle: 'Caribbean Brain\nHealth Summit',
@@ -1086,8 +1123,8 @@ export const seedGlobals = (images: SeedImages): Globals => ({
       },
       {
         form: 'relay',
-        heading: 'Thank you for proposing an activity',
-        body: 'Your country lead will be in touch about your Brain Health Relay activity.',
+        heading: 'Thank you. We have received your Brain Health Relay activity proposal.',
+        body: 'This acknowledgement does not confirm a programme slot or any requested support. The Summit team or relevant country lead will follow up to clarify the activity, timing and delivery arrangements.\n\nPlease do not advertise the activity as a confirmed Summit contribution until those arrangements have been agreed.',
       },
       {
         form: 'contact',
