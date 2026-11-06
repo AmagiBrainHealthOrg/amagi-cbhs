@@ -30,6 +30,7 @@ const types: Record<string, string> = {
   currency: 'currency',
   link: 'multipleRecordLinks',
   select: 'multipleSelects',
+  checkbox: 'checkbox',
 }
 
 // A base that matches the config, with one linked Locations table.
@@ -254,5 +255,29 @@ describe('attributionFields', () => {
       }),
     ).toEqual({ fldSource: 'partner-paho', fldCampaign: 'summit-week', fldPage: '/about' })
     expect(attributionFields(table, { utm: null, sourcePage: null })).toEqual({})
+  })
+})
+
+describe('Relay acknowledgement', () => {
+  it('writes a ticked box as true', () => {
+    const id = airtableForms.relay.fields.acknowledgement!.id
+    const table = {
+      id: airtableForms.relay.table,
+      name: 'Relay',
+      primaryFieldId: id,
+      fields: [{ id, name: 'Acknowledgement', type: 'checkbox' }],
+    }
+    expect(
+      toAirtableFields(
+        {
+          table: table.id,
+          fields: { acknowledgement: airtableForms.relay.fields.acknowledgement },
+        },
+        table,
+        {
+          acknowledgement: 'true',
+        },
+      ),
+    ).toEqual({ [id]: true })
   })
 })

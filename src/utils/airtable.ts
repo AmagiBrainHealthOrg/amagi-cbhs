@@ -73,6 +73,9 @@ export function toAirtableFields(
       case 'multipleSelects':
         fields[field.id] = value
         break
+      case 'checkbox':
+        fields[field.id] = true
+        break
       case 'email':
         fields[field.id] = value[0].toLowerCase()
         break
