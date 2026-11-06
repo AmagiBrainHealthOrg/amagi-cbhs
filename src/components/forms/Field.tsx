@@ -74,6 +74,27 @@ export function Field({ field, id, error, defaultValue }: Props) {
     )
   }
 
+  if (control === 'checkbox') {
+    return (
+      <div className={`${className} form-choices`}>
+        <label htmlFor={id} className="form-choice">
+          <input
+            id={id}
+            type="checkbox"
+            name={name}
+            value="true"
+            required={required}
+            defaultChecked={chosen.has('true')}
+            aria-invalid={invalid}
+            aria-describedby={describedBy}
+          />
+          <span>{label}</span>
+        </label>
+        {notes}
+      </div>
+    )
+  }
+
   const common = {
     id,
     name,

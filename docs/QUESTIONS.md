@@ -103,3 +103,11 @@ Open questions for Amagi Health about the CBHS 2026 website and its Airtable bas
 21. **Registration confirmation.** After registering for an in-person session, people see and are emailed "You're registered. We'll email you nearer the time with anything you need to know before the session." Is that right? You can change it in the CMS under Forms.
 
 22. **Full sessions.** Should sessions have a place limit? For now an editor unticks "Registration open" when a session is full, and the Register button disappears.
+
+23. **Summit dates news item.** "Summit dates announced" (1 September 2026) says "an Anchor Day in Jamaica will bring the region together". It is dated, so it was left as published. Would you like an update note on it?
+
+24. **Anchor Day FAQ wording.** "What is the Anchor Day? And where is it?" was edited on the site before your 5 November copy and is close to, but not the same as, your long description. It was left as it is. Should it use the new wording?
+
+25. **"Opening" on the programme.** The programme's day note on Monday 16 November says "Opening". Should it say "Summit week begins" instead?
+
+26. **Relay option wording.** The form's choices are worded from your request: Confirmed / Not yet confirmed, Public / Restricted / Invitation-only, In person / Online / Hybrid, Yes / No. "Activity type" and "Publicity and media permissions" are free text until you supply lists. Are these right?

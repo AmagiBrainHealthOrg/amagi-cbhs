@@ -16,6 +16,7 @@ export type FieldKind =
   | 'currency'
   | 'link'
   | 'select'
+  | 'checkbox'
 
 export type FieldName =
   | 'name'
@@ -42,6 +43,19 @@ export type FieldName =
   | 'message'
   | 'followUp'
   | 'session'
+  | 'acknowledgement'
+  | 'city'
+  | 'activityTitle'
+  | 'activityType'
+  | 'deliveryFormat'
+  | 'activityTime'
+  | 'timeZone'
+  | 'venueStatus'
+  | 'venue'
+  | 'estimatedAttendance'
+  | 'attendanceAccess'
+  | 'registrationNeeded'
+  | 'publicity'
 
 export type AirtableField = { id: string; kind: FieldKind }
 
@@ -122,6 +136,20 @@ export const airtableForms: Record<FormKey, AirtableForm> = {
       activityDate: { id: 'fldPB1I9UU5reAHGo', kind: 'date' },
       activity: longText('fldPfzfsQCFvU9RnR'), // "About" in the base
       followUp: select('fldJX1gjrevqX5f94'),
+      acknowledgement: { id: 'fldvlFXSFwQ5nuQ7H', kind: 'checkbox' },
+      city: text('fldwlkax6VZ2rTZ9d'),
+      activityTitle: text('fldJ3DE7FhMHlpB7P'),
+      activityType: text('fld2L8G2IPAus3rta'),
+      deliveryFormat: select('fld4fH9E12sIFogR0'),
+      activityTime: text('fldWQSlveLtSy8Ftv'),
+      timeZone: text('fldElPTK9SGNFFrJV'),
+      venueStatus: select('fld9kauhZtM0UNPvZ'),
+      venue: text('fld0lGVmnVBmqHC2R'),
+      estimatedAttendance: text('fldkivxtOUoQ6rb0D'),
+      attendanceAccess: select('fldcUdbECyWaxN4uv'),
+      registrationNeeded: select('fldm0Q8pk227RLcJq'),
+      support: longText('fldQG9VMieRSAA3Y5'),
+      publicity: longText('fld2yHaY2D9M442aw'),
     },
   },
   contact: {
@@ -177,4 +205,5 @@ export const compatibleTypes: Record<FieldKind, readonly string[]> = {
   currency: ['currency', 'number'],
   link: ['multipleRecordLinks'],
   select: ['singleSelect', 'multipleSelects'],
+  checkbox: ['checkbox'],
 }

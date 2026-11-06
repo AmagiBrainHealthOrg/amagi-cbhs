@@ -82,6 +82,59 @@ describe('form validation', () => {
     })
   })
 
+  it('asks every Relay requirement once, with the acknowledgement first and required', () => {
+    const { fields } = formRegistry.relay
+    const names = fields.map((f) => f.name)
+    expect(new Set(names).size).toBe(names.length)
+    for (const name of [
+      'organisation',
+      'name',
+      'email',
+      'phone',
+      'location',
+      'city',
+      'activityTitle',
+      'activity',
+      'activityType',
+      'deliveryFormat',
+      'activityDate',
+      'activityTime',
+      'timeZone',
+      'venueStatus',
+      'venue',
+      'estimatedAttendance',
+      'attendanceAccess',
+      'registrationNeeded',
+      'support',
+      'publicity',
+    ]) {
+      expect(names).toContain(name)
+    }
+    expect(fields[0]).toMatchObject({
+      name: 'acknowledgement',
+      control: 'checkbox',
+      required: true,
+    })
+    expect(validate([fields[0]], {})).toEqual({ acknowledgement: 'Tick this box to continue' })
+    expect(validate([fields[0]], { acknowledgement: 'true' })).toEqual({})
+  })
+
+  it('asks for the venue only once it is confirmed', () => {
+    const { fields } = formRegistry.relay
+    const status = {
+      ...fields.find((f) => f.name === 'venueStatus')!,
+      options: [
+        { value: 'Confirmed', label: 'Confirmed', id: 'selMs0xEgvd4dgWEI' },
+        { value: 'Not yet confirmed', label: 'Not yet confirmed', id: 'selJuzHbluyY4hBmq' },
+      ],
+    }
+    const venue = fields.find((f) => f.name === 'venue')!
+    expect(validate([status, venue], { venueStatus: 'Not yet confirmed' })).toEqual({})
+    expect(validate([status, venue], { venueStatus: 'Confirmed' })).toEqual({
+      venue: 'This field is required',
+    })
+  })
+
   it('adds https:// to a bare web address', () => {
     expect(normaliseUrl('example.org')).toBe('https://example.org')
     expect(normaliseUrl('http://example.org')).toBe('http://example.org')

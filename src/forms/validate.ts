@@ -43,6 +43,7 @@ function check(field: ResolvedField, value: string | string[]): string | undefin
   const list = Array.isArray(value) ? value : value ? [value] : []
   if (list.length === 0) {
     if (!field.required) return undefined
+    if (field.control === 'checkbox') return 'Tick this box to continue'
     return ['select', 'radios', 'checkboxes'].includes(field.control)
       ? 'Choose an option'
       : 'This field is required'
@@ -52,6 +53,8 @@ function check(field: ResolvedField, value: string | string[]): string | undefin
     const allowed = new Set(field.options.map((o) => o.value))
     return list.every((v) => allowed.has(v)) ? undefined : 'Choose one of the options'
   }
+
+  if (field.control === 'checkbox') return undefined
 
   const text = list[0]
   switch (field.control) {

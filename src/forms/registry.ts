@@ -5,7 +5,16 @@ import type { FormKey } from '@/config/forms'
 // to is in src/config/airtable.ts; options for link and select fields come from the base.
 
 export type Control =
-  'text' | 'email' | 'tel' | 'url' | 'textarea' | 'date' | 'select' | 'radios' | 'checkboxes'
+  | 'text'
+  | 'email'
+  | 'tel'
+  | 'url'
+  | 'textarea'
+  | 'date'
+  | 'select'
+  | 'radios'
+  | 'checkboxes'
+  | 'checkbox'
 
 export type FieldDef = {
   name: FieldName
@@ -174,32 +183,91 @@ export const formRegistry: Record<FormKey, FormDefinition> = {
       followUp,
     ],
   },
+  // SPEC §8.3, and Dr Govia's copy of 5 November 2026.
   relay: {
     submitLabel: 'Propose activity',
     fields: [
-      name,
-      email,
-      phone,
-      organisation(),
+      {
+        name: 'acknowledgement',
+        label:
+          'I understand that I or my organisation would be responsible for organising this activity. Submitting a proposal does not confirm a programme slot, funding, a venue, technical support or broadcasting; any support must be agreed separately.',
+        control: 'checkbox',
+        required: true,
+        wide: true,
+      },
+      { ...organisation(true), label: 'Host organisation, group or individual' },
+      { ...name, label: 'Named person responsible for organising the activity' },
+      { ...email, label: 'Contact email' },
+      { ...phone, label: 'Telephone/WhatsApp' },
       role(),
       describesYou,
-      location('Country of the activity'),
+      location('Country/territory'),
+      { name: 'city', label: 'City or area', control: 'text', required: true },
+      { name: 'activityTitle', label: 'Working activity title', control: 'text', required: true },
+      {
+        name: 'activity',
+        label: 'Short description, including the intended audience',
+        control: 'textarea',
+        required: true,
+        wide: true,
+      },
+      { name: 'activityType', label: 'Activity type', control: 'text', required: true },
+      { name: 'deliveryFormat', label: 'Delivery format', control: 'select', required: true },
       {
         name: 'activityDate',
-        label: 'Activity date',
+        label: 'Preferred date',
         control: 'date',
         required: true,
         min: '2026-11-16',
         max: '2026-11-22',
         hint: 'Between 16 and 22 November 2026.',
       },
+      { name: 'activityTime', label: 'Preferred local time', control: 'text', required: true },
+      { name: 'timeZone', label: 'Time zone', control: 'text', required: true },
       {
-        name: 'activity',
-        label: 'Proposed activity',
+        name: 'venueStatus',
+        label: 'Venue or online platform status',
+        control: 'select',
+        required: true,
+      },
+      {
+        name: 'venue',
+        label: 'Venue or online platform',
+        control: 'text',
+        required: true,
+        showWhen: { field: 'venueStatus', choiceId: 'selMs0xEgvd4dgWEI' }, // Confirmed
+      },
+      {
+        name: 'estimatedAttendance',
+        label: 'Estimated attendance',
+        control: 'text',
+        required: true,
+      },
+      {
+        name: 'attendanceAccess',
+        label: 'Is attendance public, restricted or invitation-only?',
+        control: 'select',
+        required: true,
+      },
+      {
+        name: 'registrationNeeded',
+        label: 'Is registration needed?',
+        control: 'select',
+        required: true,
+      },
+      {
+        name: 'support',
+        label: 'What support, if any, would you need to deliver this activity?',
+        control: 'textarea',
+        wide: true,
+        hint: 'For example, an introduction to another contributor, advice on the format, or online/technical support. Requests will be discussed; support is not guaranteed.',
+      },
+      {
+        name: 'publicity',
+        label: 'Publicity and media permissions',
         control: 'textarea',
         required: true,
         wide: true,
-        hint: "What you'd run, who it's for and where.",
       },
       followUp,
     ],
