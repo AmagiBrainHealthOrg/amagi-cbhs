@@ -6,7 +6,7 @@ import { Section } from '@/components/Section'
 import type { BlockProps } from './types'
 
 export function RichTextBlock({ block, blockId }: BlockProps<'richText'>) {
-  const { content, layout, heading, intro, anchorId } = block
+  const { content, layout, kicker, heading, intro, anchorId } = block
 
   // Prose is the long-form legal layout: a plain reading column, no section styling.
   if (layout === 'prose') {
@@ -16,6 +16,15 @@ export function RichTextBlock({ block, blockId }: BlockProps<'richText'>) {
         {intro && <p>{intro}</p>}
         <RichText data={content} disableContainer />
       </section>
+    )
+  }
+
+  // With nothing to sit beside, the text takes the page column's left edge.
+  if (!kicker && !heading && !intro) {
+    return (
+      <Section {...block} blockId={blockId} className="v1-reveal">
+        <RichText className="v1-text-column" data={content} />
+      </Section>
     )
   }
 

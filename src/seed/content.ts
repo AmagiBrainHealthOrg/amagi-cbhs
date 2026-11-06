@@ -263,9 +263,9 @@ export const formPages = (images: SeedImages): SeedPage[] => [
     meta: meta(relayCopy.title),
     layout: [
       photoHero(images, { kicker: 'Get involved', heading: relayCopy.title, lead: relayCopy.lead }),
-      { blockType: 'richText', background: 'white', layout: 'prose', content: relayCopy.intro },
+      { blockType: 'richText', background: 'white', layout: 'split', content: relayCopy.intro },
       { blockType: 'form', background: 'white', form: 'relay' },
-      { blockType: 'richText', background: 'white', layout: 'prose', content: relayCopy.after },
+      { blockType: 'richText', background: 'white', layout: 'split', content: relayCopy.after },
       donateBanner,
     ],
   },
@@ -302,7 +302,7 @@ export const scheduleSection: Extract<Layout[number], { blockType: 'schedule' }>
   background: 'white',
   anchorId: 'programme',
   dayNotes: [
-    { day: '2026-11-16', note: 'Opening', highlight: false },
+    { day: '2026-11-16', note: 'Summit week begins', highlight: false },
     { day: '2026-11-22', note: 'Close', highlight: false },
   ],
 }
@@ -932,7 +932,7 @@ const faqGroups = [
       {
         question: 'What is the Anchor Day? And where is it?',
         answer:
-          'For the inaugural Caribbean Brain Health Summit, the Anchor Day takes the form of a focused, Jamaica-based leadership conversation convened by Dr Ishtar Govia. It brings together invited participants to examine locally relevant brain-health, care and workforce priorities, the evidence and partnerships needed to address them, and feasible next steps beyond Summit week.\n\nThe discussion connects Jamaica’s circumstances with the wider Caribbean agenda. It complements—not replaces—the public sessions, country-led activities and community participation taking place across the week. Any subsequent projects or commitments will require separate agreement.',
+          "For the inaugural Caribbean Brain Health Summit, Anchor Day takes the form of a focused, Jamaica-based leadership conversation convened by Dr Ishtar Govia.\n\nInvited participants will examine locally relevant brain-health, care and workforce priorities, the evidence and partnerships needed to address them, and feasible next steps beyond Summit week.\n\nThe conversation connects Jamaica's circumstances with the wider Caribbean agenda. It complements the public sessions, country-led activities and community participation taking place across the week; it does not represent a regional decision-making or endorsement process. Any subsequent projects or commitments require separate agreement.",
       },
       {
         question: 'Can I register to attend Anchor Day?',
