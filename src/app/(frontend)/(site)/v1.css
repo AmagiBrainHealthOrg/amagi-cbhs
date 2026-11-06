@@ -66,6 +66,19 @@
 .v1-lead-text p + p {
   margin-top: 1em;
 }
+
+.v1-text-column {
+  max-width: 760px;
+  line-height: var(--lh-reading);
+}
+.v1-text-column p + p {
+  margin-top: 12px;
+}
+.v1-text-column a {
+  color: var(--primary-blue);
+  font-weight: 600;
+  text-decoration: underline;
+}
 .v1-muted {
   margin-top: 16px;
   color: var(--muted-ink);

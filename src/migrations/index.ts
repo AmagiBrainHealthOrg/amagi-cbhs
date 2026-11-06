@@ -43,6 +43,7 @@ import * as migration_20261104_180000_suriname_hybrid from './20261104_180000_su
 import * as migration_20261104_190000_cayman_usa_sessions from './20261104_190000_cayman_usa_sessions';
 import * as migration_20261104_200000_invited_talk_hybrid from './20261104_200000_invited_talk_hybrid';
 import * as migration_20261105_120000_relay_and_anchor_day_copy from './20261105_120000_relay_and_anchor_day_copy';
+import * as migration_20261105_130000_faq_note_relay_layout from './20261105_130000_faq_note_relay_layout';
 
 export const migrations = [
   {
@@ -264,5 +265,10 @@ export const migrations = [
     up: migration_20261105_120000_relay_and_anchor_day_copy.up,
     down: migration_20261105_120000_relay_and_anchor_day_copy.down,
     name: '20261105_120000_relay_and_anchor_day_copy',
+  },
+  {
+    up: migration_20261105_130000_faq_note_relay_layout.up,
+    down: migration_20261105_130000_faq_note_relay_layout.down,
+    name: '20261105_130000_faq_note_relay_layout',
   },
 ];
