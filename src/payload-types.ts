@@ -1041,6 +1041,9 @@ export interface Team {
 export interface Faq {
   id: number;
   question: string;
+  /**
+   * Leave a blank line between paragraphs. Link to a page on this site with [text](/path).
+   */
   answer: string;
   /**
    * FAQs with the same category are grouped together. An FAQ list block can filter by it.
