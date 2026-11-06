@@ -4,6 +4,7 @@ import React from 'react'
 import { Button } from '@/components/Button'
 import { formOptions } from '@/config/forms'
 import { getGlobal } from '@/lib/globals'
+import { splitParagraphs } from '@/utils/paragraphs'
 
 import { FormSubmitTracker } from './FormSubmitTracker'
 
@@ -30,7 +31,9 @@ export default async function FormThankYouPage({ params, searchParams }: Props) 
         audienceType={first(query.audience_type)}
       />
       <h1 id="thank-you-title">{copy?.heading ?? 'Thank you'}</h1>
-      {copy?.body && <p>{copy.body}</p>}
+      {splitParagraphs(copy?.body).map((paragraph) => (
+        <p key={paragraph}>{paragraph}</p>
+      ))}
       <Button href="/" variant="secondary" journey={form} action="thank_you_home">
         Back to the homepage
       </Button>

@@ -23,7 +23,15 @@ export const Faqs: CollectionConfig = {
   },
   fields: [
     { name: 'question', type: 'text', required: true },
-    { name: 'answer', type: 'textarea', required: true },
+    {
+      name: 'answer',
+      type: 'textarea',
+      required: true,
+      admin: {
+        description:
+          'Leave a blank line between paragraphs. Link to a page on this site with [text](/path).',
+      },
+    },
     {
       name: 'category',
       type: 'text',
