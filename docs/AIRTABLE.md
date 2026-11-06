@@ -48,7 +48,7 @@ Also written: `Organisation / affiliation`, `Role / Title`, `Website`, `Experien
 
 ### `Propose a Brain Health Relay activity` (Relay form, Release 2)
 
-Also written: `Organisation / affiliation`, `Role / Title`, `Experience ` (link), `Date of activity ` (date only), `About` (the proposed activity).
+Also written: `Organisation / affiliation`, `Role / Title`, `Experience ` (link), `Date of activity ` (date only, the preferred date), `About` (short description including the audience), `Acknowledgement` (checkbox), `City or area`, `Activity title`, `Activity type`, `Delivery format`, `Preferred local time`, `Time zone`, `Venue status`, `Venue or online platform` (only when the venue is confirmed), `Estimated attendance`, `Attendance access`, `Registration needed`, `Support needed`, `Publicity and media permissions`.
 
 ### `Enquiries` (Get in touch form, Release 2)
 
@@ -60,7 +60,7 @@ Not written (Amagi's own): `About`, `Engagement`, `Area of work`, `Interest / po
 
 Table `tblmdrD7SJ18AXXvx`. Written: `Name`, `Email` (primary, single line text), `Phone/Whatsapp`, `Location` (link to `Locations`), `Organisation / affiliation`, `Session`, and the attribution columns.
 
-`Session` holds the session's title, day and time, venue and country, such as "Anchor Day plenary · Thursday 19 November, 09:00–10:30 · Main hall, Jamaica".
+`Session` holds the session's title, day and time, venue and country, such as "Dementia Caregiver Self-Care Roadmap · Sunday 22 November, 14:30–17:30 · Bellevue Conference Room, Jamaica".
 
 ## Lookup tables
 
