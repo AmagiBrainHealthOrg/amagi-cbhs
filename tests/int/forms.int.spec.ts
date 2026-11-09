@@ -95,7 +95,8 @@ describe('form validation', () => {
       'city',
       'activityTitle',
       'activity',
-      'activityType',
+      'activityTypes',
+      'activityTypeOther',
       'deliveryFormat',
       'activityDate',
       'activityTime',
@@ -104,9 +105,11 @@ describe('form validation', () => {
       'venue',
       'estimatedAttendance',
       'attendanceAccess',
+      'attendanceGroup',
       'registrationNeeded',
       'support',
-      'publicity',
+      'publicListing',
+      'postActivity',
     ]) {
       expect(names).toContain(name)
     }
@@ -117,6 +120,18 @@ describe('form validation', () => {
     })
     expect(validate([fields[0]], {})).toEqual({ acknowledgement: 'Tick this box to continue' })
     expect(validate([fields[0]], { acknowledgement: 'true' })).toEqual({})
+  })
+
+  it('asks for the other activity type only when Other is ticked', () => {
+    const other = { value: 'Other — please specify', label: 'Other', id: 'selz6do3qZRDLnp0o' }
+    const talk = { value: 'Talk', label: 'Talk', id: 'selTalk' }
+    const relay: ResolvedField[] = formRegistry.relay.fields
+      .filter((f) => f.name === 'activityTypes' || f.name === 'activityTypeOther')
+      .map((f) => (f.name === 'activityTypes' ? { ...f, options: [talk, other] } : f))
+    expect(validate(relay, { activityTypes: ['Talk'] })).toEqual({})
+    expect(validate(relay, { activityTypes: ['Talk', other.value] })).toEqual({
+      activityTypeOther: 'This field is required',
+    })
   })
 
   it('asks for the venue only once it is confirmed', () => {

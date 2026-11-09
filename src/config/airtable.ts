@@ -46,7 +46,8 @@ export type FieldName =
   | 'acknowledgement'
   | 'city'
   | 'activityTitle'
-  | 'activityType'
+  | 'activityTypes'
+  | 'activityTypeOther'
   | 'deliveryFormat'
   | 'activityTime'
   | 'timeZone'
@@ -54,8 +55,10 @@ export type FieldName =
   | 'venue'
   | 'estimatedAttendance'
   | 'attendanceAccess'
+  | 'attendanceGroup'
   | 'registrationNeeded'
-  | 'publicity'
+  | 'publicListing'
+  | 'postActivity'
 
 export type AirtableField = { id: string; kind: FieldKind }
 
@@ -139,7 +142,8 @@ export const airtableForms: Record<FormKey, AirtableForm> = {
       acknowledgement: { id: 'fldvlFXSFwQ5nuQ7H', kind: 'checkbox' },
       city: text('fldwlkax6VZ2rTZ9d'),
       activityTitle: text('fldJ3DE7FhMHlpB7P'),
-      activityType: text('fld2L8G2IPAus3rta'),
+      activityTypes: select('fld1nIFzwcYT4hpvq'),
+      activityTypeOther: text('fldFI0Dy4SyZLMA2F'),
       deliveryFormat: select('fld4fH9E12sIFogR0'),
       activityTime: text('fldWQSlveLtSy8Ftv'),
       timeZone: text('fldElPTK9SGNFFrJV'),
@@ -147,9 +151,11 @@ export const airtableForms: Record<FormKey, AirtableForm> = {
       venue: text('fld0lGVmnVBmqHC2R'),
       estimatedAttendance: text('fldkivxtOUoQ6rb0D'),
       attendanceAccess: select('fldcUdbECyWaxN4uv'),
+      attendanceGroup: longText('fldv0pTS7edvBTN6b'),
       registrationNeeded: select('fldm0Q8pk227RLcJq'),
       support: longText('fldQG9VMieRSAA3Y5'),
-      publicity: longText('fld2yHaY2D9M442aw'),
+      publicListing: select('fldZPWj9rOMocjZLX'),
+      postActivity: select('fldoMFbiO2VunHCR4'),
     },
   },
   contact: {
