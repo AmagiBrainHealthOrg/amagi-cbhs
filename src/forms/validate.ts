@@ -32,7 +32,9 @@ export function isVisible(field: FieldDef, values: Values, fields: ResolvedField
   if (!field.showWhen) return true
   const { field: other, choiceId } = field.showWhen
   const option = fields.find((f) => f.name === other)?.options?.find((o) => o.id === choiceId)
-  return Boolean(option) && values[other] === option?.value
+  if (!option) return false
+  const value = values[other]
+  return Array.isArray(value) ? value.includes(option.value) : value === option.value
 }
 
 // A web address without a scheme gets https://, as people often type "example.com".
