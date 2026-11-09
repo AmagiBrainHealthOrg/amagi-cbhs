@@ -211,7 +211,21 @@ export const formRegistry: Record<FormKey, FormDefinition> = {
         required: true,
         wide: true,
       },
-      { name: 'activityType', label: 'Activity type', control: 'text', required: true },
+      {
+        name: 'activityTypes',
+        label: 'Activity type',
+        control: 'checkboxes',
+        required: true,
+        wide: true,
+        hint: 'Choose all that apply.',
+      },
+      {
+        name: 'activityTypeOther',
+        label: 'Other activity type',
+        control: 'text',
+        required: true,
+        showWhen: { field: 'activityTypes', choiceId: 'selz6do3qZRDLnp0o' }, // Other — please specify
+      },
       { name: 'deliveryFormat', label: 'Delivery format', control: 'select', required: true },
       {
         name: 'activityDate',
@@ -245,13 +259,21 @@ export const formRegistry: Record<FormKey, FormDefinition> = {
       },
       {
         name: 'attendanceAccess',
-        label: 'Is attendance public, restricted or invitation-only?',
+        label: 'Who is the activity intended for?',
         control: 'select',
         required: true,
       },
       {
+        name: 'attendanceGroup',
+        label:
+          'If attendance is limited to a particular group, please describe the group or eligibility requirements.',
+        control: 'textarea',
+        wide: true,
+        showWhen: { field: 'attendanceAccess', choiceId: 'selQbm35jLyEbFTKD' }, // A specific group
+      },
+      {
         name: 'registrationNeeded',
-        label: 'Is registration needed?',
+        label: 'Will people need to register for your activity?',
         control: 'select',
         required: true,
       },
@@ -263,9 +285,17 @@ export const formRegistry: Record<FormKey, FormDefinition> = {
         hint: 'For example, an introduction to another contributor, advice on the format, or online/technical support. Requests will be discussed; support is not guaranteed.',
       },
       {
-        name: 'publicity',
-        label: 'Publicity and media permissions',
-        control: 'textarea',
+        name: 'publicListing',
+        label:
+          'May we publicly list your organisation/group and describe this activity once its inclusion in the programme is confirmed?',
+        control: 'radios',
+        required: true,
+        wide: true,
+      },
+      {
+        name: 'postActivity',
+        label: 'What post-activity material do you expect to be able to provide?',
+        control: 'radios',
         required: true,
         wide: true,
       },
