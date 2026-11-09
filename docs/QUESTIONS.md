@@ -104,10 +104,16 @@ Open questions for Amagi Health about the CBHS 2026 website and its Airtable bas
 
 22. **Full sessions.** Should sessions have a place limit? For now an editor unticks "Registration open" when a session is full, and the Register button disappears.
 
-23. **Summit dates news item.** "Summit dates announced" (1 September 2026) says "an Anchor Day in Jamaica will bring the region together". It is dated, so it was left as published. Would you like an update note on it?
+23. **Summit dates news item.** Resolved 6 November 2026: you updated the Anchor Day note on the News page yourself.
 
 24. **Anchor Day FAQ wording.** Resolved 5 November 2026: "What is the Anchor Day? And where is it?" now uses your long description word for word, in three paragraphs.
 
 25. **"Opening" on the programme.** Resolved 5 November 2026: the day note on Monday 16 November now says "Summit week begins", matching the calendar wording.
 
-26. **Relay option wording.** The form's choices are worded from your request: Confirmed / Not yet confirmed, Public / Restricted / Invitation-only, In person / Online / Hybrid, Yes / No. "Activity type" and "Publicity and media permissions" are free text until you supply lists. Are these right?
+26. **Relay option wording.** Resolved 6 November 2026: your email of 6 November gives new wording for attendance, registration, activity type and publicity, plus a new question about post-activity material.
+
+27. **Required Relay questions.** Decided 8 November 2026: every new question is required except the attendance follow-up, which shows only when you choose "A specific group". The "Other" activity type asks for a short description when ticked.
+
+28. **"Not decided" wording.** Decided 8 November 2026: both questions now say "Not yet decided".
+
+29. **Intended audience asked twice.** The form already asks for a "Short description, including the intended audience", and now also asks "Who is the activity intended for?". Should we drop "including the intended audience" from the description label? It is unchanged for now.
