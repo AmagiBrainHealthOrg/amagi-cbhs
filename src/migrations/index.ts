@@ -50,8 +50,10 @@ import * as migration_20261110_155243 from './20261110_155243'
 import * as migration_20261110_155534 from './20261110_155534'
 import * as migration_20261110_155550 from './20261110_155550'
 import * as migration_20261110_155600 from './20261110_155600'
+import * as migration_20261110_155700 from './20261110_155700'
 import * as migration_20261110_160000_country_page_links from './20261110_160000_country_page_links'
 import * as migration_20261110_170000_pladrr_page from './20261110_170000_pladrr_page'
+import * as migration_20261110_180000_pladrr_form_layout from './20261110_180000_pladrr_form_layout'
 
 export const migrations = [
   {
@@ -315,6 +317,11 @@ export const migrations = [
     name: '20261110_155600',
   },
   {
+    up: migration_20261110_155700.up,
+    down: migration_20261110_155700.down,
+    name: '20261110_155700',
+  },
+  {
     up: migration_20261110_160000_country_page_links.up,
     down: migration_20261110_160000_country_page_links.down,
     name: '20261110_160000_country_page_links',
@@ -323,5 +330,10 @@ export const migrations = [
     up: migration_20261110_170000_pladrr_page.up,
     down: migration_20261110_170000_pladrr_page.down,
     name: '20261110_170000_pladrr_page',
+  },
+  {
+    up: migration_20261110_180000_pladrr_form_layout.up,
+    down: migration_20261110_180000_pladrr_form_layout.down,
+    name: '20261110_180000_pladrr_form_layout',
   },
 ]

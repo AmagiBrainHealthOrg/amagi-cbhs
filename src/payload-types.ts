@@ -606,6 +606,10 @@ export interface FlowBlock {
       }[]
     | null;
   /**
+   * Rows of dots that grow with each step, as on About.
+   */
+  showDots?: boolean | null;
+  /**
    * Optional closing paragraph under the steps.
    */
   outro?: string | null;
@@ -1743,6 +1747,7 @@ export interface FlowBlockSelect<T extends boolean = true> {
         body?: T;
         id?: T;
       };
+  showDots?: T;
   outro?: T;
   id?: T;
   blockName?: T;
