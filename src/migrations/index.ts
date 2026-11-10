@@ -1,50 +1,51 @@
-import * as migration_20261006_141524_baseline from './20261006_141524_baseline';
-import * as migration_20261006_141525_enable_rls from './20261006_141525_enable_rls';
-import * as migration_20261006_144657_add_user_role from './20261006_144657_add_user_role';
-import * as migration_20261007_135743_t006_globals from './20261007_135743_t006_globals';
-import * as migration_20261007_140638_t007_collections from './20261007_140638_t007_collections';
-import * as migration_20261007_144302_t011_copy_fields from './20261007_144302_t011_copy_fields';
-import * as migration_20261007_144558_t011_content from './20261007_144558_t011_content';
-import * as migration_20261007_174846_t008_form_submissions from './20261007_174846_t008_form_submissions';
-import * as migration_20261007_190003_donation_checkout_item from './20261007_190003_donation_checkout_item';
-import * as migration_20261008_163317_partners_order_logo_grid_display from './20261008_163317_partners_order_logo_grid_display';
-import * as migration_20261008_170000_release_1_content from './20261008_170000_release_1_content';
-import * as migration_20261008_174216_plausible_domain from './20261008_174216_plausible_domain';
-import * as migration_20261008_175856_plausible_host from './20261008_175856_plausible_host';
-import * as migration_20261008_180000_plausible_legal_copy from './20261008_180000_plausible_legal_copy';
-import * as migration_20261009_120000_rate_limits from './20261009_120000_rate_limits';
-import * as migration_20261009_130000_forms_content from './20261009_130000_forms_content';
-import * as migration_20261009_130420_hero_and_card_links from './20261009_130420_hero_and_card_links';
-import * as migration_20261009_140000_summit_week_content from './20261009_140000_summit_week_content';
-import * as migration_20261009_200000_restore_home from './20261009_200000_restore_home';
-import * as migration_20261009_201942 from './20261009_201942';
-import * as migration_20261009_204442_team from './20261009_204442_team';
-import * as migration_20261009_210000_hosting_and_cookie_copy from './20261009_210000_hosting_and_cookie_copy';
-import * as migration_20261009_220000_team_content from './20261009_220000_team_content';
-import * as migration_20261009_230000_team_position from './20261009_230000_team_position';
-import * as migration_20261013_024300 from './20261013_024300';
-import * as migration_20261013_191636_events_block from './20261013_191636_events_block';
-import * as migration_20261013_200000_events_content from './20261013_200000_events_content';
-import * as migration_20261028_181735 from './20261028_181735';
-import * as migration_20261028_190000_approach_content from './20261028_190000_approach_content';
-import * as migration_20261102_130803_programme from './20261102_130803_programme';
-import * as migration_20261102_140000_programme_content from './20261102_140000_programme_content';
-import * as migration_20261102_150000_suriname_host_country from './20261102_150000_suriname_host_country';
-import * as migration_20261103_144732 from './20261103_144732';
-import * as migration_20261103_150000_programme_sessions from './20261103_150000_programme_sessions';
-import * as migration_20261103_163302 from './20261103_163302';
-import * as migration_20261103_163400_summit_week_content from './20261103_163400_summit_week_content';
-import * as migration_20261103_170000_programme_descriptions from './20261103_170000_programme_descriptions';
-import * as migration_20261103_180000_about_partner_link from './20261103_180000_about_partner_link';
-import * as migration_20261103_190000_anchor_day_monday from './20261103_190000_anchor_day_monday';
-import * as migration_20261104_135427 from './20261104_135427';
-
-import * as migration_20261104_180000_suriname_hybrid from './20261104_180000_suriname_hybrid';
-import * as migration_20261104_190000_cayman_usa_sessions from './20261104_190000_cayman_usa_sessions';
-import * as migration_20261104_200000_invited_talk_hybrid from './20261104_200000_invited_talk_hybrid';
-import * as migration_20261105_120000_relay_and_anchor_day_copy from './20261105_120000_relay_and_anchor_day_copy';
-import * as migration_20261105_130000_faq_note_relay_layout from './20261105_130000_faq_note_relay_layout';
-import * as migration_20261110_120000_countries_nav from './20261110_120000_countries_nav';
+import * as migration_20261006_141524_baseline from './20261006_141524_baseline'
+import * as migration_20261006_141525_enable_rls from './20261006_141525_enable_rls'
+import * as migration_20261006_144657_add_user_role from './20261006_144657_add_user_role'
+import * as migration_20261007_135743_t006_globals from './20261007_135743_t006_globals'
+import * as migration_20261007_140638_t007_collections from './20261007_140638_t007_collections'
+import * as migration_20261007_144302_t011_copy_fields from './20261007_144302_t011_copy_fields'
+import * as migration_20261007_144558_t011_content from './20261007_144558_t011_content'
+import * as migration_20261007_174846_t008_form_submissions from './20261007_174846_t008_form_submissions'
+import * as migration_20261007_190003_donation_checkout_item from './20261007_190003_donation_checkout_item'
+import * as migration_20261008_163317_partners_order_logo_grid_display from './20261008_163317_partners_order_logo_grid_display'
+import * as migration_20261008_170000_release_1_content from './20261008_170000_release_1_content'
+import * as migration_20261008_174216_plausible_domain from './20261008_174216_plausible_domain'
+import * as migration_20261008_175856_plausible_host from './20261008_175856_plausible_host'
+import * as migration_20261008_180000_plausible_legal_copy from './20261008_180000_plausible_legal_copy'
+import * as migration_20261009_120000_rate_limits from './20261009_120000_rate_limits'
+import * as migration_20261009_130000_forms_content from './20261009_130000_forms_content'
+import * as migration_20261009_130420_hero_and_card_links from './20261009_130420_hero_and_card_links'
+import * as migration_20261009_140000_summit_week_content from './20261009_140000_summit_week_content'
+import * as migration_20261009_200000_restore_home from './20261009_200000_restore_home'
+import * as migration_20261009_201942 from './20261009_201942'
+import * as migration_20261009_204442_team from './20261009_204442_team'
+import * as migration_20261009_210000_hosting_and_cookie_copy from './20261009_210000_hosting_and_cookie_copy'
+import * as migration_20261009_220000_team_content from './20261009_220000_team_content'
+import * as migration_20261009_230000_team_position from './20261009_230000_team_position'
+import * as migration_20261013_024300 from './20261013_024300'
+import * as migration_20261013_191636_events_block from './20261013_191636_events_block'
+import * as migration_20261013_200000_events_content from './20261013_200000_events_content'
+import * as migration_20261028_181735 from './20261028_181735'
+import * as migration_20261028_190000_approach_content from './20261028_190000_approach_content'
+import * as migration_20261102_130803_programme from './20261102_130803_programme'
+import * as migration_20261102_140000_programme_content from './20261102_140000_programme_content'
+import * as migration_20261102_150000_suriname_host_country from './20261102_150000_suriname_host_country'
+import * as migration_20261103_144732 from './20261103_144732'
+import * as migration_20261103_150000_programme_sessions from './20261103_150000_programme_sessions'
+import * as migration_20261103_163302 from './20261103_163302'
+import * as migration_20261103_163400_summit_week_content from './20261103_163400_summit_week_content'
+import * as migration_20261103_170000_programme_descriptions from './20261103_170000_programme_descriptions'
+import * as migration_20261103_180000_about_partner_link from './20261103_180000_about_partner_link'
+import * as migration_20261103_190000_anchor_day_monday from './20261103_190000_anchor_day_monday'
+import * as migration_20261104_135427 from './20261104_135427'
+import * as migration_20261104_180000_suriname_hybrid from './20261104_180000_suriname_hybrid'
+import * as migration_20261104_190000_cayman_usa_sessions from './20261104_190000_cayman_usa_sessions'
+import * as migration_20261104_200000_invited_talk_hybrid from './20261104_200000_invited_talk_hybrid'
+import * as migration_20261105_120000_relay_and_anchor_day_copy from './20261105_120000_relay_and_anchor_day_copy'
+import * as migration_20261105_130000_faq_note_relay_layout from './20261105_130000_faq_note_relay_layout'
+import * as migration_20261110_120000_countries_nav from './20261110_120000_countries_nav'
+import * as migration_20261110_142800 from './20261110_142800'
+import * as migration_20261110_150000_country_pages_content from './20261110_150000_country_pages_content'
 
 export const migrations = [
   {
@@ -245,7 +246,7 @@ export const migrations = [
   {
     up: migration_20261104_135427.up,
     down: migration_20261104_135427.down,
-    name: '20261104_135427'
+    name: '20261104_135427',
   },
   {
     up: migration_20261104_180000_suriname_hybrid.up,
@@ -277,4 +278,14 @@ export const migrations = [
     down: migration_20261110_120000_countries_nav.down,
     name: '20261110_120000_countries_nav',
   },
-];
+  {
+    up: migration_20261110_142800.up,
+    down: migration_20261110_142800.down,
+    name: '20261110_142800',
+  },
+  {
+    up: migration_20261110_150000_country_pages_content.up,
+    down: migration_20261110_150000_country_pages_content.down,
+    name: '20261110_150000_country_pages_content',
+  },
+]
