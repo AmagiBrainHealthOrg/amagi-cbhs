@@ -136,11 +136,20 @@
   gap: clamp(28px, 5vw, 64px);
   align-items: center;
 }
-.v1-section.v1-split {
+.v1-section.v1-split,
+.v1-split-top {
   align-items: start;
+}
+/* In a split the grid gap spaces the heading from its text, side by side or stacked. */
+.v1-split > .v1-section-heading {
+  margin-bottom: 0;
 }
 .v1-section + .v1-section {
   padding-top: 0;
+}
+/* Two white sections in a row share one gap, smaller than a band's padding. */
+.v1-section:has(+ .v1-section) {
+  padding-bottom: clamp(40px, 6vw, 72px);
 }
 
 /* Hero */
@@ -863,7 +872,7 @@
 /* Flow diagram */
 .v1-flow {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--v1-flow-steps, 4), minmax(0, 1fr));
   gap: 0;
   margin: 0;
   padding: 0;
@@ -1829,8 +1838,12 @@
 .v1-section-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  align-items: center;
+  gap: 12px 28px;
   margin-top: 28px;
+}
+.v1-section-actions .v1-text-link {
+  margin-top: 0;
 }
 .v1-section-button {
   min-height: 52px;
@@ -1966,4 +1979,36 @@
 .v1-band-blue .v1-text-column a {
   color: var(--white);
   text-decoration: underline;
+}
+
+/* Lists in rich text: ticks in the brand blue, with room between items */
+.v1-lead-text > :first-child,
+.v1-text-column > :first-child {
+  margin-top: 0;
+}
+.v1-lead-text ul,
+.v1-text-column ul {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 1em;
+  padding: 0;
+  list-style: none;
+}
+.v1-lead-text li,
+.v1-text-column li {
+  position: relative;
+  padding-left: 34px;
+}
+.v1-lead-text li::before,
+.v1-text-column li::before {
+  content: '';
+  position: absolute;
+  top: 0.35em;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary-blue)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E")
+    center / 12px no-repeat;
 }

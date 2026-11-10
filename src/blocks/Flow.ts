@@ -18,6 +18,13 @@ export const Flow: Block = {
       ],
     },
     {
+      name: 'showDots',
+      type: 'checkbox',
+      label: 'Show dots',
+      defaultValue: true,
+      admin: { description: 'Rows of dots that grow with each step, as on About.' },
+    },
+    {
       name: 'outro',
       type: 'textarea',
       admin: { description: 'Optional closing paragraph under the steps.' },

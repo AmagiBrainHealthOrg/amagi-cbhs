@@ -60,7 +60,7 @@ export function RichTextBlock({ block, blockId }: BlockProps<'richText'>) {
   }
 
   return (
-    <Section {...block} blockId={blockId} className="v1-split v1-reveal">
+    <Section {...block} blockId={blockId} className="v1-split v1-split-top v1-reveal">
       <div>
         <RichText className="v1-lead-text" data={content} />
         {actions}

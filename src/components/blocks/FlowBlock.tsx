@@ -8,7 +8,7 @@ import type { BlockProps } from './types'
 export function FlowBlock({ block, blockId }: BlockProps<'flow'>) {
   return (
     <Section {...block} blockId={blockId} className="v1-reveal">
-      <FlowDiagram steps={block.steps ?? []} />
+      <FlowDiagram steps={block.steps ?? []} dots={block.showDots !== false} />
       {block.outro && <p className="v1-section-outro">{block.outro}</p>}
     </Section>
   )

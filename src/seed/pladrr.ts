@@ -133,6 +133,7 @@ export const pladrrPage: RequiredDataFromCollectionSlug<'pages'> = {
       blockType: 'flow',
       heading: 'How the three days will work',
       background: 'white',
+      showDots: false,
       steps: [
         {
           title: 'Day 1 — Caribbean questions and research priorities',
@@ -291,7 +292,7 @@ export const pladrrFormPage: RequiredDataFromCollectionSlug<'pages'> = {
   layout: [
     {
       blockType: 'hero',
-      style: 'plain',
+      style: 'photo',
       kicker: 'PLADRR Jamaica 2027',
       heading: 'Express interest',
       showDonateButton: false,
@@ -300,7 +301,7 @@ export const pladrrFormPage: RequiredDataFromCollectionSlug<'pages'> = {
     {
       blockType: 'richText',
       background: 'white',
-      layout: 'lead',
+      layout: 'split',
       content: richText(
         paragraph(
           'Use this form to express interest in scientific participation, the regional stakeholder dialogue, contributing relevant expertise, future public-event information or supporting participation.',

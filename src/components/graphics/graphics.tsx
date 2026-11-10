@@ -302,9 +302,15 @@ export function ActionWheel({
 const flowIcons: IconName[] = ['landmark', 'users', 'hand-heart', 'users']
 const flowDots = [1, 5, 15, 40]
 
-export function FlowDiagram({ steps }: { steps: { title: string; body?: string | null }[] }) {
+export function FlowDiagram({
+  steps,
+  dots = true,
+}: {
+  steps: { title: string; body?: string | null }[]
+  dots?: boolean
+}) {
   return (
-    <ol className="v1-flow">
+    <ol className="v1-flow" style={{ '--v1-flow-steps': steps.length } as React.CSSProperties}>
       {steps.map(({ title, body }, index) => {
         const Icon = icons[flowIcons[index % flowIcons.length]]
         return (
@@ -313,11 +319,13 @@ export function FlowDiagram({ steps }: { steps: { title: string; body?: string |
               <Icon aria-hidden="true" />
               <h3>{title}</h3>
               {body && <p>{body}</p>}
-              <span className="v1-flow-dots" aria-hidden="true">
-                {Array.from({ length: flowDots[index] ?? 40 }, (_, dot) => (
-                  <i key={dot} />
-                ))}
-              </span>
+              {dots && (
+                <span className="v1-flow-dots" aria-hidden="true">
+                  {Array.from({ length: flowDots[index] ?? 40 }, (_, dot) => (
+                    <i key={dot} />
+                  ))}
+                </span>
+              )}
             </div>
             {index < steps.length - 1 && (
               <ArrowRight className="v1-flow-arrow" aria-hidden="true" />
