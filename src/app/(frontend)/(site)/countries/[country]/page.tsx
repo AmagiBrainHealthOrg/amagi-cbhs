@@ -10,6 +10,7 @@ import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { Button } from '@/components/Button'
 import { Card } from '@/components/Card'
 import { DonateBanner } from '@/components/DonateBanner'
+import { Gallery } from '@/components/Gallery'
 import { LinkedText } from '@/components/LinkedText'
 import { Section } from '@/components/Section'
 import { countryTeams } from '@/config/countryTeams'
@@ -37,7 +38,7 @@ const findCountry = cache(async (slug: string) => {
     where: { slug: { equals: slug } },
     draft: Boolean(user),
     limit: 1,
-    depth: 0,
+    depth: 1,
     overrideAccess: false,
     user,
   })
@@ -170,6 +171,9 @@ export default async function CountryPage({ params }: Props) {
   }
 
   const { programme, hosts, priorities, takePart, beyond, about } = copy
+  const photos = (country.gallery ?? []).flatMap(({ image }) =>
+    typeof image === 'object' && image.url ? [image] : [],
+  )
   const cards = takePart?.cards ?? []
 
   return (
@@ -244,6 +248,12 @@ export default async function CountryPage({ params }: Props) {
           )
         )}
       </Section>
+
+      {photos.length > 0 && (
+        <Section blockId="gallery" anchorId="gallery" heading={`${country.name} gallery`}>
+          <Gallery label={`${country.name} photos`} photos={photos} />
+        </Section>
+      )}
 
       <Section blockId="hosts" heading={hosts?.heading}>
         <div className="v1-text-column">

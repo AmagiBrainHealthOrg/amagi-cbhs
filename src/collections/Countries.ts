@@ -60,6 +60,16 @@ export const Countries: CollectionConfig = {
       },
     },
     {
+      name: 'gallery',
+      type: 'array',
+      labels: { singular: 'Photo', plural: 'Photos' },
+      admin: {
+        description:
+          'Optional. Photos show in a gallery below the programme. The first shows largest.',
+      },
+      fields: [{ name: 'image', type: 'upload', relationTo: 'media', required: true }],
+    },
+    {
       name: 'priorities',
       type: 'group',
       fields: [
