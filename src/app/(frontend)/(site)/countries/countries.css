@@ -117,6 +117,7 @@
 .country-session-actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
   margin-top: 6px;
 }
@@ -309,4 +310,18 @@
 .gallery-controls button:focus-visible {
   outline: 3px solid var(--primary-blue);
   outline-offset: 3px;
+}
+
+.country-sessions .v1-team-dialog p {
+  margin: 12px 0 0;
+}
+.country-sessions .v1-team-dialog .country-session-details {
+  margin-top: 8px;
+  color: var(--muted-ink);
+  font-family: var(--app-font-ui);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+}
+.country-session-actions .v1-team-more {
+  margin: 0 0 0 auto;
 }
