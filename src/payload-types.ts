@@ -76,6 +76,7 @@ export interface Config {
     sessions: Session;
     'session-locations': SessionLocation;
     'session-themes': SessionTheme;
+    countries: Country;
     'form-submissions': FormSubmission;
     media: Media;
     users: User;
@@ -95,6 +96,7 @@ export interface Config {
     sessions: SessionsSelect<false> | SessionsSelect<true>;
     'session-locations': SessionLocationsSelect<false> | SessionLocationsSelect<true>;
     'session-themes': SessionThemesSelect<false> | SessionThemesSelect<true>;
+    countries: CountriesSelect<false> | CountriesSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -113,6 +115,7 @@ export interface Config {
     'donation-settings': DonationSetting;
     'anchor-day': AnchorDay;
     'summit-week': SummitWeek;
+    'country-pages': CountryPage;
     dropdowns: Dropdown;
     integrations: Integration;
     forms: Form;
@@ -125,6 +128,7 @@ export interface Config {
     'donation-settings': DonationSettingsSelect<false> | DonationSettingsSelect<true>;
     'anchor-day': AnchorDaySelect<false> | AnchorDaySelect<true>;
     'summit-week': SummitWeekSelect<false> | SummitWeekSelect<true>;
+    'country-pages': CountryPagesSelect<false> | CountryPagesSelect<true>;
     dropdowns: DropdownsSelect<false> | DropdownsSelect<true>;
     integrations: IntegrationsSelect<false> | IntegrationsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -1168,6 +1172,51 @@ export interface SessionTheme {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "countries".
+ */
+export interface Country {
+  id: number;
+  name: string;
+  /**
+   * Generated from the name when left empty.
+   */
+  slug: string;
+  /**
+   * The programme location whose published sessions this page lists. Its schedule tab and session pages link here.
+   */
+  location: number | SessionLocation;
+  /**
+   * The page heading, also shown on the Countries page.
+   */
+  tagline: string;
+  /**
+   * Separate paragraphs with a blank line.
+   */
+  intro: string;
+  /**
+   * Approved acknowledgement of this country’s local hosts. Shown above the general note when set.
+   */
+  hosts?: string | null;
+  /**
+   * Shows the Anchor Day note under the programme.
+   */
+  anchorDay?: boolean | null;
+  priorities: {
+    question: string;
+    strengths: string;
+    nextStep: string;
+    regional: string;
+  };
+  /**
+   * Lower numbers come first.
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
@@ -1303,6 +1352,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'session-themes';
         value: number | SessionTheme;
+      } | null)
+    | ({
+        relationTo: 'countries';
+        value: number | Country;
       } | null)
     | ({
         relationTo: 'form-submissions';
@@ -1949,6 +2002,31 @@ export interface SessionThemesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "countries_select".
+ */
+export interface CountriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  location?: T;
+  tagline?: T;
+  intro?: T;
+  hosts?: T;
+  anchorDay?: T;
+  priorities?:
+    | T
+    | {
+        question?: T;
+        strengths?: T;
+        nextStep?: T;
+        regional?: T;
+      };
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "form-submissions_select".
  */
 export interface FormSubmissionsSelect<T extends boolean = true> {
@@ -2251,6 +2329,96 @@ export interface SummitWeek {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "country-pages".
+ */
+export interface CountryPage {
+  id: number;
+  index: {
+    kicker: string;
+    heading: string;
+    lead: string;
+  };
+  programme: {
+    heading: string;
+    /**
+     * Write {country} where the country’s name should go.
+     */
+    intro: string;
+    /**
+     * Write {country} where the country’s name should go.
+     */
+    timeZoneNote: string;
+  };
+  /**
+   * Shown on countries that host the Anchor Day.
+   */
+  anchorDay: {
+    heading: string;
+    when: string;
+    body: string;
+  };
+  hosts: {
+    heading: string;
+    note: string;
+  };
+  priorities: {
+    heading: string;
+    intro: string;
+    questionLabel: string;
+    strengthsLabel: string;
+    nextStepLabel: string;
+    regionalLabel: string;
+  };
+  takePart: {
+    heading: string;
+    cards?:
+      | {
+          icon:
+            | 'megaphone'
+            | 'shield'
+            | 'stethoscope'
+            | 'graduation'
+            | 'landmark'
+            | 'users'
+            | 'video'
+            | 'hand-heart'
+            | 'file-text'
+            | 'scale'
+            | 'badge-check'
+            | 'lock';
+          title: string;
+          body: string;
+          linkLabel?: string | null;
+          /**
+           * A path such as /relay, or #programme for the list.
+           */
+          linkHref?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    stayConnectedLabel: string;
+    stayConnected: string;
+  };
+  beyond: {
+    heading: string;
+    /**
+     * Separate paragraphs with a blank line. Link with [text](/path).
+     */
+    body: string;
+  };
+  about: {
+    heading: string;
+    /**
+     * Separate paragraphs with a blank line. Link with [text](/path).
+     */
+    body: string;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "dropdowns".
  */
 export interface Dropdown {
@@ -2526,6 +2694,82 @@ export interface SummitWeekSelect<T extends boolean = true> {
         label?: T;
         body?: T;
         id?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "country-pages_select".
+ */
+export interface CountryPagesSelect<T extends boolean = true> {
+  index?:
+    | T
+    | {
+        kicker?: T;
+        heading?: T;
+        lead?: T;
+      };
+  programme?:
+    | T
+    | {
+        heading?: T;
+        intro?: T;
+        timeZoneNote?: T;
+      };
+  anchorDay?:
+    | T
+    | {
+        heading?: T;
+        when?: T;
+        body?: T;
+      };
+  hosts?:
+    | T
+    | {
+        heading?: T;
+        note?: T;
+      };
+  priorities?:
+    | T
+    | {
+        heading?: T;
+        intro?: T;
+        questionLabel?: T;
+        strengthsLabel?: T;
+        nextStepLabel?: T;
+        regionalLabel?: T;
+      };
+  takePart?:
+    | T
+    | {
+        heading?: T;
+        cards?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              body?: T;
+              linkLabel?: T;
+              linkHref?: T;
+              id?: T;
+            };
+        stayConnectedLabel?: T;
+        stayConnected?: T;
+      };
+  beyond?:
+    | T
+    | {
+        heading?: T;
+        body?: T;
+      };
+  about?:
+    | T
+    | {
+        heading?: T;
+        body?: T;
       };
   _status?: T;
   updatedAt?: T;
