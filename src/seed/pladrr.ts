@@ -7,6 +7,7 @@ import { bullets, link, paragraph, richText } from './lexical'
 export const PLADRR_DOI = 'https://doi.org/10.1371/journal.pmed.1005059'
 export const PLADRR_FORM_PATH = '/pladrr/express-interest'
 const CONTACT = 'ishtargovia@amagibrainhealth.org'
+const paragraphs = (...values: string[]) => values.join('\n\n')
 
 export const pladrrPage: RequiredDataFromCollectionSlug<'pages'> = {
   title: 'PLADRR Jamaica 2027',
@@ -43,20 +44,19 @@ export const pladrrPage: RequiredDataFromCollectionSlug<'pages'> = {
       ),
     },
     {
-      blockType: 'richText',
+      blockType: 'scaleStrip',
       heading: 'What is PLADRR?',
       background: 'white',
-      layout: 'split',
-      content: richText(
-        paragraph(
-          'PLADRR examines how public policy and the social, economic and physical conditions in which people live can shape dementia risk across populations. It complements individual and clinical approaches by asking what can change in systems and environments—not only what individuals should do differently.',
-        ),
-        paragraph(
-          'The research agenda includes equity, locally relevant evidence and responsible data governance. Population-wide action should be examined for who benefits, who is left out and whether inequalities narrow or widen.',
-        ),
-        paragraph(
-          'Jamaica follows the group’s inaugural scientific meeting in Auckland, Aotearoa New Zealand, in February 2025.',
-        ),
+      steps: [
+        { label: 'Individual approaches' },
+        { label: 'Clinical approaches' },
+        { label: 'Systems and environments', highlight: true },
+      ],
+      highlightLabel: 'PLADRR',
+      body: paragraphs(
+        'PLADRR examines how public policy and the social, economic and physical conditions in which people live can shape dementia risk across populations. It complements individual and clinical approaches by asking what can change in systems and environments—not only what individuals should do differently.',
+        'The research agenda includes equity, locally relevant evidence and responsible data governance. Population-wide action should be examined for who benefits, who is left out and whether inequalities narrow or widen.',
+        'Jamaica follows the group’s inaugural scientific meeting in Auckland, Aotearoa New Zealand, in February 2025.',
       ),
     },
     {
@@ -71,12 +71,20 @@ export const pladrrPage: RequiredDataFromCollectionSlug<'pages'> = {
         paragraph(
           'The meeting will explore a possible “cognitive dividend”: whether changes in policies and population conditions may have brought benefits for cognitive health, for whom, and how such effects could be assessed. It will not assume that a benefit has occurred or that any observed change was caused by the Declaration.',
         ),
-        paragraph(
-          'The work needs to distinguish three questions: how NCD risk factors have changed; how cognitive health has changed; and whether particular changes can credibly be attributed to specific policies. Answering them requires attention to the policies actually implemented, their timing and reach, available measures and data, and alternative explanations.',
-        ),
-        paragraph(
-          'Where existing evidence is insufficient, the useful outcome is a clear methodological roadmap—not a premature conclusion.',
-        ),
+      ),
+    },
+    {
+      blockType: 'venn',
+      background: 'white',
+      circles: [
+        { label: 'How NCD risk factors have changed' },
+        { label: 'How cognitive health has changed' },
+        { label: 'Whether particular changes can credibly be attributed to specific policies' },
+      ],
+      centre: 'A possible “cognitive dividend”',
+      body: paragraphs(
+        'The work needs to distinguish three questions: how NCD risk factors have changed; how cognitive health has changed; and whether particular changes can credibly be attributed to specific policies. Answering them requires attention to the policies actually implemented, their timing and reach, available measures and data, and alternative explanations.',
+        'Where existing evidence is insufficient, the useful outcome is a clear methodological roadmap—not a premature conclusion.',
       ),
     },
     {
@@ -130,42 +138,56 @@ export const pladrrPage: RequiredDataFromCollectionSlug<'pages'> = {
       ),
     },
     {
-      blockType: 'flow',
+      blockType: 'funnel',
       heading: 'How the three days will work',
       background: 'white',
-      showDots: false,
       steps: [
         {
+          when: '3 Feb',
           title: 'Day 1 — Caribbean questions and research priorities',
           body: 'Establish the context, existing strengths, policy questions and evidence needs.',
         },
         {
+          when: '4 Feb',
           title: 'Day 2 — Scientific methods and regional dialogue',
           body: 'Test approaches and draft ideas with relevant perspectives; build connections across working themes.',
         },
         {
+          when: '5 Feb',
           title: 'Day 3 — Integration and next steps',
           body: 'Review the working drafts, resolve overlaps and define a realistic programme of further work.',
         },
       ],
-      outro:
-        'The proposed design combines focused working groups with joint discussions. Participants may contribute across themes where their expertise is relevant. Detailed arrangements, including any public lecture or online participation, will be announced once confirmed.',
+      end: 'A realistic programme of further work',
+      body: 'The proposed design combines focused working groups with joint discussions. Participants may contribute across themes where their expertise is relevant. Detailed arrangements, including any public lecture or online participation, will be announced once confirmed.',
     },
     {
-      blockType: 'richText',
+      blockType: 'comparison',
       heading: 'Who the meeting is for',
+      intro:
+        'The scientific working meeting is intended for researchers and relevant policy, practice, community and data-governance contributors whose experience can help address the research questions.',
       background: 'pale',
-      layout: 'split',
-      content: richText(
-        paragraph(
-          'The scientific working meeting is intended for researchers and relevant policy, practice, community and data-governance contributors whose experience can help address the research questions. Caribbean and Caribbean-diaspora early-career researchers are a priority for meaningful scientific participation and support.',
-        ),
-        paragraph(
-          'This is not a general conference with automatically available places, an abstract competition or a commercial innovation showcase. Participation arrangements are being finalised. Expressing interest does not confirm attendance, a speaking role or funding.',
-        ),
-        paragraph(
-          'Early-career participants should contribute to scientific thinking and outputs, not only record discussions. Roles, mentorship, workload, credit and any continuing tasks will be discussed explicitly. Attendance does not automatically commit anyone to twelve months of work.',
-        ),
+      is: {
+        heading: 'It is for',
+        items: [
+          { text: 'Researchers' },
+          { text: 'Relevant policy, practice, community and data-governance contributors' },
+          {
+            text: 'Caribbean and Caribbean-diaspora early-career researchers, a priority for meaningful scientific participation and support',
+          },
+        ],
+      },
+      isNot: {
+        heading: 'It is not',
+        items: [
+          { text: 'A general conference with automatically available places' },
+          { text: 'An abstract competition' },
+          { text: 'A commercial innovation showcase' },
+        ],
+      },
+      body: paragraphs(
+        'Participation arrangements are being finalised. Expressing interest does not confirm attendance, a speaking role or funding.',
+        'Early-career participants should contribute to scientific thinking and outputs, not only record discussions. Roles, mentorship, workload, credit and any continuing tasks will be discussed explicitly. Attendance does not automatically commit anyone to twelve months of work.',
       ),
     },
     {

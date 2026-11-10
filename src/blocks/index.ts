@@ -4,6 +4,7 @@ import { Accordion } from './Accordion'
 import { ActionAreas } from './ActionAreas'
 import { AnchorDay } from './AnchorDay'
 import { CardGrid } from './CardGrid'
+import { Comparison, Funnel, ScaleStrip, Venn } from './Diagrams'
 import { DonateBanner } from './DonateBanner'
 import { Events } from './Events'
 import { FaqList } from './FaqList'
@@ -32,6 +33,10 @@ export const pageBlocks: Block[] = [
   Schedule,
   Roadmap,
   Flow,
+  ScaleStrip,
+  Venn,
+  Funnel,
+  Comparison,
   CardGrid,
   Accordion,
   ActionAreas,
