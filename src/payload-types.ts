@@ -187,6 +187,10 @@ export interface Page {
         | ScheduleBlock
         | RoadmapBlock
         | FlowBlock
+        | ScaleStripBlock
+        | VennBlock
+        | FunnelBlock
+        | ComparisonBlock
         | CardGridBlock
         | AccordionBlock
         | ActionAreasBlock
@@ -616,6 +620,162 @@ export interface FlowBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'flow';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ScaleStripBlock".
+ */
+export interface ScaleStripBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  /**
+   * From one person outwards. Each scale shows more people than the last.
+   */
+  steps?:
+    | {
+        label: string;
+        highlight?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Tag on the highlighted scales, such as "PLADRR’s focus".
+   */
+  highlightLabel?: string | null;
+  /**
+   * Optional text beside or under the graphic. Separate paragraphs with a blank line. Link with [text](/path).
+   */
+  body?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'scaleStrip';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VennBlock".
+ */
+export interface VennBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  circles?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Where all three circles overlap.
+   */
+  centre?: string | null;
+  /**
+   * Optional text beside or under the graphic. Separate paragraphs with a blank line. Link with [text](/path).
+   */
+  body?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'venn';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FunnelBlock".
+ */
+export interface FunnelBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  /**
+   * Each step is narrower than the last.
+   */
+  steps?:
+    | {
+        /**
+         * Such as "3 Feb".
+         */
+        when?: string | null;
+        title: string;
+        body?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Where the funnel leads, under its point.
+   */
+  end?: string | null;
+  /**
+   * Optional text beside or under the graphic. Separate paragraphs with a blank line. Link with [text](/path).
+   */
+  body?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'funnel';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ComparisonBlock".
+ */
+export interface ComparisonBlock {
+  /**
+   * Small uppercase line above the heading.
+   */
+  kicker?: string | null;
+  heading?: string | null;
+  intro?: string | null;
+  background: 'white' | 'pale' | 'blue';
+  /**
+   * Lets links jump to this section, e.g. "week" for /#week.
+   */
+  anchorId?: string | null;
+  is: {
+    heading: string;
+    items?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  isNot: {
+    heading: string;
+    items?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  /**
+   * Optional text beside or under the graphic. Separate paragraphs with a blank line. Link with [text](/path).
+   */
+  body?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'comparison';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1491,6 +1651,10 @@ export interface PagesSelect<T extends boolean = true> {
         schedule?: T | ScheduleBlockSelect<T>;
         roadmap?: T | RoadmapBlockSelect<T>;
         flow?: T | FlowBlockSelect<T>;
+        scaleStrip?: T | ScaleStripBlockSelect<T>;
+        venn?: T | VennBlockSelect<T>;
+        funnel?: T | FunnelBlockSelect<T>;
+        comparison?: T | ComparisonBlockSelect<T>;
         cardGrid?: T | CardGridBlockSelect<T>;
         accordion?: T | AccordionBlockSelect<T>;
         actionAreas?: T | ActionAreasBlockSelect<T>;
@@ -1749,6 +1913,108 @@ export interface FlowBlockSelect<T extends boolean = true> {
       };
   showDots?: T;
   outro?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ScaleStripBlock_select".
+ */
+export interface ScaleStripBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  steps?:
+    | T
+    | {
+        label?: T;
+        highlight?: T;
+        id?: T;
+      };
+  highlightLabel?: T;
+  body?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VennBlock_select".
+ */
+export interface VennBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  circles?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  centre?: T;
+  body?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FunnelBlock_select".
+ */
+export interface FunnelBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  steps?:
+    | T
+    | {
+        when?: T;
+        title?: T;
+        body?: T;
+        id?: T;
+      };
+  end?: T;
+  body?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ComparisonBlock_select".
+ */
+export interface ComparisonBlockSelect<T extends boolean = true> {
+  kicker?: T;
+  heading?: T;
+  intro?: T;
+  background?: T;
+  anchorId?: T;
+  is?:
+    | T
+    | {
+        heading?: T;
+        items?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+      };
+  isNot?:
+    | T
+    | {
+        heading?: T;
+        items?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+      };
+  body?: T;
   id?: T;
   blockName?: T;
 }

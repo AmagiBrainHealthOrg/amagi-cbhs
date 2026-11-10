@@ -7,6 +7,7 @@ import { CardGridBlock } from './CardGridBlock'
 import { DonateBannerBlock } from './DonateBannerBlock'
 import { EventsBlock } from './EventsBlock'
 import { FaqListBlock } from './FaqListBlock'
+import { ComparisonBlock, FunnelBlock, ScaleStripBlock, VennBlock } from './DiagramBlocks'
 import { FlowBlock } from './FlowBlock'
 import { FormBlock } from './FormBlock'
 import { HeroBlock } from './HeroBlock'
@@ -49,6 +50,14 @@ function RenderBlock({ block, blockId, actionAreas }: RenderProps) {
       return <RoadmapBlock block={block} blockId={blockId} />
     case 'flow':
       return <FlowBlock block={block} blockId={blockId} />
+    case 'scaleStrip':
+      return <ScaleStripBlock block={block} blockId={blockId} />
+    case 'venn':
+      return <VennBlock block={block} blockId={blockId} />
+    case 'funnel':
+      return <FunnelBlock block={block} blockId={blockId} />
+    case 'comparison':
+      return <ComparisonBlock block={block} blockId={blockId} />
     case 'cardGrid':
       return <CardGridBlock block={block} blockId={blockId} />
     case 'accordion':
