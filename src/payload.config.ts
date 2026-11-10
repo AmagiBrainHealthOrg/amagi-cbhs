@@ -21,8 +21,10 @@ import { FormSubmissions } from './collections/FormSubmissions'
 import { SessionLocations } from './collections/SessionLocations'
 import { Sessions } from './collections/Sessions'
 import { SessionThemes } from './collections/SessionThemes'
+import { Countries } from './collections/Countries'
 import { AnchorDay } from './globals/AnchorDay'
 import { SummitWeek } from './globals/SummitWeek'
+import { CountryPages } from './globals/CountryPages'
 import { ComingSoon } from './globals/ComingSoon'
 import { CookieConsent } from './globals/CookieConsent'
 import { DonationSettings } from './globals/DonationSettings'
@@ -52,6 +54,7 @@ export default buildConfig({
     Sessions,
     SessionLocations,
     SessionThemes,
+    Countries,
     FormSubmissions,
     Media,
     Users,
@@ -62,6 +65,7 @@ export default buildConfig({
     DonationSettings,
     AnchorDay,
     SummitWeek,
+    CountryPages,
     Dropdowns,
     Integrations,
     Forms,

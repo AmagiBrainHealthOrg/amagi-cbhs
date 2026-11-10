@@ -4,13 +4,16 @@ import React from 'react'
 
 import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { DonateBanner } from '@/components/DonateBanner'
+import { countryHref, getCountries } from '@/lib/countries'
+import { getGlobal } from '@/lib/globals'
 
-import { countries } from '@/config/countries'
 import './countries.css'
 
 export const metadata: Metadata = { title: 'Countries | Caribbean Brain Health Summit' }
 
-export default function CountriesPage() {
+export default async function CountriesPage() {
+  const [{ index }, countries] = await Promise.all([getGlobal('country-pages'), getCountries()])
+
   return (
     <>
       <section className="page-hero country-hero">
@@ -19,26 +22,25 @@ export default function CountriesPage() {
             label="Breadcrumb"
             items={[{ label: 'Home', href: '/' }, { label: 'Countries' }]}
           />
-          <p className="page-kicker">Where it happens</p>
-          <h1>Across the region, and online</h1>
-          <p className="page-hero-lead">
-            Each host country runs its own programme of free, local activity. Online sessions let
-            anyone in the region or the diaspora join in.
-          </p>
+          {index?.kicker && <p className="page-kicker">{index.kicker}</p>}
+          <h1>{index?.heading || 'Countries'}</h1>
+          {index?.lead && <p className="page-hero-lead">{index.lead}</p>}
         </div>
       </section>
-      <section className="v1-section" aria-label="Host countries">
-        <ul className="country-index">
-          {countries.map(({ slug, name, tagline }) => (
-            <li key={slug}>
-              <Link href={`/countries/${slug}`}>
-                <h2>{name}</h2>
-                <p>{tagline}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
+      {countries.length > 0 && (
+        <section className="v1-section" aria-label="Host countries">
+          <ul className="country-index">
+            {countries.map(({ id, slug, name, tagline }) => (
+              <li key={id}>
+                <Link href={countryHref(slug)}>
+                  <h2>{name}</h2>
+                  <p>{tagline}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
       <DonateBanner />
     </>
   )

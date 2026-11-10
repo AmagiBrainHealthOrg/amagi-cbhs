@@ -19,6 +19,8 @@ export type ScheduleLocation = {
   online: boolean
   timeZone: string
   zoneLabel: string
+  /** The location's country page, when it has one. */
+  countryHref?: string
 }
 export type ScheduleTheme = { id: number; name: string; colour: ThemeColour }
 export type ScheduleSession = {
@@ -47,7 +49,13 @@ export type ScheduleData = {
 const idOf = (value: number | { id: number } | null | undefined) =>
   value == null ? undefined : typeof value === 'number' ? value : value.id
 
-export const TBC_DAY: ScheduleDay = { value: 'tbc', dow: 'Date', date: 'TBC', highlight: false, tbc: true }
+export const TBC_DAY: ScheduleDay = {
+  value: 'tbc',
+  dow: 'Date',
+  date: 'TBC',
+  highlight: false,
+  tbc: true,
+}
 
 // Same day, then timed sessions by start, then untimed ones, then title.
 export const bySchedule = (a: ScheduleSession, b: ScheduleSession) =>

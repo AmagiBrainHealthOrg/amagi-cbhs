@@ -2,6 +2,7 @@ import type { DataFromGlobalSlug, RequiredDataFromCollectionSlug } from 'payload
 
 import type { Page } from '@/payload-types'
 
+import { countryPagesCopy } from './countries'
 import { cookiesContent, privacyContent, termsContent } from './legal'
 import { bullets, heading, paragraph, paragraphs, richText } from './lexical'
 import { anchorDayCopy, relayCopy } from './relayAnchorCopy'
@@ -993,10 +994,12 @@ type Globals = {
       | 'forms'
       | 'summit-week'
       | 'anchor-day'
+      | 'country-pages'
   ]: Omit<Partial<DataFromGlobalSlug<S>>, 'id' | 'updatedAt' | 'createdAt' | '_status'>
 }
 
 export const seedGlobals = (images: SeedImages): Globals => ({
+  'country-pages': countryPagesCopy,
   'summit-week': {
     days: [
       {
