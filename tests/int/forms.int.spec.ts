@@ -170,3 +170,84 @@ describe('form validation', () => {
     expect(labels.join(' ')).not.toMatch(/diagnos|symptom|medical|health history|condition/i)
   })
 })
+
+describe('PLADRR expression of interest', () => {
+  const choice = (id: string, value: string) => ({ id, value, label: value })
+  const options: Partial<Record<string, ReturnType<typeof choice>[]>> = {
+    mainReason: [
+      choice('sel1jL5rYf1TTVcNH', 'Scientific'),
+      choice('selHqDc2XYRauyv84', 'Public information'),
+    ],
+    perspectives: [choice('selA', 'Epidemiology'), choice('selOX7b3kWWn4MMi8', 'Other')],
+    careerStage: [choice('selM', 'Mid-career')],
+    workingThemes: [choice('selT1', 'One'), choice('selT2', 'Two'), choice('selT3', 'Three')],
+    canAttend: [choice('selLRPxWFiCBeASeV', 'All three days'), choice('selP', 'Part')],
+    supportNeeded: [choice('selTr', 'Travel'), choice('selh0loKFIKcfA2uR', 'None')],
+    alreadyInvited: [choice('selOb9mzuxfbn06zi', 'Yes'), choice('selN', 'No')],
+  }
+  const pladrr: ResolvedField[] = formRegistry['pladrr-eoi'].fields.map((field) =>
+    options[field.name] ? { ...field, options: options[field.name] } : field,
+  )
+  const field = (name: string) => pladrr.find((f) => f.name === name)!
+  const aboutYou = {
+    name: 'Testy Testerson',
+    email: 'testy@example.com',
+    country: 'Jamaica',
+    organisation: 'Independent',
+    role: 'Researcher',
+    eoiAcknowledged: 'true',
+    privacyAcknowledged: 'true',
+  }
+  const scientific = {
+    ...aboutYou,
+    mainReason: 'Scientific',
+    perspectives: ['Epidemiology'],
+    careerStage: 'Mid-career',
+    relevantWork: 'Work',
+    workingThemes: ['One'],
+    clarifyQuestion: 'Question',
+    contribution: 'Contribution',
+    canAttend: 'All three days',
+    alreadyInvited: 'No',
+  }
+
+  it('asks only the chosen route, and nothing else', () => {
+    expect(validate(pladrr, scientific)).toEqual({})
+    expect(validate(pladrr, { ...aboutYou, mainReason: 'Public information' })).toEqual({})
+    expect(isVisible(field('perspectives'), { mainReason: 'Public information' }, pladrr)).toBe(
+      false,
+    )
+  })
+
+  it('shows the ending only once a route is chosen', () => {
+    expect(isVisible(field('eoiAcknowledged'), {}, pladrr)).toBe(false)
+    expect(isVisible(field('eoiAcknowledged'), { mainReason: 'Scientific' }, pladrr)).toBe(true)
+  })
+
+  it('asks for the other perspective only while Other is ticked on the scientific route', () => {
+    const values = { ...scientific, perspectives: ['Other'] }
+    expect(validate(pladrr, values)).toEqual({ perspectiveOther: 'This field is required' })
+    expect(
+      isVisible(field('perspectiveOther'), { ...values, mainReason: 'Public information' }, pladrr),
+    ).toBe(false)
+  })
+
+  it('asks about availability for any answer except all three days', () => {
+    expect(isVisible(field('availability'), scientific, pladrr)).toBe(false)
+    expect(isVisible(field('availability'), { ...scientific, canAttend: 'Part' }, pladrr)).toBe(
+      true,
+    )
+  })
+
+  it('limits word counts, selections and the exclusive option', () => {
+    expect(
+      validate(pladrr, { ...scientific, clarifyQuestion: Array(101).fill('word').join(' ') }),
+    ).toEqual({ clarifyQuestion: 'Keep this to 100 words or fewer' })
+    expect(validate(pladrr, { ...scientific, workingThemes: ['One', 'Two', 'Three'] })).toEqual({
+      workingThemes: 'Choose up to 2',
+    })
+    expect(validate(pladrr, { ...scientific, supportNeeded: ['Travel', 'None'] })).toEqual({
+      supportNeeded: `"None" can't be combined with other options`,
+    })
+  })
+})

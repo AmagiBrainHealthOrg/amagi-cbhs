@@ -62,6 +62,12 @@ Table `tblmdrD7SJ18AXXvx`. Written: `Name`, `Email` (primary, single line text),
 
 `Session` holds the session's title, day and time, venue and country, such as "Dementia Caregiver Self-Care Roadmap · Sunday 22 November, 14:30–17:30 · Bellevue Conference Room, Jamaica".
 
+### `PLADRR expressions of interest` (PLADRR form at `/pladrr/express-interest`)
+
+Table `tbllZwqx8hnRzFHto`. One record per submission. `Main reason` is the route the person chose (scientific meeting, stakeholder dialogue, expertise, public lecture information or support); only that route's fields are filled. Each field's description gives the form's question ID (B1…H4) and any word limit.
+
+The site writes every field except `Submitted at` (Airtable fills it). It ticks `Needs organiser review` when someone answers Yes to `Already invited`. `Wider Amagi and Summit news` is its own consent, never derived from the acknowledgements. `Country or territory` is free text, with a world country list offered as suggestions. The select choices are the form's options: rename them here and the form follows.
+
 ## Lookup tables
 
 Each record is one option on the forms; its primary field is the label.

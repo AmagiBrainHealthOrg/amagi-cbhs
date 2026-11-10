@@ -22,7 +22,7 @@ const inOrder = (field: ResolvedField, titles: string[]): ResolvedField => {
 }
 
 export async function FormBlock({ block, blockId, actionAreas }: Props) {
-  const { submitLabel, notice } = formRegistry[block.form]
+  const { submitLabel, notice, sections, hidePrivacyLine, submitAfter } = formRegistry[block.form]
   let fields: ResolvedField[] | undefined
   try {
     fields = (await getResolvedForm(block.form)).map((field) => inOrder(field, actionAreas))
@@ -39,6 +39,9 @@ export async function FormBlock({ block, blockId, actionAreas }: Props) {
           submitLabel={submitLabel}
           notice={notice}
           idPrefix={blockId}
+          sections={sections}
+          hidePrivacyLine={hidePrivacyLine}
+          submitAfter={submitAfter}
         />
       ) : (
         <p className="form-alert" role="alert">

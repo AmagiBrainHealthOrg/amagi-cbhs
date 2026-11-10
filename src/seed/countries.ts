@@ -67,7 +67,6 @@ export const seedCountries: SeedCountry[] = [
       'The emphasis is not simply on learning a tool. It is on professional scope, supervision, clinical review and referral arrangements. Training does not by itself authorise independent screening, establish a diagnosis or guarantee a supervised placement.',
       'Jamaica also hosts the inaugural Anchor Day leadership roundtable: a focused, invitation-only conversation convened by Dr Ishtar Govia on brain health, care capacity, workforce readiness and practical next steps within the wider Caribbean agenda. It complements—not replaces—the public and community contributions across Summit week.',
     ),
-    anchorDay: true,
     hosts:
       'Amagi Health convenes the Summit and coordinates its Jamaica contribution with local contributors. Organisations and individuals supporting specific activities will be acknowledged according to their agreed roles.',
     priorities: {
@@ -137,11 +136,6 @@ export const countryPagesCopy: Omit<DataFromGlobalSlug<'country-pages'>, 'id'> =
       'Browse the confirmed {country} activities below. Some are open to the public; others require registration, selection or an invitation. Check each listing for local time, location and access arrangements before making plans.',
     timeZoneNote: 'Times are in {country} time.',
   },
-  anchorDay: {
-    heading: 'Anchor Day leadership roundtable',
-    when: 'Monday 16 November 2026, 9:30 am–12:00 noon, Jamaica time.',
-    body: 'Participation by invitation. Practical details are shared directly with invited participants.',
-  },
   hosts: {
     heading: 'Local hosts and contributors',
     note: "Each activity listing identifies its host and contributors. These roles are specific to the activity; taking part does not automatically imply endorsement by an individual's employer or by another institution.",
@@ -163,28 +157,28 @@ export const countryPagesCopy: Omit<DataFromGlobalSlug<'country-pages'>, 'id'> =
         title: 'Attend',
         body: 'Choose a suitable event from the listings and follow its access instructions.',
         linkLabel: 'View country activities',
-        linkHref: '#programme',
+        linkHref: '/summit-week?country={slug}#programme',
       },
       {
         icon: 'hand-heart',
         title: 'Contribute expertise or practical support',
         body: 'Tell us what you could offer and which local priority or activity it relates to. A suitable role or speaking opportunity is not guaranteed.',
         linkLabel: 'Express interest in this country',
-        linkHref: '/register',
+        linkHref: '/partner?country={slug}#partner-form',
       },
       {
         icon: 'megaphone',
         title: 'Host a Relay activity',
         body: 'Propose an hour-long activity you or your organisation will organise and lead. Programme inclusion and any support must be confirmed separately.',
         linkLabel: 'Propose a Relay activity',
-        linkHref: '/relay',
+        linkHref: '/relay?country={slug}',
       },
       {
         icon: 'file-text',
         title: 'Help shape the agenda',
         body: 'Contribute to the Caribbean Call to Action on Brain Health consultation.',
         linkLabel: 'Contribute to the consultation',
-        linkHref: '/call-to-action',
+        linkHref: '/call-to-action#have-your-say',
       },
     ],
     stayConnectedLabel: 'Stay connected:',

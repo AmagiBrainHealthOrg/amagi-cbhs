@@ -60,13 +60,6 @@ export const Countries: CollectionConfig = {
       },
     },
     {
-      name: 'anchorDay',
-      type: 'checkbox',
-      label: 'Hosts the Anchor Day',
-      defaultValue: false,
-      admin: { description: 'Shows the Anchor Day note under the programme.' },
-    },
-    {
       name: 'priorities',
       type: 'group',
       fields: [

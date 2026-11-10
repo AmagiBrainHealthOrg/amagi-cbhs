@@ -1,12 +1,14 @@
 import {
   ArrowRight,
   BadgeCheck,
+  CalendarDays,
   FileText,
   Globe,
   GraduationCap,
   HandHeart,
   Landmark,
   Lock,
+  MapPin,
   Megaphone,
   Scale,
   ShieldPlus,
@@ -36,6 +38,8 @@ export const icons: Record<IconKey, typeof Megaphone> = {
   scale: Scale,
   'badge-check': BadgeCheck,
   lock: Lock,
+  calendar: CalendarDays,
+  'map-pin': MapPin,
 }
 
 export type IconName = IconKey
@@ -178,6 +182,7 @@ export type Step = {
   when?: string | null
   title: string
   body?: string | null
+  href?: string | null
   status: 'done' | 'now' | 'next'
 }
 
@@ -200,7 +205,7 @@ export function Roadmap({
       className="v1-roadmap"
       style={{ '--v1-steps': steps.length, '--v1-progress': progress } as React.CSSProperties}
     >
-      {steps.map(({ when, title, body, status }, index) => (
+      {steps.map(({ when, title, body, status, href }, index) => (
         <li key={index} className={`v1-roadmap-${status}`}>
           <span className="v1-roadmap-node" aria-hidden="true">
             {numbered ? index + 1 : null}
@@ -212,7 +217,15 @@ export function Roadmap({
             </p>
           )}
           {when && <p className="v1-roadmap-when">{when}</p>}
-          <h3>{title}</h3>
+          <h3>
+            {href ? (
+              <Link href={href} className="v1-roadmap-link">
+                {title} <ArrowRight aria-hidden="true" />
+              </Link>
+            ) : (
+              title
+            )}
+          </h3>
           {body && <p>{body}</p>}
         </li>
       ))}
@@ -373,6 +386,24 @@ export function IconTiles({ items }: { items: Item[] }) {
         <Card key={index} index={index} {...item} />
       ))}
     </ul>
+  )
+}
+
+type NumberedItem = { title?: string | null; label?: string | null; body?: string | null }
+
+// Cards numbered 1, 2, 3… in the brand colour cycle, such as PLADRR's working themes.
+export function NumberedCards({ items }: { items: NumberedItem[] }) {
+  return (
+    <ol className="v1-numbered-cards">
+      {items.map(({ title, label, body }, index) => (
+        <li key={index} className={`v1-numbered-card-${index % 4}`}>
+          <span aria-hidden="true">{index + 1}</span>
+          {title && <h3>{title}</h3>}
+          {label && <p className="v1-numbered-label">{label}</p>}
+          {body && <p>{body}</p>}
+        </li>
+      ))}
+    </ol>
   )
 }
 

@@ -22,6 +22,7 @@ export async function HeroBlock({ block }: BlockProps<'hero'>) {
     extraLink,
     countdown,
     stats,
+    meta,
   } = block
   const links = [
     { link: secondaryLink, action: 'hero_secondary' },
@@ -36,7 +37,7 @@ export async function HeroBlock({ block }: BlockProps<'hero'>) {
           <Button
             key={action}
             href={link!.href!}
-            variant="secondary"
+            variant={action === 'hero_secondary' && secondaryLink?.solid ? 'solid' : 'secondary'}
             tone={tone}
             journey="awareness"
             action={action}
@@ -69,6 +70,7 @@ export async function HeroBlock({ block }: BlockProps<'hero'>) {
   }
   const props = {
     ...text,
+    meta,
     children: (
       <>
         {actions('dark')}

@@ -17,6 +17,7 @@ export const CardGrid: Block = {
       options: [
         { label: 'Tiles', value: 'tiles' },
         { label: 'Badges', value: 'badges' },
+        { label: 'Numbered', value: 'numbered' },
       ],
     },
     {
@@ -27,9 +28,24 @@ export const CardGrid: Block = {
         {
           type: 'row',
           fields: [
-            { name: 'icon', type: 'select', required: true, options: [...iconOptions] },
+            {
+              name: 'icon',
+              type: 'select',
+              options: [...iconOptions],
+              admin: { condition: (_, __, { blockData }) => blockData?.style !== 'numbered' },
+              validate: (value: unknown, { blockData }: { blockData?: { style?: string } }) =>
+                blockData?.style === 'numbered' || Boolean(value) || 'Choose an icon.',
+            },
             { name: 'title', type: 'text', admin: { description: 'Optional for badges.' } },
           ],
+        },
+        {
+          name: 'label',
+          type: 'text',
+          admin: {
+            description: 'Numbered cards: a small line under the title.',
+            condition: (_, __, { blockData }) => blockData?.style === 'numbered',
+          },
         },
         { name: 'body', type: 'textarea', required: true },
         {

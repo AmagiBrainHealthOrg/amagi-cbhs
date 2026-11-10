@@ -29,6 +29,16 @@ function useVisitorZone() {
   )
 }
 
+// A link such as /summit-week?country=jamaica#programme opens that country's tab. Read in the
+// browser, so the page itself stays cached.
+function useLinkedCountry() {
+  return useSyncExternalStore(
+    noSubscription,
+    () => new URLSearchParams(window.location.search).get('country'),
+    () => null,
+  )
+}
+
 const columns = (count: number) => ({ '--days': count }) as React.CSSProperties
 
 function localise(session: ScheduleSession, zone: string, days: ScheduleData['days']) {
@@ -51,7 +61,12 @@ function localise(session: ScheduleSession, zone: string, days: ScheduleData['da
 
 export function Schedule({ data }: { data: ScheduleData }) {
   const { days, locations, themes } = data
-  const [tab, setTab] = useState<Tab>('overview')
+  const linkedCountry = useLinkedCountry()
+  const [chosenTab, setTab] = useState<Tab | null>(null)
+  const linkedTab = locations.find(
+    ({ countryHref }) => linkedCountry && countryHref === `/countries/${linkedCountry}`,
+  )?.id
+  const tab: Tab = chosenTab ?? linkedTab ?? 'overview'
   const [theme, setTheme] = useState<number | null>(null)
   const [day, setDay] = useState(() =>
     Math.max(

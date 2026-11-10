@@ -5,17 +5,39 @@ import heroIllustration from '@/assets/hero-illustration.jpg'
 import heroIllustrationMedium from '@/assets/hero-illustration-medium.jpg'
 import heroIllustrationMobile from '@/assets/hero-illustration-mobile.jpg'
 
+import { icons } from '@/components/graphics/graphics'
+import type { IconKey } from '@/config/icons'
 import type { Media } from '@/payload-types'
 import { crossfadeKeyframes } from '@/utils/crossfadeKeyframes'
 import { withBreaks } from '@/utils/withBreaks'
 
 const SECONDS_PER_IMAGE = 8
 
+export type HeroMeta = { id?: string | null; icon: IconKey; label: string }
+
 type Props = {
   kicker?: string | null
   heading: string
   lead?: string | null
+  meta?: HeroMeta[] | null
   children?: React.ReactNode
+}
+
+function MetaRow({ meta }: { meta?: HeroMeta[] | null }) {
+  if (!meta?.length) return null
+  return (
+    <ul className="v1-hero-meta">
+      {meta.map(({ id, icon, label }) => {
+        const Icon = icons[icon]
+        return (
+          <li key={id ?? label}>
+            <Icon aria-hidden="true" />
+            {label}
+          </li>
+        )
+      })}
+    </ul>
+  )
 }
 
 const Wave = () => (
@@ -29,11 +51,12 @@ const Wave = () => (
   </svg>
 )
 
-const Inner = ({ kicker, heading, lead, children }: Props) => (
+const Inner = ({ kicker, heading, lead, meta, children }: Props) => (
   <div className="v1-hero-inner">
     {kicker && <p className="v1-kicker">{kicker}</p>}
     <h1>{withBreaks(heading)}</h1>
     {lead && <p className="v1-hero-lead">{lead}</p>}
+    <MetaRow meta={meta} />
     {children}
   </div>
 )
@@ -110,13 +133,14 @@ export function IllustrationHero({
   )
 }
 
-export function PlainHero({ kicker, heading, lead, children }: Props) {
+export function PlainHero({ kicker, heading, lead, meta, children }: Props) {
   return (
     <section className="page-hero">
       <div className="page-hero-inner">
         {kicker && <p className="page-kicker">{kicker}</p>}
         <h1>{withBreaks(heading)}</h1>
         {lead && <p className="page-hero-lead">{lead}</p>}
+        <MetaRow meta={meta} />
         {children}
       </div>
     </section>
