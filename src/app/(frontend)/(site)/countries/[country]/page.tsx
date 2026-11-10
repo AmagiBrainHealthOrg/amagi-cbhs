@@ -4,19 +4,24 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
-import React from 'react'
+import React, { cache } from 'react'
 
 import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { Button } from '@/components/Button'
 import { Card } from '@/components/Card'
 import { DonateBanner } from '@/components/DonateBanner'
+import { LinkedText } from '@/components/LinkedText'
 import { Section } from '@/components/Section'
-import { countries, type Country, findCountry } from '@/config/countries'
+import { countryTeams } from '@/config/countryTeams'
+import { getCountries } from '@/lib/countries'
+import { getGlobal } from '@/lib/globals'
 import config from '@/payload.config'
-import type { Session, Team } from '@/payload-types'
+import type { Country, Session, Team } from '@/payload-types'
+import { splitParagraphs } from '@/utils/paragraphs'
 import { dayLabel, registrationRoutes, timeRange } from '@/utils/sessions'
 
-import type { RouteProps } from '../../_page'
+import { RefreshRouteOnSave } from '../../../RefreshRouteOnSave'
+import { previewUser, type RouteProps } from '../../_page'
 import '../countries.css'
 
 type Props = RouteProps<{ country: string }>
@@ -24,15 +29,28 @@ type Props = RouteProps<{ country: string }>
 // TODO: the team sections are hidden for now (10 November 2026). Set true to bring them back.
 const SHOW_TEAM = false
 
-export const generateStaticParams = () => countries.map(({ slug }) => ({ country: slug }))
+// Each page renders on its first visit, then serves from cache until a publish revalidates it.
+export const generateStaticParams = () => []
+
+const findCountry = cache(async (slug: string) => {
+  const payload = await getPayload({ config })
+  const user = await previewUser()
+  const { docs } = await payload.find({
+    collection: 'countries',
+    where: { slug: { equals: slug } },
+    draft: Boolean(user),
+    limit: 1,
+    depth: 0,
+    overrideAccess: false,
+    user,
+  })
+  return { country: docs[0], draft: Boolean(user) }
+})
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const country = findCountry((await params).country)
+  const { country } = await findCountry((await params).country)
   return country
-    ? {
-        title: `${country.name} | Caribbean Brain Health Summit`,
-        description: country.tagline,
-      }
+    ? { title: `${country.name} | Caribbean Brain Health Summit`, description: country.tagline }
     : {}
 }
 
@@ -41,37 +59,32 @@ const bySchedule = (a: Session, b: Session) =>
   (a.startTime ?? '99').localeCompare(b.startTime ?? '99') ||
   a.title.localeCompare(b.title)
 
-async function loadCountry(country: Country) {
+async function loadDetails(country: Country) {
   const payload = await getPayload({ config })
   const read = { pagination: false, overrideAccess: false } as const
-  const { docs: locations } = await payload.find({
-    collection: 'session-locations',
-    where: { name: { equals: country.name } },
-    depth: 0,
-    ...read,
-  })
+  const location = typeof country.location === 'number' ? country.location : country.location.id
   const [sessions, team] = await Promise.all([
-    locations[0]
+    payload.find({
+      collection: 'sessions',
+      where: { location: { equals: location } },
+      depth: 1,
+      ...read,
+    }),
+    SHOW_TEAM
       ? payload.find({
-          collection: 'sessions',
-          where: { location: { equals: locations[0].id } },
+          collection: 'team',
+          where: { country: { in: countryTeams[country.slug] ?? [country.name] } },
+          sort: ['order', 'name'],
           depth: 1,
           ...read,
         })
       : undefined,
-    payload.find({
-      collection: 'team',
-      where: { country: { in: country.teamCountries } },
-      sort: ['order', 'name'],
-      depth: 1,
-      ...read,
-    }),
   ])
-  return {
-    sessions: (sessions?.docs ?? []).sort(bySchedule),
-    team: team.docs,
-  }
+  return { sessions: sessions.docs.sort(bySchedule), team: team?.docs ?? [] }
 }
+
+const withCountry = (text: string | null | undefined, name: string) =>
+  text?.replaceAll('{country}', name)
 
 function SessionCard({ session }: { session: Session }) {
   const location = typeof session.location === 'object' ? session.location : undefined
@@ -141,19 +154,32 @@ function TeamMember({ member }: { member: Team }) {
   )
 }
 
+function Paragraphs({ text }: { text?: string | null }) {
+  return splitParagraphs(text).map((paragraph) => (
+    <p key={paragraph}>
+      <LinkedText text={paragraph} />
+    </p>
+  ))
+}
+
 export default async function CountryPage({ params }: Props) {
-  const country = findCountry((await params).country)
+  const { country, draft } = await findCountry((await params).country)
   if (!country) notFound()
 
-  let data: Awaited<ReturnType<typeof loadCountry>> | undefined
+  const [copy, countries] = await Promise.all([getGlobal('country-pages'), getCountries()])
+  let details: Awaited<ReturnType<typeof loadDetails>> | undefined
   try {
-    data = await loadCountry(country)
+    details = await loadDetails(country)
   } catch (error) {
-    console.error(`The ${country.name} page could not load its sessions and team`, error)
+    console.error(`The ${country.name} page could not load its sessions`, error)
   }
+
+  const { programme, anchorDay, hosts, priorities, takePart, beyond, about } = copy
+  const cards = takePart?.cards ?? []
 
   return (
     <>
+      {draft && <RefreshRouteOnSave />}
       <section className="page-hero country-hero">
         <div className="page-hero-inner">
           <Breadcrumbs
@@ -169,29 +195,29 @@ export default async function CountryPage({ params }: Props) {
         </div>
       </section>
 
-      <nav className="country-tabs" aria-label="Host countries">
-        <ul>
-          {countries.map(({ slug, name }) => (
-            <li key={slug}>
-              <Link
-                href={`/countries/${slug}`}
-                aria-current={slug === country.slug ? 'page' : undefined}
-              >
-                {name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      {countries.length > 1 && (
+        <nav className="country-tabs" aria-label="Host countries">
+          <ul>
+            {countries.map(({ id, slug, name }) => (
+              <li key={id}>
+                <Link
+                  href={`/countries/${slug}`}
+                  aria-current={slug === country.slug ? 'page' : undefined}
+                >
+                  {name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
 
       <section
         className="v1-section country-intro"
         aria-label={`About ${country.name}'s contribution`}
       >
         <div className="v1-lead-text">
-          {country.intro.map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
-          ))}
+          <Paragraphs text={country.intro} />
         </div>
       </section>
 
@@ -199,51 +225,50 @@ export default async function CountryPage({ params }: Props) {
         blockId="programme"
         anchorId="programme"
         background="pale"
-        heading="Explore the programme"
-        intro={`Browse the confirmed ${country.name} activities below. Some are open to the public; others require registration, selection or an invitation. Check each listing for local time, location and access arrangements before making plans.`}
+        heading={programme?.heading}
+        intro={withCountry(programme?.intro, country.name)}
       >
-        {!data ? (
+        {!details ? (
           <p className="form-alert" role="alert">
             The programme is unavailable right now. Please try again later.
           </p>
         ) : (
-          data.sessions.length > 0 && (
+          details.sessions.length > 0 && (
             <>
-              <p className="country-timezone">Times are in {country.timeZone}.</p>
+              {programme?.timeZoneNote && (
+                <p className="country-timezone">
+                  {withCountry(programme.timeZoneNote, country.name)}
+                </p>
+              )}
               <ul className="country-sessions">
-                {data.sessions.map((session) => (
+                {details.sessions.map((session) => (
                   <SessionCard key={session.id} session={session} />
                 ))}
               </ul>
             </>
           )
         )}
-        {country.anchorDay && (
-          <aside className="country-anchor-day" aria-label="Anchor Day">
-            <h3>Anchor Day leadership roundtable</h3>
-            <p>
-              <strong>Monday 16 November 2026</strong> 9:30 am–12:00 noon, Jamaica time.
-            </p>
-            <p>
-              Participation by invitation. Practical details are shared directly with invited
-              participants.
-            </p>
+        {country.anchorDay && anchorDay?.heading && (
+          <aside className="country-anchor-day" aria-label={anchorDay.heading}>
+            <h3>{anchorDay.heading}</h3>
+            {anchorDay.when && (
+              <p>
+                <strong>{anchorDay.when}</strong>
+              </p>
+            )}
+            {anchorDay.body && <p>{anchorDay.body}</p>}
           </aside>
         )}
       </Section>
 
-      <Section blockId="hosts" heading="Local hosts and contributors">
+      <Section blockId="hosts" heading={hosts?.heading}>
         <div className="v1-text-column">
-          {country.hosts && <p>{country.hosts}</p>}
-          <p className={country.hosts ? 'v1-muted' : undefined}>
-            Each activity listing identifies its host and contributors. These roles are specific to
-            the activity; taking part does not automatically imply endorsement by an
-            individual&apos;s employer or by another institution.
-          </p>
+          <Paragraphs text={country.hosts} />
+          {hosts?.note && <p className={country.hosts ? 'v1-muted' : undefined}>{hosts.note}</p>}
         </div>
       </Section>
 
-      {SHOW_TEAM && data && data.team.length > 0 && (
+      {details && details.team.length > 0 && (
         <Section
           blockId="team"
           anchorId="team"
@@ -252,99 +277,69 @@ export default async function CountryPage({ params }: Props) {
           intro={`The people bringing ${country.name}'s contribution together.`}
         >
           <ul className="country-team">
-            {data.team.map((member) => (
+            {details.team.map((member) => (
               <TeamMember key={member.id} member={member} />
             ))}
           </ul>
         </Section>
       )}
 
-      <Section
-        blockId="priorities"
-        heading="Priorities to develop together"
-        intro="The following is an emerging discussion focus for the country team, not an adopted national position. We welcome experience and evidence that can help test and refine it."
-      >
+      <Section blockId="priorities" heading={priorities?.heading} intro={priorities?.intro}>
         <div className="country-question">
-          <p className="v1-kicker">The question</p>
-          <p>{country.question}</p>
+          {priorities?.questionLabel && <p className="v1-kicker">{priorities.questionLabel}</p>}
+          <p>{country.priorities.question}</p>
         </div>
         <dl className="country-priorities">
           <div>
-            <dt>Strengths to build on</dt>
-            <dd>{country.strengths}</dd>
+            <dt>{priorities?.strengthsLabel}</dt>
+            <dd>{country.priorities.strengths}</dd>
           </div>
           <div>
-            <dt>A possible local next step</dt>
-            <dd>{country.nextStep}</dd>
+            <dt>{priorities?.nextStepLabel}</dt>
+            <dd>{country.priorities.nextStep}</dd>
           </div>
           <div>
-            <dt>Where regional cooperation could help</dt>
-            <dd>{country.regional}</dd>
+            <dt>{priorities?.regionalLabel}</dt>
+            <dd>{country.priorities.regional}</dd>
           </div>
         </dl>
       </Section>
 
-      <Section blockId="take-part" heading="Find your way to take part">
-        <ul className="v1-icon-tiles">
-          <Card
-            index={0}
-            icon="users"
-            title="Attend"
-            body="Choose a suitable event from the listings and follow its access instructions."
-            link={{ label: 'View country activities', href: '#programme' }}
-          />
-          <Card
-            index={1}
-            icon="hand-heart"
-            title="Contribute expertise or practical support"
-            body="Tell us what you could offer and which local priority or activity it relates to. A suitable role or speaking opportunity is not guaranteed."
-            link={{ label: 'Express interest in this country', href: '/register' }}
-          />
-          <Card
-            index={2}
-            icon="megaphone"
-            title="Host a Relay activity"
-            body="Propose an hour-long activity you or your organisation will organise and lead. Programme inclusion and any support must be confirmed separately."
-            link={{ label: 'Propose a Relay activity', href: '/relay' }}
-          />
-          <Card
-            index={3}
-            icon="file-text"
-            title="Help shape the agenda"
-            body="Contribute to the Caribbean Call to Action on Brain Health consultation."
-            link={{ label: 'Contribute to the consultation', href: '/call-to-action' }}
-          />
-        </ul>
-        <p className="v1-muted">
-          <strong>Stay connected:</strong> express interest in future work if you cannot contribute
-          during this November&apos;s programme.
-        </p>
+      <Section blockId="take-part" heading={takePart?.heading}>
+        {cards.length > 0 && (
+          <ul className="v1-icon-tiles">
+            {cards.map((card, index) => (
+              <Card
+                key={card.id ?? index}
+                index={index}
+                icon={card.icon}
+                title={card.title}
+                body={card.body}
+                link={{ label: card.linkLabel, href: card.linkHref }}
+              />
+            ))}
+          </ul>
+        )}
+        {takePart?.stayConnected && (
+          <p className="v1-muted">
+            {takePart.stayConnectedLabel && <strong>{takePart.stayConnectedLabel}</strong>}{' '}
+            {takePart.stayConnected}
+          </p>
+        )}
 
-        <details className="country-details">
-          <summary>Beyond Summit week</summary>
-          <p>
-            The intention is to carry forward useful priorities, relationships and agreed next
-            steps—not only repeat the events. Further work will depend on the people,
-            responsibilities, resources and permissions agreed. Expressing interest does not create
-            a commitment to organise an activity or join a project.
-          </p>
-          <p>
-            Interested in wider conversations? Explore the{' '}
-            <Link href="/summit-week">shared online programme</Link> and{' '}
-            <Link href="/countries">other country contributions</Link>. Please use the appropriate
-            local service&apos;s contact route for immediate care enquiries; Summit registration is
-            not a clinical referral service.
-          </p>
-        </details>
+        {beyond?.heading && beyond.body && (
+          <details className="country-details">
+            <summary>{beyond.heading}</summary>
+            <Paragraphs text={beyond.body} />
+          </details>
+        )}
 
-        <div className="country-about">
-          <h3>About this contribution</h3>
-          <p>
-            These activities form part of the Caribbean Brain Health Summit 2026, convened by Amagi
-            Health. Local hosts lead their own agreed activities. For the current regional programme
-            and ways to participate, visit <Link href="/">amagisummit.org</Link>.
-          </p>
-        </div>
+        {about?.body && (
+          <div className="country-about">
+            {about.heading && <h3>{about.heading}</h3>}
+            <Paragraphs text={about.body} />
+          </div>
+        )}
       </Section>
 
       <DonateBanner />

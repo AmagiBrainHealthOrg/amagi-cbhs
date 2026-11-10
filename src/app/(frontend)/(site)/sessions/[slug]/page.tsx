@@ -10,9 +10,9 @@ import { Form } from '@/components/forms/Form'
 import { SessionDescription } from '@/components/SessionDescription'
 import { formRegistry } from '@/forms/registry'
 import type { ResolvedField } from '@/forms/validate'
+import { countryHrefsByLocation } from '@/lib/countries'
 import { getResolvedForm } from '@/lib/forms'
 import { canRegister } from '@/lib/sessions'
-import { countryHref } from '@/config/countryLinks'
 import config from '@/payload.config'
 import { registrationRoutes, whenLabel, zoneLabel } from '@/utils/sessions'
 
@@ -59,7 +59,7 @@ export default async function SessionPage(props: Props) {
   const theme = typeof session.theme === 'object' ? session.theme : undefined
   const open = canRegister(session)
   const routes = registrationRoutes(session, location)
-  const countryPage = countryHref(location.name)
+  const countryPage = (await countryHrefsByLocation()).get(location.id)
   const formLabel = routes.find(({ external }) => !external)?.label
 
   let fields: ResolvedField[] | undefined

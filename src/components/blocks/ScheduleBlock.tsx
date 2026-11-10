@@ -3,6 +3,7 @@ import React from 'react'
 
 import { Schedule } from '@/components/Schedule'
 import { Section } from '@/components/Section'
+import { countryHrefsByLocation } from '@/lib/countries'
 import config from '@/payload.config'
 import { buildSchedule, type ScheduleData } from '@/utils/schedule'
 
@@ -21,7 +22,15 @@ export async function ScheduleBlock({ block, blockId }: BlockProps<'schedule'>) 
       payload.find({ collection: 'session-themes', sort: ['order', 'name'], ...read }),
       payload.find({ collection: 'sessions', depth: 0, ...read }),
     ])
-    data = buildSchedule(block, locations.docs, themes.docs, sessions.docs)
+    const schedule = buildSchedule(block, locations.docs, themes.docs, sessions.docs)
+    const countryHrefs = await countryHrefsByLocation()
+    data = {
+      ...schedule,
+      locations: schedule.locations.map((location) => ({
+        ...location,
+        countryHref: countryHrefs.get(location.id),
+      })),
+    }
   } catch (error) {
     console.error('The schedule could not load its sessions', error)
   }
