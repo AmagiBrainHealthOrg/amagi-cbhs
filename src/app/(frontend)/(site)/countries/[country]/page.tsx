@@ -26,9 +26,6 @@ import '../countries.css'
 
 type Props = RouteProps<{ country: string }>
 
-// TODO: the team sections are hidden for now (10 November 2026). Set true to bring them back.
-const SHOW_TEAM = false
-
 // Each page renders on its first visit, then serves from cache until a publish revalidates it.
 export const generateStaticParams = () => []
 
@@ -70,17 +67,15 @@ async function loadDetails(country: Country) {
       depth: 1,
       ...read,
     }),
-    SHOW_TEAM
-      ? payload.find({
-          collection: 'team',
-          where: { country: { in: countryTeams[country.slug] ?? [country.name] } },
-          sort: ['order', 'name'],
-          depth: 1,
-          ...read,
-        })
-      : undefined,
+    payload.find({
+      collection: 'team',
+      where: { country: { in: countryTeams[country.slug] ?? [country.name] } },
+      sort: ['order', 'name'],
+      depth: 1,
+      ...read,
+    }),
   ])
-  return { sessions: sessions.docs.sort(bySchedule), team: team?.docs ?? [] }
+  return { sessions: sessions.docs.sort(bySchedule), team: team.docs }
 }
 
 const withCountry = (text: string | null | undefined, name: string) =>
