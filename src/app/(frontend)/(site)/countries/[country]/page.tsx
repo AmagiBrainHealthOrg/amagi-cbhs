@@ -21,6 +21,9 @@ import '../countries.css'
 
 type Props = RouteProps<{ country: string }>
 
+// TODO: the team sections are hidden for now (10 November 2026). Set true to bring them back.
+const SHOW_TEAM = false
+
 export const generateStaticParams = () => countries.map(({ slug }) => ({ country: slug }))
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -87,7 +90,11 @@ function SessionCard({ session }: { session: Session }) {
         </span>
       </p>
       <h3>
-        <Link href={`/sessions/${session.slug}`}>{session.title}</Link>
+        {routes.length > 0 ? (
+          <Link href={`/sessions/${session.slug}`}>{session.title}</Link>
+        ) : (
+          session.title
+        )}
       </h3>
       {session.venue && (
         <p className="country-session-venue">
@@ -236,7 +243,7 @@ export default async function CountryPage({ params }: Props) {
         </div>
       </Section>
 
-      {data && data.team.length > 0 && (
+      {SHOW_TEAM && data && data.team.length > 0 && (
         <Section
           blockId="team"
           anchorId="team"
