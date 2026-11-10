@@ -118,7 +118,7 @@ function TeamMember({ member }: { member: Team }) {
   const photo = typeof member.photo === 'object' && member.photo?.url ? member.photo : undefined
   return (
     <li>
-      {photo ? (
+      {photo && (
         <Image
           className="country-team-photo"
           src={photo.url!}
@@ -127,8 +127,6 @@ function TeamMember({ member }: { member: Team }) {
           height={photo.height ?? 640}
           sizes="180px"
         />
-      ) : (
-        <div className="country-photo-placeholder country-team-photo" aria-hidden="true" />
       )}
       <h3>{member.name}</h3>
       {member.role && <p>{member.role}</p>}
@@ -277,20 +275,6 @@ export default async function CountryPage({ params }: Props) {
             <dd>{country.regional}</dd>
           </div>
         </dl>
-      </Section>
-
-      <Section
-        blockId="gallery"
-        anchorId="gallery"
-        background="pale"
-        heading={`${country.name} gallery`}
-        intro="Moments from the country's activities across Summit week."
-      >
-        <ul className="country-gallery">
-          {Array.from({ length: country.galleryCount }, (_, index) => (
-            <li key={index} className="country-photo-placeholder" aria-hidden="true" />
-          ))}
-        </ul>
       </Section>
 
       <Section blockId="take-part" heading="Find your way to take part">
