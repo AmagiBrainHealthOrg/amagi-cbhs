@@ -59,6 +59,39 @@ export type FieldName =
   | 'registrationNeeded'
   | 'publicListing'
   | 'postActivity'
+  | 'country'
+  | 'mainReason'
+  | 'perspectives'
+  | 'perspectiveOther'
+  | 'careerStage'
+  | 'caribbeanConnection'
+  | 'relevantWork'
+  | 'profile'
+  | 'workingThemes'
+  | 'clarifyQuestion'
+  | 'contribution'
+  | 'resources'
+  | 'canAttend'
+  | 'availability'
+  | 'supportNeeded'
+  | 'privateContact'
+  | 'alreadyInvited'
+  | 'organiserReview'
+  | 'stakeholderPerspective'
+  | 'stakeholderQuestion'
+  | 'stakeholderAttend'
+  | 'stakeholderCapacity'
+  | 'approvalNotes'
+  | 'expertise'
+  | 'expertiseTheme'
+  | 'expertiseCapacity'
+  | 'supportType'
+  | 'supportDescription'
+  | 'supportCapacity'
+  | 'anythingElse'
+  | 'eoiAcknowledged'
+  | 'privacyAcknowledged'
+  | 'newsConsent'
 
 export type AirtableField = { id: string; kind: FieldKind }
 
@@ -171,6 +204,49 @@ export const airtableForms: Record<FormKey, AirtableForm> = {
       outlet: text('fld5VA36NVFxm7LOp'),
       message: longText('fldK626l63vHmFGeO'), // "Enquiry" in the base
       followUp: select('fldU6CMtXg6aiArBO'),
+    },
+  },
+  // Field descriptions in the base give each question's ID (B1…H4).
+  'pladrr-eoi': {
+    table: 'tbllZwqx8hnRzFHto', // PLADRR expressions of interest
+    fields: {
+      name: text('fldOPrHn4PK6EqQcg'),
+      email: email('fldmw1sdmPkqWz2hk'),
+      country: text('fldILxjePdryVGzB7'),
+      organisation: text('fldQkM8azAOLAOvYg'),
+      role: text('fldMeFPsuu6FDfn1S'),
+      mainReason: select('fldfrBYuQMrmpxkno'),
+      perspectives: select('fldAj146YPYXhw079'),
+      perspectiveOther: text('fld9TkkZUc1frA3Ss'),
+      careerStage: select('fldCAFjUohK2hjwdX'),
+      caribbeanConnection: longText('fldCay5IHusIFqKMG'),
+      relevantWork: longText('fld7eYqoRi8p3ZmLz'),
+      profile: { id: 'fldHfKL2ZAvAo34T9', kind: 'url' },
+      workingThemes: select('flduY6yPrCN939lpv'),
+      clarifyQuestion: longText('fldN98BFefJ4IMI0v'),
+      contribution: longText('fldfaPrysvN1pbfsj'),
+      resources: longText('fldCbN5b9DL9Ns3DV'),
+      canAttend: select('fldvrkhlkWD7iyS96'),
+      availability: longText('fldYE5mjPowuMOpeU'),
+      supportNeeded: select('fldSppY62jkw8fvNl'),
+      privateContact: select('fldIdTacD5RrgRoV8'),
+      alreadyInvited: select('fldbFPgechLxhAt0P'),
+      organiserReview: { id: 'fldGWvkfk2S3F9Ldv', kind: 'checkbox' }, // set by the server
+      stakeholderPerspective: longText('fld8OFfK8eWHK2mwc'),
+      stakeholderQuestion: longText('fldjJiv5ImwmdwKbo'),
+      stakeholderAttend: select('fldd9ua4ZBYkGccRX'),
+      stakeholderCapacity: select('fldBtCOf7slmPRpWH'),
+      approvalNotes: longText('fld9d894x4wnJ2uwV'),
+      expertise: longText('fldRlktaIyaBMhrtf'),
+      expertiseTheme: longText('fldSIAjAmx9yJykAm'),
+      expertiseCapacity: select('fldVm62cabVKsNwK8'),
+      supportType: select('fld8I4pnHCzsXC5Wi'),
+      supportDescription: longText('fldLkwc0Z8IJD7GQE'),
+      supportCapacity: select('fldbZLnZelVQhaI3A'),
+      anythingElse: longText('fld48F9888adWrLO6'),
+      eoiAcknowledged: { id: 'fldiZSy981dNRxtvW', kind: 'checkbox' },
+      privacyAcknowledged: { id: 'fld9fd7vNDNHa8wyX', kind: 'checkbox' },
+      newsConsent: { id: 'fldqde4WafpFnkeVD', kind: 'checkbox' },
     },
   },
   // Email is the primary field, a single line text.

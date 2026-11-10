@@ -12,6 +12,8 @@ export const iconOptions = [
   { label: 'Scales', value: 'scale' },
   { label: 'Badge with tick', value: 'badge-check' },
   { label: 'Lock', value: 'lock' },
+  { label: 'Calendar', value: 'calendar' },
+  { label: 'Map pin', value: 'map-pin' },
 ] as const
 
 export type IconKey = (typeof iconOptions)[number]['value']

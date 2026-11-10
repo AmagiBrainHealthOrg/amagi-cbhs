@@ -225,6 +225,30 @@ export interface HeroBlock {
    * Shown as a slow crossfade. Set the focal point on each image to control cropping.
    */
   images?: (number | Media)[] | null;
+  /**
+   * Optional small details under the lead, such as the date and place.
+   */
+  meta?:
+    | {
+        icon:
+          | 'megaphone'
+          | 'shield'
+          | 'stethoscope'
+          | 'graduation'
+          | 'landmark'
+          | 'users'
+          | 'video'
+          | 'hand-heart'
+          | 'file-text'
+          | 'scale'
+          | 'badge-check'
+          | 'lock'
+          | 'calendar'
+          | 'map-pin';
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
   showDonateButton?: boolean | null;
   /**
    * Optional second button.
@@ -235,6 +259,10 @@ export interface HeroBlock {
      * A path such as /about, a full URL, or a mailto: link.
      */
     href?: string | null;
+    /**
+     * For the page’s main action when there is no Donate button.
+     */
+    solid?: boolean | null;
   };
   /**
    * Optional third button, after the second.
@@ -329,7 +357,20 @@ export interface RichTextBlock {
     };
     [k: string]: unknown;
   };
-  layout: 'split' | 'prose';
+  layout: 'split' | 'prose' | 'lead';
+  /**
+   * Optional buttons under the text. The first is solid, the second a text link.
+   */
+  links?:
+    | {
+        label: string;
+        /**
+         * A path such as /about, a full URL, or a mailto: link.
+         */
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'richText';
@@ -530,6 +571,10 @@ export interface RoadmapBlock {
         title: string;
         status: 'done' | 'now' | 'next';
         body?: string | null;
+        /**
+         * Optional. The title links here, such as /pladrr.
+         */
+        href?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -560,6 +605,10 @@ export interface FlowBlock {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Optional closing paragraph under the steps.
+   */
+  outro?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'flow';
@@ -580,26 +629,35 @@ export interface CardGridBlock {
    * Lets links jump to this section, e.g. "week" for /#week.
    */
   anchorId?: string | null;
-  style: 'tiles' | 'badges';
+  style: 'tiles' | 'badges' | 'numbered';
   items?:
     | {
-        icon:
-          | 'megaphone'
-          | 'shield'
-          | 'stethoscope'
-          | 'graduation'
-          | 'landmark'
-          | 'users'
-          | 'video'
-          | 'hand-heart'
-          | 'file-text'
-          | 'scale'
-          | 'badge-check'
-          | 'lock';
+        icon?:
+          | (
+              | 'megaphone'
+              | 'shield'
+              | 'stethoscope'
+              | 'graduation'
+              | 'landmark'
+              | 'users'
+              | 'video'
+              | 'hand-heart'
+              | 'file-text'
+              | 'scale'
+              | 'badge-check'
+              | 'lock'
+              | 'calendar'
+              | 'map-pin'
+            )
+          | null;
         /**
          * Optional for badges.
          */
         title?: string | null;
+        /**
+         * Numbered cards: a small line under the title.
+         */
+        label?: string | null;
         body: string;
         /**
          * Optional link at the foot of the card.
@@ -713,7 +771,9 @@ export interface ActionAreasBlock {
           | 'file-text'
           | 'scale'
           | 'badge-check'
-          | 'lock';
+          | 'lock'
+          | 'calendar'
+          | 'map-pin';
         title: string;
         body?: string | null;
         id?: string | null;
@@ -891,7 +951,7 @@ export interface FormBlock {
    * Lets links jump to this section, e.g. "week" for /#week.
    */
   anchorId?: string | null;
-  form: 'register-interest' | 'cta-consultation' | 'partner' | 'relay' | 'contact';
+  form: 'register-interest' | 'cta-consultation' | 'partner' | 'relay' | 'contact' | 'pladrr-eoi';
   id?: string | null;
   blockName?: string | null;
   blockType: 'form';
@@ -1197,10 +1257,6 @@ export interface Country {
    * Approved acknowledgement of this country’s local hosts. Shown above the general note when set.
    */
   hosts?: string | null;
-  /**
-   * Shows the Anchor Day note under the programme.
-   */
-  anchorDay?: boolean | null;
   priorities: {
     question: string;
     strengths: string;
@@ -1221,7 +1277,8 @@ export interface Country {
  */
 export interface FormSubmission {
   id: number;
-  form: 'register-interest' | 'cta-consultation' | 'partner' | 'relay' | 'contact' | 'session-registration';
+  form:
+    'register-interest' | 'cta-consultation' | 'partner' | 'relay' | 'contact' | 'session-registration' | 'pladrr-eoi';
   /**
    * The person's answers: name, email, phone and the form's own fields (SPEC §8.1, §8.3).
    */
@@ -1463,12 +1520,20 @@ export interface HeroBlockSelect<T extends boolean = true> {
   heading?: T;
   lead?: T;
   images?: T;
+  meta?:
+    | T
+    | {
+        icon?: T;
+        label?: T;
+        id?: T;
+      };
   showDonateButton?: T;
   secondaryLink?:
     | T
     | {
         label?: T;
         href?: T;
+        solid?: T;
       };
   extraLink?:
     | T
@@ -1511,6 +1576,13 @@ export interface RichTextBlockSelect<T extends boolean = true> {
   anchorId?: T;
   content?: T;
   layout?: T;
+  links?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -1648,6 +1720,7 @@ export interface RoadmapBlockSelect<T extends boolean = true> {
         title?: T;
         status?: T;
         body?: T;
+        href?: T;
         id?: T;
       };
   id?: T;
@@ -1670,6 +1743,7 @@ export interface FlowBlockSelect<T extends boolean = true> {
         body?: T;
         id?: T;
       };
+  outro?: T;
   id?: T;
   blockName?: T;
 }
@@ -1689,6 +1763,7 @@ export interface CardGridBlockSelect<T extends boolean = true> {
     | {
         icon?: T;
         title?: T;
+        label?: T;
         body?: T;
         link?:
           | T
@@ -2011,7 +2086,6 @@ export interface CountriesSelect<T extends boolean = true> {
   tagline?: T;
   intro?: T;
   hosts?: T;
-  anchorDay?: T;
   priorities?:
     | T
     | {
@@ -2349,14 +2423,6 @@ export interface CountryPage {
      */
     timeZoneNote: string;
   };
-  /**
-   * Shown on countries that host the Anchor Day.
-   */
-  anchorDay: {
-    heading: string;
-    when: string;
-    body: string;
-  };
   hosts: {
     heading: string;
     note: string;
@@ -2385,12 +2451,14 @@ export interface CountryPage {
             | 'file-text'
             | 'scale'
             | 'badge-check'
-            | 'lock';
+            | 'lock'
+            | 'calendar'
+            | 'map-pin';
           title: string;
           body: string;
           linkLabel?: string | null;
           /**
-           * A path such as /relay, or #programme for the list.
+           * A path such as /relay?country={slug}. {slug} becomes the country’s slug.
            */
           linkHref?: string | null;
           id?: string | null;
@@ -2489,7 +2557,14 @@ export interface Form {
    */
   thankYou?:
     | {
-        form: 'register-interest' | 'cta-consultation' | 'partner' | 'relay' | 'contact' | 'session-registration';
+        form:
+          | 'register-interest'
+          | 'cta-consultation'
+          | 'partner'
+          | 'relay'
+          | 'contact'
+          | 'session-registration'
+          | 'pladrr-eoi';
         heading: string;
         body?: string | null;
         id?: string | null;
@@ -2718,13 +2793,6 @@ export interface CountryPagesSelect<T extends boolean = true> {
         heading?: T;
         intro?: T;
         timeZoneNote?: T;
-      };
-  anchorDay?:
-    | T
-    | {
-        heading?: T;
-        when?: T;
-        body?: T;
       };
   hosts?:
     | T

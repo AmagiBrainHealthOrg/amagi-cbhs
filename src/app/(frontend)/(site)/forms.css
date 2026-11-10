@@ -49,3 +49,17 @@
 .form-choice:nth-of-type(5n + 2) .form-choice-number { background: var(--orange); color: var(--ink-deep); }
 .form-choice:nth-of-type(5n + 3) .form-choice-number { background: var(--yellow); color: var(--ink-deep); }
 .form-choice:nth-of-type(5n + 4) .form-choice-number { background: var(--red); color: var(--white); }
+
+/* Forms in sections, such as the PLADRR expression of interest */
+.form-section { display: grid; gap: 16px; padding-top: 28px; border-top: 1px solid var(--line); }
+.form-section:first-of-type { padding-top: 0; border-top: 0; }
+.form-section + .form-section { margin-top: 12px; }
+.form-section h2 { margin: 0; color: var(--primary-blue); font-family: var(--app-font-heading); font-size: var(--fs-lg); font-weight: 800; }
+.form-section-notice { border-left: 4px solid var(--primary-blue); }
+.form-before { margin: 0; color: var(--ink-deep); font-size: var(--fs-sm); line-height: 1.5; }
+.form-before a { color: var(--primary-blue); font-weight: 700; text-decoration: underline; }
+.form-reveal { padding-left: 16px; border-left: 3px solid var(--primary-blue); }
+.form-count { margin: 0; justify-self: end; color: var(--muted-text); font-family: var(--app-font-ui); font-size: var(--fs-2xs); text-align: right; }
+.form-count-over { color: var(--red); font-weight: 700; }
+.form-choice-or { margin: 4px 0; color: var(--muted-text); font-family: var(--app-font-ui); font-size: var(--fs-2xs); text-align: center; text-transform: uppercase; }
+.form-choice-disabled { border-style: dashed; color: var(--muted-text); background: var(--pale-blue); cursor: not-allowed; }

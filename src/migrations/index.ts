@@ -46,6 +46,12 @@ import * as migration_20261105_130000_faq_note_relay_layout from './20261105_130
 import * as migration_20261110_120000_countries_nav from './20261110_120000_countries_nav'
 import * as migration_20261110_142800 from './20261110_142800'
 import * as migration_20261110_150000_country_pages_content from './20261110_150000_country_pages_content'
+import * as migration_20261110_155243 from './20261110_155243'
+import * as migration_20261110_155534 from './20261110_155534'
+import * as migration_20261110_155550 from './20261110_155550'
+import * as migration_20261110_155600 from './20261110_155600'
+import * as migration_20261110_160000_country_page_links from './20261110_160000_country_page_links'
+import * as migration_20261110_170000_pladrr_page from './20261110_170000_pladrr_page'
 
 export const migrations = [
   {
@@ -287,5 +293,35 @@ export const migrations = [
     up: migration_20261110_150000_country_pages_content.up,
     down: migration_20261110_150000_country_pages_content.down,
     name: '20261110_150000_country_pages_content',
+  },
+  {
+    up: migration_20261110_155243.up,
+    down: migration_20261110_155243.down,
+    name: '20261110_155243',
+  },
+  {
+    up: migration_20261110_155534.up,
+    down: migration_20261110_155534.down,
+    name: '20261110_155534',
+  },
+  {
+    up: migration_20261110_155550.up,
+    down: migration_20261110_155550.down,
+    name: '20261110_155550',
+  },
+  {
+    up: migration_20261110_155600.up,
+    down: migration_20261110_155600.down,
+    name: '20261110_155600',
+  },
+  {
+    up: migration_20261110_160000_country_page_links.up,
+    down: migration_20261110_160000_country_page_links.down,
+    name: '20261110_160000_country_page_links',
+  },
+  {
+    up: migration_20261110_170000_pladrr_page.up,
+    down: migration_20261110_170000_pladrr_page.down,
+    name: '20261110_170000_pladrr_page',
   },
 ]

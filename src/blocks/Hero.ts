@@ -1,5 +1,6 @@
 import type { Block } from 'payload'
 
+import { iconOptions } from '@/config/icons'
 import { linkFields } from '@/globals/shared'
 
 export const Hero: Block = {
@@ -37,6 +38,22 @@ export const Hero: Block = {
       },
     },
     {
+      name: 'meta',
+      type: 'array',
+      maxRows: 4,
+      labels: { singular: 'Detail', plural: 'Details' },
+      admin: { description: 'Optional small details under the lead, such as the date and place.' },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            { name: 'icon', type: 'select', required: true, options: [...iconOptions] },
+            { name: 'label', type: 'text', required: true },
+          ],
+        },
+      ],
+    },
+    {
       name: 'showDonateButton',
       type: 'checkbox',
       label: 'Show the Donate button',
@@ -46,7 +63,16 @@ export const Hero: Block = {
       name: 'secondaryLink',
       type: 'group',
       admin: { description: 'Optional second button.' },
-      fields: linkFields.map((field) => ({ ...field, required: false })),
+      fields: [
+        ...linkFields.map((field) => ({ ...field, required: false })),
+        {
+          name: 'solid',
+          type: 'checkbox',
+          label: 'Solid button',
+          defaultValue: false,
+          admin: { description: 'For the page’s main action when there is no Donate button.' },
+        },
+      ],
     },
     {
       name: 'extraLink',

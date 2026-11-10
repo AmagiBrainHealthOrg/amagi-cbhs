@@ -93,6 +93,12 @@ export async function submitForm(
     data[field.name] = field.control === 'url' ? normaliseUrl(value as string) : value
   }
   if (session) data.session = session.summary
+  // Some answers also tick a flag for the organisers, such as an existing invitation.
+  for (const field of fields) {
+    if (!field.flag || !data[field.name]) continue
+    const option = field.options?.find((o) => o.id === field.flag?.choiceId)
+    if (option && data[field.name] === option.value) data[field.flag.field] = 'true'
+  }
   const labelOf = (name: 'location' | 'describesYou') =>
     fields.find((f) => f.name === name)?.options?.find((o) => o.value === data[name])?.label
 

@@ -49,13 +49,6 @@ export const CountryPages: GlobalConfig = {
       ],
     },
     {
-      name: 'anchorDay',
-      type: 'group',
-      label: 'Anchor Day note',
-      admin: { description: 'Shown on countries that host the Anchor Day.' },
-      fields: [text('heading'), text('when'), textarea('body')],
-    },
-    {
       name: 'hosts',
       type: 'group',
       label: 'Local hosts',
@@ -94,7 +87,10 @@ export const CountryPages: GlobalConfig = {
                 {
                   name: 'linkHref',
                   type: 'text',
-                  admin: { description: 'A path such as /relay, or #programme for the list.' },
+                  admin: {
+                    description:
+                      'A path such as /relay?country={slug}. {slug} becomes the country’s slug.',
+                  },
                 },
               ],
             },

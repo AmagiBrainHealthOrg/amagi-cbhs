@@ -60,8 +60,8 @@ export const seedSessions: SeedSession[] = [
     location: 'Jamaica',
     theme: 'Policy & Investment',
     day: '2026-11-16',
-    startTime: '09:00',
-    endTime: '11:30',
+    startTime: '09:30',
+    endTime: '12:00',
     venue: 'UWI Mona Council Room',
     registrationOpen: false,
     description:

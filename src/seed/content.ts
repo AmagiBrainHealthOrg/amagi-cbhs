@@ -3,6 +3,7 @@ import type { DataFromGlobalSlug, RequiredDataFromCollectionSlug } from 'payload
 import type { Page } from '@/payload-types'
 
 import { countryPagesCopy } from './countries'
+import { pladrrFormPage, pladrrPage, pladrrThankYou } from './pladrr'
 import { cookiesContent, privacyContent, termsContent } from './legal'
 import { bullets, heading, paragraph, paragraphs, richText } from './lexical'
 import { anchorDayCopy, relayCopy } from './relayAnchorCopy'
@@ -48,6 +49,7 @@ const roadmap = {
       when: '3–5 Feb 2027',
       title: 'PLADRR, Kingston',
       body: 'The follow-on event continues the work.',
+      href: '/pladrr',
       status: 'next',
     },
     {
@@ -285,6 +287,7 @@ export const registerLink = { label: 'Register interest', href: '/register' }
 export const relayLink = { label: 'Propose a Relay activity', href: '/relay' }
 export const summitWeekNav = { label: 'Summit Week', href: '/summit-week' }
 export const countriesLink = { label: 'Countries', href: '/countries' }
+export const pladrrLink = { label: 'PLADRR 2027', href: '/pladrr' }
 
 export const aboutContact = {
   blockType: 'cardGrid',
@@ -795,6 +798,7 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
         heading: 'Have your say',
         intro: 'Help shape the Caribbean Call to Action on Brain Health.',
         background: 'white',
+        anchorId: 'have-your-say',
         form: 'cta-consultation',
       },
       donateBanner,
@@ -856,6 +860,8 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
       termsContent,
     ),
   },
+  pladrrPage,
+  pladrrFormPage,
 ]
 
 // Amagi confirmed permission for all seven (Ishtar Govia, 8 October 2026). Logo files are in
@@ -1039,6 +1045,7 @@ export const seedGlobals = (images: SeedImages): Globals => ({
   footer: {
     links: [
       countriesLink,
+      pladrrLink,
       { label: 'Privacy', href: '/privacy' },
       { label: 'Cookies', href: '/cookies' },
       { label: 'Terms', href: '/terms' },
@@ -1112,6 +1119,7 @@ export const seedGlobals = (images: SeedImages): Globals => ({
   // Placeholder copy until Amagi supplies it (SPEC §8.4).
   forms: {
     thankYou: [
+      pladrrThankYou,
       {
         form: 'register-interest',
         heading: 'Thank you for registering your interest',

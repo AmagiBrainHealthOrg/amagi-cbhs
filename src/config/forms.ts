@@ -6,6 +6,7 @@ export const formOptions = [
   { label: 'Brain Health Relay', value: 'relay' },
   { label: 'Contact and media', value: 'contact' },
   { label: 'Session registration', value: 'session-registration' },
+  { label: 'PLADRR expression of interest', value: 'pladrr-eoi' },
 ] as const
 
 export type FormKey = (typeof formOptions)[number]['value']

@@ -120,23 +120,6 @@
   gap: 10px;
   margin-top: 6px;
 }
-.country-anchor-day {
-  margin-top: 28px;
-  padding: 22px 24px;
-  border-left: 5px solid var(--orange);
-  border-radius: var(--v1-radius);
-  background: var(--white);
-}
-.country-anchor-day h3 {
-  margin: 0 0 6px;
-  color: var(--primary-blue);
-  font-family: var(--app-font-heading);
-  font-size: var(--fs-lg);
-}
-.country-anchor-day p + p {
-  margin-top: 4px;
-  color: var(--muted-ink);
-}
 
 .country-team {
   display: grid;

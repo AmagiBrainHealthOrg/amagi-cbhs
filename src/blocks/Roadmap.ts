@@ -53,6 +53,12 @@ export const Roadmap: Block = {
           ],
         },
         { name: 'body', type: 'textarea' },
+        {
+          name: 'href',
+          type: 'text',
+          label: 'Link',
+          admin: { description: 'Optional. The title links here, such as /pladrr.' },
+        },
       ],
     },
   ],

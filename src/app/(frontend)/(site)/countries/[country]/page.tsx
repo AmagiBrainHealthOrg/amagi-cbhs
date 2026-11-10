@@ -174,7 +174,7 @@ export default async function CountryPage({ params }: Props) {
     console.error(`The ${country.name} page could not load its sessions`, error)
   }
 
-  const { programme, anchorDay, hosts, priorities, takePart, beyond, about } = copy
+  const { programme, hosts, priorities, takePart, beyond, about } = copy
   const cards = takePart?.cards ?? []
 
   return (
@@ -248,17 +248,6 @@ export default async function CountryPage({ params }: Props) {
             </>
           )
         )}
-        {country.anchorDay && anchorDay?.heading && (
-          <aside className="country-anchor-day" aria-label={anchorDay.heading}>
-            <h3>{anchorDay.heading}</h3>
-            {anchorDay.when && (
-              <p>
-                <strong>{anchorDay.when}</strong>
-              </p>
-            )}
-            {anchorDay.body && <p>{anchorDay.body}</p>}
-          </aside>
-        )}
       </Section>
 
       <Section blockId="hosts" heading={hosts?.heading}>
@@ -315,7 +304,10 @@ export default async function CountryPage({ params }: Props) {
                 icon={card.icon}
                 title={card.title}
                 body={card.body}
-                link={{ label: card.linkLabel, href: card.linkHref }}
+                link={{
+                  label: card.linkLabel,
+                  href: card.linkHref?.replaceAll('{slug}', country.slug),
+                }}
               />
             ))}
           </ul>

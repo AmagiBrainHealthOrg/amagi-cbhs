@@ -17,5 +17,10 @@ export const Flow: Block = {
         { name: 'body', type: 'textarea' },
       ],
     },
+    {
+      name: 'outro',
+      type: 'textarea',
+      admin: { description: 'Optional closing paragraph under the steps.' },
+    },
   ],
 }

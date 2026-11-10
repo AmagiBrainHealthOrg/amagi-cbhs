@@ -26,6 +26,19 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(dirname),
   },
+  // The PLADRR form is the CMS page `pladrr-express-interest`, served under /pladrr.
+  async rewrites() {
+    return [{ source: '/pladrr/express-interest', destination: '/pladrr-express-interest' }]
+  },
+  async redirects() {
+    return [
+      {
+        source: '/pladrr-express-interest',
+        destination: '/pladrr/express-interest',
+        permanent: false,
+      },
+    ]
+  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })

@@ -1,6 +1,8 @@
 import type { FieldName } from '@/config/airtable'
 import type { FormKey } from '@/config/forms'
 
+import { pladrrForm } from './pladrr'
+
 // SPEC §8.3. Which fields each form asks, in order, and how. The Airtable field each one writes
 // to is in src/config/airtable.ts; options for link and select fields come from the base.
 
@@ -16,6 +18,13 @@ export type Control =
   | 'checkboxes'
   | 'checkbox'
 
+/**
+ * While another field holds the choice with this ID; with `not`, any answer except that choice;
+ * with `answered`, any answer at all.
+ */
+export type ShowWhen =
+  { field: FieldName; choiceId: string; not?: boolean } | { field: FieldName; answered: true }
+
 export type FieldDef = {
   name: FieldName
   label: string
@@ -30,8 +39,32 @@ export type FieldDef = {
   max?: string
   /** Numbered, coloured badges on each option, as on the Call to Action page. */
   numbered?: boolean
-  /** Shown, and validated, only while another field holds the choice with this ID. */
-  showWhen?: { field: FieldName; choiceId: string }
+  /** Shown, and validated, only while another field's answer matches. */
+  showWhen?: ShowWhen
+  /** Indented under the question it follows up, as a revealed detail. */
+  reveal?: boolean
+  /** Textareas: a live word count, and longer answers are rejected. */
+  wordLimit?: number
+  /** Checkboxes: the most that can be ticked. */
+  maxSelections?: number
+  /** Checkboxes: the choice that can't be combined with the others, such as "None". */
+  exclusiveChoiceId?: string
+  /** Text inputs: suggestions offered as people type. Any answer is still accepted. */
+  suggestions?: readonly string[]
+  /** A paragraph shown before the field. Links with [text](/path). */
+  before?: string
+  /** Also ticks this checkbox field when the answer is the choice with this ID. */
+  flag?: { choiceId: string; field: FieldName }
+  /** The form section this field sits in. */
+  section?: string
+}
+
+export type FormSection = {
+  id: string
+  heading: string
+  /** Shown after the section's fields. */
+  notice?: string
+  showWhen?: ShowWhen
 }
 
 export type FormDefinition = {
@@ -39,6 +72,12 @@ export type FormDefinition = {
   submitLabel: string
   /** Shown above the submit button. */
   notice?: string
+  /** Groups the fields under headings, in this order. */
+  sections?: FormSection[]
+  /** Leave out the privacy line by the submit button, when the form has its own. */
+  hidePrivacyLine?: boolean
+  /** Show the submit button only once this field is answered. */
+  submitAfter?: FieldName
 }
 
 const name: FieldDef = {
@@ -336,4 +375,5 @@ export const formRegistry: Record<FormKey, FormDefinition> = {
     submitLabel: 'Register',
     fields: [name, location('Country'), organisation(true), email, { ...phone, required: true }],
   },
+  'pladrr-eoi': pladrrForm,
 }

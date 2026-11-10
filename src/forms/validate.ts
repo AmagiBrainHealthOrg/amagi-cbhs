@@ -1,7 +1,7 @@
 import type { FieldName } from '@/config/airtable'
 import type { FieldOption } from '@/utils/airtable'
 
-import type { FieldDef } from './registry'
+import type { FieldDef, ShowWhen } from './registry'
 
 // Shared by the browser and the server action, so both give the same messages (SPEC §8.2).
 
@@ -28,13 +28,28 @@ export function readValues(fields: ResolvedField[], form: FormData): Values {
   return values
 }
 
+export const countWords = (text: string) => text.split(/\s+/).filter(Boolean).length
+
+const answerOf = (values: Values, name: FieldName): string[] => {
+  const value = values[name]
+  return (Array.isArray(value) ? value : [value ?? '']).filter(Boolean)
+}
+
+/** Whether another field's answer matches a section's or field's condition. */
+export function matches(when: ShowWhen | undefined, values: Values, fields: ResolvedField[]) {
+  if (!when) return true
+  const controller = fields.find((f) => f.name === when.field)
+  // A follow-up shows only while the question it follows is showing too.
+  if (controller && !isVisible(controller, values, fields)) return false
+  const answer = answerOf(values, when.field)
+  if ('answered' in when) return answer.length > 0
+  const option = controller?.options?.find((o) => o.id === when.choiceId)
+  if (when.not) return answer.length > 0 && !answer.includes(option?.value ?? '')
+  return Boolean(option) && answer.includes(option!.value)
+}
+
 export function isVisible(field: FieldDef, values: Values, fields: ResolvedField[]): boolean {
-  if (!field.showWhen) return true
-  const { field: other, choiceId } = field.showWhen
-  const option = fields.find((f) => f.name === other)?.options?.find((o) => o.id === choiceId)
-  if (!option) return false
-  const value = values[other]
-  return Array.isArray(value) ? value.includes(option.value) : value === option.value
+  return matches(field.showWhen, values, fields)
 }
 
 // A web address without a scheme gets https://, as people often type "example.com".
@@ -53,7 +68,15 @@ function check(field: ResolvedField, value: string | string[]): string | undefin
 
   if (field.options) {
     const allowed = new Set(field.options.map((o) => o.value))
-    return list.every((v) => allowed.has(v)) ? undefined : 'Choose one of the options'
+    if (!list.every((v) => allowed.has(v))) return 'Choose one of the options'
+    if (field.maxSelections && list.length > field.maxSelections) {
+      return `Choose up to ${field.maxSelections}`
+    }
+    const exclusive = field.options.find((o) => o.id === field.exclusiveChoiceId)
+    if (exclusive && list.length > 1 && list.includes(exclusive.value)) {
+      return `"${exclusive.label}" can't be combined with other options`
+    }
+    return undefined
   }
 
   if (field.control === 'checkbox') return undefined
@@ -80,6 +103,9 @@ function check(field: ResolvedField, value: string | string[]): string | undefin
       }
       return undefined
     case 'textarea':
+      if (field.wordLimit && countWords(text) > field.wordLimit) {
+        return `Keep this to ${field.wordLimit} words or fewer`
+      }
       return text.length > MAX_LONG_TEXT ? `Keep this under ${MAX_LONG_TEXT} characters` : undefined
     default:
       return text.length > MAX_TEXT ? `Keep this under ${MAX_TEXT} characters` : undefined

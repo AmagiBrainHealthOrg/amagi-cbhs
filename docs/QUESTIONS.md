@@ -117,3 +117,15 @@ Open questions for Amagi Health about the CBHS 2026 website and its Airtable bas
 28. **"Not decided" wording.** Decided 8 November 2026: both questions now say "Not yet decided".
 
 29. **Intended audience asked twice.** The form already asks for a "Short description, including the intended audience", and now also asks "Who is the activity intended for?". Should we drop "including the intended audience" from the description label? It is unchanged for now.
+
+## PLADRR Jamaica 2027
+
+30. **Privacy text on the expression of interest form.** Decided 10 November 2026: approved by the developers as written, and the form is live at `/pladrr/express-interest`. Please check it, the privacy notice it links to and the workflow behind it.
+
+31. **Confirmation email subject.** Your copy gives no subject line, so the email's subject is its heading for now: "Thank you. We have received your expression of interest in PLADRR Jamaica 2027." What should it be? You can change the heading in the CMS under Forms.
+
+32. **New form wording.** The form shows a word count ("12 of 100 words"), "Keep this to 100 words or fewer" when an answer is too long, and "1 of 2 selected" on the working themes. Is that wording right? The proposed group headings inside the scientific route ("Your perspective", "Your contribution", "Taking part") and a "Step 2 of 3" progress bar are left out until you approve them.
+
+33. **"Suggested FAQs".** Decided 10 November 2026: the heading is "FAQs". You can change it in the CMS.
+
+34. **PLADRR in the header.** PLADRR is linked from the footer and from the PLADRR step of the roadmap on Home and About, not from the header, which is full. Should it replace News in the header?
