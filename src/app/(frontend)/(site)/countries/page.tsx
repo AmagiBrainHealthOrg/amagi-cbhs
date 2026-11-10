@@ -32,9 +32,6 @@ export default function CountriesPage() {
           {countries.map(({ slug, name, tagline }) => (
             <li key={slug}>
               <Link href={`/countries/${slug}`}>
-                <div className="country-photo-placeholder" aria-hidden="true">
-                  Image
-                </div>
                 <h2>{name}</h2>
                 <p>{tagline}</p>
               </Link>

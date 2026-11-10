@@ -138,21 +138,6 @@
   color: var(--muted-ink);
 }
 
-.country-photo-placeholder {
-  display: grid;
-  place-items: center;
-  aspect-ratio: 4 / 3;
-  border: 2px dashed var(--divider);
-  border-radius: var(--v1-radius);
-  background: var(--theme-blue-bg);
-  color: var(--muted-ink);
-  font-family: var(--app-font-ui);
-  font-size: var(--fs-xs);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 .country-team {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
@@ -223,27 +208,6 @@
   margin: 0;
   color: var(--muted-ink);
   line-height: 1.5;
-}
-
-.country-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
-  gap: 16px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.country-gallery li:first-child {
-  grid-column: span 2;
-  grid-row: span 2;
-  aspect-ratio: auto;
-}
-@media (max-width: 600px) {
-  .country-gallery li:first-child {
-    grid-column: auto;
-    grid-row: auto;
-    aspect-ratio: 4 / 3;
-  }
 }
 
 .country-details {

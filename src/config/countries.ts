@@ -14,7 +14,6 @@ export type Country = {
   strengths: string
   nextStep: string
   regional: string
-  galleryCount: number
 }
 
 export const countries: Country[] = [
@@ -39,7 +38,6 @@ export const countries: Country[] = [
       'Identify one priority for further scoping, the evidence needed, and the organisations or disciplines that should join the next conversation.',
     regional:
       'Comparative learning, diaspora expertise and appropriate technical or institutional connections.',
-    galleryCount: 6,
   },
   {
     slug: 'cayman-islands',
@@ -60,7 +58,6 @@ export const countries: Country[] = [
       'Identify a specific coordination or access difficulty, clarify the information needed and bring the relevant organisations into a focused follow-up discussion.',
     regional:
       'Peer learning on navigation, service connections and appropriate innovation, adapted to local circumstances.',
-    galleryCount: 6,
   },
   {
     slug: 'jamaica',
@@ -84,7 +81,6 @@ export const countries: Country[] = [
       'Clarify one bounded improvement and its evidence, supervision, referral, organisational and resource requirements.',
     regional:
       'Shared methods and learning, and connections that support locally led research and delivery.',
-    galleryCount: 6,
   },
   {
     slug: 'suriname',
@@ -105,7 +101,6 @@ export const countries: Country[] = [
       'Identify a priority emerging from the dialogue and clarify the collaborators, capacity and permissions needed to explore it.',
     regional:
       'Appropriate methods, workforce learning and exchange across languages, disciplines and health-system contexts.',
-    galleryCount: 6,
   },
   {
     slug: 'trinidad-and-tobago',
@@ -126,7 +121,6 @@ export const countries: Country[] = [
       'Identify a local gap or opportunity and clarify what would be needed to evaluate and develop an appropriate response.',
     regional:
       'Responsible evaluation, cross-disciplinary learning and connections with Caribbean and diaspora collaborators.',
-    galleryCount: 6,
   },
 ]
 
