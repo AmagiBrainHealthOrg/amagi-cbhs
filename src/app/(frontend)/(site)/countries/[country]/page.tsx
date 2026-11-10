@@ -1,4 +1,4 @@
-import { Calendar, Clock, MapPin } from 'lucide-react'
+import { Calendar, Clock, MapPin, Video } from 'lucide-react'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -13,13 +13,14 @@ import { DonateBanner } from '@/components/DonateBanner'
 import { Gallery } from '@/components/Gallery'
 import { LinkedText } from '@/components/LinkedText'
 import { Section } from '@/components/Section'
+import { SessionMore } from '@/components/SessionMore'
 import { countryTeams } from '@/config/countryTeams'
 import { getCountries } from '@/lib/countries'
 import { getGlobal } from '@/lib/globals'
 import config from '@/payload.config'
 import type { Country, Session, Team } from '@/payload-types'
 import { splitParagraphs } from '@/utils/paragraphs'
-import { dayLabel, registrationRoutes, timeRange } from '@/utils/sessions'
+import { dayLabel, inZone, registrationRoutes, timeRange } from '@/utils/sessions'
 
 import { RefreshRouteOnSave } from '../../../RefreshRouteOnSave'
 import { previewUser, type RouteProps } from '../../_page'
@@ -60,11 +61,16 @@ const bySchedule = (a: Session, b: Session) =>
 async function loadDetails(country: Country) {
   const payload = await getPayload({ config })
   const read = { pagination: false, overrideAccess: false } as const
-  const location = typeof country.location === 'number' ? country.location : country.location.id
+  const location = typeof country.location === 'number' ? undefined : country.location
   const [sessions, team] = await Promise.all([
     payload.find({
       collection: 'sessions',
-      where: { location: { equals: location } },
+      where: {
+        or: [
+          { location: { equals: location?.id ?? country.location } },
+          { country: { equals: country.id } },
+        ],
+      },
       depth: 1,
       ...read,
     }),
@@ -76,7 +82,13 @@ async function loadDetails(country: Country) {
       ...read,
     }),
   ])
-  return { sessions: sessions.docs.sort(bySchedule), team: team.docs }
+  // Online sessions are entered in the Online location's zone; the page shows the country's.
+  const local = sessions.docs.map((session) =>
+    typeof session.location === 'object' && session.location.online && location
+      ? inZone(session, session.location.timeZone, location.timeZone)
+      : session,
+  )
+  return { sessions: local.sort(bySchedule), team: team.docs }
 }
 
 const withCountry = (text: string | null | undefined, name: string) =>
@@ -86,6 +98,20 @@ function SessionCard({ session }: { session: Session }) {
   const location = typeof session.location === 'object' ? session.location : undefined
   const theme = typeof session.theme === 'object' ? session.theme : undefined
   const routes = location ? registrationRoutes(session, location) : []
+  const register =
+    routes.length > 0
+      ? routes.map((route) => (
+          <Button
+            key={route.href}
+            href={route.href}
+            variant="secondary"
+            journey="participate"
+            action="session_register"
+          >
+            {route.label ?? 'Register'}
+          </Button>
+        ))
+      : null
   return (
     <li className={theme ? `schedule-theme-${theme.colour}` : undefined}>
       {theme && <p className="country-chip">{theme.name}</p>}
@@ -110,21 +136,25 @@ function SessionCard({ session }: { session: Session }) {
           <MapPin aria-hidden="true" /> {session.venue}
         </p>
       )}
-      {session.description && <p className="country-session-body">{session.description}</p>}
-      {routes.length > 0 && (
-        <div className="country-session-actions">
-          {routes.map((route) => (
-            <Button
-              key={route.href}
-              href={route.href}
-              variant="secondary"
-              journey="participate"
-              action="session_register"
-            >
-              {route.label ?? 'Register'}
-            </Button>
-          ))}
-        </div>
+      {location?.online && (
+        <p className="country-session-venue">
+          <Video aria-hidden="true" /> {location.name}
+        </p>
+      )}
+      {session.description ? (
+        <SessionMore
+          title={session.title}
+          details={[
+            session.day ? dayLabel(session.day) : 'Date TBC',
+            session.startTime ? timeRange(session.startTime, session.endTime) : 'Time TBC',
+            session.venue ?? (location?.online ? location.name : undefined),
+          ].filter((detail): detail is string => Boolean(detail))}
+          description={session.description}
+        >
+          {register}
+        </SessionMore>
+      ) : (
+        register && <div className="country-session-actions">{register}</div>
       )}
     </li>
   )

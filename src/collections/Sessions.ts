@@ -51,6 +51,16 @@ export const Sessions: CollectionConfig = {
       ],
     },
     {
+      name: 'country',
+      type: 'relationship',
+      relationTo: 'countries',
+      index: true,
+      admin: {
+        description:
+          'Online sessions: the host country this belongs to. Its country page then lists it too.',
+      },
+    },
+    {
       type: 'row',
       fields: [
         {

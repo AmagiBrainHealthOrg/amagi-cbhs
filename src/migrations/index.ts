@@ -57,6 +57,8 @@ import * as migration_20261110_174417 from './20261110_174417';
 import * as migration_20261110_180000_pladrr_form_layout from './20261110_180000_pladrr_form_layout';
 import * as migration_20261110_190000_pladrr_diagrams from './20261110_190000_pladrr_diagrams'
 import * as migration_20261110_193232_country_gallery from './20261110_193232_country_gallery'
+import * as migration_20261110_194511_session_country from './20261110_194511_session_country'
+import * as migration_20261110_200000_cayman_online_sessions from './20261110_200000_cayman_online_sessions'
 
 export const migrations = [
   {
@@ -353,5 +355,15 @@ export const migrations = [
     up: migration_20261110_193232_country_gallery.up,
     down: migration_20261110_193232_country_gallery.down,
     name: '20261110_193232_country_gallery',
+  },
+  {
+    up: migration_20261110_194511_session_country.up,
+    down: migration_20261110_194511_session_country.down,
+    name: '20261110_194511_session_country',
+  },
+  {
+    up: migration_20261110_200000_cayman_online_sessions.up,
+    down: migration_20261110_200000_cayman_online_sessions.down,
+    name: '20261110_200000_cayman_online_sessions',
   },
 ];

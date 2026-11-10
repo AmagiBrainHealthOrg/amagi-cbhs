@@ -48,6 +48,27 @@ export function zoneLabel(name: string, timeZone: string): string {
 
 type When = { day?: string | null; startTime?: string | null; endTime?: string | null }
 
+const clock = (instant: string, timeZone: string) =>
+  new Intl.DateTimeFormat('en-GB', {
+    timeZone,
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  }).format(new Date(instant))
+
+// A session's day and times entered in `from`, as they read in `to`.
+export function inZone<T extends When>(session: T, from: string, to: string): T {
+  const { day, startTime, endTime } = session
+  if (!day || !startTime || from === to) return session
+  const start = zonedToUtc(day, startTime, from)
+  return {
+    ...session,
+    day: new Intl.DateTimeFormat('en-CA', { timeZone: to }).format(new Date(start)),
+    startTime: clock(start, to),
+    endTime: endTime ? clock(zonedToUtc(day, endTime, from), to) : endTime,
+  }
+}
+
 // "Monday 16 November, 09:00–11:30", with "to be confirmed" for a missing day or time.
 export function whenLabel({ day, startTime, endTime }: When): string {
   if (!day && !startTime) return 'Date and time to be confirmed'

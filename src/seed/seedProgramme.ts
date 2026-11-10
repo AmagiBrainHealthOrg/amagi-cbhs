@@ -51,6 +51,14 @@ export async function seedProgramme(args: Args): Promise<string[]> {
   }
 
   const locationIds = await idsByName(args, 'session-locations')
+  const { docs: countries } = await payload.find({
+    collection: 'countries',
+    pagination: false,
+    depth: 0,
+    draft: true,
+    req,
+  })
+  const countryIds = new Map(countries.map(({ name, id }) => [name, id]))
   const { docs } = await payload.find({
     collection: 'sessions',
     pagination: false,
@@ -63,7 +71,7 @@ export async function seedProgramme(args: Args): Promise<string[]> {
 
   for (const [index, slug] of slugs().entries()) {
     if (existing.has(slug)) continue
-    const { location, theme, published = true, ...rest } = seedSessions[index]
+    const { location, country, theme, published = true, ...rest } = seedSessions[index]
     const locationId = locationIds.get(location)
     if (locationId === undefined) {
       throw new Error(`Programme session "${rest.title}" has an unknown location "${location}"`)
@@ -74,6 +82,7 @@ export async function seedProgramme(args: Args): Promise<string[]> {
         ...rest,
         slug,
         location: locationId,
+        country: country ? countryIds.get(country) : undefined,
         theme: theme ? themeIds.get(theme) : undefined,
         _status: published ? 'published' : 'draft',
       },

@@ -84,8 +84,8 @@ export async function seedContent({ payload, req }: Args): Promise<SeedResult> {
     [...seedSessionLocations, ...seedProgrammeLocations],
     (doc) => ({ field: 'name', value: doc.name }),
   )
-  result.created.push(...(await seedProgramme({ payload, req })))
   result.created.push(...(await createMissingCountries({ payload, req })))
+  result.created.push(...(await seedProgramme({ payload, req })))
 
   const globals = seedGlobals(images)
   for (const slug of Object.keys(globals) as (keyof typeof globals)[]) {

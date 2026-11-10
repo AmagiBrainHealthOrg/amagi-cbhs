@@ -35,6 +35,8 @@ export type SeedSession = {
   /** Set when the title has changed since the session went live, so its web address stays. */
   slug?: string
   location: LocationName
+  /** Online sessions: the host country whose page also lists it. */
+  country?: Exclude<LocationName, 'Online' | 'United States'>
   theme?: ThemeName
   day?: SummitDay
   startTime?: Time
@@ -124,6 +126,7 @@ export const seedSessions: SeedSession[] = [
     title:
       'Cayman Islands: Tech & Thrive Tuesday — Science, Technology and the Future of Brain Health',
     location: 'Online',
+    country: 'Cayman Islands',
     theme: 'Technology & Innovation',
     day: '2026-11-17',
     startTime: '18:00',
@@ -244,6 +247,7 @@ export const seedSessions: SeedSession[] = [
     title: 'Netball for Brain Health: Movement, Connection and Teamwork',
     slug: 'cayman-brain-health-relay-allstars-netball-club',
     location: 'Online',
+    country: 'Cayman Islands',
     theme: 'Community',
     day: '2026-11-18',
     startTime: '14:00',
@@ -310,6 +314,7 @@ export const seedSessions: SeedSession[] = [
     title: 'How the Brain Controls Health: Lessons from C. elegans',
     slug: 'cayman-brain-health-relay-the-tullet-laboratory',
     location: 'Online',
+    country: 'Cayman Islands',
     theme: 'Research & Data',
     day: '2026-11-19',
     startTime: '09:00',
@@ -322,6 +327,7 @@ export const seedSessions: SeedSession[] = [
     title: 'How the microbiome affects health',
     slug: 'cayman-brain-health-relay-the-ezcurra-laboratory',
     location: 'Online',
+    country: 'Cayman Islands',
     theme: 'Research & Data',
     day: '2026-11-19',
     startTime: '10:00',
@@ -353,6 +359,7 @@ export const seedSessions: SeedSession[] = [
     title: 'MedTech, Neuroimaging and the Patient Care Journey',
     slug: 'cayman-longevity-program-morning-relay-session',
     location: 'Online',
+    country: 'Cayman Islands',
     theme: 'Technology & Innovation',
     day: '2026-11-19',
     startTime: '11:00',
@@ -365,6 +372,7 @@ export const seedSessions: SeedSession[] = [
     title: 'The PAVING Wheel: Practical Approaches to Health and Wellbeing',
     slug: 'cayman-brain-health-relay-st-matthew-s-university-school-of-medicine',
     location: 'Online',
+    country: 'Cayman Islands',
     theme: 'Community',
     day: '2026-11-19',
     startTime: '13:00',
@@ -377,6 +385,7 @@ export const seedSessions: SeedSession[] = [
     title: 'Netball, Music and Brain Health',
     slug: 'cayman-brain-health-relay-netball-cayman',
     location: 'Online',
+    country: 'Cayman Islands',
     theme: 'Community',
     day: '2026-11-19',
     startTime: '14:00',
@@ -389,6 +398,7 @@ export const seedSessions: SeedSession[] = [
     title: 'Everyday Habits, Cognitive Health and the Gut–Hormone–Brain Axis',
     slug: 'cayman-longevity-program-afternoon-relay-session',
     location: 'Online',
+    country: 'Cayman Islands',
     theme: 'Life-course',
     day: '2026-11-19',
     startTime: '15:00',

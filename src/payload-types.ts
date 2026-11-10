@@ -1299,6 +1299,10 @@ export interface Session {
   location: number | SessionLocation;
   theme?: (number | null) | SessionTheme;
   /**
+   * Online sessions: the host country this belongs to. Its country page then lists it too.
+   */
+  country?: (number | null) | Country;
+  /**
    * Leave empty while the date is TBC.
    */
   day?: ('2026-11-16' | '2026-11-17' | '2026-11-18' | '2026-11-19' | '2026-11-20' | '2026-11-21' | '2026-11-22') | null;
@@ -2310,6 +2314,7 @@ export interface SessionsSelect<T extends boolean = true> {
   slug?: T;
   location?: T;
   theme?: T;
+  country?: T;
   day?: T;
   startTime?: T;
   endTime?: T;
