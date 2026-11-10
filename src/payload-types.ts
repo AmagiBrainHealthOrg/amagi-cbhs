@@ -1421,6 +1421,15 @@ export interface Country {
    * Approved acknowledgement of this country’s local hosts. Shown above the general note when set.
    */
   hosts?: string | null;
+  /**
+   * Optional. Photos show in a gallery below the programme. The first shows largest.
+   */
+  gallery?:
+    | {
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
   priorities: {
     question: string;
     strengths: string;
@@ -2357,6 +2366,12 @@ export interface CountriesSelect<T extends boolean = true> {
   tagline?: T;
   intro?: T;
   hosts?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
   priorities?:
     | T
     | {

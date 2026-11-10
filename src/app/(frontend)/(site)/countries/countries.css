@@ -255,3 +255,58 @@
 .country-index p {
   color: var(--muted-ink);
 }
+
+.gallery {
+  min-width: 0;
+  contain: inline-size;
+}
+.gallery-track {
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  padding: 0 0 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  list-style: none;
+}
+.gallery-track:focus-visible {
+  outline: 3px solid var(--primary-blue);
+  outline-offset: 4px;
+}
+.gallery-track li {
+  flex: none;
+  scroll-snap-align: start;
+}
+.gallery-track img {
+  display: block;
+  width: auto;
+  max-width: 85vw;
+  height: clamp(220px, 40vw, 420px);
+  border-radius: var(--v1-radius);
+  object-fit: cover;
+}
+.gallery-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+.gallery-controls button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 2px solid var(--primary-blue);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--primary-blue);
+  cursor: pointer;
+}
+.gallery-controls button:hover {
+  background: var(--theme-blue-bg);
+}
+.gallery-controls button:focus-visible {
+  outline: 3px solid var(--primary-blue);
+  outline-offset: 3px;
+}

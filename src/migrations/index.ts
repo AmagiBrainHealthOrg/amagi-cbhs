@@ -56,6 +56,7 @@ import * as migration_20261110_170000_pladrr_page from './20261110_170000_pladrr
 import * as migration_20261110_174417 from './20261110_174417';
 import * as migration_20261110_180000_pladrr_form_layout from './20261110_180000_pladrr_form_layout';
 import * as migration_20261110_190000_pladrr_diagrams from './20261110_190000_pladrr_diagrams'
+import * as migration_20261110_193232_country_gallery from './20261110_193232_country_gallery'
 
 export const migrations = [
   {
@@ -347,5 +348,10 @@ export const migrations = [
     up: migration_20261110_190000_pladrr_diagrams.up,
     down: migration_20261110_190000_pladrr_diagrams.down,
     name: '20261110_190000_pladrr_diagrams',
+  },
+  {
+    up: migration_20261110_193232_country_gallery.up,
+    down: migration_20261110_193232_country_gallery.down,
+    name: '20261110_193232_country_gallery',
   },
 ];
