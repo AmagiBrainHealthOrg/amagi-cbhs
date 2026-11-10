@@ -21,6 +21,11 @@
 .site-nav ul, .site-menu ul { display: flex; gap: 4px; margin: 0; padding: 0; list-style: none; }
 .site-nav a, .site-menu a { display: block; padding: 10px 12px; border-radius: 4px; color: var(--primary-blue); font-family: var(--app-font-ui); font-size: var(--fs-sm); font-weight: 700; }
 .site-nav a:hover, .site-menu a:hover { background: var(--pale-blue); }
+.site-nav a { white-space: nowrap; }
+@media (max-width: 1360px) {
+  .site-nav ul { gap: 0; }
+  .site-nav a { padding-inline: 7px; }
+}
 .site-header-actions { display: flex; align-items: center; gap: 8px; }
 .site-menu { position: relative; display: none; }
 .site-menu summary { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 4px; color: var(--primary-blue); cursor: pointer; list-style: none; }
@@ -42,7 +47,7 @@
 .donate-banner-button { min-height: 54px; padding-inline: 30px; font-size: var(--fs-base); }
 .donate-banner-button svg { width: 17px; height: 17px; }
 
-@media (max-width: 960px) {
+@media (max-width: 1200px) {
   .site-nav { display: none; }
   .site-menu { display: block; }
 }

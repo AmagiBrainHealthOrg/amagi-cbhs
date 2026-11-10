@@ -463,6 +463,11 @@
 .v1-map-list .v1-map-list-anchor > span {
   background: var(--yellow);
 }
+.v1-map-list a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .v1-map-list small {
   color: var(--pale-text-light);
   font-size: var(--fs-2xs);

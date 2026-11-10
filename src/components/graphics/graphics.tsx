@@ -14,6 +14,7 @@ import {
   Users,
   Video,
 } from 'lucide-react'
+import Link from 'next/link'
 import React from 'react'
 
 import { Button } from '@/components/Button'
@@ -70,6 +71,7 @@ export type MapCountry = {
   y: number
   anchor?: boolean | null
   labelSide: 'left' | 'right'
+  href?: string
 }
 
 export function CaribbeanMap({
@@ -126,10 +128,10 @@ export function CaribbeanMap({
         ))}
       </svg>
       <ul className="v1-map-list">
-        {countries.map(({ name, city, anchor: isAnchor }) => (
+        {countries.map(({ name, city, anchor: isAnchor, href }) => (
           <li key={name} className={isAnchor ? 'v1-map-list-anchor' : undefined}>
             <span aria-hidden="true" />
-            <strong>{name}</strong>
+            <strong>{href ? <Link href={href}>{name}</Link> : name}</strong>
             <small>{isAnchor && anchorLabel ? anchorLabel : city}</small>
           </li>
         ))}
