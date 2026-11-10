@@ -326,6 +326,14 @@
   color: var(--muted-text);
   font-size: var(--fs-xs);
 }
+.schedule-location .schedule-country-link {
+  margin-left: auto;
+  color: var(--primary-blue);
+  font-family: var(--app-font-ui);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  text-decoration: underline;
+}
 .schedule-location p {
   flex-basis: 100%;
   margin: 8px 0 0;

@@ -12,6 +12,7 @@ import { formRegistry } from '@/forms/registry'
 import type { ResolvedField } from '@/forms/validate'
 import { getResolvedForm } from '@/lib/forms'
 import { canRegister } from '@/lib/sessions'
+import { countryHref } from '@/config/countryLinks'
 import config from '@/payload.config'
 import { registrationRoutes, whenLabel, zoneLabel } from '@/utils/sessions'
 
@@ -58,6 +59,7 @@ export default async function SessionPage(props: Props) {
   const theme = typeof session.theme === 'object' ? session.theme : undefined
   const open = canRegister(session)
   const routes = registrationRoutes(session, location)
+  const countryPage = countryHref(location.name)
   const formLabel = routes.find(({ external }) => !external)?.label
 
   let fields: ResolvedField[] | undefined
@@ -76,7 +78,10 @@ export default async function SessionPage(props: Props) {
         <Link className="back-link" href="/summit-week">
           <ArrowLeft aria-hidden="true" /> Summit Week
         </Link>
-        <p className="news-meta">{[location.name, theme?.name].filter(Boolean).join(' · ')}</p>
+        <p className="news-meta">
+          {countryPage ? <Link href={countryPage}>{location.name}</Link> : location.name}
+          {theme?.name && ` · ${theme.name}`}
+        </p>
         <h1>{session.title}</h1>
         <dl className="session-details">
           <div>

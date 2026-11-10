@@ -4,6 +4,7 @@ import Link from 'next/link'
 import React, { useMemo, useRef, useState, useSyncExternalStore } from 'react'
 
 import { SessionInfo } from '@/components/SessionInfo'
+import { countryHref } from '@/config/countryLinks'
 import {
   bySchedule,
   type ScheduleData,
@@ -249,6 +250,11 @@ export function Schedule({ data }: { data: ScheduleData }) {
             <header className="schedule-location">
               <h3>{location.name}</h3>
               {location.city && <span>{location.city}</span>}
+              {countryHref(location.name) && (
+                <Link className="schedule-country-link" href={countryHref(location.name)!}>
+                  About {location.name}&apos;s contribution
+                </Link>
+              )}
               <p>{zoneNote(location)}</p>
             </header>
             <div
@@ -340,9 +346,7 @@ export function Schedule({ data }: { data: ScheduleData }) {
                               </span>
                             )
                           })}
-                          {hidden > 0 && (
-                            <span className="schedule-more">+{hidden} more</span>
-                          )}
+                          {hidden > 0 && <span className="schedule-more">+{hidden} more</span>}
                         </td>
                       )
                     })}

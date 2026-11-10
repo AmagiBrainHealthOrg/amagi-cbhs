@@ -283,6 +283,7 @@ export const partnerLink = { label: 'Partner with the Summit', href: '/partner' 
 export const registerLink = { label: 'Register interest', href: '/register' }
 export const relayLink = { label: 'Propose a Relay activity', href: '/relay' }
 export const summitWeekNav = { label: 'Summit Week', href: '/summit-week' }
+export const countriesLink = { label: 'Countries', href: '/countries' }
 
 export const aboutContact = {
   blockType: 'cardGrid',
@@ -1024,6 +1025,7 @@ export const seedGlobals = (images: SeedImages): Globals => ({
     navItems: [
       { label: 'About', href: '/about' },
       summitWeekNav,
+      countriesLink,
       { label: 'Support Caribbean Brain Health', href: '/support' },
       { label: 'Call to Action', href: '/call-to-action' },
       { label: 'News', href: '/news' },
@@ -1033,6 +1035,7 @@ export const seedGlobals = (images: SeedImages): Globals => ({
   },
   footer: {
     links: [
+      countriesLink,
       { label: 'Privacy', href: '/privacy' },
       { label: 'Cookies', href: '/cookies' },
       { label: 'Terms', href: '/terms' },
