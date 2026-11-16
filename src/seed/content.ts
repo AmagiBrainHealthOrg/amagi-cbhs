@@ -246,6 +246,13 @@ const formPage = (
 
 export const formPages = (images: SeedImages): SeedPage[] => [
   formPage(images, {
+    title: 'Register your interest',
+    slug: 'register',
+    kicker: 'Get involved',
+    lead: "Tell us how you'd like to take part. We'll email you when the programme is published.",
+    form: 'register-interest',
+  }),
+  formPage(images, {
     title: 'Partner with the Summit',
     slug: 'partner',
     kicker: 'Get involved',
@@ -276,10 +283,12 @@ export const formPages = (images: SeedImages): SeedPage[] => [
 
 // Buttons that lead to the forms, from the pages Amagi's copy names (SPEC §8.3).
 export const partnerLink = { label: 'Partner with the Summit', href: '/partner' }
-// Retired with the Register Interest form; kept for the 20261009_140000 migration.
+// Used only by the 20261009_140000 migration.
 export const registerLink = { label: 'Register interest', href: '/register' }
 export const FAQ_SESSIONS_ANSWER =
   'See the programme on the Summit Week page and sign up for a session.'
+// Only the Summit Week "Can't join live?" card links to the Register Interest form now.
+export const recordingsRegisterLink = { label: 'Register your interest', href: '/register' }
 export const sessionsLink = { label: 'Sign up for a session', href: '/summit-week#programme' }
 const programmeLink = { label: sessionsLink.label, href: '#programme' }
 export const relayLink = { label: 'Propose a Relay activity', href: '/relay' }
@@ -480,7 +489,7 @@ export const summitWeekPage = (images: SeedImages): SeedPage => ({
       background: 'pale',
       style: 'tiles',
       items: [],
-      links: [programmeLink],
+      links: [recordingsRegisterLink],
     },
     donateBanner,
   ],

@@ -37,8 +37,6 @@ const nextConfig: NextConfig = {
         destination: '/pladrr/express-interest',
         permanent: false,
       },
-      // The Register Interest form is retired; its visitors want the sessions.
-      { source: '/register', destination: '/summit-week#programme', permanent: false },
     ]
   },
 }
