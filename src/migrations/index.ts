@@ -60,6 +60,7 @@ import * as migration_20261110_193232_country_gallery from './20261110_193232_co
 import * as migration_20261110_194511_session_country from './20261110_194511_session_country'
 import * as migration_20261110_200000_cayman_online_sessions from './20261110_200000_cayman_online_sessions'
 import * as migration_20261115_190000_sessions_cta from './20261115_190000_sessions_cta';
+import * as migration_20261115_210000_cant_join_live_register from './20261115_210000_cant_join_live_register';
 
 export const migrations = [
   {
@@ -371,5 +372,10 @@ export const migrations = [
     up: migration_20261115_190000_sessions_cta.up,
     down: migration_20261115_190000_sessions_cta.down,
     name: '20261115_190000_sessions_cta',
+  },
+  {
+    up: migration_20261115_210000_cant_join_live_register.up,
+    down: migration_20261115_210000_cant_join_live_register.down,
+    name: '20261115_210000_cant_join_live_register',
   },
 ];
