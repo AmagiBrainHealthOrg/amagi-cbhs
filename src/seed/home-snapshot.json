@@ -35,8 +35,8 @@
       "blockType": "hero",
       "images": [],
       "secondaryLink": {
-        "label": "Register your interest",
-        "href": "/register"
+        "label": "Sign up for a session",
+        "href": "/summit-week#programme"
       },
       "extraLink": {
         "label": "Partner with the Summit",
