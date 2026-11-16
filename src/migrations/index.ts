@@ -59,6 +59,7 @@ import * as migration_20261110_190000_pladrr_diagrams from './20261110_190000_pl
 import * as migration_20261110_193232_country_gallery from './20261110_193232_country_gallery'
 import * as migration_20261110_194511_session_country from './20261110_194511_session_country'
 import * as migration_20261110_200000_cayman_online_sessions from './20261110_200000_cayman_online_sessions'
+import * as migration_20261115_190000_sessions_cta from './20261115_190000_sessions_cta';
 
 export const migrations = [
   {
@@ -365,5 +366,10 @@ export const migrations = [
     up: migration_20261110_200000_cayman_online_sessions.up,
     down: migration_20261110_200000_cayman_online_sessions.down,
     name: '20261110_200000_cayman_online_sessions',
+  },
+  {
+    up: migration_20261115_190000_sessions_cta.up,
+    down: migration_20261115_190000_sessions_cta.down,
+    name: '20261115_190000_sessions_cta',
   },
 ];

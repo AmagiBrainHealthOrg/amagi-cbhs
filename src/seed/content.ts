@@ -246,13 +246,6 @@ const formPage = (
 
 export const formPages = (images: SeedImages): SeedPage[] => [
   formPage(images, {
-    title: 'Register your interest',
-    slug: 'register',
-    kicker: 'Get involved',
-    lead: "Tell us how you'd like to take part. We'll email you when the programme is published.",
-    form: 'register-interest',
-  }),
-  formPage(images, {
     title: 'Partner with the Summit',
     slug: 'partner',
     kicker: 'Get involved',
@@ -283,7 +276,12 @@ export const formPages = (images: SeedImages): SeedPage[] => [
 
 // Buttons that lead to the forms, from the pages Amagi's copy names (SPEC §8.3).
 export const partnerLink = { label: 'Partner with the Summit', href: '/partner' }
+// Retired with the Register Interest form; kept for the 20261009_140000 migration.
 export const registerLink = { label: 'Register interest', href: '/register' }
+export const FAQ_SESSIONS_ANSWER =
+  'See the programme on the Summit Week page and sign up for a session.'
+export const sessionsLink = { label: 'Sign up for a session', href: '/summit-week#programme' }
+const programmeLink = { label: sessionsLink.label, href: '#programme' }
 export const relayLink = { label: 'Propose a Relay activity', href: '/relay' }
 export const summitWeekNav = { label: 'Summit Week', href: '/summit-week' }
 export const countriesLink = { label: 'Countries', href: '/countries' }
@@ -369,7 +367,7 @@ export const summitWeekPage = (images: SeedImages): SeedPage => ({
       kicker: 'Summit Week · 16–22 November 2026',
       heading: 'One week. Many places. One shared agenda.',
       lead: 'Locally led activities and online conversations take place throughout the week. A separate, invitation-only leadership conversation in Jamaica forms the inaugural Anchor Day.',
-      secondaryLink: { label: 'Register your interest', href: '/register' },
+      secondaryLink: programmeLink,
     }),
     scheduleSection,
     {
@@ -482,7 +480,7 @@ export const summitWeekPage = (images: SeedImages): SeedPage => ({
       background: 'pale',
       style: 'tiles',
       items: [],
-      links: [{ label: 'Register your interest', href: '/register' }],
+      links: [programmeLink],
     },
     donateBanner,
   ],
@@ -501,7 +499,7 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
         heading: 'One Caribbean.\nOne brain health future.',
         lead: 'A week of free sessions across the region and online, connecting local priorities with practical next steps beyond the week. Your gift makes it happen.',
         showDonateButton: true,
-        secondaryLink: registerLink,
+        secondaryLink: sessionsLink,
         extraLink: partnerLink,
         // Summit week starts at midnight in Kingston (UTC-5, no daylight saving).
         countdown: {
@@ -814,7 +812,7 @@ export const seedPages = (images: SeedImages): SeedPage[] => [
       photoHero(images, {
         kicker: 'FAQs',
         heading: 'Frequently asked questions',
-        secondaryLink: registerLink,
+        secondaryLink: sessionsLink,
       }),
       { blockType: 'faqList', background: 'white', showCategories: true },
       donateBanner,
@@ -954,7 +952,7 @@ const faqGroups = [
     items: [
       {
         question: 'How do I stay updated?',
-        answer: "Register your interest and we'll email you when the programme is published.",
+        answer: FAQ_SESSIONS_ANSWER,
       },
       {
         question: 'Can my organisation run an activity?',
