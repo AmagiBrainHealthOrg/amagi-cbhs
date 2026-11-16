@@ -3,7 +3,7 @@ import React from 'react'
 
 import { Schedule } from '@/components/Schedule'
 import { Section } from '@/components/Section'
-import { countryHrefsByLocation } from '@/lib/countries'
+import { countryHrefsByLocation, getCountries } from '@/lib/countries'
 import config from '@/payload.config'
 import { buildSchedule, type ScheduleData } from '@/utils/schedule'
 
@@ -17,12 +17,25 @@ export async function ScheduleBlock({ block, blockId }: BlockProps<'schedule'>) 
     const payload = await getPayload({ config })
     const user = await previewUser()
     const read = { pagination: false, draft: Boolean(user), overrideAccess: false, user } as const
-    const [locations, themes, sessions] = await Promise.all([
+    const [locations, themes, sessions, countries] = await Promise.all([
       payload.find({ collection: 'session-locations', sort: ['order', 'name'], ...read }),
       payload.find({ collection: 'session-themes', sort: ['order', 'name'], ...read }),
       payload.find({ collection: 'sessions', depth: 0, ...read }),
+      getCountries(),
     ])
-    const schedule = buildSchedule(block, locations.docs, themes.docs, sessions.docs)
+    const countryLocations = new Map(
+      countries.map(({ id, location }) => [
+        id,
+        typeof location === 'number' ? location : location.id,
+      ]),
+    )
+    const schedule = buildSchedule(
+      block,
+      locations.docs,
+      themes.docs,
+      sessions.docs,
+      countryLocations,
+    )
     const countryHrefs = await countryHrefsByLocation()
     data = {
       ...schedule,

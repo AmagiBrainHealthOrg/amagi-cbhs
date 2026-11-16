@@ -1299,7 +1299,7 @@ export interface Session {
   location: number | SessionLocation;
   theme?: (number | null) | SessionTheme;
   /**
-   * Online sessions: the host country this belongs to. Its country page then lists it too.
+   * Online sessions: the host country this belongs to. Its country page and its Summit Week tab then list it too.
    */
   country?: (number | null) | Country;
   /**

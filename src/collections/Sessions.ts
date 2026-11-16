@@ -57,7 +57,7 @@ export const Sessions: CollectionConfig = {
       index: true,
       admin: {
         description:
-          'Online sessions: the host country this belongs to. Its country page then lists it too.',
+          'Online sessions: the host country this belongs to. Its country page and its Summit Week tab then list it too.',
       },
     },
     {
