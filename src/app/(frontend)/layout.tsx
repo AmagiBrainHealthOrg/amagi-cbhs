@@ -20,7 +20,11 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const plausible = await getPlausibleSettings()
 
   return (
-    <html lang="en" className={`${baloo2.variable} ${montserrat.variable} ${roboto.variable}`}>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${baloo2.variable} ${montserrat.variable} ${roboto.variable}`}
+    >
       <head>
         <link rel="stylesheet" href="https://use.typekit.net/ebg5tit.css" />
       </head>
