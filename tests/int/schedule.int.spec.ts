@@ -8,7 +8,13 @@ import { blockFormOptions } from '@/config/forms'
 import { formRegistry } from '@/forms/registry'
 import type { Session, SessionLocation, SessionTheme } from '@/payload-types'
 import { buildSchedule } from '@/utils/schedule'
-import { registrationRoutes, sessionSummary, whenLabel, zonedToUtc, zoneLabel } from '@/utils/sessions'
+import {
+  registrationRoutes,
+  sessionSummary,
+  whenLabel,
+  zonedToUtc,
+  zoneLabel,
+} from '@/utils/sessions'
 
 const stamp = '2026-11-01T00:00:00.000Z'
 const location = (id: number, name: string, extra: Partial<SessionLocation> = {}) =>
@@ -109,7 +115,9 @@ describe('schedule data', () => {
         text: 'Contact info@amagibrainhealth.org or complete the partner form.',
       }),
     )
-    expect(html).toContain('<a href="mailto:info@amagibrainhealth.org">info@amagibrainhealth.org</a>')
+    expect(html).toContain(
+      '<a href="mailto:info@amagibrainhealth.org">info@amagibrainhealth.org</a>',
+    )
     expect(html).toContain('<a href="/partner#partner-form">partner form</a>')
     expect(html).toMatch(/^Contact <a/)
     expect(html).toMatch(/form<\/a>\.$/)
@@ -139,7 +147,9 @@ describe('schedule data', () => {
     ]
     expect(registrationRoutes(hybrid, { online: false })).toEqual(routes)
     expect(registrationRoutes(hybrid, { online: true })).toEqual(routes)
-    expect(registrationRoutes({ ...hybrid, registrationOpen: false }, { online: false })).toEqual([])
+    expect(registrationRoutes({ ...hybrid, registrationOpen: false }, { online: false })).toEqual(
+      [],
+    )
   })
 
   it('drops sessions whose location is not published and sorts by time', () => {
@@ -194,7 +204,51 @@ describe('schedule data', () => {
       ],
     )
     expect(sessions.map((s) => s.id)).toEqual([2, 1])
-    expect(sessions[1]).toMatchObject({ start: undefined, startTime: undefined, endTime: undefined })
+    expect(sessions[1]).toMatchObject({
+      start: undefined,
+      startTime: undefined,
+      endTime: undefined,
+    })
+  })
+
+  it("also lists an online session with a country on that country's tab, in its time", () => {
+    const places = [
+      location(2, 'Online', { online: true }),
+      location(3, 'Suriname', { timeZone: 'America/Paramaribo' }),
+    ]
+    const { sessions } = buildSchedule(
+      {},
+      places,
+      [],
+      [
+        session(1, {
+          location: 2,
+          country: 9,
+          startTime: '10:00',
+          endTime: '11:00',
+          zoomUrl: 'https://zoom.us/j/1',
+        }),
+        session(2, { location: 2, country: 9, day: '2026-11-22', startTime: '22:30' }),
+        session(3, { location: 2, startTime: '12:00' }),
+      ],
+      new Map([[9, 3]]),
+    )
+    const tab = (id: number) => sessions.filter((s) => s.locationId === id)
+    expect(tab(2).map((s) => s.id)).toEqual([1, 3, 2])
+    expect(tab(3)).toMatchObject([
+      {
+        id: 1,
+        day: 0,
+        startTime: '12:00',
+        endTime: '13:00',
+        start: '2026-11-16T15:00:00.000Z',
+        venue: 'Online',
+        registration: [{ href: 'https://zoom.us/j/1', external: true }],
+      },
+      // 22:30 on the 22nd in Jamaica is past midnight in Suriname: kept on the last day.
+      { id: 2, day: 6, startTime: '00:30' },
+    ])
+    expect(new Set(sessions.map((s) => s.key)).size).toBe(sessions.length)
   })
 })
 

@@ -1,7 +1,13 @@
 import { summitDays, type ThemeColour } from '@/config/summit'
 import type { ScheduleBlock, Session, SessionLocation, SessionTheme } from '@/payload-types'
 
-import { registrationRoutes, type RegistrationRoute, zonedToUtc, zoneLabel } from './sessions'
+import {
+  inZone,
+  registrationRoutes,
+  type RegistrationRoute,
+  zonedToUtc,
+  zoneLabel,
+} from './sessions'
 
 export type ScheduleDay = {
   value: string
@@ -24,6 +30,8 @@ export type ScheduleLocation = {
 }
 export type ScheduleTheme = { id: number; name: string; colour: ThemeColour }
 export type ScheduleSession = {
+  /** Unique per entry: an online session with a country also appears on that country's tab. */
+  key: string
   id: number
   title: string
   locationId: number
@@ -69,6 +77,8 @@ export function buildSchedule(
   locations: SessionLocation[],
   themes: SessionTheme[],
   sessions: Session[],
+  /** Session location id by country id, for online sessions that name a country. */
+  countryLocations: Map<number, number> = new Map(),
 ): ScheduleData {
   const notes = new Map((block.dayNotes ?? []).map((note) => [note.day, note]))
   const days = summitDays.map(({ value, label }): ScheduleDay => {
@@ -86,33 +96,50 @@ export function buildSchedule(
 
   if (sessions.some((session) => !session.day)) days.push(TBC_DAY)
 
-  const list = sessions.flatMap((session): ScheduleSession[] => {
-    const location = byId.get(idOf(session.location) ?? -1)
+  const entry = (session: Session, location: SessionLocation, venue?: string) => {
     const day = session.day
       ? days.findIndex(({ value }) => value === session.day)
       : days.indexOf(TBC_DAY)
-    if (!location || day === -1) return []
     const themeId = idOf(session.theme)
     const zoned = (time?: string | null) =>
       session.day && session.startTime && time
         ? zonedToUtc(session.day, time, location.timeZone)
         : undefined
-    return [
-      {
-        id: session.id,
-        title: session.title,
-        locationId: location.id,
-        themeId: themeId !== undefined && themeIds.has(themeId) ? themeId : undefined,
-        day,
-        startTime: session.startTime || undefined,
-        endTime: (session.startTime && session.endTime) || undefined,
-        start: zoned(session.startTime),
-        end: zoned(session.endTime),
-        venue: location.online ? undefined : session.venue || undefined,
-        description: session.description || undefined,
-        registration: registrationRoutes(session, location),
-      },
-    ]
+    return {
+      key: `${session.id}-${location.id}`,
+      id: session.id,
+      title: session.title,
+      locationId: location.id,
+      themeId: themeId !== undefined && themeIds.has(themeId) ? themeId : undefined,
+      day,
+      startTime: session.startTime || undefined,
+      endTime: (session.startTime && session.endTime) || undefined,
+      start: zoned(session.startTime),
+      end: zoned(session.endTime),
+      venue: venue ?? (location.online ? undefined : session.venue || undefined),
+      description: session.description || undefined,
+      registration: registrationRoutes(session, location),
+    }
+  }
+  const week = days.filter(({ tbc }) => !tbc)
+
+  const list = sessions.flatMap((session): ScheduleSession[] => {
+    const location = byId.get(idOf(session.location) ?? -1)
+    if (!location) return []
+    const own = entry(session, location)
+    if (own.day === -1) return []
+    const country = location.online
+      ? byId.get(countryLocations.get(idOf(session.country) ?? -1) ?? -1)
+      : undefined
+    if (!country || country.online) return [own]
+    // Also on the country's tab, in the country's time, marked with the online location's name.
+    const local = inZone(session, location.timeZone, country.timeZone)
+    const copy = { ...entry(local, country, location.name), registration: own.registration }
+    // A time that falls just outside the week in the country's zone stays on its nearest day.
+    if (copy.day === -1 && local.day) {
+      copy.day = days.indexOf(local.day < week[0].value ? week[0] : week[week.length - 1])
+    }
+    return [own, copy]
   })
   list.sort(bySchedule)
 

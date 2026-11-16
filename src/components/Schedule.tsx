@@ -124,7 +124,7 @@ export function Schedule({ data }: { data: ScheduleData }) {
   const card = (session: ScheduleSession) => {
     const sessionTheme = themeOf(session)
     return (
-      <li key={session.id} className="schedule-card">
+      <li key={session.key} className="schedule-card">
         {sessionTheme && (
           <span className={`schedule-theme schedule-theme-${sessionTheme.colour}`}>
             {sessionTheme.name}
@@ -140,7 +140,7 @@ export function Schedule({ data }: { data: ScheduleData }) {
           </span>
           {session.description && (
             <SessionInfo
-              id={`session-info-${session.id}`}
+              id={`session-info-${session.key}`}
               title={session.title}
               text={session.description}
             />
@@ -353,7 +353,7 @@ export function Schedule({ data }: { data: ScheduleData }) {
                             const sessionTheme = themeOf(session)
                             return (
                               <span
-                                key={session.id}
+                                key={session.key}
                                 className={`schedule-chip schedule-theme-${sessionTheme?.colour ?? 'none'}`}
                               >
                                 {session.title}
