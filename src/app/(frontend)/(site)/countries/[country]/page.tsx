@@ -126,11 +126,7 @@ function SessionCard({ session }: { session: Session }) {
         </span>
       </p>
       <h3>
-        {routes.length > 0 ? (
-          <Link href={`/sessions/${session.slug}`}>{session.title}</Link>
-        ) : (
-          session.title
-        )}
+        <Link href={`/sessions/${session.slug}`}>{session.title}</Link>
       </h3>
       {session.venue && (
         <p className="country-session-venue">

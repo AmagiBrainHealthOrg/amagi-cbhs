@@ -34,6 +34,7 @@ export type ScheduleSession = {
   key: string
   id: number
   title: string
+  slug: string
   locationId: number
   themeId?: number
   /** Index into the days, in the location's zone. */
@@ -111,6 +112,7 @@ export function buildSchedule(
       key: `${session.id}-${location.id}`,
       id: session.id,
       title: session.title,
+      slug: session.slug,
       locationId: location.id,
       themeId: themeId !== undefined && themeIds.has(themeId) ? themeId : undefined,
       day,

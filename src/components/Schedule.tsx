@@ -147,7 +147,9 @@ export function Schedule({ data }: { data: ScheduleData }) {
             />
           )}
         </div>
-        <h4>{session.title}</h4>
+        <h4>
+          <Link href={`/sessions/${session.slug}`}>{session.title}</Link>
+        </h4>
         {!online.has(session.locationId) && (
           <p className="schedule-venue">{session.venue ?? 'Venue TBC'}</p>
         )}
