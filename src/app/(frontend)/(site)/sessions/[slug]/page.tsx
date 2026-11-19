@@ -108,41 +108,42 @@ export default async function SessionPage(props: Props) {
         )}
         {session.youtubeVideo && <SessionVideo id={session.youtubeVideo} title={session.title} />}
 
-        <section className="session-register" aria-labelledby="register-heading">
-          <h2 id="register-heading">Register</h2>
-          {routes.length === 0 && <p>Registration for this session has closed.</p>}
-          {routes
-            .filter(({ external }) => external)
-            .map(({ label = 'Register on Zoom', href }) => (
-              <a
-                key={href}
-                className="button button-blue"
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-journey="session_registration"
-                data-action="register_online"
-                data-destination-type="external"
-              >
-                {label}
-              </a>
-            ))}
-          {open && formLabel && <h3>{formLabel}</h3>}
-          {open &&
-            (fields ? (
-              <Form
-                formKey={FORM}
-                fields={fields}
-                submitLabel={formRegistry[FORM].submitLabel}
-                idPrefix="session"
-                hidden={{ session: String(session.id) }}
-              />
-            ) : (
-              <p className="form-alert" role="alert">
-                This form is unavailable right now. Please try again later.
-              </p>
-            ))}
-        </section>
+        {routes.length > 0 && (
+          <section className="session-register" aria-labelledby="register-heading">
+            <h2 id="register-heading">Register</h2>
+            {routes
+              .filter(({ external }) => external)
+              .map(({ label = 'Register on Zoom', href }) => (
+                <a
+                  key={href}
+                  className="button button-blue"
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-journey="session_registration"
+                  data-action="register_online"
+                  data-destination-type="external"
+                >
+                  {label}
+                </a>
+              ))}
+            {open && formLabel && <h3>{formLabel}</h3>}
+            {open &&
+              (fields ? (
+                <Form
+                  formKey={FORM}
+                  fields={fields}
+                  submitLabel={formRegistry[FORM].submitLabel}
+                  idPrefix="session"
+                  hidden={{ session: String(session.id) }}
+                />
+              ) : (
+                <p className="form-alert" role="alert">
+                  This form is unavailable right now. Please try again later.
+                </p>
+              ))}
+          </section>
+        )}
       </article>
       <DonateBanner />
     </>
