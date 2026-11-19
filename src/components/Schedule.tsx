@@ -4,6 +4,7 @@ import Link from 'next/link'
 import React, { useMemo, useRef, useState, useSyncExternalStore } from 'react'
 
 import { SessionInfo } from '@/components/SessionInfo'
+import { SessionVideo } from '@/components/SessionVideo'
 import {
   bySchedule,
   type ScheduleData,
@@ -150,6 +151,7 @@ export function Schedule({ data }: { data: ScheduleData }) {
         {!online.has(session.locationId) && (
           <p className="schedule-venue">{session.venue ?? 'Venue TBC'}</p>
         )}
+        {session.video && <SessionVideo id={session.video} title={session.title} />}
         {session.registration.length > 0 && (
           <div className="schedule-registers">
             {session.registration.map(({ label = 'Register', href, external }) =>

@@ -8,6 +8,7 @@ import React, { cache } from 'react'
 import { DonateBanner } from '@/components/DonateBanner'
 import { Form } from '@/components/forms/Form'
 import { SessionDescription } from '@/components/SessionDescription'
+import { SessionVideo } from '@/components/SessionVideo'
 import { formRegistry } from '@/forms/registry'
 import type { ResolvedField } from '@/forms/validate'
 import { countryHrefsByLocation } from '@/lib/countries'
@@ -105,6 +106,7 @@ export default async function SessionPage(props: Props) {
             <SessionDescription text={session.description} />
           </p>
         )}
+        {session.youtubeVideo && <SessionVideo id={session.youtubeVideo} title={session.title} />}
 
         <section className="session-register" aria-labelledby="register-heading">
           <h2 id="register-heading">Register</h2>
