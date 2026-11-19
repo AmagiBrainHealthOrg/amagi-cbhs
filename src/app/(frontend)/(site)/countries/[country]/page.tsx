@@ -14,6 +14,7 @@ import { Gallery } from '@/components/Gallery'
 import { LinkedText } from '@/components/LinkedText'
 import { Section } from '@/components/Section'
 import { SessionMore } from '@/components/SessionMore'
+import { SessionVideo } from '@/components/SessionVideo'
 import { countryTeams } from '@/config/countryTeams'
 import { getCountries } from '@/lib/countries'
 import { getGlobal } from '@/lib/globals'
@@ -141,6 +142,7 @@ function SessionCard({ session }: { session: Session }) {
           <Video aria-hidden="true" /> {location.name}
         </p>
       )}
+      {session.youtubeVideo && <SessionVideo id={session.youtubeVideo} title={session.title} />}
       {session.description ? (
         <SessionMore
           title={session.title}

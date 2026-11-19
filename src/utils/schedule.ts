@@ -45,6 +45,8 @@ export type ScheduleSession = {
   end?: string
   venue?: string
   description?: string
+  /** YouTube video ID. */
+  video?: string
   registration: RegistrationRoute[]
 }
 export type ScheduleData = {
@@ -118,6 +120,7 @@ export function buildSchedule(
       end: zoned(session.endTime),
       venue: venue ?? (location.online ? undefined : session.venue || undefined),
       description: session.description || undefined,
+      video: session.youtubeVideo || undefined,
       registration: registrationRoutes(session, location),
     }
   }
