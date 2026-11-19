@@ -1320,6 +1320,10 @@ export interface Session {
   venue?: string | null;
   description?: string | null;
   /**
+   * Optional. Paste the YouTube link (a watch, youtu.be or share link). The video then plays wherever the session shows: the schedule, the session page and the country page of its Location (or, for online sessions, its Country). Only the video ID is kept.
+   */
+  youtubeVideo?: string | null;
+  /**
    * Online sessions: the Register button opens this link.
    */
   zoomUrl?: string | null;
@@ -2320,6 +2324,7 @@ export interface SessionsSelect<T extends boolean = true> {
   endTime?: T;
   venue?: T;
   description?: T;
+  youtubeVideo?: T;
   zoomUrl?: T;
   registrationOptions?:
     | T

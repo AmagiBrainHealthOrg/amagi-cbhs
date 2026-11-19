@@ -7,6 +7,7 @@ import { everyPage, revalidateAfterChange, revalidateAfterDelete } from '@/hooks
 
 import { drafts, editorialAccess } from './shared'
 import { previewUrl } from '@/utils/preview'
+import { youTubeId } from '@/utils/youtube'
 
 const TIME = /^([01]\d|2[0-3]):[0-5]\d$/
 const time = (value: string | null | undefined) =>
@@ -95,6 +96,19 @@ export const Sessions: CollectionConfig = {
       },
     },
     { name: 'description', type: 'textarea' },
+    {
+      name: 'youtubeVideo',
+      label: 'YouTube video',
+      type: 'text',
+      admin: {
+        placeholder: 'https://youtu.be/…',
+        description:
+          'Optional. Paste the YouTube link (a watch, youtu.be or share link). The video then plays wherever the session shows: the schedule, the session page and the country page of its Location (or, for online sessions, its Country). Only the video ID is kept.',
+      },
+      hooks: { beforeValidate: [({ value }) => (value ? (youTubeId(value) ?? value) : value)] },
+      validate: (value: string | null | undefined) =>
+        !value || Boolean(youTubeId(value)) || 'Paste a YouTube link, such as https://youtu.be/…',
+    },
     {
       name: 'zoomUrl',
       label: 'Zoom registration link',

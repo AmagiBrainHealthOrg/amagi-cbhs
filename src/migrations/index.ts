@@ -55,12 +55,13 @@ import * as migration_20261110_160000_country_page_links from './20261110_160000
 import * as migration_20261110_170000_pladrr_page from './20261110_170000_pladrr_page';
 import * as migration_20261110_174417 from './20261110_174417';
 import * as migration_20261110_180000_pladrr_form_layout from './20261110_180000_pladrr_form_layout';
-import * as migration_20261110_190000_pladrr_diagrams from './20261110_190000_pladrr_diagrams'
-import * as migration_20261110_193232_country_gallery from './20261110_193232_country_gallery'
-import * as migration_20261110_194511_session_country from './20261110_194511_session_country'
-import * as migration_20261110_200000_cayman_online_sessions from './20261110_200000_cayman_online_sessions'
+import * as migration_20261110_190000_pladrr_diagrams from './20261110_190000_pladrr_diagrams';
+import * as migration_20261110_193232_country_gallery from './20261110_193232_country_gallery';
+import * as migration_20261110_194511_session_country from './20261110_194511_session_country';
+import * as migration_20261110_200000_cayman_online_sessions from './20261110_200000_cayman_online_sessions';
 import * as migration_20261115_190000_sessions_cta from './20261115_190000_sessions_cta';
 import * as migration_20261115_210000_cant_join_live_register from './20261115_210000_cant_join_live_register';
+import * as migration_20261119_133812 from './20261119_133812';
 
 export const migrations = [
   {
@@ -346,7 +347,7 @@ export const migrations = [
   {
     up: migration_20261110_180000_pladrr_form_layout.up,
     down: migration_20261110_180000_pladrr_form_layout.down,
-    name: '20261110_180000_pladrr_form_layout'
+    name: '20261110_180000_pladrr_form_layout',
   },
   {
     up: migration_20261110_190000_pladrr_diagrams.up,
@@ -377,5 +378,10 @@ export const migrations = [
     up: migration_20261115_210000_cant_join_live_register.up,
     down: migration_20261115_210000_cant_join_live_register.down,
     name: '20261115_210000_cant_join_live_register',
+  },
+  {
+    up: migration_20261119_133812.up,
+    down: migration_20261119_133812.down,
+    name: '20261119_133812'
   },
 ];
