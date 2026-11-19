@@ -287,6 +287,102 @@
   border-radius: var(--v1-radius);
   object-fit: cover;
 }
+.gallery-track button {
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: var(--v1-radius);
+  background: none;
+  cursor: zoom-in;
+}
+.gallery-track button:focus-visible {
+  outline: 3px solid var(--primary-blue);
+  outline-offset: 3px;
+}
+.gallery-lightbox {
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.gallery-lightbox::backdrop {
+  background: rgba(0, 20, 40, 0.96);
+}
+/* Clicks on the empty space around the photo reach the dialog, which closes it. */
+.gallery-lightbox figure {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 12px;
+  height: 100%;
+  margin: 0;
+  padding: 64px 16px 24px;
+  pointer-events: none;
+}
+.gallery-lightbox img {
+  width: auto;
+  max-width: min(100%, calc(100vw - 144px));
+  height: auto;
+  max-height: calc(100dvh - 140px);
+  border-radius: var(--v1-radius);
+  object-fit: contain;
+  pointer-events: auto;
+}
+.gallery-lightbox figcaption {
+  color: var(--white);
+  font-family: var(--app-font-ui);
+  font-size: var(--fs-xs);
+}
+.gallery-lightbox > button {
+  position: fixed;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--primary-blue);
+  cursor: pointer;
+}
+.gallery-lightbox > button:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 3px;
+}
+.gallery-lightbox-close {
+  top: 12px;
+  right: 12px;
+}
+.gallery-lightbox-prev,
+.gallery-lightbox-next {
+  top: 50%;
+  transform: translateY(-50%);
+}
+.gallery-lightbox-prev {
+  left: 12px;
+}
+.gallery-lightbox-next {
+  right: 12px;
+}
+@media (max-width: 600px) {
+  .gallery-lightbox figure {
+    padding-bottom: 80px;
+  }
+  .gallery-lightbox img {
+    max-width: 100%;
+    max-height: calc(100dvh - 190px);
+  }
+  .gallery-lightbox-prev,
+  .gallery-lightbox-next {
+    top: auto;
+    bottom: 16px;
+    transform: none;
+  }
+}
 .gallery-controls {
   display: flex;
   justify-content: flex-end;
